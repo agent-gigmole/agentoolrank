@@ -1,0 +1,36 @@
+import type { MetadataRoute } from "next";
+import { db } from "@/lib/db";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
+
+  // Static pages
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1.0 },
+    { url: `${baseUrl}/new`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/search`, changeFrequency: "weekly", priority: 0.5 },
+  ];
+
+  // Category pages
+  const categories = await db.execute("SELECT slug FROM categories");
+  const categoryPages: MetadataRoute.Sitemap = categories.rows.map((row) => ({
+    url: `${baseUrl}/category/${(row as unknown as { slug: string }).slug}`,
+    lastModified: new Date(),
+    changeFrequency: "daily" as const,
+    priority: 0.8,
+  }));
+
+  // Tool detail pages (the SEO long-tail gold)
+  const tools = await db.execute("SELECT id, updated_at FROM tools ORDER BY score DESC");
+  const toolPages: MetadataRoute.Sitemap = tools.rows.map((row) => {
+    const r = row as unknown as { id: string; updated_at: string };
+    return {
+      url: `${baseUrl}/tool/${r.id}`,
+      lastModified: new Date(r.updated_at),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    };
+  });
+
+  return [...staticPages, ...categoryPages, ...toolPages];
+}
