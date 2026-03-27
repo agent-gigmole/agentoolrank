@@ -1,20 +1,17 @@
 import { createClient } from "@libsql/client";
+import { join } from "path";
 
 function getDb() {
   const url = process.env.TURSO_DATABASE_URL;
   const authToken = process.env.TURSO_AUTH_TOKEN;
 
-  if (!url) {
-    // Local development: use local SQLite file
-    return createClient({
-      url: "file:./db/local.db",
-    });
+  if (url) {
+    return createClient({ url, authToken });
   }
 
-  return createClient({
-    url,
-    authToken,
-  });
+  // Local/build: use SQLite file (resolve from project root)
+  const dbPath = join(process.cwd(), "db", "local.db");
+  return createClient({ url: `file:${dbPath}` });
 }
 
 export const db = getDb();
