@@ -1,0 +1,39 @@
+project:
+  name: "ai-directory"
+  description: "AI Agent 工具导航站，数据驱动 + LLM 自动化内容，靠 SEO 获取流量"
+  language: "typescript"
+  python_version: ""
+  harness: ""
+
+commands:
+  test: "npm test"
+  lint: "npm run lint"
+  build: "npm run build"
+  run: "npm run dev"
+
+entry_points:
+  config: "src/config/"
+  main: "src/app/"
+  tests: "__tests__/"
+
+success_criteria:
+  - "首页/分类页/详情页三个核心页面可正常渲染"
+  - "工具数据自动采集管道可运行（爬取 + LLM 生成）"
+  - "Lighthouse SEO 评分 > 90"
+  - "Vercel 部署成功"
+
+external_links:
+  source: ""
+  docs: "https://nextjs.org/docs"
+  api_reference: ""
+
+communication:
+  enabled: false
+  endpoint: ""
+  target: ""
+  on_checkpoint: false
+  on_idle: false
+
+dependencies:
+  runtime: [next, react, react-dom, tailwindcss]
+  dev: [typescript, eslint, prettier, jest]
