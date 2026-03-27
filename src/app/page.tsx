@@ -21,7 +21,7 @@ export default async function HomePage() {
       {/* Hero + Value Prop */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          AI Agent Tools Directory
+          AgenTool Rank
         </h1>
         <p className="text-lg text-gray-600 mb-2">
           Find the right AI agent tools for your stack. Data-driven, updated daily.

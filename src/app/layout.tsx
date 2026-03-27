@@ -14,12 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Agent Tools Directory — Find the Best AI Agent Tools",
+  title: "AgenTool Rank — AI Agent Tools Directory, Ranked by Data",
   description: "Data-driven directory of AI agent tools. Ranked by GitHub activity, updated daily. Find frameworks, orchestration tools, coding agents, and more.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com"),
   openGraph: {
-    title: "AI Agent Tools Directory",
+    title: "AgenTool Rank — AI Agent Tools Directory",
     description: "Data-driven directory of AI agent tools. Ranked by GitHub activity, updated daily.",
     type: "website",
+    siteName: "AgenTool Rank",
   },
 };
 
