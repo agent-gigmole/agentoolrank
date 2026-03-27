@@ -93,6 +93,42 @@ export async function getLastRefreshTime(): Promise<string | null> {
   return (result.rows[0]?.last_refresh as string) ?? null;
 }
 
+/**
+ * Generate comparison pairs from top tools in each category.
+ * Returns sorted pairs like ["langchain-vs-dify", ...] for sitemap + comparison index.
+ */
+export async function getComparisonPairs(topN: number = 8): Promise<Array<{ slugA: string; slugB: string; nameA: string; nameB: string; category: string }>> {
+  const categories = await db.execute("SELECT slug FROM categories");
+  const pairs: Array<{ slugA: string; slugB: string; nameA: string; nameB: string; category: string }> = [];
+  const seen = new Set<string>();
+
+  for (const cat of categories.rows) {
+    const slug = (cat as unknown as { slug: string }).slug;
+    const tools = await db.execute({
+      sql: `SELECT id, name FROM tools WHERE category_tags LIKE ? AND content_status = 'complete' ORDER BY score DESC LIMIT ?`,
+      args: [`%"${slug}"%`, topN],
+    });
+
+    const toolList = tools.rows as unknown as Array<{ id: string; name: string }>;
+    // Generate pairs from top tools (i vs j where i < j)
+    for (let i = 0; i < toolList.length; i++) {
+      for (let j = i + 1; j < toolList.length; j++) {
+        // Alphabetical order for consistent URLs
+        const [a, b] = toolList[i].id < toolList[j].id
+          ? [toolList[i], toolList[j]]
+          : [toolList[j], toolList[i]];
+        const key = `${a.id}-vs-${b.id}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          pairs.push({ slugA: a.id, slugB: b.id, nameA: a.name, nameB: b.name, category: slug });
+        }
+      }
+    }
+  }
+
+  return pairs;
+}
+
 export async function searchTools(query: string, limit: number = 20): Promise<Tool[]> {
   const result = await db.execute({
     sql: `SELECT * FROM tools WHERE name LIKE ? OR tagline LIKE ? OR description LIKE ? ORDER BY score DESC LIMIT ?`,

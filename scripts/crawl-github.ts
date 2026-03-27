@@ -281,11 +281,48 @@ const SEED_REPOS: Array<[string, string]> = [
 ];
 
 async function main() {
-  console.log(`Crawling ${SEED_REPOS.length} repos...`);
+  // Check for discovered repos file (from discover-repos.ts)
+  let repos: Array<[string, string]> = SEED_REPOS;
+
+  const useDiscovered = process.argv.includes("--discovered");
+  const seedOnly = process.argv.includes("--seed-only");
+
+  if (useDiscovered) {
+    try {
+      const file = Bun.file("scripts/discovered-repos.json");
+      if (await file.exists()) {
+        const discovered = JSON.parse(await file.text()) as Array<[string, string]>;
+        repos = discovered;
+        console.log(`Using discovered-repos.json: ${repos.length} repos`);
+      } else {
+        console.error("discovered-repos.json not found. Run discover-repos.ts first.");
+        process.exit(1);
+      }
+    } catch (err) {
+      console.error(`Error reading discovered-repos.json: ${err}`);
+      process.exit(1);
+    }
+  } else if (!seedOnly) {
+    // Default: merge seed + discovered
+    try {
+      const file = Bun.file("scripts/discovered-repos.json");
+      if (await file.exists()) {
+        const discovered = JSON.parse(await file.text()) as Array<[string, string]>;
+        const existing = new Set(SEED_REPOS.map(([o, n]) => `${o}/${n}`.toLowerCase()));
+        const newOnes = discovered.filter(([o, n]) => !existing.has(`${o}/${n}`.toLowerCase()));
+        repos = [...SEED_REPOS, ...newOnes];
+        console.log(`Merged: ${SEED_REPOS.length} seed + ${newOnes.length} discovered = ${repos.length} total`);
+      }
+    } catch {
+      // No discovered file, just use seed
+    }
+  }
+
+  console.log(`Crawling ${repos.length} repos...`);
   let success = 0;
   let failed = 0;
 
-  for (const [owner, name] of SEED_REPOS) {
+  for (const [owner, name] of repos) {
     console.log(`${owner}/${name}`);
     const ok = await fetchAndUpsertRepo(owner, name);
     if (ok) success++;

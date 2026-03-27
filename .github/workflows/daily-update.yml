@@ -19,10 +19,19 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      - name: Crawl GitHub repos
+      - name: Crawl GitHub repos (seed + discovered)
         run: bun run scripts/crawl-github.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Clean up non-relevant tools
+        run: bun run scripts/cleanup-tools.ts
+
+      - name: Filter by relevance
+        run: bun run scripts/filter-relevance.ts
+
+      - name: Reclassify tools
+        run: bun run scripts/reclassify-tools.ts
 
       - name: Compute rankings
         run: bun run scripts/compute-rankings.ts

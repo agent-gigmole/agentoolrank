@@ -11,6 +11,9 @@ export function Nav() {
           <Link href="/new" className="text-gray-600 hover:text-gray-900 transition-colors">
             New
           </Link>
+          <Link href="/compare" className="text-gray-600 hover:text-gray-900 transition-colors">
+            Compare
+          </Link>
           <Link href="/search" className="text-gray-600 hover:text-gray-900 transition-colors">
             Search
           </Link>
