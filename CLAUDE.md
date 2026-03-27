@@ -127,3 +127,9 @@ curl -s -X POST $ENDPOINT \
 - SEO 是生命线 — 每个页面必须有正确的 meta tags、structured data、语义化 HTML
 - 详情页是长尾 SEO 主力 — 每个工具详情页必须独立可索引、有唯一 URL
 - 数据更新频率 > 竞品 — 目标每日自动刷新，不接受手动批量更新
+
+## gstack
+
+Use the /browse skill from gstack for all web browsing, never use mcp__claude-in-chrome__* tools.
+
+Available skills: /office-hours, /plan-ceo-review, /plan-eng-review, /plan-design-review, /design-consultation, /review, /ship, /land-and-deploy, /canary, /benchmark, /browse, /qa, /qa-only, /design-review, /setup-browser-cookies, /setup-deploy, /retro, /investigate, /document-release, /codex, /cso, /autoplan, /careful, /freeze, /guard, /unfreeze, /gstack-upgrade
