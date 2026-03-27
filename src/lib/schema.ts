@@ -57,7 +57,7 @@ export const ToolSchema = z.object({
   // Metadata
   source: ToolSourceEnum,
   pricing: PricingEnum,
-  affiliate_url: z.string().url().optional(),
+  affiliate_url: z.string().url().nullish(),
   content_status: ContentStatusEnum.default("pending"),
 
   // Ranking
