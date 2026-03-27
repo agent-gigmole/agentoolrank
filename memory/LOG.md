@@ -56,3 +56,13 @@
 - 最终结果：578 个工具入库（从 44 扩展到 578）
 - 踩坑：GitHub Search API OR 语法不工作、FK 约束删除顺序、slug 冲突、awesome-list 噪音
 - 待办：535 个工具 pending LLM 内容、inferCategories 分类精度低
+
+## 2026-03-28 深度清洗 + LLM 内容 + 对比页（578 → 463）
+- 创建 filter-relevance.ts：基于 tagline 关键词过滤非 AI agent 工具，移除 115 个
+- 创建 reclassify-tools.ts：改进分类正则，减少默认分类堆积
+- LLM 内容生成：48 个新工具完成（claude -p CLI，~20秒/个）
+- 对比页：/compare 索引页 + sitemap 添加 170 个对比 URL
+- Nav 添加 Compare 链接
+- 最终：463 工具 | 86 complete 内容 | 648 sitemap URL | 170 对比页
+- 关键数据变化：44→463 工具 | 58→648 sitemap URL | 43→86 LLM 内容 | 0→170 对比页
+- 踩坑：claude -p ~20秒/个（50个≈17分钟）、libsql Row 需要 as unknown as T 双重断言

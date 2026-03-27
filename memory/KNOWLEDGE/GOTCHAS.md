@@ -53,3 +53,16 @@
 - 需要 blocklist pattern 过滤（如 `awesome-*`, `*-tutorial`, `*-papers` 等）
 - cleanup-tools.ts 用 description 关键词 + 低星过滤可清理约 20%
 - 建议：爬取后增加 LLM 分类步骤判断是否为"工具"
+- 最佳实践：两层过滤（cleanup blocklist + filter-relevance 关键词），从 578 清到 463
+
+## claude-cli-pipe-speed
+- `claude -p "prompt"` 每个工具约 20 秒处理时间
+- 50 个工具约 17 分钟，不如直接调 API 快但不需要 API key
+- 批量生成时考虑并行（但 Claude Code CLI 似乎有并发限制）
+- 大批量（300+）建议用 API 直接调用
+
+## libsql-row-type-assertion
+- libsql/turso 的 Row 类型不能直接 `as T` 断言
+- 需要 `as unknown as T` 双重断言才能通过 TypeScript 编译
+- 原因：Row 是类数组类型，与普通对象接口不兼容
+- 影响所有从 db.execute() 返回的 rows 遍历

@@ -21,3 +21,6 @@
 | metric_snapshots 外键 / FK constraint / 删除顺序 | GOTCHAS.md#metric-snapshots-fk-constraint |
 | slug 冲突 / makeSlug / repo name only | GOTCHAS.md#slug-collision-with-repo-name-only |
 | awesome-list 噪音 / 非工具 repo / blocklist | GOTCHAS.md#awesome-list-noise |
+| claude -p CLI 速度 / 批量生成 / 并发限制 | GOTCHAS.md#claude-cli-pipe-speed |
+| libsql Row 类型 / as unknown as T / 双重断言 | GOTCHAS.md#libsql-row-type-assertion |
+| 五步管道 / 发现→爬取→清理→过滤→分类 | LOG.md#2026-03-28 |

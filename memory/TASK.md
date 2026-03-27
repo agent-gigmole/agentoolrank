@@ -2,11 +2,11 @@
 
 ## 当前任务
 
-P0: 扩充工具数量 + 生成对比页 + SEO 冷启动
+P0: 剩余 LLM 内容生成 + SEO 冷启动
 
 ## 目标
 
-从 44 个工具扩充到 200+，生成 50+ 热门对比页，开源爬虫获取初始 backlinks
+377 个工具完成 LLM 内容生成，重新提交 sitemap（648 URL），开源爬虫获取 backlinks
 
 ## 已完成步骤
 
@@ -23,14 +23,14 @@ P0: 扩充工具数量 + 生成对比页 + SEO 冷启动
 - [x] SEO 配置（sitemap + robots + JSON-LD）
 - [x] Vercel 部署 + Cloudflare DNS
 - [x] Google Search Console sitemap 提交
+- [x] 扩充到 200+ 工具（实际 463 个，五步管道：发现→爬取→清理→过滤→分类）
+- [x] 自动生成 50+ 热门对比页（实际 170 个对比页 + 索引页）
+- [x] LLM 批量生成部分工具内容（86/463 完成）
 
 ## 待完成步骤
 
-- [x] 扩充到 200+ 工具（实际 578 个，GitHub Search API + awesome-list + curated 列表）
-- [ ] LLM 批量生成 535 个工具内容
-- [ ] 改进 inferCategories 分类精度（365/578 默认分类）
-- [ ] 修复 slug 冲突（makeSlug 改用 owner-name 格式）
-- [ ] 自动生成 50+ 热门对比页
+- [ ] LLM 批量生成剩余 377 个工具内容
+- [ ] 重新提交 sitemap 到 Google Search Console（648 URL）
 - [ ] 开源爬虫到 GitHub 获取 backlinks
 - [ ] Supabase 迁移（解决 SQLite/Vercel 架构问题）
 - [ ] Newsletter 后端（接通 email capture）
