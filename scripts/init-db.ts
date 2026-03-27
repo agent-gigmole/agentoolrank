@@ -7,18 +7,17 @@ import { readFileSync } from "fs";
 import { db } from "../src/lib/db";
 
 const CATEGORIES = [
-  { slug: "framework", name: "Agent Frameworks", description: "Full-featured frameworks for building AI agents", icon: "🏗️" },
-  { slug: "orchestration", name: "Orchestration", description: "Multi-agent coordination and workflow engines", icon: "🎭" },
-  { slug: "rag", name: "RAG & Knowledge", description: "Retrieval-augmented generation and knowledge management", icon: "📚" },
-  { slug: "code-agent", name: "Coding Agents", description: "AI agents that write, review, and debug code", icon: "💻" },
-  { slug: "browser-agent", name: "Browser Agents", description: "Web browsing and automation agents", icon: "🌐" },
-  { slug: "voice-agent", name: "Voice & Phone Agents", description: "Voice-powered AI agents for calls and conversations", icon: "🎙️" },
-  { slug: "data-agent", name: "Data & Analytics Agents", description: "Agents for data analysis, ETL, and business intelligence", icon: "📊" },
-  { slug: "customer-support", name: "Customer Support", description: "AI agents for customer service and helpdesk", icon: "🎧" },
-  { slug: "sales-agent", name: "Sales & Outreach", description: "Agents for lead generation, outreach, and CRM", icon: "📈" },
-  { slug: "devtools", name: "Developer Tools", description: "SDKs, MCP servers, testing tools, and agent infrastructure", icon: "🔧" },
-  { slug: "memory-state", name: "Memory & State", description: "Long-term memory, context management, and state persistence for agents", icon: "🧠" },
-  { slug: "deployment", name: "Deployment & Monitoring", description: "Agent hosting, observability, and production tooling", icon: "🚀" },
+  { slug: "agent-frameworks", name: "Agent Frameworks", description: "Code-first libraries and SDKs for building, orchestrating, and deploying autonomous AI agents", icon: "🏗️" },
+  { slug: "no-code-agent-builders", name: "No-Code Agent Builders", description: "Visual and low-code platforms that let non-developers create AI agents through drag-and-drop interfaces", icon: "🧩" },
+  { slug: "coding-agents", name: "Coding Agents", description: "AI-powered tools that autonomously write, review, debug, and deploy code", icon: "💻" },
+  { slug: "observability-evaluation", name: "Observability & Evaluation", description: "Monitoring, tracing, and testing infrastructure for running AI agents reliably in production", icon: "📡" },
+  { slug: "memory-knowledge", name: "Memory & Knowledge", description: "Persistent memory layers and vector databases that give agents long-term recall and contextual retrieval", icon: "🧠" },
+  { slug: "tool-integration", name: "Tool Integration & Infrastructure", description: "Connectors and platforms that let agents authenticate with and take actions across third-party APIs", icon: "🔌" },
+  { slug: "browser-web-agents", name: "Browser & Web Agents", description: "Tools enabling AI agents to navigate websites, interact with web UIs, and extract structured data", icon: "🌐" },
+  { slug: "agent-protocols", name: "Agent Protocols & Standards", description: "Open standards and protocols defining how agents communicate with tools and collaborate with other agents", icon: "📜" },
+  { slug: "enterprise-agent-platforms", name: "Enterprise Agent Platforms", description: "Production-grade platforms from major vendors for deploying AI agents at scale across business functions", icon: "🏢" },
+  { slug: "voice-agents", name: "Voice Agents", description: "Platforms for building AI agents that converse in real-time voice for customer service and telephony", icon: "🎙️" },
+  { slug: "sandboxes-execution", name: "Sandboxes & Execution Environments", description: "Secure, isolated runtime environments where AI agents can safely execute code and interact with OS", icon: "🔒" },
 ];
 
 async function main() {
