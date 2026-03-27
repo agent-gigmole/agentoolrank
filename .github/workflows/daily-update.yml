@@ -1,0 +1,44 @@
+name: Daily Data Update
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # 6 AM UTC daily
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Crawl GitHub repos
+        run: bun run scripts/crawl-github.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute rankings
+        run: bun run scripts/compute-rankings.ts
+
+      # Note: LLM content generation requires ANTHROPIC_API_KEY
+      # Uncomment when API key is configured as a secret
+      # - name: Generate content for new tools
+      #   run: bun run scripts/generate-content.ts --limit=20
+      #   env:
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add db/local.db
+          git diff --staged --quiet || git commit -m "data: daily update $(date +%Y-%m-%d)"
+          git push
