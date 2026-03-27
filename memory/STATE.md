@@ -19,18 +19,28 @@
 - Vercel 部署上线 + Cloudflare DNS
 - Google Search Console sitemap 提交成功（58 页发现）
 - Telegram topic「目录站」绑定
+- 批量工具扩充：44 → 578 个工具入库
+  - discover-repos.ts: GitHub Search API + awesome-list 爬取 + curated 列表
+  - crawl-github.ts --discovered 模式批量爬取（716/740 成功）
+  - cleanup-tools.ts 过滤非工具/低星/重复项（删除 138 个）
 
 ## 进行中
 
-- 无（MVP 已上线，等待 SEO 发酵）
+- 535 个工具 pending LLM 内容生成（578 总工具 - 43 已有内容）
+- inferCategories 分类精度低（365/578 归到默认 agent-frameworks），需改进
 
 ## 已知最佳结果
 
 - 站点在线：https://agentoolrank.com
-- 44 个工具，43 个有完整 LLM 内容
+- 578 个工具入库，43 个有完整 LLM 内容
 - Top 3: n8n (★181k), dify (★135k), langchain (★131k)
-- Google Search Console: 58 页已发现
+- Google Search Console: 58 页已发现（待重新提交 sitemap 反映 578 工具）
 
 ## 下一步
 
-- P0: 扩充到 200+ 工具 + 自动生成 50+ 对比页 + 开源爬虫获取 backlinks
+- P0: LLM 批量生成 535 个工具的内容
+- P0: 改进 inferCategories 分类准确度（正则太粗糙）
+- P0: 修复 slug 冲突问题（makeSlug 改用 owner-name 格式）
+- P1: 自动生成 50+ 热门对比页
+- P1: 重新提交 sitemap 到 Google Search Console
+- P2: 开源爬虫获取 backlinks

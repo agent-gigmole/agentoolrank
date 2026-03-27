@@ -31,3 +31,25 @@
 - SQLite 返回的 NULL 值在 Zod 中不匹配 `z.string().optional()`（optional 只接受 undefined）
 - 需要用 `z.string().nullish()`（接受 null + undefined）
 - affiliate_url 等可空字段都要用 nullish
+
+## github-search-api-language-filter
+- GitHub Search API 的 `language:Python OR language:TypeScript` 语法返回 0 结果
+- OR 连接多个 language 过滤器不工作，需要分开多次查询或使用其他格式
+- 替代方案：awesome-list 爬取效果更好，一次可获得 700+ repo links
+
+## metric-snapshots-fk-constraint
+- tools 表有 metric_snapshots 外键约束
+- 删除工具时必须先删 metric_snapshots 再删 tools，否则报 FK constraint error
+- cleanup-tools.ts 中需要 `DELETE FROM metric_snapshots WHERE tool_id = ?` 先于 `DELETE FROM tools`
+
+## slug-collision-with-repo-name-only
+- makeSlug 只用 repo name（不含 owner）会导致 slug 冲突
+- 例如：多个 org 都有叫 `agent` 或 `framework` 的 repo
+- 25 个 slug 冲突，ON CONFLICT 导致后入库的覆盖先入库的
+- 修复：makeSlug 改用 `owner-name` 格式可避免冲突
+
+## awesome-list-noise
+- awesome-list 中大量 repo 不是 AI agent 工具（模型权重、教程、资源列表、论文等）
+- 需要 blocklist pattern 过滤（如 `awesome-*`, `*-tutorial`, `*-papers` 等）
+- cleanup-tools.ts 用 description 关键词 + 低星过滤可清理约 20%
+- 建议：爬取后增加 LLM 分类步骤判断是否为"工具"

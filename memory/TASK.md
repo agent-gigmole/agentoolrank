@@ -26,7 +26,10 @@ P0: 扩充工具数量 + 生成对比页 + SEO 冷启动
 
 ## 待完成步骤
 
-- [ ] 扩充到 200+ 工具（GitHub search API 批量发现）
+- [x] 扩充到 200+ 工具（实际 578 个，GitHub Search API + awesome-list + curated 列表）
+- [ ] LLM 批量生成 535 个工具内容
+- [ ] 改进 inferCategories 分类精度（365/578 默认分类）
+- [ ] 修复 slug 冲突（makeSlug 改用 owner-name 格式）
 - [ ] 自动生成 50+ 热门对比页
 - [ ] 开源爬虫到 GitHub 获取 backlinks
 - [ ] Supabase 迁移（解决 SQLite/Vercel 架构问题）

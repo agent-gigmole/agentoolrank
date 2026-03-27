@@ -17,3 +17,7 @@
 | GitHub GraphQL 限流 | GOTCHAS.md#github-graphql-rate-limit |
 | create-next-app 交互 | GOTCHAS.md#create-next-app-interactive |
 | Zod nullable vs optional | GOTCHAS.md#zod-nullable-vs-optional |
+| GitHub Search API language 过滤 / OR 语法 | GOTCHAS.md#github-search-api-language-filter |
+| metric_snapshots 外键 / FK constraint / 删除顺序 | GOTCHAS.md#metric-snapshots-fk-constraint |
+| slug 冲突 / makeSlug / repo name only | GOTCHAS.md#slug-collision-with-repo-name-only |
+| awesome-list 噪音 / 非工具 repo / blocklist | GOTCHAS.md#awesome-list-noise |

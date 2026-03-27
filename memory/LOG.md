@@ -47,3 +47,12 @@
 - MVP 完成，站点上线 agentoolrank.com
 - 自检结果：补了大量遗漏（STATE/LOG/TASK/KNOWLEDGE/DECISIONS 全部过期）
 - 状态：idle，等待 P0（扩充工具 + 对比页 + backlinks）
+
+## 2026-03-28 批量工具扩充（44 → 578）
+- 创建 discover-repos.ts：GitHub Search API + awesome-list 爬取 + curated 列表
+- 发现 740 个新 repo（awesome-list 贡献最多）
+- 修改 crawl-github.ts 支持 --discovered 模式，批量爬取 716 个成功入库
+- 创建 cleanup-tools.ts：过滤非工具/低星/重复项，删除 138 个
+- 最终结果：578 个工具入库（从 44 扩展到 578）
+- 踩坑：GitHub Search API OR 语法不工作、FK 约束删除顺序、slug 冲突、awesome-list 噪音
+- 待办：535 个工具 pending LLM 内容、inferCategories 分类精度低
