@@ -11,7 +11,7 @@ function getModel() {
 
   if (!apiKey) throw new Error("LLM_API_KEY not configured");
 
-  const provider = createOpenAI({ apiKey, baseURL, compatibility: "compatible" });
+  const provider = createOpenAI({ apiKey, baseURL });
   return provider.chat(modelId);
 }
 
