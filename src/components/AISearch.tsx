@@ -331,13 +331,35 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
           );
         })}
 
-        {/* Streaming indicator */}
-        {isStreaming && messages.length > 0 && !getMessageText(messages[messages.length - 1] as any) && (
-          <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-            Analyzing tools and building your stack...
-          </div>
-        )}
+        {/* Streaming status indicator */}
+        {isStreaming && messages.length > 0 && (() => {
+          const lastMsg = messages[messages.length - 1];
+          const lastText = lastMsg?.role === "assistant" ? getMessageText(lastMsg as any) : "";
+          const hasJson = lastText.includes("```json");
+          const jsonComplete = lastText.includes("```json") && lastText.split("```").length > 2;
+
+          let statusText = "Analyzing your requirements...";
+          let statusIcon = "🔍";
+          if (lastText.length > 0 && !hasJson) {
+            statusText = "Selecting tools from 463 options...";
+            statusIcon = "🧠";
+          } else if (hasJson && !jsonComplete) {
+            statusText = "Building your tool stack...";
+            statusIcon = "🔧";
+          } else if (jsonComplete) {
+            statusText = "Rendering flow diagram...";
+            statusIcon = "📊";
+          }
+
+          return (
+            <div className="flex items-center gap-2.5 py-2 px-3 bg-blue-50/50 rounded-lg border border-blue-100">
+              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin shrink-0" />
+              <span className="text-sm text-blue-700">
+                {statusIcon} {statusText}
+              </span>
+            </div>
+          );
+        })()}
 
         <div ref={messagesEndRef} />
       </div>
