@@ -162,3 +162,54 @@
 - 输出：流程图 + 工作流故事 + 成本估算 + 替代多少人工
 - 这不是「工具目录」，是「AI 转型咨询 SaaS」
 - 竞品都没有做到这一步
+
+---
+
+## 用户系统需求
+
+> 从「目录站」变成「服务站」后，用户系统变成刚需。
+
+### 现状
+- 没有用户注册/登录系统
+- Save Stack 保存到全局 stacks 表（无 user_id）
+- 对话历史存 localStorage（浏览器本地，换设备丢失）
+- save-stack API 无鉴权
+
+### 轻量方案（推荐先做）
+- 保存 stack 时生成唯一 token
+- URL 即凭证（/stack/abc123?token=xyz）
+- 不需要注册登录，类似 Excalidraw 模式
+
+### 完整方案（有用户量后）
+- 加 Clerk（Vercel Marketplace 一键装）
+- 数据库加 user_id 字段
+- 「我的 Stacks」页面
+
+---
+
+## SEO 现状评估
+
+### ✅ 已有
+- sitemap.ts（动态，含工具/分类/stack/对比页）
+- robots.ts（允许爬虫 + 指向 sitemap）
+- generateMetadata（工具/stack/分类/对比页都有独立 meta）
+- 对比页 /compare/[slugs]（programmatic SEO 已存在）
+
+### ❌ 还缺
+- 结构化数据（JSON-LD）— 富摘要
+- OG 图片 — 社交分享预览
+- canonical URL — 防重复内容
+- 内链策略 — 页面之间互相链接
+- Google Search Console 提交确认
+
+---
+
+## 冷启动方案（不需要写代码）
+
+| 方案 | 成本 | 预期效果 | 优先级 |
+|------|------|---------|--------|
+| 主动邮件工具方「你被收录了」 | 免费 | 工具方转发+反链 | ⭐⭐⭐⭐⭐ |
+| Product Hunt Launch | 免费 | 一天几千访问 | ⭐⭐⭐⭐ |
+| Twitter/X thread「I analyzed 120 AI agent tools」 | 免费 | 传播+反链 | ⭐⭐⭐⭐ |
+| Reddit r/artificial + HackerNews | 免费 | 技术人群精准 | ⭐⭐⭐ |
+| Google Search Console 提交 sitemap | 免费 | SEO 基础 | ⭐⭐⭐⭐⭐ |
