@@ -24,3 +24,8 @@
 | claude -p CLI 速度 / 批量生成 / 并发限制 | GOTCHAS.md#claude-cli-pipe-speed |
 | libsql Row 类型 / as unknown as T / 双重断言 | GOTCHAS.md#libsql-row-type-assertion |
 | 五步管道 / 发现→爬取→清理→过滤→分类 | LOG.md#2026-03-28 |
+| Turso 迁移 / 数据库翻转决策 / 运行时写入 | DECISIONS.md#database-choice |
+| embedding 存储 / 向量搜索 / 暴力扫描 / BLOB 列 | DECISIONS.md#embedding-storage |
+| AI Gateway / OIDC / API 认证 | DECISIONS.md#ai-gateway-auth |
+| CEO 审查 / SCOPE EXPANSION / C 方案 | DECISIONS.md#scope-strategy |
+| AI-First 搜索 / 流式响应 / 对话式 / Phase 5 | LOG.md#2026-03-28 |

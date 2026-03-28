@@ -94,3 +94,14 @@
 - Sitemap 从 648 扩展至 756 URLs（+108 stack 相关 URL）
 - Nav 添加 Stacks 入口
 - Phase 4 全部步骤完成
+
+## 2026-03-28 Phase 5 AI-First 搜索 — CEO 审查 + Spec 定稿
+- CEO 审查完成，选择 SCOPE EXPANSION 模式 → 完整 C 方案（全量 AI-First）
+- 关键决策：
+  - 全量迁移 Turso（翻转之前"不迁移 Supabase"的决定，但用 Turso 不用 Supabase）
+  - SQLite 列 + 暴力扫描存 embedding（不引入向量数据库，463 工具规模够用）
+  - AI Gateway OIDC 认证
+- 发现现有 AI 搜索代码（Phase 4 的 StackGenerator + generate-stack API）体验弱：关键词搜索 + 手动点按钮 + 非流式
+- Spec review 初评 5/10，修复 8 个问题后文档完善
+- 分三阶段实施：Phase 1 AI 核心 → Phase 2 对话式体验 → Phase 3 UGC + 收尾
+- 状态：计划完成，待开始实施

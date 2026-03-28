@@ -36,9 +36,22 @@
   - Nav 添加 Stacks 入口
   - Sitemap 扩展至 756 URLs
 
+- Phase 4 AI 搜索（部分）：StackGenerator + /api/generate-stack 已存在
+  - 关键词搜索 + 按钮触发 + 非流式响应（体验弱）
+
 ## 进行中
 
-- 无（Phase 4 完成，进入运营阶段）
+- Phase 5: AI-First 搜索推荐体验（CEO 审查完成，Spec 已定稿）
+  - 状态：计划阶段完成，待开始实施
+  - 三个实施阶段：Phase 1 AI 核心 → Phase 2 对话式体验 → Phase 3 UGC + 收尾
+
+## 关键决策（Phase 5）
+
+- 全量迁移 Turso（翻转之前"不迁移"的决定）
+- SQLite 列 + 暴力扫描存 embedding（不引入向量数据库）
+- AI Gateway OIDC 认证
+- CEO 审查选了 SCOPE EXPANSION 模式 → 完整 C 方案（全量 AI-First）
+- Spec review 评分 5/10 → 修复 8 个问题后文档已完善
 
 ## 已知最佳结果
 
@@ -51,11 +64,8 @@
 - /weekly 周报页面上线
 - 开源数据集仓库已创建
 
-## 下一步（运营阶段）
+## 下一步
 
-- 监控 Google Search Console 索引覆盖率
-- 持续通过 GitHub Actions daily cron 更新数据
-- 周报内容自动化（weekly cron）
-- 推广开源数据集仓库获取 backlinks
-- 剩余 2 个工具 LLM 内容补全
-- Stack Graph 场景扩充（更多场景 + 用户反馈驱动）
+- Phase 5 Phase 1：AI 核心（Turso 迁移 + embedding 生成 + 语义搜索 API）
+- Phase 5 Phase 2：对话式搜索体验（流式 UI + 多轮对话 + 个性化推荐）
+- Phase 5 Phase 3：UGC + 收尾（用户评价 + 社区功能 + 性能优化）

@@ -2,29 +2,45 @@
 
 ## 当前阶段
 
-Phase 4: Stack Graph — 按任务/场景展示工具组合
+Phase 5: AI-First 搜索推荐体验
 
 ## 目标
 
-创建 Stack Graph 功能：用户选择场景（如"搭 RAG chatbot"），展示完成该任务需要的工具栈组合。
+将现有关键词搜索升级为 AI-First 对话式搜索推荐体验，包含语义搜索、流式响应、多轮对话、个性化推荐。
 
 ## 已完成阶段
 
 - [x] Phase 1: 数据引擎（爬虫 + 排名 + 基础页面 + 部署）
 - [x] Phase 2: 完整 MVP（LLM 内容 + 对比页 + SEO + GSC）
 - [x] Phase 3: 增长引擎（扩充 463 工具 + 开源仓库 + Newsletter + Weekly + 趋势图）
+- [x] Phase 4: Stack Graph（15 个场景 + AI 搜索初版）
+- [x] Phase 5 计划：CEO 审查完成，Spec 定稿
 
-## Phase 4 已完成步骤
+## Phase 5 — Phase 1: AI 核心
 
-- [x] 设计 Stack Graph 数据模型（stacks 表 + stack_tools 关联）
-- [x] 定义 15 个热门场景（RAG chatbot / coding assistant / multi-agent 等）
-- [x] LLM 生成每个场景的工具栈推荐
-- [x] /stack 索引页（所有场景列表）
-- [x] /stack/[slug] 详情页（工具组合图 + 每个位置可选工具 + 对比链接）
-- [x] JSON-LD structured data（HowTo + BreadcrumbList schema）
-- [x] sitemap 添加 stack 页面（756 URLs）
-- [x] Nav 添加 Stacks 入口
+- [ ] Turso 全量迁移（本地 SQLite → Turso 云端）
+- [ ] Embedding 生成（所有工具的 description/tagline 向量化）
+- [ ] SQLite 列存储 embedding（BLOB 列 + 暴力扫描）
+- [ ] 语义搜索 API 端点（/api/semantic-search）
+- [ ] AI Gateway OIDC 认证配置
+- [ ] 搜索结果融合（关键词 + 语义 hybrid search）
+
+## Phase 5 — Phase 2: 对话式搜索体验
+
+- [ ] 流式响应 UI（SSE/streaming）
+- [ ] 搜索页重设计（AI-first 对话框 + 实时结果）
+- [ ] 多轮对话上下文管理
+- [ ] Stack 推荐整合（搜索 → 自动推荐相关 Stack）
+- [ ] 个性化推荐（基于浏览历史/偏好）
+
+## Phase 5 — Phase 3: UGC + 收尾
+
+- [ ] 用户评价系统（工具评分 + 评论）
+- [ ] 社区功能（用户提交工具 + 投票）
+- [ ] 性能优化（缓存策略 + embedding 预计算）
+- [ ] 监控 + 分析（搜索质量指标 + 用户行为）
+- [ ] 文档更新 + 部署收尾
 
 ## 阻塞项
 
-- 无（Phase 4 全部完成）
+- 无（计划已定稿，可开始实施）

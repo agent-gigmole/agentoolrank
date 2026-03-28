@@ -25,8 +25,22 @@
 
 ## database-choice
 - **背景**: 数据存储 — JSON 文件 vs SQLite vs Turso vs Supabase
-- **结论**: SQLite 本地开发 + Vercel 打包部署（临时方案）。autoplan 建议 Turso，实际 SQLite+outputFileTracingIncludes 能工作但不是长期方案。P1 迁移 Supabase
+- **结论 v1**: SQLite 本地开发 + Vercel 打包部署（临时方案）。autoplan 建议 Turso，实际 SQLite+outputFileTracingIncludes 能工作但不是长期方案。P1 迁移 Supabase
 - **日期**: 2026-03-27
+- **结论 v2**: Phase 3 评估后决定不迁移 Supabase — SQLite + GitHub Actions 完全够用
+- **日期**: 2026-03-28
+- **结论 v3（当前）**: Phase 5 翻转决定 — 全量迁移 Turso（不是 Supabase）。原因：AI 搜索需要服务端写入（embedding 存储 + 用户数据），SQLite 打包模式不支持运行时写入。选 Turso 而非 Supabase 因为 Turso 兼容 libsql（项目已用），迁移成本最低
+- **日期**: 2026-03-28
+
+## embedding-storage
+- **背景**: 向量存储方案 — 专用向量数据库(Pinecone/Weaviate) vs SQLite 列存储
+- **结论**: SQLite BLOB 列 + 暴力扫描。463 工具规模下暴力扫描足够快（<50ms），不值得引入额外向量数据库依赖
+- **日期**: 2026-03-28
+
+## ai-gateway-auth
+- **背景**: AI API 调用认证方案
+- **结论**: AI Gateway + OIDC 认证。统一管理 API key、限流、监控
+- **日期**: 2026-03-28
 
 ## ranking-algorithm
 - **背景**: 排名公式 — min-max 归一化 vs percentile rank
