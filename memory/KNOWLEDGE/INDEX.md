@@ -33,3 +33,8 @@
 | AI SDK v6 / breaking changes / useChat / sendMessage / parts | GOTCHAS.md#ai-sdk-v6-breaking-changes |
 | Vercel env preview / --yes / branch | GOTCHAS.md#vercel-env-preview-branch |
 | @ai-sdk/openai / DeepSeek / OpenAI-compatible | LOG.md#2026-03-28 |
+| SEO飞轮 / 增长闭环 / 竞品对标 | SEO_FLYWHEEL.md |
+| Stack分享页 / UGC / programmatic SEO | SEO_FLYWHEEL.md#1 |
+| 对比页 / vs页 / 长尾SEO | SEO_FLYWHEEL.md#2 |
+| 徽章 / 反向链接 / badge | SEO_FLYWHEEL.md#4 |
+| 工作流故事 / 用户场景描述 | SEO_FLYWHEEL.md#ai-builder |
