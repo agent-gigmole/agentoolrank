@@ -45,6 +45,24 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
+function appendUtm(url: string): string {
+  try {
+    const u = new URL(url);
+    u.searchParams.set("utm_source", "agentoolrank");
+    u.searchParams.set("utm_medium", "directory");
+    u.searchParams.set("utm_campaign", "tool_page");
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+function getOutboundUrl(tool: Tool): string {
+  if (tool.affiliate_url) return tool.affiliate_url;
+  if (tool.website_url) return appendUtm(tool.website_url);
+  return "";
+}
+
 function JsonLd({ tool }: { tool: Tool }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const data: Record<string, unknown> = {
@@ -140,7 +158,7 @@ export default async function ToolPage({ params }: Props) {
         <div className="flex gap-3 mb-8">
           {tool.website_url && (
             <a
-              href={tool.affiliate_url || tool.website_url}
+              href={getOutboundUrl(tool)}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium"
