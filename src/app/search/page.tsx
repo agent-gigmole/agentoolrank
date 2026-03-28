@@ -2,6 +2,7 @@ import Link from "next/link";
 import { searchTools, searchStacks, getToolBySlug } from "@/lib/queries";
 import { ToolCard } from "@/components/ToolCard";
 import { StackFlow } from "@/components/StackFlow";
+import { StackGenerator } from "@/components/StackGenerator";
 import type { Metadata } from "next";
 import type { Tool } from "@/lib/schema";
 
@@ -66,18 +67,16 @@ export default async function SearchPage({ searchParams }: Props) {
       </form>
 
       {query && !hasResults && (
-        <div className="text-center py-16">
-          <p className="text-gray-500 mb-2">
-            No results for &quot;{query}&quot;
-          </p>
-          <p className="text-sm text-gray-400">
-            Try describing what you want to build in different words, or{" "}
-            <Link href="/stack" className="text-blue-600 hover:underline">
-              browse pre-built stacks
-            </Link>
-            .
-          </p>
+        <div className="mb-8">
+          <StackGenerator query={query} />
         </div>
+      )}
+
+      {/* AI Stack Generator — when no stacks matched */}
+      {query && enrichedStacks.length === 0 && (
+        <section className="mb-8">
+          <StackGenerator query={query} />
+        </section>
       )}
 
       {/* Matching Stacks — shown first, with flow diagram */}

@@ -93,13 +93,6 @@ Return ONLY valid JSON.`;
   }
 }
 
-export async function GET() {
-  const hasKey = !!(process.env.LLM_API_KEY);
-  const baseUrl = process.env.LLM_BASE_URL || "not set";
-  const model = process.env.LLM_MODEL || "not set";
-  return Response.json({ hasKey, baseUrl, model });
-}
-
 export async function POST(req: NextRequest) {
   try {
     const { query } = await req.json();
