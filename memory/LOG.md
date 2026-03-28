@@ -66,3 +66,14 @@
 - 最终：463 工具 | 86 complete 内容 | 648 sitemap URL | 170 对比页
 - 关键数据变化：44→463 工具 | 58→648 sitemap URL | 43→86 LLM 内容 | 0→170 对比页
 - 踩坑：claude -p ~20秒/个（50个≈17分钟）、libsql Row 需要 as unknown as T 双重断言
+
+## 2026-03-28 LLM 内容全量完成 + SEO 优化
+- LLM 内容生成：461/463 完成（99.6%），从 86 → 461
+- Supabase 迁移评估：决定不做，SQLite + GitHub Actions 完全够用
+- SEO 优化一揽子上线：
+  - 面包屑导航组件 + BreadcrumbList JSON-LD structured data
+  - 分类页 CollectionPage schema
+  - 工具详情页 JSON-LD 增强为 SoftwareApplication
+  - 详情页底部添加对比页内链（提升内链密度 + 长尾 SEO）
+- 已部署 Vercel 上线
+- 待办：手动提交 GSC sitemap 反映最新变更
