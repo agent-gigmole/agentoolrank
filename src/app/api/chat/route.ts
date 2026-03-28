@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { streamText, convertToModelMessages } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { db } from "@/lib/db";
 import { NextRequest } from "next/server";
@@ -96,10 +96,12 @@ ${stackContext}`;
 
     const model = getModel();
 
+    const modelMessages = await convertToModelMessages(messages);
+
     const result = streamText({
       model,
       system: systemMessage,
-      messages,
+      messages: modelMessages,
       temperature: 0.3,
     });
 
