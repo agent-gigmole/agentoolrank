@@ -129,6 +129,21 @@ export async function getComparisonPairs(topN: number = 8): Promise<Array<{ slug
   return pairs;
 }
 
+/**
+ * Get metric snapshots for a tool (for trend chart).
+ * Returns daily star counts ordered by date.
+ */
+export async function getToolSnapshots(toolId: string): Promise<Array<{ date: string; stars: number }>> {
+  const result = await db.execute({
+    sql: "SELECT date, github_stars FROM metric_snapshots WHERE tool_id = ? ORDER BY date ASC",
+    args: [toolId],
+  });
+  return result.rows.map((r) => ({
+    date: (r as unknown as { date: string }).date,
+    stars: (r as unknown as { github_stars: number }).github_stars,
+  }));
+}
+
 export async function searchTools(query: string, limit: number = 20): Promise<Tool[]> {
   const result = await db.execute({
     sql: `SELECT * FROM tools WHERE name LIKE ? OR tagline LIKE ? OR description LIKE ? ORDER BY score DESC LIMIT ?`,

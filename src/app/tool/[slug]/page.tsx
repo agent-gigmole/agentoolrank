@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getToolBySlug, getTools } from "@/lib/queries";
+import { getToolBySlug, getTools, getToolSnapshots } from "@/lib/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { StarChart } from "@/components/StarChart";
 import type { Metadata } from "next";
 import type { Tool } from "@/lib/schema";
 
@@ -74,6 +75,9 @@ export default async function ToolPage({ params }: Props) {
   const { slug } = await params;
   const tool = await getToolBySlug(slug);
   if (!tool) notFound();
+
+  // Get star history for chart
+  const snapshots = await getToolSnapshots(tool.id);
 
   // Get alternatives
   const alternativeTools: Tool[] = [];
@@ -164,6 +168,16 @@ export default async function ToolPage({ params }: Props) {
             <MetricCard label="Commits (90d)" value={tool.commit_count_90d?.toString() ?? null} />
             <MetricCard label="Releases (6m)" value={tool.release_count_6m?.toString() ?? null} />
           </div>
+        )}
+
+        {/* Star Growth Chart */}
+        {tool.github_stars !== null && (
+          <StarChart
+            snapshots={snapshots}
+            currentStars={tool.github_stars}
+            velocity={tool.star_velocity_30d}
+            name={tool.name}
+          />
         )}
 
         {/* Description */}
