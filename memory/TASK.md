@@ -1,43 +1,29 @@
 # TASK.md — 当前任务
 
-## 当前状态
+## 当前阶段
 
-✅ 全部规划任务已完成，项目进入运营阶段。
+Phase 4: Stack Graph — 按任务/场景展示工具组合
 
-## 已完成步骤
+## 目标
 
-- [x] AgentKit 框架部署
-- [x] gstack 安装
-- [x] /office-hours 设计文档
-- [x] /autoplan 三阶段审查
-- [x] 确定待决问题（域名 agentoolrank.com、11 个分类、英文优先）
-- [x] 初始化 Next.js 项目
-- [x] 设计数据模型（Zod schema + SQLite）
-- [x] 实现核心页面路由（首页/分类/详情/对比/搜索/新增）
-- [x] 搭建数据采集管道（GitHub GraphQL 爬虫 + 排名算法）
-- [x] LLM 内容生成（43/44 工具 via Claude Code CLI）
-- [x] SEO 配置（sitemap + robots + JSON-LD）
-- [x] Vercel 部署 + Cloudflare DNS
-- [x] Google Search Console sitemap 提交（58 URL）
-- [x] 扩充到 463 工具（五步管道：发现→爬取→清理→过滤→分类）
-- [x] 自动生成 261 个对比页 + 索引页
-- [x] LLM 内容生成 461/463 complete（9 轮 via claude -p CLI）
-- [x] Supabase 迁移 → 决定不做（SQLite + GitHub Actions 够用，零成本）
-- [x] JSON-LD structured data 审查（SoftwareApplication schema）
-- [x] 内链优化（详情页→对比页、相关工具互链）
-- [x] 详情页 star velocity 趋势图（纯 SVG sparkline，零依赖）
-- [x] Newsletter 后端（subscribers 表 + /api/subscribe + NewsletterForm 组件）
-- [x] AI Agent Weekly 周报（/weekly 页面，趋势 Top 15 + 新增工具）
-- [x] 开源数据集仓库（github.com/agent-gigmole/awesome-ai-agent-tools）
-- [x] SEO 全套收尾（面包屑、JSON-LD、内链、自动 ping Google）
+创建 Stack Graph 功能：用户选择场景（如"搭 RAG chatbot"），展示完成该任务需要的工具栈组合。
 
-## 运营阶段待办
+## 已完成阶段
 
-- [ ] 监控 Google Search Console 索引覆盖率
-- [ ] 周报内容自动化（weekly cron）
-- [ ] 推广开源数据集仓库获取 backlinks
-- [ ] 剩余 2 个工具 LLM 内容补全
-- [ ] Google Search Console 重新提交 sitemap
+- [x] Phase 1: 数据引擎（爬虫 + 排名 + 基础页面 + 部署）
+- [x] Phase 2: 完整 MVP（LLM 内容 + 对比页 + SEO + GSC）
+- [x] Phase 3: 增长引擎（扩充 463 工具 + 开源仓库 + Newsletter + Weekly + 趋势图）
+
+## Phase 4 待完成步骤
+
+- [ ] 设计 Stack Graph 数据模型（stacks 表 + stack_tools 关联）
+- [ ] 定义 15-20 个热门场景（RAG chatbot / 代码审查 / 客服机器人 / ...）
+- [ ] LLM 生成每个场景的工具栈推荐
+- [ ] /stack 索引页（所有场景列表）
+- [ ] /stack/[slug] 详情页（工具组合图 + 每个位置可选工具 + 对比链接）
+- [ ] JSON-LD structured data（HowTo schema）
+- [ ] sitemap 添加 stack 页面
+- [ ] 首页 + Nav 添加 Stack 入口
 
 ## 阻塞项
 
