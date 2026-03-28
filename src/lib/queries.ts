@@ -210,12 +210,54 @@ export async function getStackBySlug(slug: string): Promise<Stack | null> {
 }
 
 export async function searchTools(query: string, limit: number = 20): Promise<Tool[]> {
-  const result = await db.execute({
-    sql: `SELECT * FROM tools WHERE name LIKE ? OR tagline LIKE ? OR description LIKE ? ORDER BY score DESC LIMIT ?`,
-    args: [`%${query}%`, `%${query}%`, `%${query}%`, limit],
-  });
+  // Split query into keywords for better matching
+  const keywords = query.toLowerCase().split(/\s+/).filter((k) => k.length > 1);
+  const likePatterns = keywords.map((k) => `%${k}%`);
+
+  // Match if ANY keyword appears in name, tagline, or description
+  const conditions = likePatterns.map(
+    () => "(name LIKE ? OR tagline LIKE ? OR description LIKE ?)"
+  );
+  const args: Array<string | number> = [];
+  for (const p of likePatterns) {
+    args.push(p, p, p);
+  }
+  args.push(limit);
+
+  const sql = conditions.length > 0
+    ? `SELECT * FROM tools WHERE ${conditions.join(" OR ")} ORDER BY score DESC LIMIT ?`
+    : `SELECT * FROM tools ORDER BY score DESC LIMIT ?`;
+
+  const result = await db.execute({ sql, args });
   return result.rows.map((row) => {
     const parsed = parseJsonFields(row as Record<string, unknown>);
     return ToolSchema.parse(parsed);
+  });
+}
+
+/**
+ * Search stacks by query (title, description, tags, layer names).
+ */
+export async function searchStacks(query: string, limit: number = 10): Promise<Stack[]> {
+  const keywords = query.toLowerCase().split(/\s+/).filter((k) => k.length > 1);
+  const likePatterns = keywords.map((k) => `%${k}%`);
+
+  const conditions = likePatterns.map(
+    () => "(title LIKE ? OR description LIKE ? OR layers LIKE ?)"
+  );
+  const args: Array<string | number> = [];
+  for (const p of likePatterns) {
+    args.push(p, p, p);
+  }
+  args.push(limit);
+
+  const sql = conditions.length > 0
+    ? `SELECT * FROM stacks WHERE ${conditions.join(" OR ")} ORDER BY slug LIMIT ?`
+    : `SELECT * FROM stacks ORDER BY slug LIMIT ?`;
+
+  const result = await db.execute({ sql, args });
+  return result.rows.map((row) => {
+    const r = row as unknown as { slug: string; title: string; description: string; icon: string; difficulty: string; layers: string };
+    return { ...r, layers: JSON.parse(r.layers) };
   });
 }

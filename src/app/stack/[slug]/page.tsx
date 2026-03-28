@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getStackBySlug, getStacks, getToolBySlug } from "@/lib/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { StackFlow } from "@/components/StackFlow";
 import type { Metadata } from "next";
 import type { Tool } from "@/lib/schema";
 
@@ -107,65 +108,21 @@ export default async function StackDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Stack Layers */}
-        <div className="space-y-6">
-          {stack.layers.map((layer, layerIdx) => (
-            <section key={layerIdx} className="border border-gray-200 rounded-lg overflow-hidden">
-              {/* Layer header */}
-              <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold">
-                    {layerIdx + 1}
-                  </span>
-                  <h2 className="font-semibold text-gray-900">{layer.name}</h2>
-                </div>
-                <p className="text-sm text-gray-500 mt-1 ml-8">{layer.description}</p>
-              </div>
-
-              {/* Tool options */}
-              <div className="divide-y divide-gray-100">
-                {layer.tools.map((stackTool) => {
-                  const tool = toolMap.get(stackTool.tool_id);
-                  return (
-                    <div key={stackTool.tool_id} className="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors">
-                      {/* Role badge */}
-                      <span className={`shrink-0 mt-0.5 text-[10px] px-1.5 py-0.5 rounded font-medium ${
-                        stackTool.role === "Primary" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-600"
-                      }`}>
-                        {stackTool.role}
-                      </span>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          {tool ? (
-                            <Link href={`/tool/${tool.id}`} className="font-medium text-gray-900 hover:text-blue-600 transition-colors">
-                              {tool.name}
-                            </Link>
-                          ) : (
-                            <span className="font-medium text-gray-900">{stackTool.tool_id}</span>
-                          )}
-                          {tool?.github_stars != null && (
-                            <span className="text-xs text-gray-400">
-                              {formatStars(tool.github_stars)}
-                            </span>
-                          )}
-                          {tool?.pricing && (
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                              tool.pricing === "open-source" ? "bg-green-50 text-green-700" : "bg-gray-50 text-gray-600"
-                            }`}>
-                              {tool.pricing}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{stackTool.note}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-          ))}
-        </div>
+        {/* Stack Flow Diagram */}
+        <StackFlow
+          layers={stack.layers.map((layer) => ({
+            ...layer,
+            tools: layer.tools.map((t) => {
+              const tool = toolMap.get(t.tool_id);
+              return {
+                ...t,
+                name: tool?.name ?? t.tool_id,
+                stars: tool?.github_stars ?? null,
+                pricing: tool?.pricing ?? undefined,
+              };
+            }),
+          }))}
+        />
 
         {/* Compare tools in this stack */}
         <section className="mt-8">

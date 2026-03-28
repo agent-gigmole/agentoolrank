@@ -40,7 +40,7 @@ export default async function HomePage() {
             <input
               type="text"
               name="q"
-              placeholder="Search AI agent tools..."
+              placeholder="What do you want to build? e.g. RAG chatbot, code reviewer..."
               className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </form>
