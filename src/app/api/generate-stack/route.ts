@@ -21,7 +21,7 @@ async function getToolList(): Promise<string> {
     .join("\n");
 }
 
-async function generateWithLLM(query: string, toolList: string): Promise<{
+async function generateWithLLM(query: string, toolList: string, apiKey: string, baseUrl: string, model: string): Promise<{
   slug: string;
   title: string;
   description: string;
@@ -57,29 +57,38 @@ Each layer should have 1-3 tools (Primary + Alternatives), 2-5 layers total.
 Return ONLY valid JSON.`;
 
   try {
-    const res = await fetch(`${LLM_BASE_URL}/v1/chat/completions`, {
+    const res = await fetch(`${baseUrl}/v1/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${LLM_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: LLM_MODEL,
+        model,
         messages: [{ role: "user", content: prompt }],
         max_tokens: 2000,
         temperature: 0.3,
       }),
     });
 
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`LLM API ${res.status}: ${await res.text()}`);
+      return null;
+    }
 
     const data = await res.json();
     const text = data.choices?.[0]?.message?.content ?? "";
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) return null;
+    // Strip markdown fences if present
+    const cleaned = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error("No JSON found in LLM response:", text.slice(0, 200));
+      return null;
+    }
 
     return JSON.parse(jsonMatch[0]);
-  } catch {
+  } catch (err) {
+    console.error("LLM generation error:", err);
     return null;
   }
 }
@@ -92,6 +101,11 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "Invalid query" }, { status: 400 });
     }
 
+    // Re-read env at runtime (Vercel may set after module load)
+    const apiKey = process.env.LLM_API_KEY || LLM_API_KEY;
+    const baseUrl = process.env.LLM_BASE_URL || LLM_BASE_URL;
+    const model = process.env.LLM_MODEL || LLM_MODEL;
+
     // Step 1: Check cache (existing stacks)
     const cached = await searchStacks(query, 3);
     if (cached.length > 0) {
@@ -99,7 +113,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Step 2: Generate with LLM (if API key configured)
-    if (!LLM_API_KEY) {
+    if (!apiKey || apiKey === "undefined") {
       return Response.json({
         source: "none",
         message: "No matching stacks found. LLM generation not configured.",
@@ -108,7 +122,7 @@ export async function POST(req: NextRequest) {
     }
 
     const toolList = await getToolList();
-    const generated = await generateWithLLM(query, toolList);
+    const generated = await generateWithLLM(query, toolList, apiKey, baseUrl, model);
 
     if (!generated || !generated.layers) {
       return Response.json({
