@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { db } from "@/lib/db";
-import { getComparisonPairs } from "@/lib/queries";
+import { getComparisonPairs, getStacks } from "@/lib/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
@@ -44,5 +44,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
-  return [...staticPages, ...categoryPages, ...toolPages, ...comparePages];
+  // Stack pages
+  const stacks = await getStacks();
+  const stackPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/stack`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+    ...stacks.map((s) => ({
+      url: `${baseUrl}/stack/${s.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
+  ];
+
+  return [...staticPages, ...categoryPages, ...toolPages, ...comparePages, ...stackPages];
 }

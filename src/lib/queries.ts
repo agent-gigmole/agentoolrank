@@ -170,6 +170,45 @@ export async function getSubscriberCount(): Promise<number> {
   }
 }
 
+/**
+ * Stack Graph types and queries.
+ */
+export interface StackTool {
+  tool_id: string;
+  role: string;
+  note: string;
+}
+
+export interface StackLayer {
+  name: string;
+  description: string;
+  tools: StackTool[];
+}
+
+export interface Stack {
+  slug: string;
+  title: string;
+  description: string;
+  icon: string;
+  difficulty: string;
+  layers: StackLayer[];
+}
+
+export async function getStacks(): Promise<Stack[]> {
+  const result = await db.execute("SELECT * FROM stacks ORDER BY slug");
+  return result.rows.map((row) => {
+    const r = row as unknown as { slug: string; title: string; description: string; icon: string; difficulty: string; layers: string };
+    return { ...r, layers: JSON.parse(r.layers) };
+  });
+}
+
+export async function getStackBySlug(slug: string): Promise<Stack | null> {
+  const result = await db.execute({ sql: "SELECT * FROM stacks WHERE slug = ?", args: [slug] });
+  if (result.rows.length === 0) return null;
+  const r = result.rows[0] as unknown as { slug: string; title: string; description: string; icon: string; difficulty: string; layers: string };
+  return { ...r, layers: JSON.parse(r.layers) };
+}
+
 export async function searchTools(query: string, limit: number = 20): Promise<Tool[]> {
   const result = await db.execute({
     sql: `SELECT * FROM tools WHERE name LIKE ? OR tagline LIKE ? OR description LIKE ? ORDER BY score DESC LIMIT ?`,

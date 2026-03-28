@@ -8,11 +8,14 @@ export function Nav() {
           AgenTool Rank
         </Link>
         <div className="flex items-center gap-4 text-sm">
-          <Link href="/weekly" className="text-gray-600 hover:text-gray-900 transition-colors">
-            Weekly
+          <Link href="/stack" className="text-gray-600 hover:text-gray-900 transition-colors">
+            Stacks
           </Link>
           <Link href="/compare" className="text-gray-600 hover:text-gray-900 transition-colors">
             Compare
+          </Link>
+          <Link href="/weekly" className="text-gray-600 hover:text-gray-900 transition-colors">
+            Weekly
           </Link>
           <Link href="/search" className="text-gray-600 hover:text-gray-900 transition-colors">
             Search

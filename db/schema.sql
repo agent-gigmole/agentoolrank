@@ -71,6 +71,18 @@ CREATE TABLE IF NOT EXISTS categories (
   tool_count INTEGER DEFAULT 0
 );
 
+-- Stack Graph: task/scenario-based tool combinations
+CREATE TABLE IF NOT EXISTS stacks (
+  slug TEXT PRIMARY KEY,             -- "rag-chatbot"
+  title TEXT NOT NULL,               -- "Build a RAG Chatbot"
+  description TEXT DEFAULT '',       -- Overview of the scenario
+  icon TEXT DEFAULT '',              -- Emoji icon
+  difficulty TEXT DEFAULT 'intermediate' CHECK(difficulty IN ('beginner','intermediate','advanced')),
+  layers TEXT DEFAULT '[]',          -- JSON: [{name, description, tools: [{tool_id, role, note}]}]
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 -- Newsletter subscribers
 CREATE TABLE IF NOT EXISTS subscribers (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
