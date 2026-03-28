@@ -133,10 +133,16 @@ const POPULAR_QUERIES = [
   "AI content pipeline",
 ];
 
+interface QuickResult {
+  tools: Array<{ id: string; name: string; tagline: string; pricing: string; github_stars: number }>;
+  stacks: Array<{ slug: string; title: string; description: string; icon: string }>;
+}
+
 export function AISearch({ initialQuery }: { initialQuery?: string }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [quickResults, setQuickResults] = useState<QuickResult | null>(null);
 
   const [localInput, setLocalInput] = useState("");
   const { messages, sendMessage, status } = useChat({
@@ -145,10 +151,22 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
 
   const isStreaming = status === "streaming" || status === "submitted";
 
+  // Quick search — fires immediately, shows results before AI responds
+  async function quickSearch(query: string) {
+    try {
+      const res = await fetch(`/api/quick-search?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      setQuickResults(data);
+    } catch {
+      setQuickResults(null);
+    }
+  }
+
   // Auto-send initial query
   useEffect(() => {
     if (initialQuery && !hasInteracted && messages.length === 0) {
       setHasInteracted(true);
+      quickSearch(initialQuery);
       sendMessage({ text: initialQuery });
     }
   }, [initialQuery, hasInteracted, messages.length, sendMessage]);
@@ -162,12 +180,14 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
     e.preventDefault();
     if (!localInput.trim() || isStreaming) return;
     setHasInteracted(true);
+    quickSearch(localInput);
     sendMessage({ text: localInput });
     setLocalInput("");
   }
 
   function handlePopularClick(query: string) {
     setHasInteracted(true);
+    quickSearch(query);
     sendMessage({ text: query });
   }
 
@@ -211,6 +231,50 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
               </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Quick search results — shown while AI is thinking */}
+      {quickResults && isStreaming && messages.length <= 2 && (
+        <div className="mb-6">
+          {quickResults.stacks.length > 0 && (
+            <div className="mb-4">
+              <p className="text-xs text-gray-400 mb-2">Existing stacks that might help:</p>
+              <div className="flex flex-wrap gap-2">
+                {quickResults.stacks.map((s) => (
+                  <Link
+                    key={s.slug}
+                    href={`/stack/${s.slug}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50/50 transition-colors"
+                  >
+                    <span>{s.icon}</span>
+                    <span className="text-gray-700">{s.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          {quickResults.tools.length > 0 && (
+            <div>
+              <p className="text-xs text-gray-400 mb-2">Related tools:</p>
+              <div className="flex flex-wrap gap-1.5">
+                {quickResults.tools.slice(0, 8).map((t) => (
+                  <Link
+                    key={t.id}
+                    href={`/tool/${t.id}`}
+                    className="text-xs px-2 py-1 border border-gray-200 rounded-md hover:border-blue-300 text-gray-600 hover:text-blue-600 transition-colors"
+                  >
+                    {t.name}
+                    {t.github_stars > 0 && (
+                      <span className="text-gray-400 ml-1">
+                        {t.github_stars >= 1000 ? `${(t.github_stars / 1000).toFixed(0)}k` : t.github_stars}
+                      </span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
