@@ -83,6 +83,24 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* Open Source Dataset */}
+      <section className="mb-12 flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+        <div>
+          <h3 className="font-semibold text-gray-900 text-sm">Open Source Dataset</h3>
+          <p className="text-xs text-gray-500 mt-0.5">
+            All {toolCount} tools as JSON/CSV — free to use, updated daily.
+          </p>
+        </div>
+        <a
+          href="https://github.com/agent-gigmole/awesome-ai-agent-tools"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium whitespace-nowrap"
+        >
+          View on GitHub
+        </a>
+      </section>
+
       {/* Newsletter CTA */}
       <section className="bg-gray-50 rounded-xl p-6 text-center">
         <h3 className="font-semibold text-gray-900 mb-1">Stay Updated</h3>
