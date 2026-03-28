@@ -118,21 +118,25 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Step 3: Cache the generated stack
-    const now = new Date().toISOString();
-    await db.execute({
-      sql: `INSERT OR IGNORE INTO stacks (slug, title, description, icon, difficulty, layers, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      args: [
-        generated.slug,
-        generated.title,
-        generated.description || "",
-        generated.icon || "🔧",
-        generated.difficulty || "intermediate",
-        JSON.stringify(generated.layers),
-        now, now,
-      ],
-    });
+    // Step 3: Try to cache (may fail on read-only DB like Vercel)
+    try {
+      const now = new Date().toISOString();
+      await db.execute({
+        sql: `INSERT OR IGNORE INTO stacks (slug, title, description, icon, difficulty, layers, created_at, updated_at)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        args: [
+          generated.slug,
+          generated.title,
+          generated.description || "",
+          generated.icon || "🔧",
+          generated.difficulty || "intermediate",
+          JSON.stringify(generated.layers),
+          now, now,
+        ],
+      });
+    } catch {
+      // Read-only DB on Vercel — skip caching, still return result
+    }
 
     return Response.json({
       source: "generated",
