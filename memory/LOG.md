@@ -85,3 +85,12 @@
 - 开源数据集仓库：github.com/agent-gigmole/awesome-ai-agent-tools，为获取 backlinks 准备
 - SEO 全套收尾：面包屑导航、JSON-LD structured data、内链优化、自动 ping Google 索引
 - 全部 v1 规划任务完成，项目从开发阶段转入运营阶段
+
+## 2026-03-28 Phase 4 Stack Graph 完成
+- stacks 表 + stack_tools 关联表，15 个场景入库
+- 场景覆盖：RAG chatbot, coding assistant, multi-agent, 客服机器人等
+- /stack 索引页 + /stack/[slug] 15 个详情页
+- HowTo JSON-LD + BreadcrumbList structured data
+- Sitemap 从 648 扩展至 756 URLs（+108 stack 相关 URL）
+- Nav 添加 Stacks 入口
+- Phase 4 全部步骤完成

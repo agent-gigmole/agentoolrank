@@ -30,15 +30,22 @@
 - 开源数据集仓库：github.com/agent-gigmole/awesome-ai-agent-tools
 - SEO 全套收尾：面包屑、JSON-LD、内链、自动 ping Google
 
+- Phase 4 Stack Graph 完成：stacks 表 + 15 个场景详情页
+  - /stack 索引页 + /stack/[slug] 15 个详情页
+  - HowTo JSON-LD + BreadcrumbList structured data
+  - Nav 添加 Stacks 入口
+  - Sitemap 扩展至 756 URLs
+
 ## 进行中
 
-- 无（全部规划任务已完成，进入运营阶段）
+- 无（Phase 4 完成，进入运营阶段）
 
 ## 已知最佳结果
 
 - 站点在线：https://agentoolrank.com
 - 463 个工具入库，461 个有完整 LLM 内容（99.6%）
-- 648 个 sitemap URL（工具页 + 对比页 + 分类页 + 静态页）
+- 756 个 sitemap URL（工具页 + 对比页 + 分类页 + Stack 页 + 静态页）
+- 15 个 Stack Graph 场景（RAG chatbot, coding assistant, multi-agent 等）
 - Top 3: n8n (★181k), dify (★135k), langchain (★131k)
 - Newsletter 后端已接通，可接收订阅
 - /weekly 周报页面上线
@@ -51,3 +58,4 @@
 - 周报内容自动化（weekly cron）
 - 推广开源数据集仓库获取 backlinks
 - 剩余 2 个工具 LLM 内容补全
+- Stack Graph 场景扩充（更多场景 + 用户反馈驱动）
