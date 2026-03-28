@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug } from "@/lib/queries";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import type { Tool } from "@/lib/schema";
 import type { Metadata } from "next";
 
@@ -92,10 +93,19 @@ export default async function ComparePage({ params }: Props) {
   if (!toolA || !toolB) notFound();
 
   return (
-    <main className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-        {toolA.name} vs {toolB.name}
-      </h1>
+    <>
+      <BreadcrumbJsonLd items={[
+        { label: "Compare", href: "/compare" },
+        { label: `${toolA.name} vs ${toolB.name}` },
+      ]} />
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        <Breadcrumbs items={[
+          { label: "Compare", href: "/compare" },
+          { label: `${toolA.name} vs ${toolB.name}` },
+        ]} />
+        <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">
+          {toolA.name} vs {toolB.name}
+        </h1>
       <p className="text-gray-500 text-center mb-8">
         Side-by-side comparison of two AI agent tools
       </p>
@@ -169,5 +179,6 @@ export default async function ComparePage({ params }: Props) {
         ))}
       </div>
     </main>
+    </>
   );
 }

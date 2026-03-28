@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTools, getCategories } from "@/lib/queries";
 import { ToolCard } from "@/components/ToolCard";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import type { Metadata } from "next";
 
 export const revalidate = 43200;
@@ -28,13 +29,35 @@ export default async function CategoryPage({ params }: Props) {
   const category = categories.find((c) => c.slug === slug);
   if (!category) notFound();
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `Best ${category.name}`,
+    description: category.description,
+    url: `${baseUrl}/category/${slug}`,
+    numberOfItems: tools.length,
+    hasPart: tools.slice(0, 20).map((t) => ({
+      "@type": "SoftwareApplication",
+      name: t.name,
+      url: `${baseUrl}/tool/${t.id}`,
+    })),
+  };
+
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-2xl">{category.icon}</span>
-          <h1 className="text-3xl font-bold text-gray-900">{category.name}</h1>
-        </div>
+    <>
+      <BreadcrumbJsonLd items={[{ label: category.name }]} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <main className="max-w-6xl mx-auto px-4 py-8">
+        <Breadcrumbs items={[{ label: category.name }]} />
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl">{category.icon}</span>
+            <h1 className="text-3xl font-bold text-gray-900">{category.name}</h1>
+          </div>
         <p className="text-gray-600">{category.description}</p>
         <p className="text-sm text-gray-400 mt-1">{tools.length} tools</p>
       </div>
@@ -52,5 +75,6 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       )}
     </main>
+    </>
   );
 }

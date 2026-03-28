@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug, getTools } from "@/lib/queries";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@/lib/schema";
 
@@ -44,19 +45,23 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function JsonLd({ tool }: { tool: Tool }) {
-  const data = {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
+  const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: tool.name,
-    description: tool.tagline,
-    url: tool.website_url || undefined,
+    description: tool.description || tool.tagline,
+    url: tool.website_url || `${baseUrl}/tool/${tool.id}`,
     applicationCategory: "DeveloperApplication",
+    operatingSystem: "Cross-platform",
     offers: {
       "@type": "Offer",
       price: tool.pricing === "free" || tool.pricing === "open-source" ? "0" : undefined,
       priceCurrency: "USD",
     },
   };
+  if (tool.logo_url) data.image = tool.logo_url;
+  if (tool.github_url) data.downloadUrl = tool.github_url;
   return (
     <script
       type="application/ld+json"
@@ -79,10 +84,24 @@ export default async function ToolPage({ params }: Props) {
     }
   }
 
+  // Get same-category tools for comparison links
+  const primaryCategory = tool.category_tags[0] ?? null;
+  const categoryPeers = primaryCategory
+    ? (await getTools({ category: primaryCategory, limit: 6, sort: "score" })).filter((t) => t.id !== tool.id)
+    : [];
+
   return (
     <>
       <JsonLd tool={tool} />
+      <BreadcrumbJsonLd items={[
+        ...(tool.category_tags.length > 0 ? [{ label: tool.category_tags[0].replace(/-/g, " "), href: `/category/${tool.category_tags[0]}` }] : []),
+        { label: tool.name },
+      ]} />
       <main className="max-w-4xl mx-auto px-4 py-8">
+        <Breadcrumbs items={[
+          ...(tool.category_tags.length > 0 ? [{ label: tool.category_tags[0].replace(/-/g, " "), href: `/category/${tool.category_tags[0]}` }] : []),
+          { label: tool.name },
+        ]} />
         {/* Hero */}
         <div className="flex items-start gap-4 mb-6">
           {tool.logo_url ? (
@@ -226,6 +245,25 @@ export default async function ToolPage({ params }: Props) {
                   )}
                 </Link>
               ))}
+            </div>
+          </Section>
+        )}
+        {/* Compare with peers */}
+        {categoryPeers.length > 0 && (
+          <Section title={`Compare ${tool.name}`}>
+            <div className="flex flex-wrap gap-2">
+              {categoryPeers.map((peer) => {
+                const [a, b] = tool.id < peer.id ? [tool.id, peer.id] : [peer.id, tool.id];
+                return (
+                  <Link
+                    key={peer.id}
+                    href={`/compare/${a}-vs-${b}`}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm border border-gray-200 rounded-full hover:border-blue-300 hover:bg-blue-50/50 transition-colors"
+                  >
+                    {tool.name} <span className="text-gray-400">vs</span> {peer.name}
+                  </Link>
+                );
+              })}
             </div>
           </Section>
         )}
