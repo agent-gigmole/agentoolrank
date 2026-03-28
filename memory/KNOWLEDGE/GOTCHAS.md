@@ -86,3 +86,22 @@
 - 需要 `as unknown as T` 双重断言才能通过 TypeScript 编译
 - 原因：Row 是类数组类型，与普通对象接口不兼容
 - 影响所有从 db.execute() 返回的 rows 遍历
+
+## ai-sdk-v6-responses-api-default
+- AI SDK v6 的 createOpenAI() 默认使用 OpenAI Responses API（新版），而非 Chat Completions API
+- DeepSeek 等 OpenAI-compatible 提供商不支持 Responses API，会返回 404
+- 修复：使用 `provider.chat(modelId)` 强制走 Chat Completions API
+- `compatibility: "compatible"` 参数在某些版本不存在，会导致 TypeScript build 失败
+- 只用 `.chat()` 即可，不需要额外参数
+
+## convert-to-model-messages-required
+- useChat hook 发送的是 UIMessage 格式（包含 parts 数组）
+- streamText 需要 ModelMessage 格式（纯 content 字符串）
+- 必须用 `convertToModelMessages()` 转换，否则 API 返回 200 但 AI 不回复
+- 这个坑特别隐蔽：API 层面没有报错，只是前端无响应
+
+## browse-frontend-testing
+- API 返回 200 不代表前端正常工作
+- 前端问题（如 convertToModelMessages 缺失）不会体现在 API 层面
+- 每次代码改动后必须用 /browse 测前端，不能只测 API
+- 尤其是涉及 useChat / 流式 UI 的改动，前后端交互链路必须端到端验证

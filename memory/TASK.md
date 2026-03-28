@@ -26,9 +26,13 @@ Phase 5: AI-First 搜索推荐体验
 
 ## Phase 5 — Phase 2: 对话式搜索体验
 
-- [ ] 流式响应 UI（SSE/streaming）
-- [ ] 搜索页重设计（AI-first 对话框 + 实时结果）
-- [ ] 多轮对话上下文管理
+- [x] 流式响应 UI（SSE/streaming）— 分阶段状态指示器
+- [x] 搜索页重设计（AI-first 对话框 + 实时结果）
+- [x] UX 修复（工具链接新窗口打开 + 防止后退重复生成）
+- [x] DeepSeek provider 修复（Responses API → Chat Completions API）
+- [x] convertToModelMessages 转换（UIMessage → ModelMessage）
+- [x] 前端 /browse 自测验证通过
+- [ ] 多轮对话上下文管理（可选，当前单轮已满足需求）
 - [ ] Stack 推荐整合（搜索 → 自动推荐相关 Stack）
 - [ ] 个性化推荐（基于浏览历史/偏好）
 

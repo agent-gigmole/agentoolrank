@@ -33,6 +33,11 @@
 | AI SDK v6 / breaking changes / useChat / sendMessage / parts | GOTCHAS.md#ai-sdk-v6-breaking-changes |
 | Vercel env preview / --yes / branch | GOTCHAS.md#vercel-env-preview-branch |
 | @ai-sdk/openai / DeepSeek / OpenAI-compatible | LOG.md#2026-03-28 |
+| createOpenAI Responses API / DeepSeek 404 / .chat() | GOTCHAS.md#ai-sdk-v6-responses-api-default |
+| convertToModelMessages / UIMessage / ModelMessage / 前端无响应 | GOTCHAS.md#convert-to-model-messages-required |
+| /browse 前端测试 / API 200 前端不工作 / 端到端验证 | GOTCHAS.md#browse-frontend-testing |
+| 流式状态指示器 / 分阶段 / 分析中/选型中/构建中/渲染中 | LOG.md#2026-03-29 |
+| DeepSeek 成本 / ¥0.007 / 单次推荐 | LOG.md#2026-03-29 |
 | SEO飞轮 / 增长闭环 / 竞品对标 | SEO_FLYWHEEL.md |
 | Stack分享页 / UGC / programmatic SEO | SEO_FLYWHEEL.md#1 |
 | 对比页 / vs页 / 长尾SEO | SEO_FLYWHEEL.md#2 |

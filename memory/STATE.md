@@ -45,10 +45,18 @@
   - 搜索页流式 AI Stack 生成
   - Vercel 环境变量配置（TURSO_DATABASE_URL + DEEPSEEK_API_KEY）
 
+- Phase 5 Phase 2: 对话式搜索体验（基本完成）
+  - 流式状态指示器：分阶段显示（分析中/选型中/构建中/渲染中），根据 AI 回复文本内容判断当前阶段
+  - UX 修复：工具链接 target="_blank" 防止离开 AI 页面丢失结果
+  - useRef 防止后退导航重复触发 sendMessage
+  - convertToModelMessages 转换：useChat 发 UIMessage 格式（parts），streamText 需要 ModelMessage 格式
+  - DeepSeek provider 修复：createOpenAI 默认用 Responses API → 用 provider.chat(modelId) 走 Chat Completions API
+  - 前端 /browse 自测验证通过
+  - 成本分析：单次推荐 ¥0.007，完整 3 轮对话 ¥0.011
+
 ## 进行中
 
-- Phase 5 Phase 2: 对话式搜索体验
-  - 状态：待开始
+- Phase 5 Phase 2 收尾：多轮对话上下文管理 + 个性化推荐（如有需要）
 
 ## 关键决策（Phase 5）
 
@@ -57,6 +65,7 @@
 - AI Gateway OIDC 认证
 - CEO 审查选了 SCOPE EXPANSION 模式 → 完整 C 方案（全量 AI-First）
 - Spec review 评分 5/10 → 修复 8 个问题后文档已完善
+- DeepSeek 作为 AI 提供商：成本极低（单次 ¥0.007），通过 @ai-sdk/openai 的 OpenAI-compatible 模式接入
 
 ## 已知最佳结果
 
@@ -68,8 +77,8 @@
 - Newsletter 后端已接通，可接收订阅
 - /weekly 周报页面上线
 - 开源数据集仓库已创建
+- AI 搜索流式体验上线，带分阶段状态指示器
 
 ## 下一步
 
-- Phase 5 Phase 2：对话式搜索体验（流式 UI + 多轮对话 + 个性化推荐）
 - Phase 5 Phase 3：UGC + 收尾（用户评价 + 社区功能 + 性能优化）

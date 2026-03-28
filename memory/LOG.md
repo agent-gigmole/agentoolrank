@@ -119,3 +119,13 @@
 - 搜索页接入流式 AI Stack 生成（/api/generate-stack）
 - Vercel 环境变量配置：preview 环境需 --yes 参数或指定 branch
 - db.ts 已有 Turso 支持（检查 TURSO_DATABASE_URL 环境变量），迁移只需设置 env var
+
+## 2026-03-29 Phase 5 Phase 2 基本完成 — 流式指示器 + UX 修复
+- 流式状态指示器：根据 AI 回复文本内容判断当前阶段（分析中→选型中→构建中→渲染中）
+- UX 修复：工具链接 target="_blank" 防止用户离开 AI 页面丢失结果
+- useRef 防止后退导航重复触发 sendMessage
+- DeepSeek provider 修复：createOpenAI 默认用 Responses API（新），DeepSeek 不支持 → 用 provider.chat(modelId) 走 Chat Completions API
+- convertToModelMessages 是必须的：useChat 发 UIMessage 格式（parts），streamText 需要 ModelMessage 格式
+- compatibility:"compatible" 参数在某些版本不存在，TypeScript build 失败 → 只用 .chat() 就行
+- /browse 前端自测验证通过（API 200 不代表前端正常工作，必须用 browse 测前端）
+- 成本分析：DeepSeek 单次推荐 ¥0.007，完整 3 轮对话 ¥0.011
