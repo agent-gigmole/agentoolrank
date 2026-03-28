@@ -17,8 +17,11 @@ export function Nav() {
           <Link href="/weekly" className="text-gray-600 hover:text-gray-900 transition-colors">
             Weekly
           </Link>
-          <Link href="/search" className="text-gray-600 hover:text-gray-900 transition-colors">
-            Search
+          <Link
+            href="/search"
+            className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            AI Builder
           </Link>
         </div>
       </div>
