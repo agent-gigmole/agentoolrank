@@ -144,6 +144,32 @@ export async function getToolSnapshots(toolId: string): Promise<Array<{ date: st
   }));
 }
 
+/**
+ * Get trending tools (highest star velocity) for weekly digest.
+ */
+export async function getTrendingTools(limit: number = 10): Promise<Tool[]> {
+  const result = await db.execute({
+    sql: "SELECT * FROM tools WHERE star_velocity_30d IS NOT NULL AND content_status = 'complete' ORDER BY star_velocity_30d DESC LIMIT ?",
+    args: [limit],
+  });
+  return result.rows.map((row) => {
+    const parsed = parseJsonFields(row as Record<string, unknown>);
+    return ToolSchema.parse(parsed);
+  });
+}
+
+/**
+ * Get subscriber count for display.
+ */
+export async function getSubscriberCount(): Promise<number> {
+  try {
+    const result = await db.execute("SELECT COUNT(*) as count FROM subscribers");
+    return (result.rows[0] as unknown as { count: number }).count;
+  } catch {
+    return 0;
+  }
+}
+
 export async function searchTools(query: string, limit: number = 20): Promise<Tool[]> {
   const result = await db.execute({
     sql: `SELECT * FROM tools WHERE name LIKE ? OR tagline LIKE ? OR description LIKE ? ORDER BY score DESC LIMIT ?`,

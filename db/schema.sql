@@ -71,6 +71,14 @@ CREATE TABLE IF NOT EXISTS categories (
   tool_count INTEGER DEFAULT 0
 );
 
+-- Newsletter subscribers
+CREATE TABLE IF NOT EXISTS subscribers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT NOT NULL UNIQUE,
+  subscribed_at TEXT NOT NULL DEFAULT (datetime('now')),
+  confirmed INTEGER DEFAULT 0
+);
+
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_tools_score ON tools(score DESC);
 CREATE INDEX IF NOT EXISTS idx_tools_created ON tools(created_at DESC);

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCategories, getTools, getToolCount, getLastRefreshTime } from "@/lib/queries";
 import { ToolCard } from "@/components/ToolCard";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 export const revalidate = 43200; // 12 hours
 
@@ -102,25 +103,7 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="bg-gray-50 rounded-xl p-6 text-center">
-        <h3 className="font-semibold text-gray-900 mb-1">Stay Updated</h3>
-        <p className="text-sm text-gray-600 mb-3">
-          Get a weekly digest of new AI agent tools and trends.
-        </p>
-        <form className="flex gap-2 max-w-md mx-auto">
-          <input
-            type="email"
-            placeholder="your@email.com"
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-700 transition-colors"
-          >
-            Subscribe
-          </button>
-        </form>
-      </section>
+      <NewsletterForm />
     </main>
   );
 }
