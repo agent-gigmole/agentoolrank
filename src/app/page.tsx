@@ -19,31 +19,49 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
-      {/* Hero + Value Prop */}
+      {/* Hero — AI Search */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
           AgenTool Rank
         </h1>
-        <p className="text-lg text-gray-600 mb-2">
-          Find the right AI agent tools for your stack. Data-driven, updated daily.
+        <p className="text-lg text-gray-600 mb-1">
+          Describe what you want to build. AI recommends the tool stack.
         </p>
         {toolCount > 0 && (
-          <p className="text-sm text-gray-400">
-            Tracking {toolCount} tools
-            {refreshAgo && ` · Updated ${refreshAgo}`}
+          <p className="text-sm text-gray-400 mb-6">
+            {toolCount} tools tracked · Updated {refreshAgo || "daily"}
           </p>
         )}
 
-        {/* Search */}
-        <div className="mt-6 max-w-xl mx-auto">
+        {/* AI Search Box */}
+        <div className="max-w-2xl mx-auto">
           <form action="/search" method="GET">
-            <input
-              type="text"
-              name="q"
-              placeholder="What do you want to build? e.g. RAG chatbot, code reviewer..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                name="q"
+                placeholder="e.g. Build a RAG chatbot / 金融量化系统 / AI code reviewer..."
+                className="w-full px-5 py-4 pr-20 border border-gray-300 rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Ask AI
+              </button>
+            </div>
           </form>
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            {["RAG chatbot", "Code reviewer", "量化交易", "Customer service", "Multi-agent"].map((q) => (
+              <a
+                key={q}
+                href={`/search?q=${encodeURIComponent(q)}`}
+                className="text-xs px-3 py-1 border border-gray-200 rounded-full hover:border-blue-300 hover:bg-blue-50/50 text-gray-500 hover:text-blue-600 transition-colors"
+              >
+                {q}
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 

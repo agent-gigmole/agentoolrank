@@ -1,0 +1,291 @@
+"use client";
+
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
+import { useState, useRef, useEffect } from "react";
+import { StackFlow } from "./StackFlow";
+import Link from "next/link";
+
+interface StackLayer {
+  name: string;
+  description: string;
+  tools: Array<{
+    tool_id: string;
+    role: string;
+    note: string;
+    name?: string;
+    stars?: number | null;
+    pricing?: string;
+  }>;
+}
+
+interface ParsedStack {
+  title: string;
+  icon: string;
+  difficulty: string;
+  layers: StackLayer[];
+}
+
+// Extract full text content from UIMessage parts
+function getMessageText(msg: { parts: Array<{ type: string; text?: string }> }): string {
+  return msg.parts
+    .filter((p) => p.type === "text" && p.text)
+    .map((p) => p.text!)
+    .join("");
+}
+
+function parseStackFromText(text: string): ParsedStack | null {
+  const jsonMatch = text.match(/```json\s*([\s\S]*?)```/);
+  if (!jsonMatch) return null;
+  try {
+    const parsed = JSON.parse(jsonMatch[1]);
+    if (parsed.layers && Array.isArray(parsed.layers)) {
+      return parsed as ParsedStack;
+    }
+  } catch {}
+  return null;
+}
+
+function getTextBeforeJson(text: string): string {
+  const idx = text.indexOf("```json");
+  if (idx === -1) return text;
+  return text.slice(0, idx).trim();
+}
+
+function CopyMarkdownButton({ stack }: { stack: ParsedStack }) {
+  const [copied, setCopied] = useState(false);
+
+  function toMarkdown(): string {
+    let md = `## ${stack.icon} ${stack.title}\n\n`;
+    for (const layer of stack.layers) {
+      md += `### ${layer.name}\n${layer.description}\n\n`;
+      for (const t of layer.tools) {
+        md += `- **${t.role}**: [${t.name || t.tool_id}](https://agentoolrank.com/tool/${t.tool_id}) — ${t.note}\n`;
+      }
+      md += "\n";
+    }
+    return md;
+  }
+
+  return (
+    <button
+      onClick={() => {
+        navigator.clipboard.writeText(toMarkdown());
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }}
+      className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+    >
+      {copied ? "Copied!" : "Copy as Markdown"}
+    </button>
+  );
+}
+
+function SaveStackButton({ stack, onSaved }: { stack: ParsedStack; onSaved?: (slug: string) => void }) {
+  const [saving, setSaving] = useState(false);
+  const [savedSlug, setSavedSlug] = useState<string | null>(null);
+
+  async function save() {
+    setSaving(true);
+    try {
+      const res = await fetch("/api/save-stack", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stack),
+      });
+      const data = await res.json();
+      if (data.slug) {
+        setSavedSlug(data.slug);
+        onSaved?.(data.slug);
+      }
+    } catch {}
+    setSaving(false);
+  }
+
+  if (savedSlug) {
+    return (
+      <Link
+        href={`/stack/${savedSlug}`}
+        className="text-xs px-3 py-1.5 bg-green-50 border border-green-200 text-green-700 rounded-lg hover:bg-green-100 transition-colors"
+      >
+        Saved! View →
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      onClick={save}
+      disabled={saving}
+      className="text-xs px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
+    >
+      {saving ? "Saving..." : "Save Stack"}
+    </button>
+  );
+}
+
+const POPULAR_QUERIES = [
+  "Build a RAG chatbot",
+  "AI code reviewer",
+  "金融量化系统",
+  "Customer service bot",
+  "Multi-agent workflow",
+  "AI content pipeline",
+];
+
+export function AISearch({ initialQuery }: { initialQuery?: string }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  const [localInput, setLocalInput] = useState("");
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({ api: "/api/chat" }),
+  });
+
+  const isStreaming = status === "streaming" || status === "submitted";
+
+  // Auto-send initial query
+  useEffect(() => {
+    if (initialQuery && !hasInteracted && messages.length === 0) {
+      setHasInteracted(true);
+      sendMessage({ text: initialQuery });
+    }
+  }, [initialQuery, hasInteracted, messages.length, sendMessage]);
+
+  // Auto-scroll
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!localInput.trim() || isStreaming) return;
+    setHasInteracted(true);
+    sendMessage({ text: localInput });
+    setLocalInput("");
+  }
+
+  function handlePopularClick(query: string) {
+    setHasInteracted(true);
+    sendMessage({ text: query });
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto">
+      {/* Input area */}
+      <form onSubmit={onSubmit} className="mb-6">
+        <div className="relative">
+          <input
+            ref={inputRef}
+            type="text"
+            value={localInput}
+            onChange={(e) => setLocalInput(e.target.value)}
+            placeholder="Describe what you want to build... e.g. 我想做金融量化系统"
+            className="w-full px-5 py-4 pr-24 border border-gray-300 rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+            disabled={isStreaming}
+            autoFocus={!initialQuery}
+          />
+          <button
+            type="submit"
+            disabled={isStreaming || !localInput.trim()}
+            className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:hover:bg-blue-600 transition-colors font-medium"
+          >
+            {isStreaming ? "Thinking..." : "Go"}
+          </button>
+        </div>
+      </form>
+
+      {/* Popular queries — show before first interaction */}
+      {!hasInteracted && messages.length === 0 && (
+        <div className="mb-8">
+          <p className="text-sm text-gray-500 mb-3">Popular searches:</p>
+          <div className="flex flex-wrap gap-2">
+            {POPULAR_QUERIES.map((q) => (
+              <button
+                key={q}
+                onClick={() => handlePopularClick(q)}
+                className="px-3 py-1.5 text-sm border border-gray-200 rounded-full hover:border-blue-300 hover:bg-blue-50/50 transition-colors text-gray-600 hover:text-blue-700"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Messages */}
+      <div className="space-y-6">
+        {messages.map((msg) => {
+          const text = getMessageText(msg as any);
+
+          if (msg.role === "user") {
+            return (
+              <div key={msg.id} className="flex justify-end">
+                <div className="max-w-[80%] px-4 py-2.5 bg-blue-600 text-white rounded-2xl rounded-br-md text-sm">
+                  {text}
+                </div>
+              </div>
+            );
+          }
+
+          // Assistant message
+          const stack = parseStackFromText(text);
+          const overview = getTextBeforeJson(text);
+
+          return (
+            <div key={msg.id} className="space-y-4">
+              {/* Overview text */}
+              {overview && (
+                <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+                  {overview}
+                </div>
+              )}
+
+              {/* Stack visualization */}
+              {stack && (
+                <div className="border border-gray-200 rounded-xl p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{stack.icon}</span>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {stack.title}
+                      </h3>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">
+                        AI Generated
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CopyMarkdownButton stack={stack} />
+                      <SaveStackButton stack={stack} />
+                    </div>
+                  </div>
+                  <StackFlow layers={stack.layers} />
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Streaming indicator */}
+        {isStreaming && messages.length > 0 && !getMessageText(messages[messages.length - 1] as any) && (
+          <div className="flex items-center gap-2 text-gray-400 text-sm">
+            <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            Analyzing tools and building your stack...
+          </div>
+        )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Follow-up hint — show after first response */}
+      {messages.length >= 2 && !isStreaming && (
+        <div className="mt-4 text-center">
+          <p className="text-xs text-gray-400">
+            Try: "换个更便宜的" · "Add a monitoring layer" · "Make it simpler"
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}

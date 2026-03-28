@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS stacks (
   icon TEXT DEFAULT '',              -- Emoji icon
   difficulty TEXT DEFAULT 'intermediate' CHECK(difficulty IN ('beginner','intermediate','advanced')),
   layers TEXT DEFAULT '[]',          -- JSON: [{name, description, tools: [{tool_id, role, note}]}]
+  tags TEXT DEFAULT '[]',            -- JSON array of tag strings
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
