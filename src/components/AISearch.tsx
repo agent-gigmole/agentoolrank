@@ -141,12 +141,26 @@ interface QuickResult {
 export function AISearch({ initialQuery }: { initialQuery?: string }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const hasSentInitial = useRef(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [quickResults, setQuickResults] = useState<QuickResult | null>(null);
 
   const [localInput, setLocalInput] = useState("");
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
+    onFinish: () => {
+      // Persist completed conversations to localStorage
+      try {
+        const key = "ai-builder-history";
+        const existing = JSON.parse(localStorage.getItem(key) || "[]");
+        // Keep last 5 conversations
+        const updated = [
+          { ts: Date.now(), query: initialQuery || "", messagesCount: messages.length + 1 },
+          ...existing,
+        ].slice(0, 5);
+        localStorage.setItem(key, JSON.stringify(updated));
+      } catch {}
+    },
   });
 
   const isStreaming = status === "streaming" || status === "submitted";
@@ -162,9 +176,10 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
     }
   }
 
-  // Auto-send initial query
+  // Auto-send initial query (only once, survives re-renders and back navigation)
   useEffect(() => {
-    if (initialQuery && !hasInteracted && messages.length === 0) {
+    if (initialQuery && !hasSentInitial.current && !hasInteracted && messages.length === 0) {
+      hasSentInitial.current = true;
       setHasInteracted(true);
       quickSearch(initialQuery);
       sendMessage({ text: initialQuery });
@@ -245,6 +260,8 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                   <Link
                     key={s.slug}
                     href={`/stack/${s.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50/50 transition-colors"
                   >
                     <span>{s.icon}</span>
@@ -262,6 +279,8 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                   <Link
                     key={t.id}
                     href={`/tool/${t.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-xs px-2 py-1 border border-gray-200 rounded-md hover:border-blue-300 text-gray-600 hover:text-blue-600 transition-colors"
                   >
                     {t.name}

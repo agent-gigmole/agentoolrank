@@ -42,6 +42,8 @@ function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
   return (
     <Link
       href={`/tool/${tool.tool_id}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`block p-2.5 rounded-lg border transition-all hover:shadow-md animate-fade-in ${
         isPrimary
           ? "border-blue-300 bg-blue-50 hover:border-blue-400"
