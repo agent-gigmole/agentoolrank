@@ -1,12 +1,8 @@
 # TASK.md — 当前任务
 
-## 当前任务
+## 当前状态
 
-P1: SEO 冷启动 + 站内优化
-
-## 目标
-
-重新提交 sitemap（739 URL），优化站内 SEO（JSON-LD、内链、meta），推动 Google 索引和首月流量
+✅ 全部规划任务已完成，项目进入运营阶段。
 
 ## 已完成步骤
 
@@ -27,18 +23,21 @@ P1: SEO 冷启动 + 站内优化
 - [x] 自动生成 261 个对比页 + 索引页
 - [x] LLM 内容生成 461/463 complete（9 轮 via claude -p CLI）
 - [x] Supabase 迁移 → 决定不做（SQLite + GitHub Actions 够用，零成本）
+- [x] JSON-LD structured data 审查（SoftwareApplication schema）
+- [x] 内链优化（详情页→对比页、相关工具互链）
+- [x] 详情页 star velocity 趋势图（纯 SVG sparkline，零依赖）
+- [x] Newsletter 后端（subscribers 表 + /api/subscribe + NewsletterForm 组件）
+- [x] AI Agent Weekly 周报（/weekly 页面，趋势 Top 15 + 新增工具）
+- [x] 开源数据集仓库（github.com/agent-gigmole/awesome-ai-agent-tools）
+- [x] SEO 全套收尾（面包屑、JSON-LD、内链、自动 ping Google）
 
-## 待完成步骤
+## 运营阶段待办
 
-- [ ] Google Search Console 重新提交 sitemap（739 URL）
-- [ ] 检查当前索引状态 + 解决索引问题
-- [ ] JSON-LD structured data 审查（SoftwareApplication schema）
-- [ ] 内链优化（详情页→对比页、相关工具互链）
-- [ ] meta description 质量检查
-- [ ] 开源爬虫到 GitHub 获取 backlinks
-- [ ] Newsletter 后端（接通 email capture）
-- [ ] 详情页 star velocity 趋势图
-- [ ] 自动化 "AI Agent Weekly" 周报
+- [ ] 监控 Google Search Console 索引覆盖率
+- [ ] 周报内容自动化（weekly cron）
+- [ ] 推广开源数据集仓库获取 backlinks
+- [ ] 剩余 2 个工具 LLM 内容补全
+- [ ] Google Search Console 重新提交 sitemap
 
 ## 阻塞项
 

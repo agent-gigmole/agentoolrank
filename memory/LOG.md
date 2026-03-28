@@ -77,3 +77,11 @@
   - 详情页底部添加对比页内链（提升内链密度 + 长尾 SEO）
 - 已部署 Vercel 上线
 - 待办：手动提交 GSC sitemap 反映最新变更
+
+## 2026-03-28 全部规划任务完成，进入运营阶段
+- Star Growth 趋势图：纯 SVG sparkline 实现，零外部依赖，详情页展示 star 增长趋势
+- Newsletter 后端：创建 subscribers 表 + /api/subscribe 端点 + NewsletterForm 客户端组件，前后端打通
+- AI Agent Weekly 周报：/weekly 页面上线，展示趋势 Top 15 + 新增工具，为 SEO 长尾内容
+- 开源数据集仓库：github.com/agent-gigmole/awesome-ai-agent-tools，为获取 backlinks 准备
+- SEO 全套收尾：面包屑导航、JSON-LD structured data、内链优化、自动 ping Google 索引
+- 全部 v1 规划任务完成，项目从开发阶段转入运营阶段

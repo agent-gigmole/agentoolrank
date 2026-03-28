@@ -19,24 +19,20 @@
 - Vercel 部署上线 + Cloudflare DNS
 - Google Search Console sitemap 提交成功（58 页发现）
 - Telegram topic「目录站」绑定
-- 工具扩充管道完成：
-  - discover-repos.ts: GitHub Search API + awesome-list 爬取 + curated 列表（740 新 repo 发现）
-  - crawl-github.ts --discovered 模式批量爬取（716/740 成功）
-  - cleanup-tools.ts: blocklist + pattern 过滤非工具（删除 150 个）
-  - filter-relevance.ts: tagline 关键词过滤非 AI agent 工具（删除 115 个）
-  - reclassify-tools.ts: 改进分类正则
+- 工具扩充管道完成（740 发现 → 716 爬取 → 清理/过滤 → 463 入库）
 - 对比页索引 /compare + sitemap 添加 170 个对比 URL
 - 最终数据：463 工具 | 648 sitemap URL | 461 complete 内容 | 170 对比页
 - Supabase 迁移评估：决定不做（SQLite + GitHub Actions 够用）
-- SEO 优化已上线：
-  - 面包屑导航 + BreadcrumbList JSON-LD
-  - CollectionPage schema（分类页）
-  - 工具详情页 JSON-LD 增强（SoftwareApplication）
-  - 详情页→对比页内链
+- SEO 优化已上线：面包屑 + BreadcrumbList JSON-LD + CollectionPage schema + SoftwareApplication JSON-LD + 详情页→对比页内链
+- Star Growth 趋势图：纯 SVG sparkline，零依赖
+- Newsletter 后端：subscribers 表 + /api/subscribe + NewsletterForm 客户端组件
+- AI Agent Weekly 周报：/weekly 页面，趋势 Top 15 + 新增工具
+- 开源数据集仓库：github.com/agent-gigmole/awesome-ai-agent-tools
+- SEO 全套收尾：面包屑、JSON-LD、内链、自动 ping Google
 
 ## 进行中
 
-- 无
+- 无（全部规划任务已完成，进入运营阶段）
 
 ## 已知最佳结果
 
@@ -44,11 +40,14 @@
 - 463 个工具入库，461 个有完整 LLM 内容（99.6%）
 - 648 个 sitemap URL（工具页 + 对比页 + 分类页 + 静态页）
 - Top 3: n8n (★181k), dify (★135k), langchain (★131k)
+- Newsletter 后端已接通，可接收订阅
+- /weekly 周报页面上线
+- 开源数据集仓库已创建
 
-## 下一步
+## 下一步（运营阶段）
 
-- P0: 手动重新提交 sitemap 到 Google Search Console（反映 461 LLM 内容 + SEO 优化）
-- P1: 剩余 2 个工具 LLM 内容生成
-- P1: 开源爬虫获取 backlinks
-- P2: Newsletter 后端（接通 email capture）
-- P2: 详情页 star velocity 趋势图
+- 监控 Google Search Console 索引覆盖率
+- 持续通过 GitHub Actions daily cron 更新数据
+- 周报内容自动化（weekly cron）
+- 推广开源数据集仓库获取 backlinks
+- 剩余 2 个工具 LLM 内容补全
