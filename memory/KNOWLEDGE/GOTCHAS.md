@@ -61,6 +61,26 @@
 - 批量生成时考虑并行（但 Claude Code CLI 似乎有并发限制）
 - 大批量（300+）建议用 API 直接调用
 
+## turso-schema-mismatch
+- 本地 SQLite 数据库可能有 schema.sql 中未定义的列（如 stacks 表的 tags 列）
+- 迁移到 Turso 时，需先在 Turso 端 ALTER TABLE ADD COLUMN 补齐缺失列，再导入数据
+- 否则 INSERT 会因列数不匹配失败
+- 教训：schema.sql 必须和实际数据库结构保持同步
+
+## ai-sdk-v6-breaking-changes
+- AI SDK v6（@ai-sdk/react, ai 包）有大量 breaking changes：
+  - `handleSubmit` → `sendMessage({ text: input })`
+  - `useChat({ api: "/path" })` → `useChat({ transport: new DefaultChatTransport({ api: "/path" }) })`
+  - `message.content`（字符串）→ `message.parts`（数组，需迭代 part.type === "text"）
+  - `toDataStreamResponse()` → `toUIMessageStreamResponse()`
+  - `maxTokens` 参数已移除（不再支持）
+- 从 @ai-sdk/react 需要额外导入 DefaultChatTransport
+- 影响范围：所有使用 useChat hook 和 streamText 的代码
+
+## vercel-env-preview-branch
+- `vercel env add` 对 preview 环境会询问分支名，非交互模式需加 --yes 参数
+- 或显式指定 `--git-branch main`
+
 ## libsql-row-type-assertion
 - libsql/turso 的 Row 类型不能直接 `as T` 断言
 - 需要 `as unknown as T` 双重断言才能通过 TypeScript 编译

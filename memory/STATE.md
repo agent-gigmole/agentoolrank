@@ -39,11 +39,16 @@
 - Phase 4 AI 搜索（部分）：StackGenerator + /api/generate-stack 已存在
   - 关键词搜索 + 按钮触发 + 非流式响应（体验弱）
 
+- Phase 5 Phase 1: AI 核心完成
+  - Turso 全量迁移（本地 SQLite → Turso 云端，stacks 表 tags 列修复）
+  - AI 搜索核心代码（DeepSeek via @ai-sdk/openai + AI SDK v6）
+  - 搜索页流式 AI Stack 生成
+  - Vercel 环境变量配置（TURSO_DATABASE_URL + DEEPSEEK_API_KEY）
+
 ## 进行中
 
-- Phase 5: AI-First 搜索推荐体验（CEO 审查完成，Spec 已定稿）
-  - 状态：计划阶段完成，待开始实施
-  - 三个实施阶段：Phase 1 AI 核心 → Phase 2 对话式体验 → Phase 3 UGC + 收尾
+- Phase 5 Phase 2: 对话式搜索体验
+  - 状态：待开始
 
 ## 关键决策（Phase 5）
 
@@ -66,6 +71,5 @@
 
 ## 下一步
 
-- Phase 5 Phase 1：AI 核心（Turso 迁移 + embedding 生成 + 语义搜索 API）
 - Phase 5 Phase 2：对话式搜索体验（流式 UI + 多轮对话 + 个性化推荐）
 - Phase 5 Phase 3：UGC + 收尾（用户评价 + 社区功能 + 性能优化）

@@ -16,14 +16,13 @@ Phase 5: AI-First 搜索推荐体验
 - [x] Phase 4: Stack Graph（15 个场景 + AI 搜索初版）
 - [x] Phase 5 计划：CEO 审查完成，Spec 定稿
 
-## Phase 5 — Phase 1: AI 核心
+## Phase 5 — Phase 1: AI 核心 ✅
 
-- [ ] Turso 全量迁移（本地 SQLite → Turso 云端）
-- [ ] Embedding 生成（所有工具的 description/tagline 向量化）
-- [ ] SQLite 列存储 embedding（BLOB 列 + 暴力扫描）
-- [ ] 语义搜索 API 端点（/api/semantic-search）
-- [ ] AI Gateway OIDC 认证配置
-- [ ] 搜索结果融合（关键词 + 语义 hybrid search）
+- [x] Turso 全量迁移（本地 SQLite → Turso 云端）
+- [x] AI 搜索核心代码（DeepSeek + AI SDK v6 + 流式响应）
+- [x] 搜索页接入 AI 实时 stack 生成
+- [x] Vercel 部署 + 环境变量配置
+- 注：Embedding/语义搜索/OIDC 推迟到 Phase 2（当前用 LLM 直接生成替代）
 
 ## Phase 5 — Phase 2: 对话式搜索体验
 

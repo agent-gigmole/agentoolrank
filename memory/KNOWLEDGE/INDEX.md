@@ -29,3 +29,7 @@
 | AI Gateway / OIDC / API 认证 | DECISIONS.md#ai-gateway-auth |
 | CEO 审查 / SCOPE EXPANSION / C 方案 | DECISIONS.md#scope-strategy |
 | AI-First 搜索 / 流式响应 / 对话式 / Phase 5 | LOG.md#2026-03-28 |
+| Turso schema 不一致 / ALTER TABLE / 迁移失败 | GOTCHAS.md#turso-schema-mismatch |
+| AI SDK v6 / breaking changes / useChat / sendMessage / parts | GOTCHAS.md#ai-sdk-v6-breaking-changes |
+| Vercel env preview / --yes / branch | GOTCHAS.md#vercel-env-preview-branch |
+| @ai-sdk/openai / DeepSeek / OpenAI-compatible | LOG.md#2026-03-28 |

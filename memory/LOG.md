@@ -105,3 +105,17 @@
 - Spec review 初评 5/10，修复 8 个问题后文档完善
 - 分三阶段实施：Phase 1 AI 核心 → Phase 2 对话式体验 → Phase 3 UGC + 收尾
 - 状态：计划完成，待开始实施
+
+## 2026-03-28 Phase 5 Phase 1 完成 — AI 核心代码 + Turso 迁移
+- Turso 全量迁移完成：本地 SQLite 数据 → Turso 云端
+  - 坑：stacks 表有 tags 列但 schema.sql 未定义，需先 ALTER TABLE ADD COLUMN 再迁移
+- AI 搜索核心代码：DeepSeek via @ai-sdk/openai（OpenAI-compatible provider）
+- AI SDK v6 breaking changes 大量：
+  - handleSubmit → sendMessage({ text })
+  - api 参数 → transport: new DefaultChatTransport
+  - message.content → message.parts 迭代
+  - toDataStreamResponse → toUIMessageStreamResponse
+  - maxTokens 参数已移除
+- 搜索页接入流式 AI Stack 生成（/api/generate-stack）
+- Vercel 环境变量配置：preview 环境需 --yes 参数或指定 branch
+- db.ts 已有 Turso 支持（检查 TURSO_DATABASE_URL 环境变量），迁移只需设置 env var
