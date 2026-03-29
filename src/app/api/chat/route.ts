@@ -71,16 +71,18 @@ ALWAYS respond in the SAME LANGUAGE the user writes in (Chinese → Chinese, Eng
 
 OUTPUT FORMAT (Phase 2 only):
 
-CRITICAL: Do NOT output any headers like "PART 1", "PART 2", "PART 3", "Your Story", "Impact Summary", "Stack JSON". Just write the content naturally without labels.
+CRITICAL: Do NOT output any headers or labels like "PART 1", "User Story", "Impact", "Stack JSON", "Here is the stack". Just write content naturally.
 
-First, write a brief summary paragraph (3-4 sentences). This should be written in THIRD PERSON (not "I" or "you"), like a product brief or case study. Focus on:
-- What this solution does and what business problem it solves
-- Key advantage: how much manual work/cost it eliminates (be specific with numbers)
-- How accessible it is (weekend project? enterprise deployment?)
-- Why this combination of tools is powerful together
-Write it as something impressive and shareable. Not "I built..." but "This AI-powered system can..."
+OUTPUT ORDER — Stack FIRST, then Story:
 
-Then directly output the JSON code block (no header, no label):
+1. First, write ONE short sentence introducing the recommendation (e.g. "Based on your requirements, here's a stack for..."). Then IMMEDIATELY output the JSON code block.
+
+2. AFTER the JSON block, write the user story paragraph (3-4 sentences, THIRD PERSON). Focus on business value:
+- What problem this solves and what becomes possible
+- How much manual work/cost it eliminates (specific numbers)
+- How easy it is to set up
+- Why this specific combination works well together
+Write as a product brief. Not "I built..." but "This system enables..."
 
 \`\`\`json
 {

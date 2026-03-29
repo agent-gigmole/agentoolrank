@@ -418,11 +418,20 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
           // Assistant message
           const stack = parseStackFromText(text);
           const overview = getTextBeforeJson(text);
+          // Story comes AFTER the JSON block in the AI output
+          const afterJson = text.includes("```") ? text.split(/```(?:json)?[\s\S]*?```/).pop()?.trim() : "";
 
           return (
             <div key={msg.id} className="space-y-4">
-              {/* Overview text */}
-              {overview && (
+              {/* Brief intro (before JSON) — only if short, like "Based on your requirements..." */}
+              {overview && overview.length < 200 && (
+                <div className="text-gray-700 text-sm leading-relaxed">
+                  {overview}
+                </div>
+              )}
+
+              {/* If no stack parsed, show full overview as regular text */}
+              {!stack && overview && overview.length >= 200 && (
                 <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
                   {overview}
                 </div>
@@ -451,6 +460,13 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                   <div className="mt-4" />
 
                   <StackFlow layers={stack.layers} />
+
+                  {/* User story — appears AFTER the stack, grounded in reality */}
+                  {afterJson && (
+                    <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                      <p className="text-sm text-gray-700 leading-relaxed">{afterJson}</p>
+                    </div>
+                  )}
 
                   {/* Save + Share guided flow */}
                   <StackActions stack={stack} />
