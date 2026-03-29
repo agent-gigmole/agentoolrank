@@ -89,9 +89,10 @@ function CopyMarkdownButton({ stack }: { stack: ParsedStack }) {
   );
 }
 
-function SaveStackButton({ stack, onSaved }: { stack: ParsedStack; onSaved?: (slug: string) => void }) {
+function StackActions({ stack }: { stack: ParsedStack }) {
   const [saving, setSaving] = useState(false);
   const [savedSlug, setSavedSlug] = useState<string | null>(null);
+  const [showShareMenu, setShowShareMenu] = useState(false);
 
   async function save() {
     setSaving(true);
@@ -104,83 +105,91 @@ function SaveStackButton({ stack, onSaved }: { stack: ParsedStack; onSaved?: (sl
       const data = await res.json();
       if (data.slug) {
         setSavedSlug(data.slug);
-        onSaved?.(data.slug);
       }
     } catch {}
     setSaving(false);
   }
 
-  if (savedSlug) {
+  const stackUrl = savedSlug ? `https://agentoolrank.com/stack/${savedSlug}` : null;
+
+  // Short share text for Twitter (under 280 chars)
+  const impact = stack.impact;
+  const shortShare = impact
+    ? `${stack.icon} ${stack.title}\n\n⏱ ${impact.build_time} | 💰 ${impact.monthly_cost} | 🔄 ${impact.replaces}\n\n${stackUrl || "agentoolrank.com/search"}`
+    : `${stack.icon} ${stack.title}\n\n${stackUrl || "agentoolrank.com/search"}`;
+
+  // Not saved yet — show save CTA with guidance
+  if (!savedSlug) {
     return (
-      <Link
-        href={`/stack/${savedSlug}`}
-        className="text-xs px-3 py-1.5 bg-green-50 border border-green-200 text-green-700 rounded-lg hover:bg-green-100 transition-colors"
-      >
-        Saved! View →
-      </Link>
+      <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-900">Save this stack to get a permanent link</p>
+            <p className="text-xs text-gray-500 mt-0.5">You can share it, come back to it later, or ask others for feedback</p>
+          </div>
+          <button
+            onClick={save}
+            disabled={saving}
+            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors font-medium shrink-0"
+          >
+            {saving ? "Saving..." : "Save & Get Link"}
+          </button>
+        </div>
+      </div>
     );
   }
 
+  // Saved — show link + share options
   return (
-    <button
-      onClick={save}
-      disabled={saving}
-      className="text-xs px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
-    >
-      {saving ? "Saving..." : "Save Stack"}
-    </button>
-  );
-}
-
-function ShareButton({ stack }: { stack: ParsedStack }) {
-  const [open, setOpen] = useState(false);
-
-  const shareText = stack.story
-    ? `${stack.icon} ${stack.title}\n\n${stack.story}\n\nBuilt with AI on agentoolrank.com/search`
-    : `${stack.icon} ${stack.title} — ${stack.layers.length} layers, ${stack.layers.reduce((s, l) => s + l.tools.length, 0)} tools\n\nBuilt with agentoolrank.com/search`;
-
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://agentoolrank.com/search")}`;
-
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setOpen(!open)}
-        className="text-xs px-3 py-1.5 bg-purple-50 border border-purple-200 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors"
-      >
-        Share
-      </button>
-      {open && (
-        <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-10 flex flex-col gap-1 min-w-[140px]">
-          <a
-            href={twitterUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 hover:bg-gray-50 rounded text-gray-700 flex items-center gap-1.5"
-            onClick={() => setOpen(false)}
-          >
-            𝕏 Twitter
-          </a>
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 hover:bg-gray-50 rounded text-gray-700 flex items-center gap-1.5"
-            onClick={() => setOpen(false)}
-          >
-            in LinkedIn
-          </a>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(shareText);
-              setOpen(false);
-            }}
-            className="text-xs px-3 py-1.5 hover:bg-gray-50 rounded text-gray-700 text-left"
-          >
-            Copy text
-          </button>
+    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-green-600 text-sm">✓</span>
+        <p className="text-sm font-medium text-gray-900">Saved! Your stack has a permanent link:</p>
+      </div>
+      <div className="flex items-center gap-2 mb-3">
+        <input
+          type="text"
+          readOnly
+          value={stackUrl!}
+          className="flex-1 text-xs px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-gray-600"
+          onClick={(e) => (e.target as HTMLInputElement).select()}
+        />
+        <button
+          onClick={() => navigator.clipboard.writeText(stackUrl!)}
+          className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors shrink-0"
+        >
+          Copy
+        </button>
+      </div>
+      <div className="flex items-center gap-2">
+        <p className="text-xs text-gray-500">Share to get feedback:</p>
+        <div className="relative">
+          <div className="flex items-center gap-1.5">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shortShare)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs px-2.5 py-1 bg-black text-white rounded hover:bg-gray-800 transition-colors"
+            >
+              𝕏
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(stackUrl!)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs px-2.5 py-1 bg-blue-700 text-white rounded hover:bg-blue-800 transition-colors"
+            >
+              in
+            </a>
+            <button
+              onClick={() => navigator.clipboard.writeText(shortShare)}
+              className="text-xs px-2.5 py-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+            >
+              Copy text
+            </button>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -432,11 +441,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                         AI Generated
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <CopyMarkdownButton stack={stack} />
-                      <SaveStackButton stack={stack} />
-                      <ShareButton stack={stack} />
-                    </div>
+                    <CopyMarkdownButton stack={stack} />
                   </div>
 
                   {/* Impact bar — the shareable stats */}
@@ -446,6 +451,9 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                   <div className="mt-4" />
 
                   <StackFlow layers={stack.layers} />
+
+                  {/* Save + Share guided flow */}
+                  <StackActions stack={stack} />
                 </div>
               )}
             </div>

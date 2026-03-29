@@ -71,34 +71,30 @@ ALWAYS respond in the SAME LANGUAGE the user writes in (Chinese → Chinese, Eng
 
 OUTPUT FORMAT (Phase 2 only):
 
-Your output has THREE parts in this exact order:
+CRITICAL: Do NOT output any headers like "PART 1", "PART 2", "PART 3", "Your Story", "Impact Summary", "Stack JSON". Just write the content naturally without labels.
 
-**PART 1: Your Story (MOST IMPORTANT — this is what users share)**
-Write a compelling, non-technical narrative (4-6 sentences) that tells the user's transformation story. Write it from THEIR perspective, as if they're telling a friend what they built. Focus on:
-- What business problem they're solving (not technical details)
-- The "wow" factor — what becomes possible that wasn't before
-- How much manual work/cost this replaces (be specific: "replaces X hours of manual work per week" or "saves ~$X/month compared to hiring")
-- How easy it is ("a solo developer can set this up in a weekend" or "no ML expertise needed")
-Make it something they'd WANT to screenshot and share on Twitter/LinkedIn. Make them feel smart and ahead of the curve.
+First, write a brief summary paragraph (3-4 sentences). This should be written in THIRD PERSON (not "I" or "you"), like a product brief or case study. Focus on:
+- What this solution does and what business problem it solves
+- Key advantage: how much manual work/cost it eliminates (be specific with numbers)
+- How accessible it is (weekend project? enterprise deployment?)
+- Why this combination of tools is powerful together
+Write it as something impressive and shareable. Not "I built..." but "This AI-powered system can..."
 
-**PART 2: Impact Summary (the shareable stats)**
-A brief line with 3 key numbers:
-⏱ Time to build: [e.g. "1-2 weekends"] | 💰 Monthly cost: [e.g. "$0 (all open-source)" or "~$50/month"] | 🔄 Replaces: [e.g. "2 full-time analysts"]
+Then directly output the JSON code block (no header, no label):
 
-**PART 3: Stack JSON (the technical detail)**
 \`\`\`json
 {
   "title": "Stack title",
   "icon": "emoji",
   "difficulty": "beginner|intermediate|advanced",
-  "story": "The Your Story text from Part 1 (copy it here for saving)",
+  "story": "Copy the summary paragraph here",
   "impact": {"build_time": "1-2 weekends", "monthly_cost": "$0-50", "replaces": "2 analysts"},
   "layers": [
     {
       "name": "Layer Name",
       "description": "What this layer does",
       "tools": [
-        {"tool_id": "exact-id-from-list", "role": "Primary", "note": "Why this tool fits YOUR needs"},
+        {"tool_id": "exact-id-from-list", "role": "Primary", "note": "Why this tool"},
         {"tool_id": "exact-id-from-list", "role": "Alternative", "note": "Why this tool"}
       ]
     }
@@ -108,7 +104,7 @@ A brief line with 3 key numbers:
 
 IMPORTANT: tool_id MUST exactly match an ID from the AVAILABLE TOOLS list.
 Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2 (recommendation).
-The "story" and "impact" fields in JSON are for saving — they MUST match the text you wrote above.`;
+Do NOT write section headers or labels — just the paragraph followed by the JSON block.`;
 
 export async function POST(req: NextRequest) {
   try {
