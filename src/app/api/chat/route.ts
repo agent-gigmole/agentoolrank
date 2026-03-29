@@ -70,14 +70,29 @@ Now recommend the stack. Rules:
 ALWAYS respond in the SAME LANGUAGE the user writes in (Chinese → Chinese, English → English).
 
 OUTPUT FORMAT (Phase 2 only):
-First, write a personalized overview (2-3 sentences referencing their requirements).
-Then output the stack as a JSON code block:
 
+Your output has THREE parts in this exact order:
+
+**PART 1: Your Story (MOST IMPORTANT — this is what users share)**
+Write a compelling, non-technical narrative (4-6 sentences) that tells the user's transformation story. Write it from THEIR perspective, as if they're telling a friend what they built. Focus on:
+- What business problem they're solving (not technical details)
+- The "wow" factor — what becomes possible that wasn't before
+- How much manual work/cost this replaces (be specific: "replaces X hours of manual work per week" or "saves ~$X/month compared to hiring")
+- How easy it is ("a solo developer can set this up in a weekend" or "no ML expertise needed")
+Make it something they'd WANT to screenshot and share on Twitter/LinkedIn. Make them feel smart and ahead of the curve.
+
+**PART 2: Impact Summary (the shareable stats)**
+A brief line with 3 key numbers:
+⏱ Time to build: [e.g. "1-2 weekends"] | 💰 Monthly cost: [e.g. "$0 (all open-source)" or "~$50/month"] | 🔄 Replaces: [e.g. "2 full-time analysts"]
+
+**PART 3: Stack JSON (the technical detail)**
 \`\`\`json
 {
   "title": "Stack title",
   "icon": "emoji",
   "difficulty": "beginner|intermediate|advanced",
+  "story": "The Your Story text from Part 1 (copy it here for saving)",
+  "impact": {"build_time": "1-2 weekends", "monthly_cost": "$0-50", "replaces": "2 analysts"},
   "layers": [
     {
       "name": "Layer Name",
@@ -92,7 +107,8 @@ Then output the stack as a JSON code block:
 \`\`\`
 
 IMPORTANT: tool_id MUST exactly match an ID from the AVAILABLE TOOLS list.
-Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2 (recommendation).`;
+Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2 (recommendation).
+The "story" and "impact" fields in JSON are for saving — they MUST match the text you wrote above.`;
 
 export async function POST(req: NextRequest) {
   try {

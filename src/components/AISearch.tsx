@@ -19,10 +19,18 @@ interface StackLayer {
   }>;
 }
 
+interface StackImpact {
+  build_time: string;
+  monthly_cost: string;
+  replaces: string;
+}
+
 interface ParsedStack {
   title: string;
   icon: string;
   difficulty: string;
+  story?: string;
+  impact?: StackImpact;
   layers: StackLayer[];
 }
 
@@ -121,6 +129,81 @@ function SaveStackButton({ stack, onSaved }: { stack: ParsedStack; onSaved?: (sl
     >
       {saving ? "Saving..." : "Save Stack"}
     </button>
+  );
+}
+
+function ShareButton({ stack }: { stack: ParsedStack }) {
+  const [open, setOpen] = useState(false);
+
+  const shareText = stack.story
+    ? `${stack.icon} ${stack.title}\n\n${stack.story}\n\nBuilt with AI on agentoolrank.com/search`
+    : `${stack.icon} ${stack.title} — ${stack.layers.length} layers, ${stack.layers.reduce((s, l) => s + l.tools.length, 0)} tools\n\nBuilt with agentoolrank.com/search`;
+
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://agentoolrank.com/search")}`;
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="text-xs px-3 py-1.5 bg-purple-50 border border-purple-200 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors"
+      >
+        Share
+      </button>
+      {open && (
+        <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-10 flex flex-col gap-1 min-w-[140px]">
+          <a
+            href={twitterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs px-3 py-1.5 hover:bg-gray-50 rounded text-gray-700 flex items-center gap-1.5"
+            onClick={() => setOpen(false)}
+          >
+            𝕏 Twitter
+          </a>
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs px-3 py-1.5 hover:bg-gray-50 rounded text-gray-700 flex items-center gap-1.5"
+            onClick={() => setOpen(false)}
+          >
+            in LinkedIn
+          </a>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(shareText);
+              setOpen(false);
+            }}
+            className="text-xs px-3 py-1.5 hover:bg-gray-50 rounded text-gray-700 text-left"
+          >
+            Copy text
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ImpactBar({ impact }: { impact: StackImpact }) {
+  return (
+    <div className="flex flex-wrap gap-4 px-4 py-2.5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100 text-sm">
+      <span className="flex items-center gap-1.5">
+        <span className="text-blue-500">⏱</span>
+        <span className="text-gray-500">Build:</span>
+        <span className="font-medium text-gray-900">{impact.build_time}</span>
+      </span>
+      <span className="flex items-center gap-1.5">
+        <span className="text-green-500">💰</span>
+        <span className="text-gray-500">Cost:</span>
+        <span className="font-medium text-gray-900">{impact.monthly_cost}</span>
+      </span>
+      <span className="flex items-center gap-1.5">
+        <span className="text-purple-500">🔄</span>
+        <span className="text-gray-500">Replaces:</span>
+        <span className="font-medium text-gray-900">{impact.replaces}</span>
+      </span>
+    </div>
   );
 }
 
@@ -341,8 +424,16 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                     <div className="flex items-center gap-2">
                       <CopyMarkdownButton stack={stack} />
                       <SaveStackButton stack={stack} />
+                      <ShareButton stack={stack} />
                     </div>
                   </div>
+
+                  {/* Impact bar — the shareable stats */}
+                  {stack.impact && <ImpactBar impact={stack.impact} />}
+
+                  {/* Spacer */}
+                  <div className="mt-4" />
+
                   <StackFlow layers={stack.layers} />
                 </div>
               )}
