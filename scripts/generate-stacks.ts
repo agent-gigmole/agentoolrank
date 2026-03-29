@@ -136,7 +136,7 @@ Return ONLY valid JSON, no markdown fences.`;
   const tmpFile = `/tmp/stack-prompt-${Date.now()}.txt`;
   try {
     await Bun.write(tmpFile, prompt);
-    const proc = Bun.spawn(["claude", "-p", "--model", "claude-sonnet-4-20250514"], {
+    const proc = Bun.spawn(["claude", "-p", "--model", "claude-opus-4-6"], {
       stdin: Bun.file(tmpFile),
       stdout: "pipe",
       stderr: "pipe",
