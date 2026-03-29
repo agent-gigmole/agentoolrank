@@ -1,6 +1,7 @@
 import { streamText, convertToModelMessages } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { db } from "@/lib/db";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { NextRequest } from "next/server";
 
 // Use DeepSeek (OpenAI-compatible) for now, will switch to AI Gateway later
@@ -95,6 +96,16 @@ Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit by IP
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { ok, remaining } = checkRateLimit(ip);
+    if (!ok) {
+      return Response.json(
+        { error: "Daily limit reached (20 requests). Come back tomorrow!" },
+        { status: 429, headers: { "Retry-After": "86400" } }
+      );
+    }
+
     const { messages } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
