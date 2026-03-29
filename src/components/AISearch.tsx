@@ -289,30 +289,41 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
     sendMessage({ text: query });
   }
 
+  const hasMessages = messages.length > 0;
+  const inputPlaceholder = hasMessages
+    ? "Type your answer here... 在这里回答"
+    : "Describe what you want to build... e.g. 我想做金融量化系统";
+
+  const inputForm = (
+    <form onSubmit={onSubmit} className={hasMessages ? "sticky bottom-0 bg-white pt-3 pb-2 border-t border-gray-100 z-10" : "mb-6"}>
+      <div className="relative">
+        <input
+          ref={inputRef}
+          type="text"
+          value={localInput}
+          onChange={(e) => setLocalInput(e.target.value)}
+          placeholder={inputPlaceholder}
+          className={`w-full px-5 pr-24 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm ${
+            hasMessages ? "py-3 text-base" : "py-4 text-lg"
+          }`}
+          disabled={isStreaming}
+          autoFocus={!initialQuery}
+        />
+        <button
+          type="submit"
+          disabled={isStreaming || !localInput.trim()}
+          className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:hover:bg-blue-600 transition-colors font-medium"
+        >
+          {isStreaming ? "Thinking..." : "Send"}
+        </button>
+      </div>
+    </form>
+  );
+
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Input area */}
-      <form onSubmit={onSubmit} className="mb-6">
-        <div className="relative">
-          <input
-            ref={inputRef}
-            type="text"
-            value={localInput}
-            onChange={(e) => setLocalInput(e.target.value)}
-            placeholder="Describe what you want to build... e.g. 我想做金融量化系统"
-            className="w-full px-5 py-4 pr-24 border border-gray-300 rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
-            disabled={isStreaming}
-            autoFocus={!initialQuery}
-          />
-          <button
-            type="submit"
-            disabled={isStreaming || !localInput.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:hover:bg-blue-600 transition-colors font-medium"
-          >
-            {isStreaming ? "Thinking..." : "Go"}
-          </button>
-        </div>
-      </form>
+      {/* Input at top — only before conversation starts */}
+      {!hasMessages && inputForm}
 
       {/* Popular queries — show before first interaction */}
       {!hasInteracted && messages.length === 0 && (
@@ -476,12 +487,15 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
 
       {/* Follow-up hint — show after first response */}
       {messages.length >= 2 && !isStreaming && (
-        <div className="mt-4 text-center">
+        <div className="mt-4 mb-2 text-center">
           <p className="text-xs text-gray-400">
             Try: "换个更便宜的" · "Add a monitoring layer" · "Make it simpler"
           </p>
         </div>
       )}
+
+      {/* Input at bottom — during conversation (sticky, like a chat app) */}
+      {hasMessages && inputForm}
     </div>
   );
 }
