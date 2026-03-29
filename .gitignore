@@ -57,3 +57,5 @@ yarn-error.log*
 !.yarn/releases
 !.yarn/versions
 .gstack/
+gsc-service-account.json
+data/
