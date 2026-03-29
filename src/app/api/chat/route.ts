@@ -16,17 +16,24 @@ function getModel() {
   return provider.chat(modelId);
 }
 
-// Get top tools as context for the AI
+// Get ALL tools with rich context for the AI
 async function getToolContext(): Promise<string> {
   const r = await db.execute(
-    "SELECT id, name, tagline, pricing, github_stars, category_tags FROM tools WHERE content_status = 'complete' ORDER BY score DESC LIMIT 120"
+    "SELECT id, name, tagline, description, pricing, github_stars, category_tags, pros, use_cases FROM tools WHERE content_status = 'complete' ORDER BY score DESC"
   );
   return (r.rows as any[])
-    .map(
-      (t) =>
-        `${t.id} | ${t.name} | ${(t.tagline || "").slice(0, 80)} | ${t.pricing} | ★${t.github_stars || 0} | ${t.category_tags}`
-    )
+    .map((t) => {
+      const pros = (() => { try { const p = JSON.parse(t.pros || "[]"); return p.slice(0, 2).join("; "); } catch { return ""; } })();
+      const uses = (() => { try { const u = JSON.parse(t.use_cases || "[]"); return u.slice(0, 2).join("; "); } catch { return ""; } })();
+      return `${t.id} | ${t.name} | ${(t.tagline || "").slice(0, 100)} | ${t.pricing} | ★${t.github_stars || 0} | ${t.category_tags}${pros ? ` | Pros: ${pros}` : ""}${uses ? ` | Uses: ${uses}` : ""}`;
+    })
     .join("\n");
+}
+
+// Get valid tool IDs for validation
+async function getValidToolIds(): Promise<Set<string>> {
+  const r = await db.execute("SELECT id FROM tools WHERE content_status = 'complete'");
+  return new Set((r.rows as any[]).map((t) => t.id));
 }
 
 // Get existing stacks for reference
@@ -126,9 +133,10 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "Invalid messages" }, { status: 400 });
     }
 
-    const [toolContext, stackContext] = await Promise.all([
+    const [toolContext, stackContext, validIds] = await Promise.all([
       getToolContext(),
       getStackContext(),
+      getValidToolIds(),
     ]);
 
     const systemMessage = `${SYSTEM_PROMPT}
