@@ -129,3 +129,14 @@
 - compatibility:"compatible" 参数在某些版本不存在，TypeScript build 失败 → 只用 .chat() 就行
 - /browse 前端自测验证通过（API 200 不代表前端正常工作，必须用 browse 测前端）
 - 成本分析：DeepSeek 单次推荐 ¥0.007，完整 3 轮对话 ¥0.011
+
+## 2026-03-29~30 Phase 5 收尾 — UTM/限流/两阶段/GSC/CI
+- UTM 追踪：所有外链自动加 utm_source=agentoolrank，追踪导流效果
+- CI 修复：bun.lock 与 package.json 不同步 → 重新生成；Turso 数据库同步步骤添加；GitHub Actions 需 contents:write 权限
+- 两阶段对话：AI 先问 3-5 个澄清问题（使用场景/技术栈/团队规模等），再给出精准推荐
+- 防闲聊边界控制：拒绝与 AI Agent 工具无关的问题，引导用户回到工具选型
+- IP 限流：每 IP 每天 20 次请求，防止滥用，控制 API 成本
+- GSC API 接入：创建 Service Account + gsc-report.ts 脚本，可程序化获取索引状态
+- GSC 状态：739 URL 已发现，0 已索引（新站正常，需等 1-2 周）
+- typo sitemap 已删除（之前提交了拼错域名的 sitemap）
+- 成本分析完善：单次推荐 ¥0.007，1000 用户/天约 ¥326/月（含两阶段 3 轮对话）

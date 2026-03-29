@@ -36,27 +36,26 @@
   - Nav 添加 Stacks 入口
   - Sitemap 扩展至 756 URLs
 
-- Phase 4 AI 搜索（部分）：StackGenerator + /api/generate-stack 已存在
-  - 关键词搜索 + 按钮触发 + 非流式响应（体验弱）
-
-- Phase 5 Phase 1: AI 核心完成
+- Phase 5 AI-First 搜索基本完成
   - Turso 全量迁移（本地 SQLite → Turso 云端，stacks 表 tags 列修复）
-  - AI 搜索核心代码（DeepSeek via @ai-sdk/openai + AI SDK v6）
-  - 搜索页流式 AI Stack 生成
-  - Vercel 环境变量配置（TURSO_DATABASE_URL + DEEPSEEK_API_KEY）
-
-- Phase 5 Phase 2: 对话式搜索体验（基本完成）
-  - 流式状态指示器：分阶段显示（分析中/选型中/构建中/渲染中），根据 AI 回复文本内容判断当前阶段
-  - UX 修复：工具链接 target="_blank" 防止离开 AI 页面丢失结果
-  - useRef 防止后退导航重复触发 sendMessage
-  - convertToModelMessages 转换：useChat 发 UIMessage 格式（parts），streamText 需要 ModelMessage 格式
-  - DeepSeek provider 修复：createOpenAI 默认用 Responses API → 用 provider.chat(modelId) 走 Chat Completions API
-  - 前端 /browse 自测验证通过
-  - 成本分析：单次推荐 ¥0.007，完整 3 轮对话 ¥0.011
+  - AI SDK v6 集成 + DeepSeek provider（@ai-sdk/openai OpenAI-compatible 模式）
+  - 对话式搜索体验：流式 AI Stack 生成
+  - 流式状态指示器：分阶段显示（分析中/选型中/构建中/渲染中）
+  - UX 修复：target="_blank" + 防后退重复生成
+  - convertToModelMessages 修复（UIMessage → ModelMessage）
+  - DeepSeek provider 修复（Responses API → .chat() Chat Completions API）
+  - UTM 追踪：所有外链自动加 utm_source=agentoolrank
+  - IP 限流：每 IP 每天 20 次请求
+  - 两阶段对话：AI 先问 3-5 个问题再推荐工具
+  - 防闲聊边界控制：拒绝与 AI Agent 工具无关的问题
+  - GSC API 接入：Service Account + gsc-report.ts 报告脚本
+  - CI 修复：bun.lock 同步 + Turso 同步 + contents:write 权限
+  - 成本分析：单次推荐 ¥0.007，1000 用户/天 ¥326/月
 
 ## 进行中
 
-- Phase 5 Phase 2 收尾：多轮对话上下文管理 + 个性化推荐（如有需要）
+- 运营阶段：等待 GSC 数据积累（739 URL 已发现，0 已索引 — 新站正常）
+- typo sitemap 已删除（agentoolrank.com 拼错版本）
 
 ## 关键决策（Phase 5）
 
@@ -66,6 +65,8 @@
 - CEO 审查选了 SCOPE EXPANSION 模式 → 完整 C 方案（全量 AI-First）
 - Spec review 评分 5/10 → 修复 8 个问题后文档已完善
 - DeepSeek 作为 AI 提供商：成本极低（单次 ¥0.007），通过 @ai-sdk/openai 的 OpenAI-compatible 模式接入
+- 两阶段问答模式：先澄清需求再推荐，提升推荐精准度
+- IP 限流 20 次/天：防止滥用，控制成本
 
 ## 已知最佳结果
 
@@ -77,8 +78,11 @@
 - Newsletter 后端已接通，可接收订阅
 - /weekly 周报页面上线
 - 开源数据集仓库已创建
-- AI 搜索流式体验上线，带分阶段状态指示器
+- AI 搜索流式体验上线，带分阶段状态指示器 + 两阶段问答
+- GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
 
 ## 下一步
 
-- Phase 5 Phase 3：UGC + 收尾（用户评价 + 社区功能 + 性能优化）
+- 等 GSC 数据积累 1-2 周，根据索引数据调整 SEO 策略
+- 观察 AI 搜索使用数据，优化推荐质量
+- Phase 5 Phase 3（可选）：UGC + 用户评价 + 社区功能
