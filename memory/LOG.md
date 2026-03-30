@@ -140,3 +140,22 @@
 - GSC 状态：739 URL 已发现，0 已索引（新站正常，需等 1-2 周）
 - typo sitemap 已删除（之前提交了拼错域名的 sitemap）
 - 成本分析完善：单次推荐 ¥0.007，1000 用户/天约 ¥326/月（含两阶段 3 轮对话）
+
+## 2026-03-30 Launch 准备 + Blueprint 升级 + Tool Intelligence
+- Blueprint 升级：从 Stack Generator 升级为 Blueprint Generator
+  - 新增 execution_plan（实施步骤）+ failure_points（常见失败点）+ project_tags 字段
+  - 混合推荐：AI 工具 + 外部行业标准工具（ext 标签区分内外部工具）
+  - Codex 建议定位 "AI Project Blueprint"，不叫 Playbook，不承诺赚钱
+  - 保留工具目录做 SEO 基础，Blueprint 做社交传播层
+- OG 动态图：/api/og 端点，左右分栏布局，用于社交分享预览
+- 徽章 API：/api/badge/[slug] 端点，供工具作者嵌入 README
+- 72 个 stack 重新生成：使用 Claude Opus 提升质量
+- 工具信息加厚：全量 463 工具补充 pros/use_cases 字段
+- Tool Intelligence Layer：脚本写好，用 subagent 读 GitHub README 深度分析
+  - 为每个工具生成 capabilities/integrations/limitations 档案
+  - 不用 DeepSeek（分析能力不够），用 Claude subagent
+  - top 50 工具正在分析中
+- Launch Strategy 文档落盘
+- X Article 已发布（Day 1 Launch）
+- X 互动评论开始（主动回复相关话题）
+- 下一步：Day 2 Data Story + Featured 邮件

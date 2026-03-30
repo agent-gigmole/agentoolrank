@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-运营观察期（Phase 5 基本完成，等待 GSC 数据积累）
+Launch 阶段（Day 1 完成，进入 Day 2）
 
 ## 目标
 
-等待 Google 索引数据积累 1-2 周，根据数据调整 SEO 策略；观察 AI 搜索使用情况，优化推荐质量。
+14 天 Launch 计划：通过社交媒体、社区分享、邮件等渠道获取初始用户和反馈。同时完成 Tool Intelligence Layer 上线。
 
 ## 已完成阶段
 
@@ -14,38 +14,51 @@
 - [x] Phase 2: 完整 MVP（LLM 内容 + 对比页 + SEO + GSC）
 - [x] Phase 3: 增长引擎（扩充 463 工具 + 开源仓库 + Newsletter + Weekly + 趋势图）
 - [x] Phase 4: Stack Graph（15 个场景 + AI 搜索初版）
-- [x] Phase 5 计划：CEO 审查完成，Spec 定稿
+- [x] Phase 5: AI-First 搜索（Turso + AI SDK v6 + 对话式搜索 + 流式指示器 + Blueprint 升级）
 
-## Phase 5 — Phase 1: AI 核心 ✅
+## Launch 前准备 ✅
 
-- [x] Turso 全量迁移（本地 SQLite → Turso 云端）
-- [x] AI 搜索核心代码（DeepSeek + AI SDK v6 + 流式响应）
-- [x] 搜索页接入 AI 实时 stack 生成
-- [x] Vercel 部署 + 环境变量配置
+- [x] Blueprint 升级（execution_plan + failure_points + project_tags + 混合推荐）
+- [x] OG 动态图（/api/og，左右分栏布局）
+- [x] 徽章 API（/api/badge/[slug]）
+- [x] 72 个 stack 重新生成（Claude Opus）
+- [x] 工具信息加厚（全量 463 + pros/use_cases）
+- [x] Tool Intelligence Layer 脚本
+- [x] Launch Strategy 文档
 
-## Phase 5 — Phase 2: 对话式搜索体验 ✅
+## Launch Day 1 ✅
 
-- [x] 流式响应 UI（SSE/streaming）— 分阶段状态指示器
-- [x] 搜索页重设计（AI-first 对话框 + 实时结果）
-- [x] UX 修复（工具链接新窗口打开 + 防止后退重复生成）
-- [x] DeepSeek provider 修复（Responses API → Chat Completions API）
-- [x] convertToModelMessages 转换（UIMessage → ModelMessage）
-- [x] 前端 /browse 自测验证通过
-- [x] UTM 追踪（所有外链加 utm_source=agentoolrank）
-- [x] IP 限流（每 IP 每天 20 次）
-- [x] 两阶段对话（AI 先问 3-5 问题再推荐）
-- [x] 防闲聊边界控制
-- [x] GSC API 接入（Service Account + gsc-report.ts）
-- [x] CI 修复（bun.lock + Turso 同步 + contents:write 权限）
+- [x] X Article 发布
+- [x] X 互动评论开始
 
-## 运营阶段待办
+## Launch Day 2（进行中）
 
-- [ ] 等 GSC 数据积累 1-2 周（当前 739 URL 发现，0 索引）
+- [ ] Data Story 发布（用数据讲故事，如 "463 个 AI Agent 工具趋势分析"）
+- [ ] Featured 邮件（向工具作者发邮件通知收录）
+
+## Launch Day 3-7
+
+- [ ] Reddit 相关 subreddit 分享（r/artificial, r/MachineLearning, r/SideProject）
+- [ ] Hacker News Show HN 帖子
+- [ ] 开发者社区分享（Dev.to, Hashnode, 掘金）
+- [ ] Product Hunt 准备（截图、描述、maker comment）
+- [ ] 持续 X 互动 + 回复评论
+
+## Launch Day 8-14
+
+- [ ] Product Hunt 正式发布
+- [ ] 数据复盘（GSC 索引进度、流量来源、AI 搜索使用量）
+- [ ] 根据用户反馈迭代优化
+- [ ] Newsletter 第一期发送
+- [ ] 开源仓库推广（GitHub trending 策略）
+
+## 并行任务
+
+- [ ] Tool Intelligence Layer: subagent 分析 top 50 → 上线展示页
+- [ ] GSC 数据积累观察（739 URL 已发现，0 已索引）
 - [ ] 根据 GSC 索引数据分析哪些页面类型优先被索引
-- [ ] 观察 AI 搜索使用数据，优化推荐质量
-- [ ] 考虑 backlink 建设策略（开源仓库、社区分享等）
 
-## Phase 5 — Phase 3: UGC + 收尾（可选，按需启动）
+## Phase 5 — Phase 3: UGC + 收尾（Launch 后按需启动）
 
 - [ ] 用户评价系统（工具评分 + 评论）
 - [ ] 社区功能（用户提交工具 + 投票）
@@ -55,3 +68,4 @@
 ## 阻塞项
 
 - GSC 索引需要时间（新站 1-2 周正常）
+- Tool Intelligence subagent 分析进行中

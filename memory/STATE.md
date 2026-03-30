@@ -36,7 +36,7 @@
   - Nav 添加 Stacks 入口
   - Sitemap 扩展至 756 URLs
 
-- Phase 5 AI-First 搜索基本完成
+- Phase 5 AI-First 搜索完成
   - Turso 全量迁移（本地 SQLite → Turso 云端，stacks 表 tags 列修复）
   - AI SDK v6 集成 + DeepSeek provider（@ai-sdk/openai OpenAI-compatible 模式）
   - 对话式搜索体验：流式 AI Stack 生成
@@ -52,21 +52,31 @@
   - CI 修复：bun.lock 同步 + Turso 同步 + contents:write 权限
   - 成本分析：单次推荐 ¥0.007，1000 用户/天 ¥326/月
 
+- Blueprint 升级（从 Stack Generator → Blueprint Generator）
+  - execution_plan + failure_points + project_tags 字段
+  - 混合推荐：AI 工具 + 外部行业标准工具（ext 标签区分）
+  - 定位 "AI Project Blueprint"，不叫 Playbook，不承诺赚钱
+
+- OG 动态图（/api/og，左右分栏布局）
+- 徽章 API（/api/badge/[slug]）
+- 72 个 stack 重新生成（Claude Opus）
+- 工具信息加厚（全量 463 + pros/use_cases）
+- Tool Intelligence Layer 脚本写好，subagent 正在分析 top 50
+- Launch Strategy 文档落盘
+
 ## 进行中
 
-- 运营阶段：等待 GSC 数据积累（739 URL 已发现，0 已索引 — 新站正常）
-- typo sitemap 已删除（agentoolrank.com 拼错版本）
+- Launch 阶段 — Day 1 已完成
+  - X Article 已发布（Day 1）
+  - X 互动评论开始
+- Tool Intelligence Layer: subagent 分析 top 50 工具中
+- 下一步：Day 2 Data Story + Featured 邮件
 
-## 关键决策（Phase 5）
+## 关键决策（Launch 阶段）
 
-- 全量迁移 Turso（翻转之前"不迁移"的决定）
-- SQLite 列 + 暴力扫描存 embedding（不引入向量数据库）
-- AI Gateway OIDC 认证
-- CEO 审查选了 SCOPE EXPANSION 模式 → 完整 C 方案（全量 AI-First）
-- Spec review 评分 5/10 → 修复 8 个问题后文档已完善
-- DeepSeek 作为 AI 提供商：成本极低（单次 ¥0.007），通过 @ai-sdk/openai 的 OpenAI-compatible 模式接入
-- 两阶段问答模式：先澄清需求再推荐，提升推荐精准度
-- IP 限流 20 次/天：防止滥用，控制成本
+- Blueprint 定位："AI Project Blueprint"（Codex 建议，不叫 Playbook，不承诺赚钱）
+- 保留工具目录做 SEO，Blueprint 做社交传播层
+- Tool Intelligence: 用 subagent 读 GitHub README 分析（不用 DeepSeek，分析能力不够）
 
 ## 已知最佳结果
 
@@ -74,15 +84,20 @@
 - 463 个工具入库，461 个有完整 LLM 内容（99.6%）
 - 756 个 sitemap URL（工具页 + 对比页 + 分类页 + Stack 页 + 静态页）
 - 15 个 Stack Graph 场景（RAG chatbot, coding assistant, multi-agent 等）
+- 72 个 stack 重新生成（Claude Opus 质量）
 - Top 3: n8n (★181k), dify (★135k), langchain (★131k)
 - Newsletter 后端已接通，可接收订阅
 - /weekly 周报页面上线
 - 开源数据集仓库已创建
 - AI 搜索流式体验上线，带分阶段状态指示器 + 两阶段问答
+- Blueprint 生成器上线（execution_plan + failure_points + 混合推荐）
+- OG 动态图 + 徽章 API 上线
 - GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
 
 ## 下一步
 
-- 等 GSC 数据积累 1-2 周，根据索引数据调整 SEO 策略
-- 观察 AI 搜索使用数据，优化推荐质量
-- Phase 5 Phase 3（可选）：UGC + 用户评价 + 社区功能
+- Day 2: Data Story 发布 + Featured 邮件
+- Day 3-7: 社区分享 + Reddit/HN + 开发者社区
+- Day 8-14: 数据复盘 + 迭代优化
+- Tool Intelligence Layer 完成分析 → 上线展示
+- 等 GSC 数据积累，根据索引数据调整 SEO 策略

@@ -105,3 +105,15 @@
 - 前端问题（如 convertToModelMessages 缺失）不会体现在 API 层面
 - 每次代码改动后必须用 /browse 测前端，不能只测 API
 - 尤其是涉及 useChat / 流式 UI 的改动，前后端交互链路必须端到端验证
+
+## bun-lock-sync
+- 每次 npm install / pnpm add 新包后，必须运行 `bun install` 更新 bun.lock
+- 否则 CI 的 `bun install --frozen-lockfile` 会因 lockfile 与 package.json 不同步而失败
+- 症状：本地开发正常，CI 构建失败报 frozen-lockfile 错误
+- 修复：`bun install` 重新生成 bun.lock，提交到 git
+
+## claude-cli-background
+- `claude -p "prompt"` 在后台进程（无 TTY）会卡死不返回
+- 原因：CLI 可能尝试读取终端输入或检测 TTY 状态
+- 修复：用 Claude Code subagent（Agent 工具 + run_in_background）替代 `claude -p`
+- 适用场景：批量分析、后台任务等需要 LLM 处理的自动化流程

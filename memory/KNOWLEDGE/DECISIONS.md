@@ -58,3 +58,25 @@
 - **结论**: agentoolrank.com — "agent+tool+rank" 三个 SEO 关键词，.com 最优 TLD
 - **工具经验**: whois 命令不可靠（显示可用但实际已注册），Cloudflare API /check 端点最准
 - **日期**: 2026-03-28
+
+## blueprint-pivot
+- **背景**: Stack Generator 升级方向 — 是否改名/改定位
+- **选项**:
+  - A. 保持 Stack Generator — 简单但缺乏差异化
+  - B. Playbook Generator — Codex 否决，"承诺赚钱"语感不对
+  - C. Blueprint Generator — 定位 "AI Project Blueprint"，技术蓝图感
+- **结论**: C — AI Project Blueprint。不是 pivot 是 layer（在 Stack 基础上加 execution_plan + failure_points + project_tags）
+- **关键决策**:
+  - 保留工具目录做 SEO 基础，Blueprint 做社交传播层
+  - 混合推荐：AI 工具 + 外部行业标准工具（ext 标签区分）
+  - Codex 第二意见：不叫 Playbook，不承诺赚钱
+- **日期**: 2026-03-30
+
+## tool-intelligence
+- **背景**: 为每个工具生成深度分析档案（capabilities/integrations/limitations）
+- **选项**:
+  - A. DeepSeek 批量分析 — 成本低但分析能力不够，输出质量差
+  - B. Claude subagent 读 GitHub README — 分析深度好，能理解技术细节
+- **结论**: B — 用 Claude subagent 读 GitHub README 分析
+- **实施**: 脚本批量调度 subagent，每个工具读 README + 生成 capabilities/integrations/limitations 档案
+- **日期**: 2026-03-30

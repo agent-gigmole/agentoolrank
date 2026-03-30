@@ -43,3 +43,10 @@
 | 对比页 / vs页 / 长尾SEO | SEO_FLYWHEEL.md#2 |
 | 徽章 / 反向链接 / badge | SEO_FLYWHEEL.md#4 |
 | 工作流故事 / 用户场景描述 | SEO_FLYWHEEL.md#ai-builder |
+| bun.lock 同步 / frozen-lockfile / CI 失败 | GOTCHAS.md#bun-lock-sync |
+| claude -p 后台卡死 / 无 TTY / subagent 替代 | GOTCHAS.md#claude-cli-background |
+| Blueprint / Playbook / Stack 升级 / 社交传播层 | DECISIONS.md#blueprint-pivot |
+| Tool Intelligence / 深度分析 / capabilities / README 分析 | DECISIONS.md#tool-intelligence |
+| OG 动态图 / /api/og / 社交分享 | LOG.md#2026-03-30 |
+| 徽章 API / badge / 反向链接 | LOG.md#2026-03-30 |
+| Launch Strategy / Day 1-14 / X Article | LOG.md#2026-03-30 |
