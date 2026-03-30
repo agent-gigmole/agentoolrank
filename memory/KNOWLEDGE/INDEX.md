@@ -59,3 +59,7 @@
 | OpenRouter Allowed Providers / 白名单陷阱 | GOTCHAS.md#openrouter-allowed-providers |
 | Codex 对抗性审查 / 12个问题 / 安全修复 | LOG.md#2026-03-30-codex |
 | 模型对比测试 / 6模型 / GPT-4o / Kimi / Qwen / DeepSeek / MiniMax | LOG.md#2026-03-30-codex |
+| GraphQL GitTimestamp / since 变量 / commit_count_90d | LOG.md#2026-03-30 |
+| issue 响应中位数 / closed issues / createdAt closedAt | LOG.md#2026-03-30 |
+| docs_status / HEAD 请求 / homepageUrl 检查 | LOG.md#2026-03-30 |
+| ALTER TABLE 幂等迁移 / duplicate column 静默跳过 | LOG.md#2026-03-30 |

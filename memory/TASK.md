@@ -21,10 +21,10 @@
 
 ## 紧急：壁垒建设（用户要求立即执行）
 
-### 任务 A：GitHub 真实信号指标
-- [ ] 在每日爬虫里加：issue 响应中位数、最近30天 commit 数、文档链接是否 404
-- [ ] 写入 tools 表新字段或 intelligence JSON
-- [ ] 这些数据比 README 蒸馏有价值，竞品手动抄不走
+### 任务 A：GitHub 真实信号指标 ✅
+- [x] 在每日爬虫里加：issue 响应中位数、90天 commit 数、文档链接是否 404
+- [x] 写入 tools 表新字段（issue_response_hours, docs_status）+ commit_count_90d 填充
+- [x] 这些数据比 README 蒸馏有价值，竞品手动抄不走
 
 ### 任务 B：Blueprint 模板库 SEO 页面
 - [ ] 用户保存的 Blueprint 自动变成 SEO 索引页

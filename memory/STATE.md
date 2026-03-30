@@ -78,6 +78,14 @@
   - 6 模型对比测试（GPT-4o/Kimi/Qwen/DeepSeek/MiniMax M2.7/M2.5）
   - 审查文档：docs/ADVERSARIAL_REVIEW.md
 
+- **GitHub 爬虫真实信号指标（任务 A）** ✅
+  - commit_count_90d: GraphQL `recentHistory: history(since: $since)` 变量传入
+  - issue_response_median_hours: 最近 20 个 closed issues 计算中位数
+  - docs_status: HEAD 请求检查 homepageUrl（ok/404/unknown，5s 超时）
+  - schema.sql + Zod schema + upsert SQL + metric_snapshots 全部更新
+  - 自动 schema 迁移（ALTER TABLE，幂等）
+  - dry-run 模式（--dry-run --limit N）验证通过，TypeScript 零错误
+
 ## 进行中
 
 - Launch 阶段 — Day 1 已完成

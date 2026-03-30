@@ -1,5 +1,19 @@
 # LOG.md — 变更日志
 
+## 2026-03-30 GitHub 爬虫真实信号指标
+- 修改 `scripts/crawl-github.ts` GraphQL 查询，新增 3 个真实信号指标
+- `commit_count_90d`: 通过 `recentHistory: history(since: $since)` 获取，$since 作为 GitTimestamp 变量传入
+- `issue_response_median_hours`: 抓取最近 20 个 closed issues，计算 createdAt→closedAt 中位数
+- `docs_status`: HEAD 请求 homepageUrl，5s 超时，返回 ok/404/unknown
+- 更新 db/schema.sql（新增 issue_response_hours REAL, docs_status TEXT）
+- 更新 src/lib/schema.ts Zod schema
+- upsert SQL 新增 commit_count_90d/issue_response_hours/docs_status
+- metric_snapshots 新增 commit_count_90d 记录
+- 自动 schema 迁移（ALTER TABLE，幂等，错误静默跳过已存在列）
+- 新增 --dry-run 模式（配合 --limit N 限制数量）
+- dry-run 验证结果：langchain(commits90d=608,issueHrs=43.9,docs=ok) langgraph(246,156.3,ok) crewai(266,641.6,ok)
+- TypeScript 编译零错误
+
 ## 2026-03-27 AgentKit 框架部署
 - 完成 AgentKit 框架初始化部署
 - 从 discussion_notes.md 提取项目信息填充 memory 文件
