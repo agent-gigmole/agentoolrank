@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS tools (
   pricing TEXT NOT NULL DEFAULT 'open-source' CHECK(pricing IN ('free','freemium','paid','open-source')),
   affiliate_url TEXT,
   content_status TEXT DEFAULT 'pending' CHECK(content_status IN ('pending','partial','complete')),
+  intelligence TEXT DEFAULT '',          -- JSON: deep analysis of capabilities, integrations, limitations
 
   -- Ranking
   score REAL DEFAULT 0,
