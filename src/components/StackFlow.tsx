@@ -66,15 +66,19 @@ function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
     </>
   );
 
-  // External tools don't link to our tool pages
+  // External tools link to Google search (we don't know their exact URL)
   if (isExternal) {
+    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(tool.name || tool.tool_id)}+official+site&btnI=1`;
     return (
-      <div
-        className="block p-2.5 rounded-lg border border-amber-200 bg-amber-50/30 animate-fade-in"
+      <a
+        href={searchUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block p-2.5 rounded-lg border border-amber-200 bg-amber-50/30 hover:border-amber-300 hover:shadow-md transition-all animate-fade-in"
         style={{ animationDelay: `${delay}ms` }}
       >
         {content}
-      </div>
+      </a>
     );
   }
 
