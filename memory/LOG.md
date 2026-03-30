@@ -184,3 +184,14 @@
 - 6/6 全部成功写入 Turso
 - 总覆盖率：444/464 = 95.7%
 - 脚本：/tmp/write-intel-final.ts
+
+### 2026-03-30 — Tool Intelligence 全量重做（规则引擎 → Claude subagent）
+
+- 发现第二批 394 个工具的规则引擎数据质量极差：全是模板化 "构建自主 AI 智能体" 文本
+- 308 个工具用 Claude Code subagent 全量重做深度分析
+- 踩坑1：子 agent 用关键词匹配代替 LLM 分析会产生垃圾数据（全是模板）
+- 踩坑2：batch 15 的 agent 创建了错误的表 tool_intelligence 而不是更新 tools.intelligence 列 → 需手动迁移
+- 最佳批处理参数：每 agent 20 个工具，并行 3-6 个 agent
+- 质量红线：key_differentiator 出现 "构建自主 AI 智能体" 即为低质量标记
+- 最终结果：444/461 (96.3%) 高质量覆盖，0 个低质量模板残留
+- 流程固化到 scripts/generate-intelligence-claude.md

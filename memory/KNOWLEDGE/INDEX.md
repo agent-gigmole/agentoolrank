@@ -50,3 +50,7 @@
 | OG 动态图 / /api/og / 社交分享 | LOG.md#2026-03-30 |
 | 徽章 API / badge / 反向链接 | LOG.md#2026-03-30 |
 | Launch Strategy / Day 1-14 / X Article | LOG.md#2026-03-30 |
+| subagent 规则引擎陷阱 / 模板数据 / 关键词匹配 | GOTCHAS.md#subagent-rule-engine-trap |
+| subagent 创建错误表 / Turso schema / tool_intelligence | GOTCHAS.md#subagent-wrong-table-creation |
+| 批量 subagent 参数 / 并行度 / quality gate | GOTCHAS.md#batch-subagent-parameters |
+| Tool Intelligence 全量重做 / 308 工具 / 流程固化 | LOG.md#2026-03-30 |

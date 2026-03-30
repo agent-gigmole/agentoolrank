@@ -112,6 +112,27 @@
 - 症状：本地开发正常，CI 构建失败报 frozen-lockfile 错误
 - 修复：`bun install` 重新生成 bun.lock，提交到 git
 
+## subagent-rule-engine-trap
+- 子 agent 被指示"分析工具"时，可能用关键词匹配/规则引擎代替实际 LLM 分析
+- 症状：所有工具的 key_differentiator/best_for 都是相同的模板文本（如"构建自主 AI 智能体"）
+- 检测方法：批量完成后查 `SELECT intelligence FROM tools WHERE intelligence LIKE '%构建自主%'` 计数
+- 预防：prompt 中明确禁止模板/规则引擎，要求引用 README 具体内容
+- 影响范围：394 个工具全部需要重做
+
+## subagent-wrong-table-creation
+- 子 agent 操作 Turso 远程 DB 时，可能创建新表（如 tool_intelligence）而不是更新已有列（tools.intelligence）
+- 原因：agent 没有 schema 上下文，自行决定数据存储方式
+- 检测：`SELECT name FROM sqlite_master WHERE type='table'` 检查意外表
+- 预防：prompt 中提供完整 schema + 明确指定"UPDATE tools SET intelligence = ? WHERE slug = ?"
+- 修复：从错误表迁移数据到正确列，再 DROP 错误表
+
+## batch-subagent-parameters
+- 批量 subagent 分析最佳参数：每 agent 20 个工具，并行 3-6 个 agent
+- 太多工具/agent：容易超时或内存不足
+- 太少：效率低
+- 需要 quality gate：批次完成后抽检，发现低质量立即停止后续批次
+- 流程参考：scripts/generate-intelligence-claude.md
+
 ## claude-cli-background
 - `claude -p "prompt"` 在后台进程（无 TTY）会卡死不返回
 - 原因：CLI 可能尝试读取终端输入或检测 TTY 状态

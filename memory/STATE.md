@@ -63,11 +63,13 @@
 - 工具信息加厚（全量 463 + pros/use_cases）
 - Launch Strategy 文档落盘
 
-- **Tool Intelligence Layer 完成（全量）** ✅
+- **Tool Intelligence Layer 完成（全量重做）** ✅
   - 第一批：Claude Opus 深度分析 top 50 工具 → 50/50 成功
-  - 第二批：关键词匹配 + 规则引擎分析剩余 411 工具 → 394 成功，17 跳过（README <200字符）
-  - 总计 444 个工具已有 intelligence 数据（覆盖率 ~96%）
+  - 第二批（规则引擎，已废弃）：394 个工具关键词匹配产出低质量模板数据
+  - 第三批（全量重做）：308 个工具用 Claude Code subagent 深度分析重做
+  - 最终：444/461 (96.3%) 高质量覆盖，0 个低质量模板残留
   - 9 字段结构化 JSON：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
+  - 流程固化到 scripts/generate-intelligence-claude.md
 
 ## 进行中
 
@@ -81,7 +83,8 @@
 
 - Blueprint 定位："AI Project Blueprint"（Codex 建议，不叫 Playbook，不承诺赚钱）
 - 保留工具目录做 SEO，Blueprint 做社交传播层
-- Tool Intelligence: 用 Claude Opus 分析（不用 DeepSeek，分析能力不够）— 已验证，质量显著高于 DeepSeek
+- Tool Intelligence: 用 Claude Opus/subagent 分析（不用 DeepSeek/规则引擎，质量不够）— 已验证，质量显著高于规则引擎
+- 批量 intelligence 生成最佳参数：每 agent 20 个工具，并行 3-6 个 agent
 
 ## 已知最佳结果
 
@@ -98,7 +101,7 @@
 - Blueprint 生成器上线（execution_plan + failure_points + 混合推荐）
 - OG 动态图 + 徽章 API 上线
 - GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
-- **Tool Intelligence: 444 个工具分析档案已入库（全量覆盖 95.7%，6 个低质量已重写）**
+- **Tool Intelligence: 444/461 高质量分析档案（Claude subagent 深度分析，0 个模板残留）**
 
 ## 下一步
 

@@ -54,7 +54,7 @@ Launch 阶段（Day 1 完成，进入 Day 2）
 
 ## 并行任务
 
-- [x] Tool Intelligence Layer: 50 个工具深度分析档案已入库
+- [x] Tool Intelligence Layer: 444/461 高质量分析档案已入库（全量重做完成）
 - [ ] Tool Intelligence 展示页开发
 - [ ] GSC 数据积累观察（739 URL 已发现，0 已索引）
 - [ ] 根据 GSC 索引数据分析哪些页面类型优先被索引
@@ -69,4 +69,4 @@ Launch 阶段（Day 1 完成，进入 Day 2）
 ## 阻塞项
 
 - GSC 索引需要时间（新站 1-2 周正常）
-- Tool Intelligence subagent 分析进行中
+- ~~Tool Intelligence subagent 分析~~ ✅ 已完成（444/461 高质量覆盖）
