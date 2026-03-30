@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!stack) return {};
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const totalTools = stack.layers.reduce((s: number, l: any) => s + l.tools.length, 0);
-  const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(stack.title)}&icon=${encodeURIComponent(stack.icon)}&difficulty=${stack.difficulty}&layers=${stack.layers.length}&tools=${totalTools}`;
+  const layerNames = stack.layers.map((l: any) => l.name).join("|");
+  const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(stack.title)}&icon=${encodeURIComponent(stack.icon)}&difficulty=${stack.difficulty}&layers=${stack.layers.length}&tools=${totalTools}&desc=${encodeURIComponent((stack.description || "").slice(0, 120))}&layer_names=${encodeURIComponent(layerNames)}`;
 
   return {
     title: `${stack.title} — AI Project Blueprint`,
