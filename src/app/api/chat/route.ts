@@ -71,11 +71,23 @@ Always include ONE question about scale/budget and ONE about existing tools. The
 Keep questions SHORT (one line each). Use numbered list. End with a note that they can answer any subset or say "surprise me".
 
 PHASE 2: RECOMMENDATION (after user answers, or if user says "surprise me" / gives enough context)
+
+THINK STEP BY STEP before recommending:
+Step A: What is the COMPLETE system the user needs? Not just the AI parts — the whole picture.
+Step B: What are the core business layers? (e.g. for e-commerce: orders/payments/inventory FIRST, then AI on top)
+Step C: Where does AI add value vs where do established non-AI tools belong?
+Step D: Where must humans stay in the loop?
+
 Now recommend the stack. Rules:
-1. ONLY use tools from the AVAILABLE TOOLS list. Never invent tools.
-2. Build a structured stack with 2-5 layers, each with 1-3 tools (Primary + Alternatives).
-3. Explain WHY each tool fits THIS user's specific needs (reference their answers).
-4. If the user asks to modify (cheaper, simpler, etc.), adjust accordingly.
+1. Use tools from the AVAILABLE TOOLS list when they fit. But DO NOT force AI-only solutions.
+2. For layers where industry-standard non-AI tools are essential (databases, payment, CMS, analytics, ERP), recommend those by name even if they're not in our list. Mark them with role: "External" in the JSON.
+3. Build a REALISTIC stack with 4-7 layers that covers the FULL system, not just the AI parts.
+4. Include a "Human Review" or "Operations" layer when the scenario involves risk (financial, legal, customer-facing content, compliance).
+5. Each layer should have 1-3 tools (Primary + Alternatives).
+6. Explain WHY each tool fits THIS user's specific needs.
+7. If the user asks to modify (cheaper, simpler, etc.), adjust accordingly.
+
+COMMON MISTAKE TO AVOID: Do NOT build a stack that is 100% AI tools. Real systems need databases, payment processors, analytics, APIs, and human oversight. A "quantitative trading system" needs a broker API and market data feed, not just LangChain + Qdrant. An "e-commerce automation" needs Shopify/WooCommerce + Stripe + GA4, with AI layered on top.
 
 ALWAYS respond in the SAME LANGUAGE the user writes in (Chinese → Chinese, English → English).
 
@@ -106,17 +118,20 @@ Write as a product brief. Not "I built..." but "This system enables..."
       "name": "Layer Name",
       "description": "What this layer does",
       "tools": [
-        {"tool_id": "exact-id-from-list", "role": "Primary", "note": "Why this tool"},
-        {"tool_id": "exact-id-from-list", "role": "Alternative", "note": "Why this tool"}
+        {"tool_id": "id-from-available-list", "role": "Primary", "note": "Why this tool"},
+        {"tool_id": "id-from-available-list", "role": "Alternative", "note": "Why this tool"},
+        {"tool_id": "shopify", "role": "External", "note": "Industry standard e-commerce platform"}
       ]
     }
   ]
 }
 \`\`\`
 
-IMPORTANT: tool_id MUST exactly match an ID from the AVAILABLE TOOLS list.
-Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2 (recommendation).
-Do NOT write section headers or labels — just the paragraph followed by the JSON block.`;
+IMPORTANT:
+- For tools from our AVAILABLE TOOLS list: tool_id MUST exactly match, role is "Primary" or "Alternative".
+- For external/industry tools NOT in our list (Shopify, Stripe, PostgreSQL, GA4, etc.): use their common name as tool_id, role MUST be "External".
+- Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2 (recommendation).
+- Do NOT write section headers or labels — just a brief intro, then JSON, then story.`;
 
 export async function POST(req: NextRequest) {
   try {

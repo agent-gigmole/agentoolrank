@@ -39,6 +39,45 @@ function pricingBadge(pricing?: string) {
 
 function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
   const isPrimary = tool.role === "Primary";
+  const isExternal = tool.role === "External";
+
+  const content = (
+    <>
+      <div className="flex items-center gap-1.5">
+        {isPrimary && (
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+        )}
+        {isExternal && (
+          <span className="text-[9px] px-1 py-0.5 rounded bg-amber-100 text-amber-700 shrink-0">ext</span>
+        )}
+        <span className={`text-sm font-medium ${
+          isPrimary ? "text-blue-900" : isExternal ? "text-amber-900" : "text-gray-700"
+        }`}>
+          {tool.name || tool.tool_id}
+        </span>
+        <span className="ml-auto flex items-center gap-1">
+          {pricingBadge(tool.pricing)}
+          {tool.stars != null && (
+            <span className="text-[10px] text-gray-400">{formatStars(tool.stars)}</span>
+          )}
+        </span>
+      </div>
+      <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-2">{tool.note}</p>
+    </>
+  );
+
+  // External tools don't link to our tool pages
+  if (isExternal) {
+    return (
+      <div
+        className="block p-2.5 rounded-lg border border-amber-200 bg-amber-50/30 animate-fade-in"
+        style={{ animationDelay: `${delay}ms` }}
+      >
+        {content}
+      </div>
+    );
+  }
+
   return (
     <Link
       href={`/tool/${tool.tool_id}`}
@@ -51,21 +90,7 @@ function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
       }`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="flex items-center gap-1.5">
-        {isPrimary && (
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-        )}
-        <span className={`text-sm font-medium ${isPrimary ? "text-blue-900" : "text-gray-700"}`}>
-          {tool.name || tool.tool_id}
-        </span>
-        <span className="ml-auto flex items-center gap-1">
-          {pricingBadge(tool.pricing)}
-          {tool.stars != null && (
-            <span className="text-[10px] text-gray-400">{formatStars(tool.stars)}</span>
-          )}
-        </span>
-      </div>
-      <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-2">{tool.note}</p>
+      {content}
     </Link>
   );
 }
