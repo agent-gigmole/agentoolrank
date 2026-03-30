@@ -174,3 +174,13 @@
 
 ### 总计
 - 444 个工具已有 intelligence 数据，覆盖率 ~96%（444/463）
+
+### 2026-03-30 — Tool Intelligence 补充：6 个跳过工具重新生成
+
+- 工具列表：llama-factory, a2a, langchain-chatchat, cursor, sweep, privategpt
+- 这些工具之前有 intelligence 但质量差（规则引擎生成，key_differentiator 和 best_for 都是通用文本）
+- 用 Claude Opus 分析能力重新生成高质量 intelligence
+- 尝试获取 README：4/6 有完整 README，cursor 和 sweep README 极简（<400字符），基于已知信息生成
+- 6/6 全部成功写入 Turso
+- 总覆盖率：444/464 = 95.7%
+- 脚本：/tmp/write-intel-final.ts

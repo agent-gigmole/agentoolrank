@@ -98,7 +98,7 @@
 - Blueprint 生成器上线（execution_plan + failure_points + 混合推荐）
 - OG 动态图 + 徽章 API 上线
 - GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
-- **Tool Intelligence: 444 个工具分析档案已入库（全量覆盖 96%）**
+- **Tool Intelligence: 444 个工具分析档案已入库（全量覆盖 95.7%，6 个低质量已重写）**
 
 ## 下一步
 
