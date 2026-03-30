@@ -16,16 +16,42 @@ function getModel() {
   return provider.chat(modelId);
 }
 
-// Get ALL tools with rich context for the AI
+// Get ALL tools with rich context + intelligence for the AI
 async function getToolContext(): Promise<string> {
   const r = await db.execute(
-    "SELECT id, name, tagline, description, pricing, github_stars, category_tags, pros, use_cases FROM tools WHERE content_status = 'complete' ORDER BY score DESC"
+    "SELECT id, name, tagline, pricing, github_stars, category_tags, pros, use_cases, intelligence FROM tools WHERE content_status = 'complete' ORDER BY score DESC"
   );
   return (r.rows as any[])
     .map((t) => {
-      const pros = (() => { try { const p = JSON.parse(t.pros || "[]"); return p.slice(0, 2).join("; "); } catch { return ""; } })();
-      const uses = (() => { try { const u = JSON.parse(t.use_cases || "[]"); return u.slice(0, 2).join("; "); } catch { return ""; } })();
-      return `${t.id} | ${t.name} | ${(t.tagline || "").slice(0, 100)} | ${t.pricing} | ★${t.github_stars || 0} | ${t.category_tags}${pros ? ` | Pros: ${pros}` : ""}${uses ? ` | Uses: ${uses}` : ""}`;
+      // Basic info
+      let line = `${t.id} | ${t.name} | ${(t.tagline || "").slice(0, 80)} | ${t.pricing} | ★${t.github_stars || 0} | ${t.category_tags}`;
+
+      // Intelligence (if available — richer than pros/use_cases)
+      if (t.intelligence && t.intelligence !== "") {
+        try {
+          const intel = JSON.parse(t.intelligence);
+          const caps = intel.capabilities?.slice(0, 3).join(", ") || "";
+          const integ = intel.integrations?.slice(0, 5).join(", ") || "";
+          const bestFor = intel.best_for?.slice(0, 2).join(", ") || "";
+          const notFor = intel.not_for?.slice(0, 1).join(", ") || "";
+          const diff = intel.key_differentiator || "";
+          const deploy = intel.deployment?.join(", ") || "";
+          if (caps) line += ` | Can: ${caps}`;
+          if (integ) line += ` | Integrates: ${integ}`;
+          if (deploy) line += ` | Deploy: ${deploy}`;
+          if (bestFor) line += ` | Best for: ${bestFor}`;
+          if (notFor) line += ` | NOT for: ${notFor}`;
+          if (diff) line += ` | Diff: ${diff.slice(0, 100)}`;
+        } catch {}
+      } else {
+        // Fallback to basic pros/use_cases
+        const pros = (() => { try { return JSON.parse(t.pros || "[]").slice(0, 2).join("; "); } catch { return ""; } })();
+        const uses = (() => { try { return JSON.parse(t.use_cases || "[]").slice(0, 2).join("; "); } catch { return ""; } })();
+        if (pros) line += ` | Pros: ${pros}`;
+        if (uses) line += ` | Uses: ${uses}`;
+      }
+
+      return line;
     })
     .join("\n");
 }
