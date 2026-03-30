@@ -219,3 +219,9 @@
   - api.moonshot.ai 需要 /v1 路径前缀（和 DeepSeek 不同）
   - Kimi 默认开启 thinking（reasoning_content），content 可能为空
   - OpenRouter Allowed Providers 列表设为空才是"允许所有"
+
+## 2026-03-31 — /agentkit-save checkpoint
+- 本次 session：Tool Intelligence 全量重做 + 6模型对比 + Kimi切换 + Codex审查 + 7项安全修复
+- 自检结果：补了 DECISIONS.md 遗漏
+- 下一步：GitHub 真实信号指标 + Blueprint 模板库 SEO 页面（壁垒建设）
+- 状态：working
