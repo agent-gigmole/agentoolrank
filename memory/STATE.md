@@ -61,22 +61,27 @@
 - 徽章 API（/api/badge/[slug]）
 - 72 个 stack 重新生成（Claude Opus）
 - 工具信息加厚（全量 463 + pros/use_cases）
-- Tool Intelligence Layer 脚本写好，subagent 正在分析 top 50
 - Launch Strategy 文档落盘
+
+- **Tool Intelligence Layer 完成** ✅
+  - Claude Opus 分析 top 50 工具的 GitHub README
+  - 生成结构化 JSON：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
+  - 50/50 成功写入 Turso 数据库 intelligence 字段
+  - 分析质量：具体到服务名的 integrations，基于 README 的 limitations，有对比性的 key_differentiator
 
 ## 进行中
 
 - Launch 阶段 — Day 1 已完成
   - X Article 已发布（Day 1）
   - X 互动评论开始
-- Tool Intelligence Layer: subagent 分析 top 50 工具中
 - 下一步：Day 2 Data Story + Featured 邮件
+- Tool Intelligence 展示页待开发
 
 ## 关键决策（Launch 阶段）
 
 - Blueprint 定位："AI Project Blueprint"（Codex 建议，不叫 Playbook，不承诺赚钱）
 - 保留工具目录做 SEO，Blueprint 做社交传播层
-- Tool Intelligence: 用 subagent 读 GitHub README 分析（不用 DeepSeek，分析能力不够）
+- Tool Intelligence: 用 Claude Opus 分析（不用 DeepSeek，分析能力不够）— 已验证，质量显著高于 DeepSeek
 
 ## 已知最佳结果
 
@@ -93,11 +98,12 @@
 - Blueprint 生成器上线（execution_plan + failure_points + 混合推荐）
 - OG 动态图 + 徽章 API 上线
 - GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
+- **Tool Intelligence: 50 个工具深度分析档案已入库**
 
 ## 下一步
 
+- Tool Intelligence 展示页开发（详情页展示 capabilities/integrations/best_for 等）
 - Day 2: Data Story 发布 + Featured 邮件
 - Day 3-7: 社区分享 + Reddit/HN + 开发者社区
 - Day 8-14: 数据复盘 + 迭代优化
-- Tool Intelligence Layer 完成分析 → 上线展示
 - 等 GSC 数据积累，根据索引数据调整 SEO 策略

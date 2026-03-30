@@ -159,3 +159,15 @@
 - X Article 已发布（Day 1 Launch）
 - X 互动评论开始（主动回复相关话题）
 - 下一步：Day 2 Data Story + Featured 邮件
+
+## 2026-03-29 Tool Intelligence Layer 完成
+
+- Claude Opus 直接分析 top 50 工具的 GitHub README（不使用外部 LLM API）
+- 每个工具生成 9 字段结构化 JSON：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
+- 50/50 全部成功写入 Turso 数据库 intelligence 字段
+- 分析质量远超 DeepSeek：
+  - integrations 具体到服务名（如 PostgreSQL, Chroma, LangChain 而非 "various databases"）
+  - limitations 基于 README 实际内容（如 "Fair-code license restricts commercial redistribution"）
+  - key_differentiator 有竞品对比（如 "Unlike LangChain which is code-first, Dify provides..."）
+  - best_for 和 not_for 互斥且具体
+- 工作流程：fetch README → Claude 分析 → 生成 JSON → 写入 DB（无 LLM API 调用）
