@@ -195,3 +195,27 @@
 - 质量红线：key_differentiator 出现 "构建自主 AI 智能体" 即为低质量标记
 - 最终结果：444/461 (96.3%) 高质量覆盖，0 个低质量模板残留
 - 流程固化到 scripts/generate-intelligence-claude.md
+
+## 2026-03-30 Codex 对抗性审查 + 模型切换 Kimi K2.5
+
+### Codex 审查
+- 12 个问题发现：3 Critical + 6 High + 3 Medium
+- 7 项代码修复完成：
+  - C1: intelligence 防投毒（输入校验）
+  - C2: 输入预算控制（防滥用）
+  - C4: JSON 解析容错（try-catch）
+  - C5: 删除无用代码
+  - C6: 错误信息脱敏（防泄露内部路径）
+  - C7: save-stack 请求校验
+  - S1: 埋点漏斗（分析转化）
+- 审查文档：docs/ADVERSARIAL_REVIEW.md
+
+### 模型切换 DeepSeek V3 → Kimi K2.5
+- 6 模型对比测试：GPT-4o / Kimi K2.5 / Qwen / DeepSeek V3 / MiniMax M2.7 / M2.5
+- 最终选择 Kimi K2.5（api.moonshot.ai 直连，$0.021/次，质量最佳性价比）
+- 关键坑点：
+  - Vercel env 用 echo 管道带 \n 导致 API key 失效 → 必须用 `printf '%s'`
+  - Kimi K2.5 只支持 temperature=1，不能设 0.3
+  - api.moonshot.ai 需要 /v1 路径前缀（和 DeepSeek 不同）
+  - Kimi 默认开启 thinking（reasoning_content），content 可能为空
+  - OpenRouter Allowed Providers 列表设为空才是"允许所有"

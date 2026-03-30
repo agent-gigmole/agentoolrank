@@ -71,6 +71,13 @@
   - 9 字段结构化 JSON：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
   - 流程固化到 scripts/generate-intelligence-claude.md
 
+- **Codex 对抗性审查 + 模型切换完成** ✅
+  - Codex 审查发现 12 个问题（3 Critical + 6 High + 3 Medium）
+  - 7 项代码修复：intelligence 防投毒、输入预算控制、JSON 解析容错、删无用代码、错误脱敏、save-stack 校验、埋点漏斗
+  - 模型从 DeepSeek V3 切换到 Kimi K2.5（api.moonshot.ai 直连，$0.021/次）
+  - 6 模型对比测试（GPT-4o/Kimi/Qwen/DeepSeek/MiniMax M2.7/M2.5）
+  - 审查文档：docs/ADVERSARIAL_REVIEW.md
+
 ## 进行中
 
 - Launch 阶段 — Day 1 已完成
@@ -79,12 +86,17 @@
 - 下一步：Day 2 Data Story + Featured 邮件
 - Tool Intelligence 展示页待开发
 
-## 关键决策（Launch 阶段）
+## 关键决策（最新）
 
 - Blueprint 定位："AI Project Blueprint"（Codex 建议，不叫 Playbook，不承诺赚钱）
 - 保留工具目录做 SEO，Blueprint 做社交传播层
 - Tool Intelligence: 用 Claude Opus/subagent 分析（不用 DeepSeek/规则引擎，质量不够）— 已验证，质量显著高于规则引擎
 - 批量 intelligence 生成最佳参数：每 agent 20 个工具，并行 3-6 个 agent
+- **AI 模型选型：Kimi K2.5（api.moonshot.ai 直连）**
+  - DeepSeek V3 → Kimi K2.5 切换原因：6 模型对比中 Kimi 质量更好、成本合理
+  - 只支持 temperature=1，不能设 0.3
+  - api.moonshot.ai 需要 /v1 路径前缀
+  - 默认开启 thinking（reasoning_content），content 可能为空需处理
 
 ## 已知最佳结果
 
@@ -102,6 +114,8 @@
 - OG 动态图 + 徽章 API 上线
 - GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
 - **Tool Intelligence: 444/461 高质量分析档案（Claude subagent 深度分析，0 个模板残留）**
+- **Codex 审查 12 个问题全部修复，安全性显著提升**
+- **AI 模型：Kimi K2.5 via api.moonshot.ai，$0.021/次**
 
 ## 下一步
 

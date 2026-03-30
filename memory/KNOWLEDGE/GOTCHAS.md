@@ -138,3 +138,22 @@
 - 原因：CLI 可能尝试读取终端输入或检测 TTY 状态
 - 修复：用 Claude Code subagent（Agent 工具 + run_in_background）替代 `claude -p`
 - 适用场景：批量分析、后台任务等需要 LLM 处理的自动化流程
+
+## vercel-env-echo-newline
+- `echo "value" | vercel env add` 会在值末尾带 `\n` 换行符
+- 导致 API key 等敏感值包含不可见换行符，API 认证失败
+- 修复：必须用 `printf '%s' "value" | vercel env add`
+- 影响范围：所有通过 CLI 管道设置的 Vercel 环境变量
+- 区别于 vercel-env-newline（那个是 URL 换行问题），这个是值本身带换行
+
+## kimi-k25-api-quirks
+- Kimi K2.5（api.moonshot.ai）只支持 temperature=1，设 0.3 会报错
+- API 基础 URL 需要 /v1 路径前缀：`https://api.moonshot.ai/v1`（DeepSeek 是 `https://api.deepseek.com`，不需要 /v1）
+- 默认开启 thinking 模式（响应含 reasoning_content 字段），content 字段可能为空字符串
+- 处理方式：检查 content 是否为空，若空则取 reasoning_content 或等后续 chunk
+- 注意：api.moonshot.ai（国际）vs api.moonshot.cn（国内），不要搞混
+
+## openrouter-allowed-providers
+- OpenRouter 的 Allowed Providers 设置：留空 = 允许所有 provider
+- 如果添加了任何 provider，则变成白名单模式（只允许列表中的 provider）
+- 直觉陷阱：以为"不设置 = 全部禁止"，实际是"不设置 = 全部允许"

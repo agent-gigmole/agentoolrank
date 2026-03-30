@@ -55,6 +55,8 @@ Launch 阶段（Day 1 完成，进入 Day 2）
 ## 并行任务
 
 - [x] Tool Intelligence Layer: 444/461 高质量分析档案已入库（全量重做完成）
+- [x] Codex 对抗性审查：12 个问题发现，7 项代码修复完成
+- [x] 模型切换：DeepSeek V3 → Kimi K2.5（6 模型对比测试，api.moonshot.ai 直连）
 - [ ] Tool Intelligence 展示页开发
 - [ ] GSC 数据积累观察（739 URL 已发现，0 已索引）
 - [ ] 根据 GSC 索引数据分析哪些页面类型优先被索引

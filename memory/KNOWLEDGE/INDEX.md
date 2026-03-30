@@ -54,3 +54,8 @@
 | subagent 创建错误表 / Turso schema / tool_intelligence | GOTCHAS.md#subagent-wrong-table-creation |
 | 批量 subagent 参数 / 并行度 / quality gate | GOTCHAS.md#batch-subagent-parameters |
 | Tool Intelligence 全量重做 / 308 工具 / 流程固化 | LOG.md#2026-03-30 |
+| Vercel env echo 换行符 / printf / API key 失效 | GOTCHAS.md#vercel-env-echo-newline |
+| Kimi K2.5 / api.moonshot.ai / temperature=1 / thinking模式 / /v1路径 | GOTCHAS.md#kimi-k25-api-quirks |
+| OpenRouter Allowed Providers / 白名单陷阱 | GOTCHAS.md#openrouter-allowed-providers |
+| Codex 对抗性审查 / 12个问题 / 安全修复 | LOG.md#2026-03-30-codex |
+| 模型对比测试 / 6模型 / GPT-4o / Kimi / Qwen / DeepSeek / MiniMax | LOG.md#2026-03-30-codex |
