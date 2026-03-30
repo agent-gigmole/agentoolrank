@@ -14,9 +14,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const stack = await getStackBySlug(slug);
   if (!stack) return {};
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
+  const totalTools = stack.layers.reduce((s: number, l: any) => s + l.tools.length, 0);
+  const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(stack.title)}&icon=${encodeURIComponent(stack.icon)}&difficulty=${stack.difficulty}&layers=${stack.layers.length}&tools=${totalTools}`;
+
   return {
-    title: `${stack.title} — AI Tool Stack Guide`,
-    description: `${stack.description} See the recommended tools for each layer of the stack.`,
+    title: `${stack.title} — AI Project Blueprint`,
+    description: `${stack.description} ${stack.layers.length} layers, ${totalTools} tools. See the full execution plan.`,
+    openGraph: {
+      title: stack.title,
+      description: stack.description,
+      images: [{ url: ogUrl, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: stack.title,
+      description: stack.description,
+      images: [ogUrl],
+    },
   };
 }
 

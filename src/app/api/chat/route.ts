@@ -93,45 +93,54 @@ ALWAYS respond in the SAME LANGUAGE the user writes in (Chinese → Chinese, Eng
 
 OUTPUT FORMAT (Phase 2 only):
 
-CRITICAL: Do NOT output any headers or labels like "PART 1", "User Story", "Impact", "Stack JSON", "Here is the stack". Just write content naturally.
+CRITICAL: Do NOT output any headers or labels. No "PART 1", "Blueprint", "Execution Plan". Just write content naturally.
 
-OUTPUT ORDER — Stack FIRST, then Story:
+OUTPUT ORDER — Brief intro → JSON → Summary paragraph.
 
-1. First, write ONE short sentence introducing the recommendation (e.g. "Based on your requirements, here's a stack for..."). Then IMMEDIATELY output the JSON code block.
+1. Write ONE short sentence introducing the blueprint. Then IMMEDIATELY output the JSON.
 
-2. AFTER the JSON block, write the user story paragraph (3-4 sentences, THIRD PERSON). Focus on business value:
-- What problem this solves and what becomes possible
-- How much manual work/cost it eliminates (specific numbers)
-- How easy it is to set up
-- Why this specific combination works well together
-Write as a product brief. Not "I built..." but "This system enables..."
+2. AFTER the JSON, write a summary paragraph (3-4 sentences, THIRD PERSON). Focus on what this system enables, what work it replaces, and why this combination is effective. Not "I built..." but "This blueprint enables..."
 
 \`\`\`json
 {
-  "title": "Stack title",
+  "title": "Blueprint title",
   "icon": "emoji",
   "difficulty": "beginner|intermediate|advanced",
-  "story": "Copy the summary paragraph here",
+  "project_tags": ["side-project", "open-source"],
   "impact": {"build_time": "1-2 weekends", "monthly_cost": "$0-50", "replaces": "2 analysts"},
+  "execution_plan": [
+    {"step": "Step 1", "task": "What to do", "output": "What you'll have after this step", "tools_used": ["tool-id"]},
+    {"step": "Step 2", "task": "...", "output": "...", "tools_used": ["tool-id"]}
+  ],
+  "failure_points": [
+    "Specific risk #1 and how to mitigate it",
+    "Specific risk #2 and how to mitigate it"
+  ],
   "layers": [
     {
       "name": "Layer Name",
       "description": "What this layer does",
       "tools": [
-        {"tool_id": "id-from-available-list", "role": "Primary", "note": "Why this tool"},
-        {"tool_id": "id-from-available-list", "role": "Alternative", "note": "Why this tool"},
-        {"tool_id": "shopify", "role": "External", "note": "Industry standard e-commerce platform"}
+        {"tool_id": "id-from-list", "role": "Primary", "note": "Why this tool"},
+        {"tool_id": "id-from-list", "role": "Alternative", "note": "Why this tool"},
+        {"tool_id": "shopify", "role": "External", "note": "Industry standard"}
       ]
     }
   ]
 }
 \`\`\`
 
+FIELD GUIDELINES:
+- project_tags: pick 2-3 from [side-project, startup-mvp, enterprise, open-source, low-cost, requires-dev, no-code, high-risk, proven-model]
+- execution_plan: 4-7 concrete steps. Each step must have a tangible output. Reference actual tool names.
+- failure_points: 2-4 SPECIFIC risks (not generic). "Your Shopify store will get suspended if product descriptions violate their TOS" not "be careful with compliance".
+- impact: realistic estimates based on the specific scenario.
+
 IMPORTANT:
 - For tools from our AVAILABLE TOOLS list: tool_id MUST exactly match, role is "Primary" or "Alternative".
-- For external/industry tools NOT in our list (Shopify, Stripe, PostgreSQL, GA4, etc.): use their common name as tool_id, role MUST be "External".
-- Do NOT output JSON in Phase 1 (discovery questions). Only output JSON in Phase 2 (recommendation).
-- Do NOT write section headers or labels — just a brief intro, then JSON, then story.`;
+- For external/industry tools NOT in our list: use common name as tool_id, role MUST be "External".
+- Do NOT output JSON in Phase 1 (discovery). Only in Phase 2.
+- Do NOT write section headers or labels.`;
 
 export async function POST(req: NextRequest) {
   try {

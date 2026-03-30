@@ -25,12 +25,22 @@ interface StackImpact {
   replaces: string;
 }
 
+interface ExecutionStep {
+  step: string;
+  task: string;
+  output: string;
+  tools_used?: string[];
+}
+
 interface ParsedStack {
   title: string;
   icon: string;
   difficulty: string;
+  project_tags?: string[];
   story?: string;
   impact?: StackImpact;
+  execution_plan?: ExecutionStep[];
+  failure_points?: string[];
   layers: StackLayer[];
 }
 
@@ -440,35 +450,80 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
               {/* Stack visualization */}
               {stack && (
                 <div className="border border-gray-200 rounded-xl p-5">
-                  <div className="flex items-center justify-between mb-4">
+                  {/* Header + tags */}
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xl">{stack.icon}</span>
                       <h3 className="text-lg font-semibold text-gray-900">
                         {stack.title}
                       </h3>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">
-                        AI Generated
-                      </span>
                     </div>
                     <CopyMarkdownButton stack={stack} />
                   </div>
 
-                  {/* Impact bar — the shareable stats */}
+                  {/* Project tags */}
+                  {stack.project_tags && stack.project_tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {stack.project_tags.map((tag) => (
+                        <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Impact bar */}
                   {stack.impact && <ImpactBar impact={stack.impact} />}
 
-                  {/* Spacer */}
-                  <div className="mt-4" />
+                  {/* Execution Plan */}
+                  {stack.execution_plan && stack.execution_plan.length > 0 && (
+                    <div className="mt-4 mb-4">
+                      <h4 className="text-sm font-semibold text-gray-900 mb-2">Execution Plan</h4>
+                      <div className="space-y-2">
+                        {stack.execution_plan.map((step, i) => (
+                          <div key={i} className="flex gap-3 text-sm">
+                            <div className="shrink-0 w-16 font-mono text-xs text-blue-600 font-medium pt-0.5">
+                              {step.step}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-gray-800">{step.task}</p>
+                              <p className="text-xs text-gray-400 mt-0.5">Output: {step.output}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-                  <StackFlow layers={stack.layers} />
+                  {/* Tool Stack */}
+                  <div className="mt-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Tool Stack</h4>
+                    <StackFlow layers={stack.layers} />
+                  </div>
 
-                  {/* User story — appears AFTER the stack, grounded in reality */}
+                  {/* Failure Points */}
+                  {stack.failure_points && stack.failure_points.length > 0 && (
+                    <div className="mt-4 p-3 bg-red-50/50 border border-red-100 rounded-lg">
+                      <h4 className="text-sm font-semibold text-red-800 mb-1.5">Watch Out</h4>
+                      <ul className="space-y-1">
+                        {stack.failure_points.map((fp, i) => (
+                          <li key={i} className="text-xs text-red-700 flex items-start gap-1.5">
+                            <span className="shrink-0 mt-0.5">⚠️</span>
+                            <span>{fp}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Summary — after everything */}
                   {afterJson && (
                     <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
                       <p className="text-sm text-gray-700 leading-relaxed">{afterJson}</p>
                     </div>
                   )}
 
-                  {/* Save + Share guided flow */}
+                  {/* Save + Share */}
                   <StackActions stack={stack} />
                 </div>
               )}

@@ -14,9 +14,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const tool = await getToolBySlug(slug);
   if (!tool) return {};
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
+  const desc = tool.tagline || tool.description.slice(0, 160);
+  const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(tool.name)}&icon=🔧&tools=${tool.github_stars || 0}`;
+
   return {
     title: `${tool.name} — AI Agent Tool Review & Alternatives`,
-    description: tool.tagline || tool.description.slice(0, 160),
+    description: desc,
+    openGraph: {
+      title: tool.name,
+      description: desc,
+      images: [{ url: ogUrl, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: tool.name,
+      description: desc,
+      images: [ogUrl],
+    },
   };
 }
 
