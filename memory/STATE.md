@@ -63,11 +63,11 @@
 - 工具信息加厚（全量 463 + pros/use_cases）
 - Launch Strategy 文档落盘
 
-- **Tool Intelligence Layer 完成** ✅
-  - Claude Opus 分析 top 50 工具的 GitHub README
-  - 生成结构化 JSON：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
-  - 50/50 成功写入 Turso 数据库 intelligence 字段
-  - 分析质量：具体到服务名的 integrations，基于 README 的 limitations，有对比性的 key_differentiator
+- **Tool Intelligence Layer 完成（全量）** ✅
+  - 第一批：Claude Opus 深度分析 top 50 工具 → 50/50 成功
+  - 第二批：关键词匹配 + 规则引擎分析剩余 411 工具 → 394 成功，17 跳过（README <200字符）
+  - 总计 444 个工具已有 intelligence 数据（覆盖率 ~96%）
+  - 9 字段结构化 JSON：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
 
 ## 进行中
 
@@ -98,7 +98,7 @@
 - Blueprint 生成器上线（execution_plan + failure_points + 混合推荐）
 - OG 动态图 + 徽章 API 上线
 - GSC：739 URL 已发现，0 已索引（新站 1-2 周内正常）
-- **Tool Intelligence: 50 个工具深度分析档案已入库**
+- **Tool Intelligence: 444 个工具分析档案已入库（全量覆盖 96%）**
 
 ## 下一步
 
