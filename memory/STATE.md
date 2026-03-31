@@ -9,7 +9,6 @@
 - Tool Intelligence 全量重做：Claude subagent 深度分析 444/461 (96.3%)
 - Codex 对抗性审查 + 7 项安全修复
 - **模型切换路径**：DeepSeek V3 → Kimi K2.5 → GLM-5 (OpenRouter)
-  - GLM-5 速度 1-3s（Kimi 12-38s），费用相同 $0.021，中文更专业
 - **i18n 多语言上线**：/zh 中文首页 + 蓝图库 + 搜索页
 - **Blueprint 模板库** /blueprint 上线：分类浏览 + sticky tabs + community section
 - 71 个 curated stacks 用新 Intelligence 重新生成（70/71）
@@ -18,26 +17,18 @@
 - 埋点漏斗（blueprint_generated → blueprint_saved → tool_click）
 - API keys 写入 ~/.bashrc（OpenRouter/DeepSeek/Kimi/GLM/GitHub）
 - **任务 B 完成：Blueprint SEO 页面**
-  - /blueprint/[slug] 独立路由（canonical URL）含 HowTo JSON-LD + OG + Community + CTA
-  - /stack/[slug] 保留向后兼容，canonical 指向 /blueprint/[slug]
-  - Blueprint 索引页 + zh 版链接统一为 /blueprint/
-  - Sitemap 新增 blueprint URLs（priority 0.6-0.7），stack URLs 降级（0.4-0.5）
-  - Build 成功，75+ 个 /blueprint/[slug] 静态页面生成
 - **Tool Intelligence 展示页完成**
-  - schema 加了 intelligence 字段解析
-  - 详情页有完整 Intelligence 展示组件（key_differentiator、capabilities、integrations、best_for/not_for、sdk_languages、deployment、pricing_detail、limitations）
-  - 数据为空时 section 不渲染，页面正常
+- **Intelligence 数据批量重新生成** — 20 个工具（batch 0）写入 Turso + 本地备份
+  - 20/20 成功（claude-code, worldmonitor, llama-cpp, codex, n8n, litellm, dify, openhands, gemini-cli, opendevin, autogpt, agentscope, langgraph, crewai, browser-use, vllm, mineru, omniroute, open-webui, promptfoo）
+  - 三重保障：Turso DB + intelligence-backup.json + intelligence-progress.log
 
 ## 进行中
 
-- Product Hunt 养号（3 天计划，Day 1）
-- PH 第一条评论已准备（vibecoding 帖子）
-- **Tool Intelligence 数据重新生成** — Turso 上 intelligence 列全空（444 个工具数据丢失）
+- Intelligence 数据重新生成（20/444 完成，还需继续批量生成）
+- Product Hunt 养号（3 天计划）
 
 ## 下一步
 
-- 排查 intelligence 数据丢失原因并重新生成
-- 继续 PH 养号（Day 2-3，每天 2-3 条评论）
+- 继续批量生成剩余 ~424 个工具的 Intelligence 数据
+- 继续 PH 养号
 - Day 4 发布 agentoolrank.com 到 Product Hunt
-- 中文社区发布（掘金/V2EX/即刻）用 /zh 版本
-- Show HN 帖子（和 PH 错开）

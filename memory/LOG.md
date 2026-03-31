@@ -264,3 +264,12 @@
   - 可能原因1：之前 subagent batch 15 创建了错误的表 tool_intelligence（LOG 有记录），数据从未迁移到 tools.intelligence 列
   - 可能原因2：数据写入后被某次 schema 操作意外清空
   - 需要重新生成 444 个工具的 intelligence 数据
+
+## 2026-04-01 — Intelligence Batch 0: 20 工具写入
+
+- 获取 20 个工具的 GitHub README 并分析生成结构化 intelligence JSON
+- 每个工具包含：capabilities, integrations, sdk_languages, deployment, pricing_detail, limitations, best_for, not_for, key_differentiator
+- OmniRoute (Uniswap) 仓库 404，基于已知信息生成最小 intelligence
+- OpenDevin README 与 OpenHands 相同（已更名），生成指向 OpenHands 的 intelligence
+- 20/20 全部成功写入 Turso + 本地备份（intelligence-backup.json）
+- 数据量：1096-1854 bytes/工具，quality red lines 全部通过
