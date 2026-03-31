@@ -287,3 +287,4 @@
 - 结果: 20/20 全部成功写入 Turso + intelligence-backup.json
 - 三重保障: Turso DB + backup JSON + progress log
 - 累计完成: 100/444 (batch 0-3: 80, batch 6: 20)
+2026-03-31T19:54:35Z | Batch 16-17: 40/40 intelligence 写入 Turso + 本地备份（prompt-optimizer, autochain, llmflows, typechat, vision-agent, taskingai 等）| Turso 总计 360, backup.json 总计 340
