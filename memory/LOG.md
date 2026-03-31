@@ -1,5 +1,17 @@
 # LOG.md — 变更日志
 
+## 2026-04-01 Tool Intelligence 全量重新生成 — 464/464 (100%)
+
+- 发现之前"444/461 已覆盖"记录不准确：Turso 上 intelligence 列实际全空
+- 根因确认：subagent batch 15 创建了错误的 tool_intelligence 表，数据从未迁移到 tools.intelligence 列
+- 全量重新生成：24 批 subagent 并行处理，每批 20-40 个工具，共 464 个
+- 三重保障方案：本地 JSON 备份 + Turso 写后验证 + 进度日志
+- 踩坑：并发写入同一个 JSON 备份文件导致竞争条件（444 vs 464 不一致），用 sync-backup.js 从 Turso 同步修复
+- 多个工具状态变化发现：sweep→JetBrains plugin, text-generation-inference→维护模式推荐vLLM, swe-agent→mini-SWE-agent, chatgpt-google-extension→被收购冻结, gpt-pilot→Pythagora商业化
+- GitHub README 分支不一致常见：部分在 master 而非 main，部分在子目录
+- 展示页已就绪（tool/[slug] 的 Deep Analysis section），数据填充完成即可上线展示
+- 最终结果：464/464 = 100% 覆盖，0 个遗漏
+
 ## 2026-04-01 Tool Intelligence Batch 20-21: 40 工具写入
 - 为 agentflow, gpt-code-search, langchain-agent-production-starter, blockagi, workgpt, termgpt, llama-cult-and-more, gptrpg, chatgpt-data-science-prompts, book-gpt, langchain-js-llm-template, create-t3-turbo-ai, dr-doc-search, langchain-chat-nextjs, localgpt, privategpt, private-gpt, gptswarm, mistral-finetune, r2r, go-openai, devika, llama-agents, llm-strategy, llama3, chatpdf, agency, claude-engineer, llmstack, hands-on-llms, seamless-communication, codeinterpreter-api, llm-chain, autonomous-hr-chatbot, gpt-migrate, devopsgpt, chatbot-ui, loopgpt, simpleaichat, langstream 生成 intelligence JSON
 - 全部 40/40 写入 Turso 成功，DB 总 intelligence 覆盖达 424 个工具

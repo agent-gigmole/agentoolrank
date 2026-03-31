@@ -4,9 +4,12 @@
 
 - AgentKit 框架部署 + gstack + /office-hours + /autoplan 审查
 - Phase 1-5 全部完成（数据引擎→MVP→增长→Stack Graph→AI-First搜索）
-- 463 工具入库，461 有完整内容，444 有高质量 Intelligence
+- 464 工具入库，461 有完整内容，**464 有高质量 Intelligence（100% 覆盖）**
 - Blueprint Generator 上线（execution_plan + failure_points + 混合推荐）
-- Tool Intelligence 全量重做：Claude subagent 深度分析 444/461 (96.3%)
+- Tool Intelligence 全量重做：Claude subagent 深度分析 464/464 (100%)
+  - 24 批 subagent 并行处理，每批 20-40 个工具
+  - 三重保障：Turso DB + intelligence-backup.json + intelligence-progress.log
+  - 从 Turso 同步修复 sync-backup.js 解决并发 JSON 写入竞争条件
 - Codex 对抗性审查 + 7 项安全修复
 - **模型切换路径**：DeepSeek V3 → Kimi K2.5 → GLM-5 (OpenRouter)
 - **i18n 多语言上线**：/zh 中文首页 + 蓝图库 + 搜索页
@@ -17,25 +20,15 @@
 - 埋点漏斗（blueprint_generated → blueprint_saved → tool_click）
 - API keys 写入 ~/.bashrc（OpenRouter/DeepSeek/Kimi/GLM/GitHub）
 - **任务 B 完成：Blueprint SEO 页面**
-- **Tool Intelligence 展示页完成**
-- **Intelligence 数据批量重新生成** — 360 个工具写入 Turso + 本地备份（340 in backup.json）
-  - Batch 0: 20/20（claude-code, worldmonitor, llama-cpp 等）
-  - Batch 1: 20/20（cherry-studio, langfuse, docling, ollama 等）
-  - Batch 2: 20/20（gpt-index, bifrost, ai, phidata 等）
-  - Batch 3: 20/20（composio, phoenix, letta, haystack, dspy, weaviate 等）
-  - Batch 6: 20/20（nemo-guardrails, pr-agent, tabby, autogen, peft, bentoml 等）
-  - Batch 4-15: 多轮批量生成（详见 progress.log）
-  - Batch 16-17: 40/40（prompt-optimizer, autochain, llmflows, typechat, vision-agent, taskingai 等）
-  - Batch 20-21: 40/40（agentflow, gpt-code-search, blockagi, workgpt, privategpt, localgpt, r2r, devika, llama3, chatbot-ui, seamless-communication, mistral-finetune, gptswarm 等）
-  - 三重保障：Turso DB + intelligence-backup.json + intelligence-progress.log
+- **Tool Intelligence 展示页完成** — 数据已填充，可上线展示
+- **Intelligence 数据 100% 覆盖** — 464/464 工具全部有高质量深度分析
 
 ## 进行中
 
-- Intelligence 数据重新生成（424/444 完成，还需继续批量生成约 20 个）
 - Product Hunt 养号（3 天计划）
 
 ## 下一步
 
-- 继续批量生成剩余 ~20 个工具的 Intelligence 数据
 - 继续 PH 养号
 - Day 4 发布 agentoolrank.com 到 Product Hunt
+- 验证 Intelligence 展示页在线上的显示效果

@@ -65,6 +65,9 @@
 | Turso intelligence 数据丢失 / 列全空 / subagent 验证 | GOTCHAS.md#turso-intelligence-data-loss |
 | 批量写入后验证 / data integrity / SELECT COUNT | GOTCHAS.md#turso-intelligence-data-loss |
 | Tool Intelligence 展示页 / 详情页组件 / 空数据容错 | LOG.md#2026-04-01 |
+| 并发写入 JSON / 竞争条件 / sync-backup / 批量 subagent 输出 | GOTCHAS.md#concurrent-json-file-write |
+| GitHub README 分支 / main vs master / archived 项目 | GOTCHAS.md#github-readme-branch-inconsistency |
+| Tool Intelligence 全量重做 100% / 464/464 / 数据丢失根因 | LOG.md#2026-04-01 |
 | GraphQL GitTimestamp / since 变量 / commit_count_90d | LOG.md#2026-03-30 |
 | issue 响应中位数 / closed issues / createdAt closedAt | LOG.md#2026-03-30 |
 | docs_status / HEAD 请求 / homepageUrl 检查 | LOG.md#2026-03-30 |

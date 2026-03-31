@@ -175,6 +175,24 @@
   - 不能只看 subagent 报告"成功"，要用独立查询确认数据落盘
 - 修复：需要重新运行 Claude subagent 深度分析 444 个工具
 
+## concurrent-json-file-write
+- 多个并行 subagent 同时写入同一个 JSON 备份文件会导致竞争条件
+- 症状：文件中实际条目数少于预期（如 444 vs 464），部分写入被覆盖
+- 原因：agent A 读取文件 → agent B 读取文件 → agent A 写入 → agent B 写入（覆盖 A 的数据）
+- 修复方案：
+  1. 最佳：每个 agent 写独立文件（如 `backup-batch-N.json`），最后合并
+  2. 次佳：写完后用 sync 脚本从权威数据源（如 Turso DB）同步修复
+  3. 避免：不要让多个 agent 读-改-写同一个文件
+- 实际修复：创建 sync-backup.js 从 Turso 查询所有 intelligence 数据重建备份文件
+- 适用范围：任何批量 subagent 需要共享输出文件的场景
+
+## github-readme-branch-inconsistency
+- GitHub README 获取时，默认分支可能是 main 或 master，部分项目使用其他分支
+- 需要 main → master fallback 策略
+- 部分项目 README 在子目录（如 monorepo），需检查根目录和子目录
+- 部分项目已 archived/deprecated：sweep→JetBrains plugin, text-generation-inference→维护模式, swe-agent→mini-SWE-agent, gpt-pilot→Pythagora 商业化
+- 应对：fetch README 失败时记录但不阻塞，基于已知信息生成最小 intelligence
+
 ## canonical-url-seo-migration
 - URL 路径迁移（如 /stack/[slug] → /blueprint/[slug]）时，旧路径必须保留并设 canonical
 - 直接删除旧路由会导致已索引页面 404，损失 SEO 权重
