@@ -1,5 +1,13 @@
 # LOG.md — 变更日志
 
+## 2026-04-01 Tool Intelligence Batch 3: 20 工具写入
+- 为 composio, phoenix, letta, memgpt, eino, manifest, typescript-sdk, chatdev, e2b, haystack, whisperx, wrenai, mcp-go, langchain4j, dspy, llama-factory, camel, prefect, open-notebook, weaviate 生成 intelligence JSON
+- 全部 20/20 写入 Turso 成功，总 intelligence 覆盖达 80 个工具
+- 本地备份写入 data/intelligence-backup.json
+- 进度日志 data/intelligence-progress.log
+- 注意：manifest 在 DB 中指向 mnfst/manifest（LLM router），非 nicholasgasior/gopher-manifest（404）
+- memgpt 和 letta 共享同一 GitHub URL（已分别生成 intelligence）
+
 ## 2026-03-30 GitHub 爬虫真实信号指标
 - 修改 `scripts/crawl-github.ts` GraphQL 查询，新增 3 个真实信号指标
 - `commit_count_90d`: 通过 `recentHistory: history(since: $since)` 获取，$since 作为 GitTimestamp 变量传入

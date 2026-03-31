@@ -18,13 +18,16 @@
 - API keys 写入 ~/.bashrc（OpenRouter/DeepSeek/Kimi/GLM/GitHub）
 - **任务 B 完成：Blueprint SEO 页面**
 - **Tool Intelligence 展示页完成**
-- **Intelligence 数据批量重新生成** — 20 个工具（batch 0）写入 Turso + 本地备份
-  - 20/20 成功（claude-code, worldmonitor, llama-cpp, codex, n8n, litellm, dify, openhands, gemini-cli, opendevin, autogpt, agentscope, langgraph, crewai, browser-use, vllm, mineru, omniroute, open-webui, promptfoo）
+- **Intelligence 数据批量重新生成** — 80 个工具（batch 0-3）写入 Turso + 本地备份
+  - Batch 0: 20/20（claude-code, worldmonitor, llama-cpp 等）
+  - Batch 1: 20/20（cherry-studio, langfuse, docling, ollama 等）
+  - Batch 2: 20/20（gpt-index, bifrost, ai, phidata 等）
+  - Batch 3: 20/20（composio, phoenix, letta, haystack, dspy, weaviate 等）
   - 三重保障：Turso DB + intelligence-backup.json + intelligence-progress.log
 
 ## 进行中
 
-- Intelligence 数据重新生成（20/444 完成，还需继续批量生成）
+- Intelligence 数据重新生成（80/444 完成，还需继续批量生成）
 - Product Hunt 养号（3 天计划）
 
 ## 下一步
