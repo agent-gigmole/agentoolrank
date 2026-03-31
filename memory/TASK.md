@@ -54,10 +54,15 @@
 
 ## 并行任务
 
-- [ ] Tool Intelligence 展示页开发
+- [x] Tool Intelligence 展示页开发（代码完成，数据待填充）
+- [ ] **Intelligence 数据重新生成**（Turso 上 444 个工具 intelligence 列全空，需重新生成）
+  - [ ] 排查数据丢失根因（tool_intelligence 错误表 vs schema 操作清空）
+  - [ ] 重新运行 Claude subagent 深度分析（参考 scripts/generate-intelligence-claude.md）
+  - [ ] 写入完成后验证：SELECT COUNT(*) WHERE LENGTH(intelligence) > 10
 - [ ] GSC 数据积累观察（739 URL 已发现）
 - [ ] 埋点数据观察（blueprint_generated → blueprint_saved → tool_click）
 
 ## 阻塞项
 
 - GSC 索引需要时间（新站 1-2 周正常）
+- Intelligence 数据为空，展示页功能虽完成但无数据可展示

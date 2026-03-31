@@ -165,6 +165,16 @@
 - 修复方式：用 `env-cmd -f .env.local npx tsx -e "..."` 或在脚本中手动 `dotenv.config()`
 - 注意：Next.js dev server 会自动加载 .env.local，但 tsx 直接执行不会
 
+## turso-intelligence-data-loss
+- Turso 上 444 个工具的 intelligence 列全空（length=0），数据丢失
+- crawl-github.ts 的 ON CONFLICT DO UPDATE 语句没有覆盖 intelligence 列，排除爬虫覆盖
+- 可能原因1：subagent batch 15 创建了错误的表 tool_intelligence（而非更新 tools.intelligence 列），数据从未成功迁移
+- 可能原因2：某次 schema 操作（ALTER TABLE 或数据迁移脚本）意外清空了该列
+- 教训：**批量 subagent 写入后必须立即验证数据完整性**
+  - 验证 SQL：`SELECT COUNT(*) FROM tools WHERE LENGTH(intelligence) > 10`
+  - 不能只看 subagent 报告"成功"，要用独立查询确认数据落盘
+- 修复：需要重新运行 Claude subagent 深度分析 444 个工具
+
 ## canonical-url-seo-migration
 - URL 路径迁移（如 /stack/[slug] → /blueprint/[slug]）时，旧路径必须保留并设 canonical
 - 直接删除旧路由会导致已索引页面 404，损失 SEO 权重

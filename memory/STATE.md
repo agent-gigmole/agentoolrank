@@ -23,14 +23,20 @@
   - Blueprint 索引页 + zh 版链接统一为 /blueprint/
   - Sitemap 新增 blueprint URLs（priority 0.6-0.7），stack URLs 降级（0.4-0.5）
   - Build 成功，75+ 个 /blueprint/[slug] 静态页面生成
+- **Tool Intelligence 展示页完成**
+  - schema 加了 intelligence 字段解析
+  - 详情页有完整 Intelligence 展示组件（key_differentiator、capabilities、integrations、best_for/not_for、sdk_languages、deployment、pricing_detail、limitations）
+  - 数据为空时 section 不渲染，页面正常
 
 ## 进行中
 
 - Product Hunt 养号（3 天计划，Day 1）
 - PH 第一条评论已准备（vibecoding 帖子）
+- **Tool Intelligence 数据重新生成** — Turso 上 intelligence 列全空（444 个工具数据丢失）
 
 ## 下一步
 
+- 排查 intelligence 数据丢失原因并重新生成
 - 继续 PH 养号（Day 2-3，每天 2-3 条评论）
 - Day 4 发布 agentoolrank.com 到 Product Hunt
 - 中文社区发布（掘金/V2EX/即刻）用 /zh 版本

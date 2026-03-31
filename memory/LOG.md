@@ -253,3 +253,14 @@
 - Sitemap 新增 blueprint URLs（priority 0.6-0.7），stack URLs 降级（0.4-0.5）
 - Build 成功，75+ 个 /blueprint/[slug] 静态页面生成
 - 坑点：npx tsx -e 不加载 .env.local，查 Turso 返空（非真问题，需 dotenv 或 env-cmd）
+
+## 2026-04-01 — Tool Intelligence 展示页完成 + 数据丢失发现
+- 展示页代码完成：schema 加 intelligence 字段，详情页完整 Intelligence 组件
+- 展示字段：key_differentiator、capabilities、integrations、best_for/not_for、sdk_languages、deployment、pricing_detail、limitations
+- 数据为空时 section 不渲染，页面正常显示
+- **重大发现：Turso 上 intelligence 列全空**
+  - 444 个工具的 intelligence 数据丢失，length 全为 0
+  - crawl-github.ts 的 ON CONFLICT DO UPDATE 没覆盖 intelligence，排除爬虫清空
+  - 可能原因1：之前 subagent batch 15 创建了错误的表 tool_intelligence（LOG 有记录），数据从未迁移到 tools.intelligence 列
+  - 可能原因2：数据写入后被某次 schema 操作意外清空
+  - 需要重新生成 444 个工具的 intelligence 数据

@@ -62,6 +62,9 @@
 | npx tsx .env.local / env-cmd / dotenv / Turso 空结果 | GOTCHAS.md#npx-tsx-env-local |
 | canonical URL / SEO 迁移 / 旧路由保留 / 权重合并 | GOTCHAS.md#canonical-url-seo-migration |
 | Blueprint SEO / /blueprint/[slug] / HowTo JSON-LD / 静态页面 | LOG.md#2026-04-01 |
+| Turso intelligence 数据丢失 / 列全空 / subagent 验证 | GOTCHAS.md#turso-intelligence-data-loss |
+| 批量写入后验证 / data integrity / SELECT COUNT | GOTCHAS.md#turso-intelligence-data-loss |
+| Tool Intelligence 展示页 / 详情页组件 / 空数据容错 | LOG.md#2026-04-01 |
 | GraphQL GitTimestamp / since 变量 / commit_count_90d | LOG.md#2026-03-30 |
 | issue 响应中位数 / closed issues / createdAt closedAt | LOG.md#2026-03-30 |
 | docs_status / HEAD 请求 / homepageUrl 检查 | LOG.md#2026-03-30 |
