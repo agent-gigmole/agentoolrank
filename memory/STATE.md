@@ -26,15 +26,16 @@
   - Batch 6: 20/20（nemo-guardrails, pr-agent, tabby, autogen, peft, bentoml 等）
   - Batch 4-15: 多轮批量生成（详见 progress.log）
   - Batch 16-17: 40/40（prompt-optimizer, autochain, llmflows, typechat, vision-agent, taskingai 等）
+  - Batch 20-21: 40/40（agentflow, gpt-code-search, blockagi, workgpt, privategpt, localgpt, r2r, devika, llama3, chatbot-ui, seamless-communication, mistral-finetune, gptswarm 等）
   - 三重保障：Turso DB + intelligence-backup.json + intelligence-progress.log
 
 ## 进行中
 
-- Intelligence 数据重新生成（360/444 完成，还需继续批量生成约 84 个）
+- Intelligence 数据重新生成（424/444 完成，还需继续批量生成约 20 个）
 - Product Hunt 养号（3 天计划）
 
 ## 下一步
 
-- 继续批量生成剩余 ~344 个工具的 Intelligence 数据
+- 继续批量生成剩余 ~20 个工具的 Intelligence 数据
 - 继续 PH 养号
 - Day 4 发布 agentoolrank.com 到 Product Hunt

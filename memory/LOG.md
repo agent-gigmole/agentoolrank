@@ -1,5 +1,13 @@
 # LOG.md — 变更日志
 
+## 2026-04-01 Tool Intelligence Batch 20-21: 40 工具写入
+- 为 agentflow, gpt-code-search, langchain-agent-production-starter, blockagi, workgpt, termgpt, llama-cult-and-more, gptrpg, chatgpt-data-science-prompts, book-gpt, langchain-js-llm-template, create-t3-turbo-ai, dr-doc-search, langchain-chat-nextjs, localgpt, privategpt, private-gpt, gptswarm, mistral-finetune, r2r, go-openai, devika, llama-agents, llm-strategy, llama3, chatpdf, agency, claude-engineer, llmstack, hands-on-llms, seamless-communication, codeinterpreter-api, llm-chain, autonomous-hr-chatbot, gpt-migrate, devopsgpt, chatbot-ui, loopgpt, simpleaichat, langstream 生成 intelligence JSON
+- 全部 40/40 写入 Turso 成功，DB 总 intelligence 覆盖达 424 个工具
+- 本地备份 data/intelligence-backup.json + 进度日志 data/intelligence-progress.log
+- 注意：privategpt (imartinez) 和 private-gpt (zylon-ai) 是同一项目的两个 DB 记录，分别生成了 intelligence
+- 注意：agentflow 的 github_owner 是 simonmesmith（非 wolfia-app）
+- 脚本位于 /tmp/write-intel-batch20-21.ts
+
 ## 2026-04-01 Tool Intelligence Batch 3: 20 工具写入
 - 为 composio, phoenix, letta, memgpt, eino, manifest, typescript-sdk, chatdev, e2b, haystack, whisperx, wrenai, mcp-go, langchain4j, dspy, llama-factory, camel, prefect, open-notebook, weaviate 生成 intelligence JSON
 - 全部 20/20 写入 Turso 成功，总 intelligence 覆盖达 80 个工具
