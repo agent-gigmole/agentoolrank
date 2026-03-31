@@ -18,20 +18,21 @@
 - API keys 写入 ~/.bashrc（OpenRouter/DeepSeek/Kimi/GLM/GitHub）
 - **任务 B 完成：Blueprint SEO 页面**
 - **Tool Intelligence 展示页完成**
-- **Intelligence 数据批量重新生成** — 80 个工具（batch 0-3）写入 Turso + 本地备份
+- **Intelligence 数据批量重新生成** — 100 个工具（batch 0-3,6）写入 Turso + 本地备份
   - Batch 0: 20/20（claude-code, worldmonitor, llama-cpp 等）
   - Batch 1: 20/20（cherry-studio, langfuse, docling, ollama 等）
   - Batch 2: 20/20（gpt-index, bifrost, ai, phidata 等）
   - Batch 3: 20/20（composio, phoenix, letta, haystack, dspy, weaviate 等）
+  - Batch 6: 20/20（nemo-guardrails, pr-agent, tabby, autogen, peft, bentoml 等）
   - 三重保障：Turso DB + intelligence-backup.json + intelligence-progress.log
 
 ## 进行中
 
-- Intelligence 数据重新生成（80/444 完成，还需继续批量生成）
+- Intelligence 数据重新生成（100/444 完成，还需继续批量生成）
 - Product Hunt 养号（3 天计划）
 
 ## 下一步
 
-- 继续批量生成剩余 ~424 个工具的 Intelligence 数据
+- 继续批量生成剩余 ~344 个工具的 Intelligence 数据
 - 继续 PH 养号
 - Day 4 发布 agentoolrank.com 到 Product Hunt

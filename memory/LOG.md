@@ -281,3 +281,9 @@
 - OpenDevin README 与 OpenHands 相同（已更名），生成指向 OpenHands 的 intelligence
 - 20/20 全部成功写入 Turso + 本地备份（intelligence-backup.json）
 - 数据量：1096-1854 bytes/工具，quality red lines 全部通过
+
+## 2026-04-01 Batch 6: 20 工具 Intelligence 写入
+- 工具列表: nemo-guardrails, pr-agent, tabby, chatgpt-shortcut, db-gpt, openllmetry, openai-translator, skills, inspector, agenta, code-interpreter, steel-browser, peft, autogen, openlit, bentoml, wfgy, harbor, finrobot, nadirclaw
+- 结果: 20/20 全部成功写入 Turso + intelligence-backup.json
+- 三重保障: Turso DB + backup JSON + progress log
+- 累计完成: 100/444 (batch 0-3: 80, batch 6: 20)
