@@ -17,6 +17,12 @@
 - Favicon 品牌化（AT 蓝色图标）
 - 埋点漏斗（blueprint_generated → blueprint_saved → tool_click）
 - API keys 写入 ~/.bashrc（OpenRouter/DeepSeek/Kimi/GLM/GitHub）
+- **任务 B 完成：Blueprint SEO 页面**
+  - /blueprint/[slug] 独立路由（canonical URL）含 HowTo JSON-LD + OG + Community + CTA
+  - /stack/[slug] 保留向后兼容，canonical 指向 /blueprint/[slug]
+  - Blueprint 索引页 + zh 版链接统一为 /blueprint/
+  - Sitemap 新增 blueprint URLs（priority 0.6-0.7），stack URLs 降级（0.4-0.5）
+  - Build 成功，75+ 个 /blueprint/[slug] 静态页面生成
 
 ## 进行中
 

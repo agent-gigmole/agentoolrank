@@ -245,3 +245,11 @@
 - 关键决策：DeepSeek→Kimi→GLM-5 两次切换；i18n 选 B 方案（/zh 前缀）
 - 自检结果：补了 2 项遗漏（DECISIONS + STATE 大量更新）
 - 状态：working — PH 养号 Day 1
+
+## 2026-04-01 — 任务 B 完成：Blueprint SEO 页面
+- 创建 /blueprint/[slug]/page.tsx 作为 canonical URL（HowTo JSON-LD + OG 图 + Community 标签 + CTA 引导生成）
+- /stack/[slug] 保留向后兼容，添加 canonical 指向 /blueprint/[slug]
+- Blueprint 索引页 + zh 版链接统一从 /stack/ → /blueprint/
+- Sitemap 新增 blueprint URLs（priority 0.6-0.7），stack URLs 降级（0.4-0.5）
+- Build 成功，75+ 个 /blueprint/[slug] 静态页面生成
+- 坑点：npx tsx -e 不加载 .env.local，查 Turso 返空（非真问题，需 dotenv 或 env-cmd）

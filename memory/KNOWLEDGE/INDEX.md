@@ -59,6 +59,9 @@
 | OpenRouter Allowed Providers / 白名单陷阱 | GOTCHAS.md#openrouter-allowed-providers |
 | Codex 对抗性审查 / 12个问题 / 安全修复 | LOG.md#2026-03-30-codex |
 | 模型对比测试 / 6模型 / GPT-4o / Kimi / Qwen / DeepSeek / MiniMax | LOG.md#2026-03-30-codex |
+| npx tsx .env.local / env-cmd / dotenv / Turso 空结果 | GOTCHAS.md#npx-tsx-env-local |
+| canonical URL / SEO 迁移 / 旧路由保留 / 权重合并 | GOTCHAS.md#canonical-url-seo-migration |
+| Blueprint SEO / /blueprint/[slug] / HowTo JSON-LD / 静态页面 | LOG.md#2026-04-01 |
 | GraphQL GitTimestamp / since 变量 / commit_count_90d | LOG.md#2026-03-30 |
 | issue 响应中位数 / closed issues / createdAt closedAt | LOG.md#2026-03-30 |
 | docs_status / HEAD 请求 / homepageUrl 检查 | LOG.md#2026-03-30 |

@@ -26,11 +26,11 @@
 - [x] 写入 tools 表新字段（issue_response_hours, docs_status）+ commit_count_90d 填充
 - [x] 这些数据比 README 蒸馏有价值，竞品手动抄不走
 
-### 任务 B：Blueprint 模板库 SEO 页面
-- [ ] 用户保存的 Blueprint 自动变成 SEO 索引页
-- [ ] /blueprint 索引页 + /blueprint/[slug] 详情页
-- [ ] 每个保存的蓝图就是一个长尾 SEO 页面
-- [ ] 目标：用户帮你建护城河
+### 任务 B：Blueprint 模板库 SEO 页面 ✅
+- [x] 用户保存的 Blueprint 自动变成 SEO 索引页
+- [x] /blueprint 索引页 + /blueprint/[slug] 详情页（canonical URL）
+- [x] 每个保存的蓝图就是一个长尾 SEO 页面（75+ 静态页）
+- [x] 目标：用户帮你建护城河
 
 ## Launch（继续）
 

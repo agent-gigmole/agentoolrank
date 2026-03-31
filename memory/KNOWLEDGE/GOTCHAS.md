@@ -157,3 +157,17 @@
 - OpenRouter 的 Allowed Providers 设置：留空 = 允许所有 provider
 - 如果添加了任何 provider，则变成白名单模式（只允许列表中的 provider）
 - 直觉陷阱：以为"不设置 = 全部禁止"，实际是"不设置 = 全部允许"
+
+## npx-tsx-env-local
+- `npx tsx -e "..."` 不会自动加载 `.env.local` 文件
+- 导致查询 Turso 等依赖环境变量的操作返回空结果
+- 容易误判为"数据库没数据"，实际只是缺 env
+- 修复方式：用 `env-cmd -f .env.local npx tsx -e "..."` 或在脚本中手动 `dotenv.config()`
+- 注意：Next.js dev server 会自动加载 .env.local，但 tsx 直接执行不会
+
+## canonical-url-seo-migration
+- URL 路径迁移（如 /stack/[slug] → /blueprint/[slug]）时，旧路径必须保留并设 canonical
+- 直接删除旧路由会导致已索引页面 404，损失 SEO 权重
+- 正确做法：旧路由页面添加 `<link rel="canonical" href="/blueprint/[slug]">` 指向新路由
+- Sitemap 中新路由给高 priority（0.6-0.7），旧路由降级（0.4-0.5）
+- Google 会逐渐合并权重到 canonical URL
