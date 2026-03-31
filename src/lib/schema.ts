@@ -42,6 +42,8 @@ export const ToolSchema = z.object({
   commit_count_90d: z.number().nullable().default(null),
   release_count_6m: z.number().nullable().default(null),
   npm_downloads_weekly: z.number().nullable().default(null),
+  issue_response_hours: z.number().nullable().default(null),
+  docs_status: z.enum(["ok", "404", "unknown"]).default("unknown"),
 
   // LLM-generated content
   pros: z.array(z.string()).default([]),

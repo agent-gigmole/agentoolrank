@@ -12,6 +12,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/weekly`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${baseUrl}/compare`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
     { url: `${baseUrl}/search`, changeFrequency: "daily", priority: 0.9 },
+    // Chinese locale pages
+    { url: `${baseUrl}/zh`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
+    { url: `${baseUrl}/zh/blueprint`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/zh/search`, changeFrequency: "daily", priority: 0.9 },
   ];
 
   // Category pages
@@ -44,15 +48,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
-  // Stack pages
+  // Stack / Blueprint pages
   const stacks = await getStacks();
   const stackPages: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/stack`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${baseUrl}/blueprint`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.9 },
     ...stacks.map((s) => ({
       url: `${baseUrl}/stack/${s.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: 0.7,
+      priority: s.slug.startsWith("custom-") ? 0.6 : 0.7,
     })),
   ];
 

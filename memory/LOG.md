@@ -239,3 +239,9 @@
 - 自检结果：补了 DECISIONS.md 遗漏
 - 下一步：GitHub 真实信号指标 + Blueprint 模板库 SEO 页面（壁垒建设）
 - 状态：working
+
+## 2026-03-31 — /agentkit-save checkpoint
+- 本次 session：Intelligence 全量重做 + 8模型对比(GLM-5最终胜出) + Codex审查 + i18n多语言 + Blueprint模板库 + stacks重生成 + PH养号开始
+- 关键决策：DeepSeek→Kimi→GLM-5 两次切换；i18n 选 B 方案（/zh 前缀）
+- 自检结果：补了 2 项遗漏（DECISIONS + STATE 大量更新）
+- 状态：working — PH 养号 Day 1

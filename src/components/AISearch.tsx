@@ -2,9 +2,82 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { StackFlow } from "./StackFlow";
 import Link from "next/link";
+import type { Locale } from "@/i18n/types";
+
+// i18n strings for AISearch
+const t = {
+  en: {
+    thinking: "Thinking...",
+    send: "Send",
+    popular: "Popular searches:",
+    existingStacks: "Existing stacks that might help:",
+    relatedTools: "Related tools:",
+    statusAnalyzing: "Analyzing your requirements...",
+    statusSelecting: "Selecting tools from 463 options...",
+    statusBuilding: "Building your tool stack...",
+    statusRendering: "Rendering flow diagram...",
+    savePrompt: "Save this stack to get a permanent link",
+    savePromptSub: "You can share it, come back to it later, or ask others for feedback",
+    saveButton: "Save & Get Link",
+    saving: "Saving...",
+    savedMessage: "Saved! Your stack has a permanent link:",
+    copy: "Copy",
+    copyText: "Copy text",
+    sharePrompt: "Share to get feedback:",
+    copyMarkdown: "Copy as Markdown",
+    copied: "Copied!",
+    executionPlan: "Execution Plan",
+    toolStack: "Tool Stack",
+    watchOut: "Watch Out",
+    placeholderInit: "Describe what you want to build... e.g. 我想做金融量化系统",
+    placeholderFollowUp: "Type your answer here... 在这里回答",
+    followUpHint: "Try: \"换个更便宜的\" · \"Add a monitoring layer\" · \"Make it simpler\"",
+  },
+  zh: {
+    thinking: "思考中...",
+    send: "发送",
+    popular: "热门搜索：",
+    existingStacks: "可能有帮助的现有方案：",
+    relatedTools: "相关工具：",
+    statusAnalyzing: "正在分析你的需求...",
+    statusSelecting: "从 463 个工具中筛选...",
+    statusBuilding: "正在构建工具栈...",
+    statusRendering: "正在渲染流程图...",
+    savePrompt: "保存此方案以获取永久链接",
+    savePromptSub: "你可以分享、稍后查看或征求反馈",
+    saveButton: "保存获取链接",
+    saving: "保存中...",
+    savedMessage: "已保存！你的方案有了永久链接：",
+    copy: "复制",
+    copyText: "复制文本",
+    sharePrompt: "分享获取反馈：",
+    copyMarkdown: "复制为 Markdown",
+    copied: "已复制！",
+    executionPlan: "执行计划",
+    toolStack: "工具栈",
+    watchOut: "注意事项",
+    placeholderInit: "描述你想构建什么……例如：量化交易系统、客服机器人、RAG 知识库",
+    placeholderFollowUp: "在这里输入你的回答……",
+    followUpHint: "试试：\"换个更便宜的\" · \"加一个监控层\" · \"简化方案\"",
+  },
+} as const;
+
+// S1: Lightweight analytics — blueprint funnel tracking
+function trackEvent(event: string, props?: Record<string, string | number>) {
+  try {
+    // Use Vercel Web Analytics custom events if available
+    if (typeof window !== "undefined" && (window as any).va) {
+      (window as any).va("event", { name: event, ...props });
+    }
+    // Also log to console in dev for debugging
+    if (process.env.NODE_ENV === "development") {
+      console.log("[track]", event, props);
+    }
+  } catch {}
+}
 
 interface StackLayer {
   name: string;
@@ -53,32 +126,45 @@ function getMessageText(msg: { parts: Array<{ type: string; text?: string }> }):
 }
 
 function parseStackFromText(text: string): ParsedStack | null {
+  // Try fenced JSON first (expected format)
   const jsonMatch = text.match(/```json\s*([\s\S]*?)```/);
-  if (!jsonMatch) return null;
-  try {
-    const parsed = JSON.parse(jsonMatch[1]);
-    if (parsed.layers && Array.isArray(parsed.layers)) {
-      return parsed as ParsedStack;
-    }
-  } catch {}
+  if (jsonMatch) {
+    try {
+      const parsed = JSON.parse(jsonMatch[1]);
+      if (parsed.layers && Array.isArray(parsed.layers)) return parsed as ParsedStack;
+    } catch {}
+  }
+  // Fallback: try to find raw JSON object with "layers" key (model skipped fences)
+  const rawMatch = text.match(/\{[\s\S]*"layers"\s*:\s*\[[\s\S]*\][\s\S]*\}/);
+  if (rawMatch) {
+    try {
+      const parsed = JSON.parse(rawMatch[0]);
+      if (parsed.layers && Array.isArray(parsed.layers)) return parsed as ParsedStack;
+    } catch {}
+  }
   return null;
 }
 
 function getTextBeforeJson(text: string): string {
+  // Try fenced JSON first
   const idx = text.indexOf("```json");
-  if (idx === -1) return text;
-  return text.slice(0, idx).trim();
+  if (idx !== -1) return text.slice(0, idx).trim();
+  // Fallback: find raw JSON object start
+  const rawIdx = text.search(/\{\s*"title"\s*:/);
+  if (rawIdx !== -1) return text.slice(0, rawIdx).trim();
+  return text;
 }
 
-function CopyMarkdownButton({ stack }: { stack: ParsedStack }) {
+function CopyMarkdownButton({ stack, locale = "en" }: { stack: ParsedStack; locale?: Locale }) {
   const [copied, setCopied] = useState(false);
+  const s = t[locale];
 
   function toMarkdown(): string {
     let md = `## ${stack.icon} ${stack.title}\n\n`;
     for (const layer of stack.layers) {
       md += `### ${layer.name}\n${layer.description}\n\n`;
-      for (const t of layer.tools) {
-        md += `- **${t.role}**: [${t.name || t.tool_id}](https://agentoolrank.com/tool/${t.tool_id}) — ${t.note}\n`;
+      for (const tool of layer.tools) {
+        md += `- **${tool.role}**: [${tool.name || tool.tool_id}](https://agentoolrank.com/tool/${tool.tool_id}) — ${tool.note}\n`;
       }
       md += "\n";
     }
@@ -94,15 +180,16 @@ function CopyMarkdownButton({ stack }: { stack: ParsedStack }) {
       }}
       className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
     >
-      {copied ? "Copied!" : "Copy as Markdown"}
+      {copied ? s.copied : s.copyMarkdown}
     </button>
   );
 }
 
-function StackActions({ stack }: { stack: ParsedStack }) {
+function StackActions({ stack, locale = "en" }: { stack: ParsedStack; locale?: Locale }) {
   const [saving, setSaving] = useState(false);
   const [savedSlug, setSavedSlug] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const s = t[locale];
 
   async function save() {
     setSaving(true);
@@ -115,6 +202,7 @@ function StackActions({ stack }: { stack: ParsedStack }) {
       const data = await res.json();
       if (data.slug) {
         setSavedSlug(data.slug);
+        trackEvent("blueprint_saved", { title: stack.title, slug: data.slug });
       }
     } catch {}
     setSaving(false);
@@ -134,15 +222,15 @@ function StackActions({ stack }: { stack: ParsedStack }) {
       <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-900">Save this stack to get a permanent link</p>
-            <p className="text-xs text-gray-500 mt-0.5">You can share it, come back to it later, or ask others for feedback</p>
+            <p className="text-sm font-medium text-gray-900">{s.savePrompt}</p>
+            <p className="text-xs text-gray-500 mt-0.5">{s.savePromptSub}</p>
           </div>
           <button
             onClick={save}
             disabled={saving}
             className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors font-medium shrink-0"
           >
-            {saving ? "Saving..." : "Save & Get Link"}
+            {saving ? s.saving : s.saveButton}
           </button>
         </div>
       </div>
@@ -154,7 +242,7 @@ function StackActions({ stack }: { stack: ParsedStack }) {
     <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-green-600 text-sm">✓</span>
-        <p className="text-sm font-medium text-gray-900">Saved! Your stack has a permanent link:</p>
+        <p className="text-sm font-medium text-gray-900">{s.savedMessage}</p>
       </div>
       <div className="flex items-center gap-2 mb-3">
         <input
@@ -168,11 +256,11 @@ function StackActions({ stack }: { stack: ParsedStack }) {
           onClick={() => navigator.clipboard.writeText(stackUrl!)}
           className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors shrink-0"
         >
-          Copy
+          {s.copy}
         </button>
       </div>
       <div className="flex items-center gap-2">
-        <p className="text-xs text-gray-500">Share to get feedback:</p>
+        <p className="text-xs text-gray-500">{s.sharePrompt}</p>
         <div className="relative">
           <div className="flex items-center gap-1.5">
             <a
@@ -195,7 +283,7 @@ function StackActions({ stack }: { stack: ParsedStack }) {
               onClick={() => navigator.clipboard.writeText(shortShare)}
               className="text-xs px-2.5 py-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
             >
-              Copy text
+              {s.copyText}
             </button>
           </div>
         </div>
@@ -226,7 +314,7 @@ function ImpactBar({ impact }: { impact: StackImpact }) {
   );
 }
 
-const POPULAR_QUERIES = [
+const POPULAR_QUERIES_EN = [
   "Build a RAG chatbot",
   "AI code reviewer",
   "金融量化系统",
@@ -235,12 +323,23 @@ const POPULAR_QUERIES = [
   "AI content pipeline",
 ];
 
+const POPULAR_QUERIES_ZH = [
+  "RAG 聊天机器人",
+  "AI 代码审查",
+  "金融量化系统",
+  "客服机器人",
+  "多 Agent 协作",
+  "AI 内容生产管线",
+];
+
 interface QuickResult {
   tools: Array<{ id: string; name: string; tagline: string; pricing: string; github_stars: number }>;
   stacks: Array<{ slug: string; title: string; description: string; icon: string }>;
 }
 
-export function AISearch({ initialQuery }: { initialQuery?: string }) {
+export function AISearch({ initialQuery, locale = "en" }: { initialQuery?: string; locale?: Locale }) {
+  const s = t[locale];
+  const POPULAR_QUERIES = locale === "zh" ? POPULAR_QUERIES_ZH : POPULAR_QUERIES_EN;
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasSentInitial = useRef(false);
@@ -310,8 +409,8 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
 
   const hasMessages = messages.length > 0;
   const inputPlaceholder = hasMessages
-    ? "Type your answer here... 在这里回答"
-    : "Describe what you want to build... e.g. 我想做金融量化系统";
+    ? s.placeholderFollowUp
+    : s.placeholderInit;
 
   const inputForm = (
     <form onSubmit={onSubmit} className={hasMessages ? "sticky bottom-0 bg-white pt-3 pb-2 border-t border-gray-100 z-10" : "mb-6"}>
@@ -333,7 +432,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
           disabled={isStreaming || !localInput.trim()}
           className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:hover:bg-blue-600 transition-colors font-medium"
         >
-          {isStreaming ? "Thinking..." : "Send"}
+          {isStreaming ? s.thinking : s.send}
         </button>
       </div>
     </form>
@@ -347,7 +446,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
       {/* Popular queries — show before first interaction */}
       {!hasInteracted && messages.length === 0 && (
         <div className="mb-8">
-          <p className="text-sm text-gray-500 mb-3">Popular searches:</p>
+          <p className="text-sm text-gray-500 mb-3">{s.popular}</p>
           <div className="flex flex-wrap gap-2">
             {POPULAR_QUERIES.map((q) => (
               <button
@@ -367,7 +466,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
         <div className="mb-6">
           {quickResults.stacks.length > 0 && (
             <div className="mb-4">
-              <p className="text-xs text-gray-400 mb-2">Existing stacks that might help:</p>
+              <p className="text-xs text-gray-400 mb-2">{s.existingStacks}</p>
               <div className="flex flex-wrap gap-2">
                 {quickResults.stacks.map((s) => (
                   <Link
@@ -386,7 +485,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
           )}
           {quickResults.tools.length > 0 && (
             <div>
-              <p className="text-xs text-gray-400 mb-2">Related tools:</p>
+              <p className="text-xs text-gray-400 mb-2">{s.relatedTools}</p>
               <div className="flex flex-wrap gap-1.5">
                 {quickResults.tools.slice(0, 8).map((t) => (
                   <Link
@@ -430,6 +529,10 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
           const overview = getTextBeforeJson(text);
           // Story comes AFTER the JSON block in the AI output
           const afterJson = text.includes("```") ? text.split(/```(?:json)?[\s\S]*?```/).pop()?.trim() : "";
+          // S1: Track blueprint generation
+          if (stack && msg.id) {
+            trackEvent("blueprint_generated", { title: stack.title, layers: stack.layers.length });
+          }
 
           return (
             <div key={msg.id} className="space-y-4">
@@ -458,7 +561,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                         {stack.title}
                       </h3>
                     </div>
-                    <CopyMarkdownButton stack={stack} />
+                    <CopyMarkdownButton stack={stack} locale={locale} />
                   </div>
 
                   {/* Project tags */}
@@ -478,7 +581,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                   {/* Execution Plan */}
                   {stack.execution_plan && stack.execution_plan.length > 0 && (
                     <div className="mt-4 mb-4">
-                      <h4 className="text-sm font-semibold text-gray-900 mb-2">Execution Plan</h4>
+                      <h4 className="text-sm font-semibold text-gray-900 mb-2">{s.executionPlan}</h4>
                       <div className="space-y-2">
                         {stack.execution_plan.map((step, i) => (
                           <div key={i} className="flex gap-3 text-sm">
@@ -497,14 +600,14 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
 
                   {/* Tool Stack */}
                   <div className="mt-4">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Tool Stack</h4>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">{s.toolStack}</h4>
                     <StackFlow layers={stack.layers} />
                   </div>
 
                   {/* Failure Points */}
                   {stack.failure_points && stack.failure_points.length > 0 && (
                     <div className="mt-4 p-3 bg-red-50/50 border border-red-100 rounded-lg">
-                      <h4 className="text-sm font-semibold text-red-800 mb-1.5">Watch Out</h4>
+                      <h4 className="text-sm font-semibold text-red-800 mb-1.5">{s.watchOut}</h4>
                       <ul className="space-y-1">
                         {stack.failure_points.map((fp, i) => (
                           <li key={i} className="text-xs text-red-700 flex items-start gap-1.5">
@@ -524,7 +627,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
                   )}
 
                   {/* Save + Share */}
-                  <StackActions stack={stack} />
+                  <StackActions stack={stack} locale={locale} />
                 </div>
               )}
             </div>
@@ -538,16 +641,16 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
           const hasJson = lastText.includes("```json");
           const jsonComplete = lastText.includes("```json") && lastText.split("```").length > 2;
 
-          let statusText = "Analyzing your requirements...";
+          let statusText: string = s.statusAnalyzing;
           let statusIcon = "🔍";
           if (lastText.length > 0 && !hasJson) {
-            statusText = "Selecting tools from 463 options...";
+            statusText = s.statusSelecting;
             statusIcon = "🧠";
           } else if (hasJson && !jsonComplete) {
-            statusText = "Building your tool stack...";
+            statusText = s.statusBuilding;
             statusIcon = "🔧";
           } else if (jsonComplete) {
-            statusText = "Rendering flow diagram...";
+            statusText = s.statusRendering;
             statusIcon = "📊";
           }
 
@@ -568,7 +671,7 @@ export function AISearch({ initialQuery }: { initialQuery?: string }) {
       {messages.length >= 2 && !isStreaming && (
         <div className="mt-4 mb-2 text-center">
           <p className="text-xs text-gray-400">
-            Try: "换个更便宜的" · "Add a monitoring layer" · "Make it simpler"
+            {s.followUpHint}
           </p>
         </div>
       )}

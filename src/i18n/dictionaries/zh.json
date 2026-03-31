@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "blueprints": "蓝图库",
+    "compare": "对比",
+    "weekly": "周报",
+    "aiBuilder": "AI 构建器"
+  },
+  "home": {
+    "title": "AgenTool Rank",
+    "subtitle": "描述你想构建什么，AI 为你推荐工具栈。",
+    "toolCount": "{count} 个 AI Agent 工具，数据驱动排名",
+    "trending": "热门工具",
+    "trendingSub": "按 Star 增速排名",
+    "categories": "按分类浏览",
+    "tools": "个工具",
+    "openDataset": "开源数据集",
+    "openDatasetDesc": "全部 {count} 个工具的 JSON/CSV 数据 — 免费使用，每日更新。",
+    "viewOnGithub": "在 GitHub 查看"
+  },
+  "blueprint": {
+    "title": "AI 项目蓝图库",
+    "subtitle": "{count} 个即用蓝图，附完整执行计划、工具推荐和成本估算。选一个，马上开始构建。",
+    "generate": "生成你的蓝图",
+    "community": "社区蓝图",
+    "communityDesc": "由用户通过 AI 蓝图生成器创建。",
+    "createYours": "创建你的蓝图",
+    "whatIs": "什么是 AI 项目蓝图？",
+    "whatIsDesc": "AI 项目蓝图是一组精心策划的工具、框架和服务的组合，旨在解决特定问题。每个蓝图包含具体的执行计划、成本估算、风险因素和替代工具 — 让你可以立即开始构建，而不是花数周时间研究该用哪些工具。",
+    "layers": "层",
+    "tools": "个工具"
+  },
+  "search": {
+    "title": "你想构建什么？",
+    "subtitle": "描述你的项目 — AI 架构师会为你推荐合适的工具栈。你可以通过追问来迭代优化。",
+    "placeholder": "描述你想构建什么……例如：量化交易系统、客服机器人、RAG 知识库",
+    "placeholderFollowUp": "在这里输入你的回答……",
+    "popular": "热门搜索：",
+    "thinking": "思考中...",
+    "send": "发送",
+    "followUpHint": "试试：\"换个更便宜的\" · \"加一个监控层\" · \"简化方案\"",
+    "existingStacks": "可能有帮助的现有方案：",
+    "relatedTools": "相关工具：",
+    "statusAnalyzing": "正在分析你的需求...",
+    "statusSelecting": "从 463 个工具中筛选...",
+    "statusBuilding": "正在构建工具栈...",
+    "statusRendering": "正在渲染流程图...",
+    "savePrompt": "保存此方案以获取永久链接",
+    "savePromptSub": "你可以分享、稍后查看或征求反馈",
+    "saveButton": "保存获取链接",
+    "saving": "保存中...",
+    "savedMessage": "已保存！你的方案有了永久链接：",
+    "copy": "复制",
+    "copyText": "复制文本",
+    "sharePrompt": "分享获取反馈：",
+    "copyMarkdown": "复制为 Markdown",
+    "copied": "已复制！",
+    "executionPlan": "执行计划",
+    "toolStack": "工具栈",
+    "watchOut": "注意事项"
+  },
+  "common": {
+    "tools": "个工具",
+    "layers": "层",
+    "difficulty": {
+      "beginner": "入门",
+      "intermediate": "中级",
+      "advanced": "高级"
+    }
+  },
+  "footer": {
+    "tagline": "AgenTool Rank — 数据驱动的 AI Agent 工具目录"
+  },
+  "meta": {
+    "title": "AgenTool Rank — 数据驱动的 AI Agent 工具目录",
+    "description": "463 个 AI Agent 工具，按 GitHub 活跃度排名，每日更新。描述你想构建的项目，AI 为你生成完整的技术蓝图。"
+  },
+  "categories": {
+    "agent-frameworks": "Agent 框架",
+    "coding-agents": "编程 Agent",
+    "no-code-agent-builders": "无代码 Agent 构建器",
+    "observability-evaluation": "可观测性与评估",
+    "memory-knowledge": "记忆与知识库",
+    "tool-integration": "工具集成",
+    "browser-web-agents": "浏览器 Agent",
+    "agent-protocols": "Agent 协议",
+    "enterprise-agent-platforms": "企业 Agent 平台",
+    "voice-agents": "语音 Agent",
+    "sandboxes-execution": "沙箱与执行环境"
+  },
+  "blueprintCategories": {
+    "assistants": "AI 助手与聊天机器人",
+    "development": "开发与编程",
+    "data": "数据与分析",
+    "content": "内容与营销",
+    "automation": "业务自动化",
+    "research": "研究与科学",
+    "other": "其他"
+  }
+}

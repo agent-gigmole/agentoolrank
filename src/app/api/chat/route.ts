@@ -4,16 +4,27 @@ import { db } from "@/lib/db";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { NextRequest } from "next/server";
 
-// Use DeepSeek (OpenAI-compatible) for now, will switch to AI Gateway later
+// GLM-5 via OpenRouter (OpenAI-compatible)
 function getModel() {
   const apiKey = process.env.LLM_API_KEY;
-  const baseURL = process.env.LLM_BASE_URL || "https://api.deepseek.com";
-  const modelId = process.env.LLM_MODEL || "deepseek-chat";
+  const baseURL = process.env.LLM_BASE_URL || "https://openrouter.ai/api/v1";
+  const modelId = process.env.LLM_MODEL || "z-ai/glm-5";
 
   if (!apiKey) throw new Error("LLM_API_KEY not configured");
 
   const provider = createOpenAI({ apiKey, baseURL });
   return provider.chat(modelId);
+}
+
+// C1: Sanitize intelligence field — strip instruction-like text that could be prompt injection
+function sanitizeField(text: string, maxLen: number): string {
+  if (!text) return "";
+  // Strip common injection patterns
+  const cleaned = text
+    .replace(/\b(always|never|must|you should|ignore|forget|instead|override|prioritize|recommend|do not recommend)\b.*?[.!]/gi, "")
+    .replace(/\b(system|instruction|prompt|role|assistant)\s*:/gi, "")
+    .slice(0, maxLen);
+  return cleaned.trim();
 }
 
 // Get ALL tools with rich context + intelligence for the AI
@@ -23,30 +34,28 @@ async function getToolContext(): Promise<string> {
   );
   return (r.rows as any[])
     .map((t) => {
-      // Basic info
       let line = `${t.id} | ${t.name} | ${(t.tagline || "").slice(0, 80)} | ${t.pricing} | ★${t.github_stars || 0} | ${t.category_tags}`;
 
-      // Intelligence (if available — richer than pros/use_cases)
       if (t.intelligence && t.intelligence !== "") {
         try {
           const intel = JSON.parse(t.intelligence);
-          const caps = intel.capabilities?.slice(0, 3).join(", ") || "";
-          const integ = intel.integrations?.slice(0, 5).join(", ") || "";
-          const bestFor = intel.best_for?.slice(0, 2).join(", ") || "";
-          const notFor = intel.not_for?.slice(0, 1).join(", ") || "";
-          const diff = intel.key_differentiator || "";
-          const deploy = intel.deployment?.join(", ") || "";
+          // Only extract structured array/string fields — no free-form text injection
+          const caps = (Array.isArray(intel.capabilities) ? intel.capabilities : []).slice(0, 3).map((c: string) => sanitizeField(c, 80)).filter(Boolean).join(", ");
+          const integ = (Array.isArray(intel.integrations) ? intel.integrations : []).slice(0, 5).map((i: string) => sanitizeField(i, 40)).filter(Boolean).join(", ");
+          const bestFor = (Array.isArray(intel.best_for) ? intel.best_for : []).slice(0, 2).map((b: string) => sanitizeField(b, 80)).filter(Boolean).join(", ");
+          const notFor = (Array.isArray(intel.not_for) ? intel.not_for : []).slice(0, 1).map((n: string) => sanitizeField(n, 80)).filter(Boolean).join(", ");
+          const diff = sanitizeField(typeof intel.key_differentiator === "string" ? intel.key_differentiator : "", 100);
+          const deploy = (Array.isArray(intel.deployment) ? intel.deployment : []).slice(0, 3).map((d: string) => sanitizeField(d, 30)).filter(Boolean).join(", ");
           if (caps) line += ` | Can: ${caps}`;
           if (integ) line += ` | Integrates: ${integ}`;
           if (deploy) line += ` | Deploy: ${deploy}`;
           if (bestFor) line += ` | Best for: ${bestFor}`;
           if (notFor) line += ` | NOT for: ${notFor}`;
-          if (diff) line += ` | Diff: ${diff.slice(0, 100)}`;
+          if (diff) line += ` | Diff: ${diff}`;
         } catch {}
       } else {
-        // Fallback to basic pros/use_cases
-        const pros = (() => { try { return JSON.parse(t.pros || "[]").slice(0, 2).join("; "); } catch { return ""; } })();
-        const uses = (() => { try { return JSON.parse(t.use_cases || "[]").slice(0, 2).join("; "); } catch { return ""; } })();
+        const pros = (() => { try { return JSON.parse(t.pros || "[]").slice(0, 2).map((p: string) => sanitizeField(p, 80)).join("; "); } catch { return ""; } })();
+        const uses = (() => { try { return JSON.parse(t.use_cases || "[]").slice(0, 2).map((u: string) => sanitizeField(u, 80)).join("; "); } catch { return ""; } })();
         if (pros) line += ` | Pros: ${pros}`;
         if (uses) line += ` | Uses: ${uses}`;
       }
@@ -56,11 +65,9 @@ async function getToolContext(): Promise<string> {
     .join("\n");
 }
 
-// Get valid tool IDs for validation
-async function getValidToolIds(): Promise<Set<string>> {
-  const r = await db.execute("SELECT id FROM tools WHERE content_status = 'complete'");
-  return new Set((r.rows as any[]).map((t) => t.id));
-}
+// Input budget limits
+const MAX_MESSAGES = 10;
+const MAX_MESSAGE_LENGTH = 2000;
 
 // Get existing stacks for reference
 async function getStackContext(): Promise<string> {
@@ -186,10 +193,20 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "Invalid messages" }, { status: 400 });
     }
 
-    const [toolContext, stackContext, validIds] = await Promise.all([
+    // C2: Input budget control — prevent cost DoS
+    if (messages.length > MAX_MESSAGES) {
+      return Response.json({ error: "Too many messages. Start a new conversation." }, { status: 400 });
+    }
+    for (const msg of messages) {
+      const text = typeof msg.content === "string" ? msg.content : JSON.stringify(msg.parts || "");
+      if (text.length > MAX_MESSAGE_LENGTH) {
+        return Response.json({ error: "Message too long" }, { status: 400 });
+      }
+    }
+
+    const [toolContext, stackContext] = await Promise.all([
       getToolContext(),
       getStackContext(),
-      getValidToolIds(),
     ]);
 
     const systemMessage = `${SYSTEM_PROMPT}
@@ -208,14 +225,13 @@ ${stackContext}`;
       model,
       system: systemMessage,
       messages: modelMessages,
-      temperature: 0.3,
     });
 
     return result.toUIMessageStreamResponse();
   } catch (err: any) {
     console.error("Chat API error:", err);
     return Response.json(
-      { error: err.message || "Something went wrong" },
+      { error: "Something went wrong. Please try again." },
       { status: 500 }
     );
   }

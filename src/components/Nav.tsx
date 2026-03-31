@@ -1,27 +1,38 @@
 import Link from "next/link";
+import type { Locale } from "@/i18n/types";
 
-export function Nav() {
+export function Nav({ locale = "en" }: { locale?: Locale }) {
+  const isZh = locale === "zh";
+  const prefix = isZh ? "/zh" : "";
+
   return (
     <nav className="border-b border-gray-200 bg-white">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
-        <Link href="/" className="font-bold text-gray-900 text-lg">
+        <Link href={`${prefix}/`} className="font-bold text-gray-900 text-lg">
           AgenTool Rank
         </Link>
         <div className="flex items-center gap-4 text-sm">
-          <Link href="/stack" className="text-gray-600 hover:text-gray-900 transition-colors">
-            Stacks
+          <Link href={`${prefix}/blueprint`} className="text-gray-600 hover:text-gray-900 transition-colors">
+            {isZh ? "蓝图库" : "Blueprints"}
           </Link>
           <Link href="/compare" className="text-gray-600 hover:text-gray-900 transition-colors">
-            Compare
+            {isZh ? "对比" : "Compare"}
           </Link>
           <Link href="/weekly" className="text-gray-600 hover:text-gray-900 transition-colors">
-            Weekly
+            {isZh ? "周报" : "Weekly"}
           </Link>
           <Link
-            href="/search"
+            href={`${prefix}/search`}
             className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
-            AI Builder
+            {isZh ? "AI 构建器" : "AI Builder"}
+          </Link>
+          {/* Language switcher */}
+          <Link
+            href={isZh ? "/" : "/zh"}
+            className="text-gray-400 hover:text-gray-600 text-xs transition-colors"
+          >
+            {isZh ? "EN" : "中文"}
           </Link>
         </div>
       </div>

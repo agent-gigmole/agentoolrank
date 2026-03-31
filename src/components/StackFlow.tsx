@@ -37,6 +37,14 @@ function pricingBadge(pricing?: string) {
   );
 }
 
+function trackToolClick(toolId: string, role: string) {
+  try {
+    if (typeof window !== "undefined" && (window as any).va) {
+      (window as any).va("event", { name: "tool_click", tool_id: toolId, role });
+    }
+  } catch {}
+}
+
 function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
   const isPrimary = tool.role === "Primary";
   const isExternal = tool.role === "External";
@@ -74,6 +82,7 @@ function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
         href={searchUrl}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackToolClick(tool.tool_id, "External")}
         className="block p-2.5 rounded-lg border border-amber-200 bg-amber-50/30 hover:border-amber-300 hover:shadow-md transition-all animate-fade-in"
         style={{ animationDelay: `${delay}ms` }}
       >
@@ -87,6 +96,7 @@ function ToolNode({ tool, delay }: { tool: StackTool; delay: number }) {
       href={`/tool/${tool.tool_id}`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackToolClick(tool.tool_id, tool.role)}
       className={`block p-2.5 rounded-lg border transition-all hover:shadow-md animate-fade-in ${
         isPrimary
           ? "border-blue-300 bg-blue-50 hover:border-blue-400"

@@ -17,6 +17,9 @@ if (!GITHUB_TOKEN) {
 
 const GRAPHQL_URL = "https://api.github.com/graphql";
 
+// 90 days ago in ISO format for commit history query
+const NINETY_DAYS_AGO = new Date(Date.now() - 90 * 86400000).toISOString();
+
 async function graphql<T>(query: string, variables: Record<string, unknown> = {}): Promise<T> {
   const res = await fetch(GRAPHQL_URL, {
     method: "POST",
@@ -40,8 +43,9 @@ async function graphql<T>(query: string, variables: Record<string, unknown> = {}
 }
 
 // Batch fetch repo details via GraphQL (saves rate limit points)
+// Note: $since is dynamically set to 90 days ago for commit count
 const REPO_QUERY = `
-query($owner: String!, $name: String!) {
+query($owner: String!, $name: String!, $since: GitTimestamp!) {
   repository(owner: $owner, name: $name) {
     nameWithOwner
     name
@@ -59,6 +63,9 @@ query($owner: String!, $name: String!) {
           history(first: 1) {
             nodes { committedDate }
           }
+          recentHistory: history(since: $since) {
+            totalCount
+          }
         }
       }
     }
@@ -68,6 +75,9 @@ query($owner: String!, $name: String!) {
     }
     repositoryTopics(first: 20) {
       nodes { topic { name } }
+    }
+    issues(first: 20, states: CLOSED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes { createdAt closedAt }
     }
   }
   rateLimit { cost remaining resetAt }
@@ -89,6 +99,7 @@ interface RepoData {
     defaultBranchRef: {
       target: {
         history: { nodes: Array<{ committedDate: string }> };
+        recentHistory: { totalCount: number };
       };
     } | null;
     releases: {
@@ -97,6 +108,9 @@ interface RepoData {
     };
     repositoryTopics: {
       nodes: Array<{ topic: { name: string } }>;
+    };
+    issues: {
+      nodes: Array<{ createdAt: string; closedAt: string | null }>;
     };
   };
   rateLimit: { cost: number; remaining: number; resetAt: string };
@@ -136,9 +150,54 @@ function inferPricing(license: string | null, topics: string[]): "free" | "freem
   return "free"; // default for GitHub repos
 }
 
+/** Calculate median hours between createdAt and closedAt for closed issues */
+function calcIssueResponseMedianHours(
+  issues: Array<{ createdAt: string; closedAt: string | null }>
+): number | null {
+  const durations = issues
+    .filter((i) => i.closedAt != null)
+    .map((i) => {
+      const created = new Date(i.createdAt).getTime();
+      const closed = new Date(i.closedAt!).getTime();
+      return (closed - created) / (1000 * 60 * 60); // hours
+    })
+    .filter((h) => h >= 0)
+    .sort((a, b) => a - b);
+
+  if (durations.length === 0) return null;
+
+  const mid = Math.floor(durations.length / 2);
+  if (durations.length % 2 === 0) {
+    return Math.round(((durations[mid - 1] + durations[mid]) / 2) * 10) / 10;
+  }
+  return Math.round(durations[mid] * 10) / 10;
+}
+
+/** Check if homepageUrl returns 404 via HEAD request */
+async function checkDocsStatus(url: string | null): Promise<"ok" | "404" | "unknown"> {
+  if (!url) return "unknown";
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch(url, {
+      method: "HEAD",
+      signal: controller.signal,
+      redirect: "follow",
+    });
+    clearTimeout(timeout);
+    if (res.status === 404) return "404";
+    if (res.ok) return "ok";
+    return "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+
+const DRY_RUN = process.argv.includes("--dry-run");
+
 async function fetchAndUpsertRepo(owner: string, name: string): Promise<boolean> {
   try {
-    const data = await graphql<RepoData>(REPO_QUERY, { owner, name });
+    const data = await graphql<RepoData>(REPO_QUERY, { owner, name, since: NINETY_DAYS_AGO });
     const repo = data.repository;
     if (!repo) {
       console.warn(`  Repo not found: ${owner}/${name}`);
@@ -155,23 +214,43 @@ async function fetchAndUpsertRepo(owner: string, name: string): Promise<boolean>
 
     const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
     const lastCommit = repo.defaultBranchRef?.target?.history?.nodes?.[0]?.committedDate ?? null;
+    const commitCount90d = repo.defaultBranchRef?.target?.recentHistory?.totalCount ?? null;
     const sixMonthsAgo = new Date(Date.now() - 180 * 86400000).toISOString();
     const recentReleases = repo.releases.nodes.filter((r) => r.createdAt > sixMonthsAgo).length;
+    const issueResponseHours = calcIssueResponseMedianHours(repo.issues?.nodes ?? []);
+    const docsStatus = await checkDocsStatus(repo.homepageUrl);
 
     const slug = makeSlug(owner, name);
     const now = new Date().toISOString();
 
+    if (DRY_RUN) {
+      console.log(`  [DRY-RUN] ${slug}:`);
+      console.log(`    ★ stars=${repo.stargazerCount}`);
+      console.log(`    commits_90d=${commitCount90d ?? '?'}`);
+      console.log(`    releases_6m=${recentReleases}`);
+      console.log(`    issue_response_median_hours=${issueResponseHours ?? '?'}`);
+      console.log(`    docs_status=${docsStatus}`);
+      console.log(`    homepage=${repo.homepageUrl ?? 'none'}`);
+      console.log(`    last_commit=${lastCommit ?? '?'}`);
+      return true;
+    }
+
     await db.execute({
       sql: `INSERT INTO tools (id, name, tagline, description, logo_url, website_url, github_url, github_owner, github_repo,
-            category_tags, industry_tags, github_stars, last_commit_date, release_count_6m,
+            category_tags, industry_tags, github_stars, last_commit_date, commit_count_90d, release_count_6m,
+            issue_response_hours, docs_status,
             source, pricing, content_status, score, created_at, updated_at, data_refreshed_at)
             VALUES (?, ?, ?, '', ?, ?, ?, ?, ?,
-            ?, '["devtools"]', ?, ?, ?,
+            ?, '["devtools"]', ?, ?, ?, ?,
+            ?, ?,
             'github', ?, 'pending', 0, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
             github_stars = excluded.github_stars,
             last_commit_date = excluded.last_commit_date,
+            commit_count_90d = excluded.commit_count_90d,
             release_count_6m = excluded.release_count_6m,
+            issue_response_hours = excluded.issue_response_hours,
+            docs_status = excluded.docs_status,
             data_refreshed_at = excluded.data_refreshed_at,
             updated_at = excluded.updated_at`,
       args: [
@@ -186,7 +265,10 @@ async function fetchAndUpsertRepo(owner: string, name: string): Promise<boolean>
         JSON.stringify(inferCategories(topics, repo.description ?? "")),
         repo.stargazerCount,
         lastCommit,
+        commitCount90d,
         recentReleases,
+        issueResponseHours,
+        docsStatus,
         inferPricing(repo.licenseInfo?.spdxId ?? null, topics),
         now, now, now,
       ],
@@ -195,12 +277,12 @@ async function fetchAndUpsertRepo(owner: string, name: string): Promise<boolean>
     // Save metric snapshot
     const today = new Date().toISOString().slice(0, 10);
     await db.execute({
-      sql: `INSERT OR REPLACE INTO metric_snapshots (tool_id, date, github_stars, release_count_6m)
-            VALUES (?, ?, ?, ?)`,
-      args: [slug, today, repo.stargazerCount, recentReleases],
+      sql: `INSERT OR REPLACE INTO metric_snapshots (tool_id, date, github_stars, commit_count_90d, release_count_6m)
+            VALUES (?, ?, ?, ?, ?)`,
+      args: [slug, today, repo.stargazerCount, commitCount90d, recentReleases],
     });
 
-    console.log(`  ✓ ${slug} (★${repo.stargazerCount})`);
+    console.log(`  ✓ ${slug} (★${repo.stargazerCount} commits90d=${commitCount90d ?? '?'} issueHrs=${issueResponseHours ?? '?'} docs=${docsStatus})`);
     return true;
   } catch (err) {
     console.error(`  ✗ ${owner}/${name}: ${err}`);
@@ -280,7 +362,34 @@ const SEED_REPOS: Array<[string, string]> = [
   ["superagent-ai", "superagent"],
 ];
 
+async function migrateSchema() {
+  // Add new columns if they don't exist (idempotent)
+  const migrations = [
+    "ALTER TABLE tools ADD COLUMN issue_response_hours REAL",
+    "ALTER TABLE tools ADD COLUMN docs_status TEXT DEFAULT 'unknown'",
+  ];
+  for (const sql of migrations) {
+    try {
+      await db.execute(sql);
+      console.log(`  Migration OK: ${sql.slice(0, 60)}...`);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (msg.includes("duplicate column") || msg.includes("already exists")) {
+        // Column already exists, skip
+      } else {
+        console.warn(`  Migration warning: ${msg}`);
+      }
+    }
+  }
+}
+
 async function main() {
+  // Run schema migration before anything else
+  if (!DRY_RUN) {
+    console.log("Running schema migrations...");
+    await migrateSchema();
+  }
+
   // Check for discovered repos file (from discover-repos.ts)
   let repos: Array<[string, string]> = SEED_REPOS;
 
@@ -318,6 +427,14 @@ async function main() {
     }
   }
 
+  // In dry-run mode, limit to --limit N repos (default 3)
+  if (DRY_RUN) {
+    const limitIdx = process.argv.indexOf("--limit");
+    const limit = limitIdx !== -1 ? parseInt(process.argv[limitIdx + 1]) || 3 : 3;
+    repos = repos.slice(0, limit);
+    console.log(`[DRY-RUN] Testing ${repos.length} repos (no DB writes)...`);
+  }
+
   console.log(`Crawling ${repos.length} repos...`);
   let success = 0;
   let failed = 0;
@@ -332,17 +449,19 @@ async function main() {
     await new Promise((r) => setTimeout(r, 500));
   }
 
-  // Update category tool counts
-  await db.execute(`
-    UPDATE categories SET tool_count = (
-      SELECT COUNT(*) FROM tools WHERE category_tags LIKE '%"' || categories.slug || '"%'
-    )
-  `);
+  if (!DRY_RUN) {
+    // Update category tool counts
+    await db.execute(`
+      UPDATE categories SET tool_count = (
+        SELECT COUNT(*) FROM tools WHERE category_tags LIKE '%"' || categories.slug || '"%'
+      )
+    `);
+
+    const count = await db.execute("SELECT COUNT(*) as c FROM tools");
+    console.log(`Total tools in DB: ${(count.rows[0] as { c: number }).c}`);
+  }
 
   console.log(`\nDone. ${success} succeeded, ${failed} failed.`);
-
-  const count = await db.execute("SELECT COUNT(*) as c FROM tools");
-  console.log(`Total tools in DB: ${count.rows[0].c}`);
 }
 
 main().catch(console.error);

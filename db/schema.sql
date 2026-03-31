@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS tools (
   commit_count_90d INTEGER,
   release_count_6m INTEGER,
   npm_downloads_weekly INTEGER,
+  issue_response_hours REAL,     -- median hours to close recent issues
+  docs_status TEXT DEFAULT 'unknown',  -- 'ok' | '404' | 'unknown'
 
   -- LLM content
   pros TEXT DEFAULT '[]',           -- JSON array

@@ -23,6 +23,36 @@
 - Temperature: 只支持 1（不能设 0.3）
 - 注意 thinking 模式：content 可能为空，reasoning_content 有值
 
+## 2026-03-31 — LLM 模型二次切换：Kimi K2.5 → GLM-5 (OpenRouter)
+
+**背景**：Kimi K2.5 上线后发现速度太慢（12-38s），测试了 GLM 系列
+
+**对比**：
+- Kimi K2.5: $0.021/次, 12-38s, 中英文质量最佳但慢
+- GLM-5: $0.021/次, 1-3s, 中文量化问题比 Kimi 更专业
+- GLM-4.7-Flash: $0.002/次, 1-4s, 质量稍弱但极便宜
+
+**决策**：切换到 GLM-5 via OpenRouter
+- 速度提升 10 倍（1-3s vs 12-38s）
+- 中文场景问题更有深度（提到 AI 分析层次、GPU vs 云端部署权衡）
+- 走 OpenRouter 而非智谱官方 API（官方 429 限流严重，速度慢 10 倍）
+
+**API 配置**：
+- Base URL: https://openrouter.ai/api/v1
+- Model ID: z-ai/glm-5
+- API Key: OpenRouter key（非智谱 key）
+
+## 2026-03-31 — i18n 多语言方案
+
+**背景**：需要在中文媒体（掘金/V2EX/即刻）推广，需要中文版
+
+**方案选择**：B 方案（标准版）— UI + 首页 + 蓝图 + 搜索翻译，工具详情保持英文
+- 不用 [locale] 动态段（避免迁移所有路由）
+- 英文无前缀，中文 /zh/ 前缀
+- 工具数据保持英文（开发者都看得懂，翻译 463 条 ROI 太低）
+
+**路由**：/zh、/zh/blueprint、/zh/search
+
 ## 2026-03-31 — Blueprint JSON 解析：前端容错 vs 服务端结构化
 
 **背景**：Codex 审查建议用 AI SDK Output.object() 做服务端结构化生成
