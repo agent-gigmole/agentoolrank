@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getStackBySlug, getStacks, getToolBySlug } from "@/lib/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { StackFlow } from "@/components/StackFlow";
+import { InstructionBlock } from "@/components/InstructionBlock";
 import type { Metadata } from "next";
 import type { Tool } from "@/lib/schema";
 
@@ -168,6 +169,21 @@ export default async function BlueprintDetailPage({ params }: Props) {
             })}
           </div>
         </section>
+
+        {/* Setup Instructions — copy & paste into terminal */}
+        <InstructionBlock
+          stack={{
+            title: stack.title,
+            icon: stack.icon,
+            layers: stack.layers.map((layer) => ({
+              ...layer,
+              tools: layer.tools.map((t) => ({
+                ...t,
+                name: toolMap.get(t.tool_id)?.name ?? t.tool_id,
+              })),
+            })),
+          }}
+        />
 
         {/* CTA to generate own blueprint */}
         <section className="mt-10 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
