@@ -57,9 +57,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/stack/${s.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: s.slug.startsWith("custom-") ? 0.6 : 0.7,
+      priority: s.slug.startsWith("custom-") ? 0.4 : 0.5,
     })),
   ];
 
-  return [...staticPages, ...categoryPages, ...toolPages, ...comparePages, ...stackPages];
+  // Blueprint pages (canonical URLs for blueprints)
+  const blueprintPages: MetadataRoute.Sitemap = stacks.map((s) => ({
+    url: `${baseUrl}/blueprint/${s.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: s.slug.startsWith("custom-") ? 0.6 : 0.7,
+  }));
+
+  return [...staticPages, ...categoryPages, ...toolPages, ...comparePages, ...stackPages, ...blueprintPages];
 }

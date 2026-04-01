@@ -204,7 +204,7 @@ function BlueprintCard({ bp, isCommunity }: { bp: BlueprintRow; isCommunity?: bo
 
   return (
     <Link
-      href={`/stack/${bp.slug}`}
+      href={`/blueprint/${bp.slug}`}
       className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all group"
     >
       <div className="flex items-start gap-3 mb-2">

@@ -6,7 +6,7 @@ import { StackFlow } from "@/components/StackFlow";
 import type { Metadata } from "next";
 import type { Tool } from "@/lib/schema";
 
-export const revalidate = 86400;
+export const revalidate = 3600;
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(stack.title)}&icon=${encodeURIComponent(stack.icon)}&difficulty=${stack.difficulty}&layers=${stack.layers.length}&tools=${totalTools}&desc=${encodeURIComponent((stack.description || "").slice(0, 120))}&layer_names=${encodeURIComponent(layerNames)}`;
 
   return {
-    title: `${stack.title} — AI Project Blueprint`,
-    description: `${stack.description} ${stack.layers.length} layers, ${totalTools} tools. See the full execution plan.`,
+    title: `${stack.title} — AI Project Blueprint | AgenToolRank`,
+    description: `${stack.description} ${stack.layers.length} layers, ${totalTools} tools. Step-by-step execution plan with tool recommendations.`,
     alternates: {
       canonical: `${baseUrl}/blueprint/${slug}`,
     },
@@ -50,16 +50,12 @@ const difficultyLabels: Record<string, { label: string; color: string }> = {
   advanced: { label: "Advanced", color: "bg-red-100 text-red-700" },
 };
 
-function formatStars(n: number | null): string {
-  if (n === null) return "";
-  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
-  return String(n);
-}
-
-export default async function StackDetailPage({ params }: Props) {
+export default async function BlueprintDetailPage({ params }: Props) {
   const { slug } = await params;
   const stack = await getStackBySlug(slug);
   if (!stack) notFound();
+
+  const isCustom = slug.startsWith("custom-");
 
   // Fetch tool details for all referenced tools
   const toolIds = new Set<string>();
@@ -75,13 +71,13 @@ export default async function StackDetailPage({ params }: Props) {
   const diff = difficultyLabels[stack.difficulty] ?? difficultyLabels.intermediate;
   const totalTools = stack.layers.reduce((s, l) => s + l.tools.length, 0);
 
-  // HowTo JSON-LD
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const howToJsonLd = {
     "@context": "https://schema.org",
     "@type": "HowTo",
     name: stack.title,
     description: stack.description,
+    url: `${baseUrl}/blueprint/${slug}`,
     step: stack.layers.map((layer, i) => ({
       "@type": "HowToStep",
       position: i + 1,
@@ -97,7 +93,7 @@ export default async function StackDetailPage({ params }: Props) {
   return (
     <>
       <BreadcrumbJsonLd items={[
-        { label: "Tool Stacks", href: "/stack" },
+        { label: "Blueprints", href: "/blueprint" },
         { label: stack.title },
       ]} />
       <script
@@ -106,7 +102,7 @@ export default async function StackDetailPage({ params }: Props) {
       />
       <main className="max-w-4xl mx-auto px-4 py-8">
         <Breadcrumbs items={[
-          { label: "Tool Stacks", href: "/stack" },
+          { label: "Blueprints", href: "/blueprint" },
           { label: stack.title },
         ]} />
 
@@ -124,6 +120,11 @@ export default async function StackDetailPage({ params }: Props) {
             <span className="text-gray-400">
               {stack.layers.length} layers · {totalTools} tools
             </span>
+            {isCustom && (
+              <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                Community
+              </span>
+            )}
           </div>
         </div>
 
@@ -145,7 +146,7 @@ export default async function StackDetailPage({ params }: Props) {
 
         {/* Compare tools in this stack */}
         <section className="mt-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Compare Tools in This Stack</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Compare Tools in This Blueprint</h2>
           <div className="flex flex-wrap gap-2">
             {stack.layers.filter((l) => l.tools.length >= 2).map((layer) => {
               const tools = layer.tools.filter((t) => toolMap.has(t.tool_id));
@@ -166,6 +167,21 @@ export default async function StackDetailPage({ params }: Props) {
               );
             })}
           </div>
+        </section>
+
+        {/* CTA to generate own blueprint */}
+        <section className="mt-10 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">Build Your Own Blueprint</h2>
+          <p className="text-sm text-gray-600 mb-4">
+            Describe your project and our AI will generate a custom blueprint with the best tool combinations for your needs.
+          </p>
+          <Link
+            href="/search"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            Generate Blueprint
+          </Link>
         </section>
       </main>
     </>

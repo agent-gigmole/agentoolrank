@@ -62,6 +62,9 @@ export const ToolSchema = z.object({
   affiliate_url: z.string().url().nullish(),
   content_status: ContentStatusEnum.default("pending"),
 
+  // Intelligence (deep analysis JSON)
+  intelligence: z.string().default(""),
+
   // Ranking
   score: z.number().default(0),
   percentile_rank: z.number().nullable().default(null),

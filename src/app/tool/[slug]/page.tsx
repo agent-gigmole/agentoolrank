@@ -60,6 +60,172 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
+interface ToolIntelligence {
+  capabilities?: string[];
+  integrations?: string[];
+  sdk_languages?: string[];
+  deployment?: string[];
+  pricing_detail?: { free_tier?: string; paid_starts_at?: string };
+  limitations?: string[];
+  best_for?: string[];
+  not_for?: string[];
+  key_differentiator?: string;
+}
+
+function parseIntelligence(raw: string): ToolIntelligence | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (typeof parsed !== "object" || parsed === null) return null;
+    return parsed as ToolIntelligence;
+  } catch {
+    return null;
+  }
+}
+
+function IntelligenceSection({ intel }: { intel: ToolIntelligence }) {
+  return (
+    <div className="space-y-6">
+      {/* Key Differentiator */}
+      {intel.key_differentiator && (
+        <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
+          <div className="text-xs font-medium text-blue-600 uppercase tracking-wide mb-1">Key Differentiator</div>
+          <p className="text-sm text-gray-800">{intel.key_differentiator}</p>
+        </div>
+      )}
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Capabilities */}
+        {intel.capabilities && intel.capabilities.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5">
+              <span className="text-blue-500">⚡</span> Capabilities
+            </h3>
+            <ul className="space-y-1">
+              {intel.capabilities.map((cap, i) => (
+                <li key={i} className="text-sm text-gray-600 flex items-start gap-1.5">
+                  <span className="text-gray-300 mt-0.5">•</span> {cap}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Integrations */}
+        {intel.integrations && intel.integrations.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5">
+              <span className="text-green-500">🔗</span> Integrations
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {intel.integrations.map((integ, i) => (
+                <span key={i} className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-md">
+                  {integ}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Best For */}
+        {intel.best_for && intel.best_for.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5">
+              <span className="text-green-500">✓</span> Best For
+            </h3>
+            <ul className="space-y-1">
+              {intel.best_for.map((bf, i) => (
+                <li key={i} className="text-sm text-gray-600 flex items-start gap-1.5">
+                  <span className="text-green-400 mt-0.5">✓</span> {bf}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Not For */}
+        {intel.not_for && intel.not_for.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5">
+              <span className="text-red-400">✗</span> Not Ideal For
+            </h3>
+            <ul className="space-y-1">
+              {intel.not_for.map((nf, i) => (
+                <li key={i} className="text-sm text-gray-600 flex items-start gap-1.5">
+                  <span className="text-red-300 mt-0.5">✗</span> {nf}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        {/* SDK Languages */}
+        {intel.sdk_languages && intel.sdk_languages.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Languages</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {intel.sdk_languages.map((lang, i) => (
+                <span key={i} className="text-xs px-2 py-1 bg-purple-50 text-purple-700 rounded-md font-mono">
+                  {lang}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Deployment */}
+        {intel.deployment && intel.deployment.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Deployment</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {intel.deployment.map((dep, i) => (
+                <span key={i} className="text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-md">
+                  {dep}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Pricing Detail */}
+        {intel.pricing_detail && (intel.pricing_detail.free_tier || intel.pricing_detail.paid_starts_at) && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Pricing Detail</h3>
+            <div className="text-xs text-gray-600 space-y-1">
+              {intel.pricing_detail.free_tier && (
+                <div><span className="text-green-600 font-medium">Free:</span> {intel.pricing_detail.free_tier}</div>
+              )}
+              {intel.pricing_detail.paid_starts_at && (
+                <div><span className="text-blue-600 font-medium">Paid:</span> {intel.pricing_detail.paid_starts_at}</div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Limitations */}
+      {intel.limitations && intel.limitations.length > 0 && (
+        <div>
+          <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5">
+            <span className="text-amber-500">⚠</span> Known Limitations
+          </h3>
+          <ul className="space-y-1">
+            {intel.limitations.map((lim, i) => (
+              <li key={i} className="text-sm text-gray-600 flex items-start gap-1.5">
+                <span className="text-amber-400 mt-0.5">⚠</span> {lim}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function appendUtm(url: string): string {
   try {
     const u = new URL(url);
@@ -219,6 +385,17 @@ export default async function ToolPage({ params }: Props) {
             <p className="text-gray-700 leading-relaxed whitespace-pre-line">{tool.description}</p>
           </Section>
         )}
+
+        {/* Tool Intelligence */}
+        {(() => {
+          const intel = parseIntelligence(tool.intelligence);
+          if (!intel) return null;
+          return (
+            <Section title="Deep Analysis">
+              <IntelligenceSection intel={intel} />
+            </Section>
+          );
+        })()}
 
         {/* Pros / Cons */}
         {(tool.pros.length > 0 || tool.cons.length > 0) && (
