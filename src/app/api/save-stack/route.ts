@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
 const MAX_TITLE_LENGTH = 200;
@@ -63,6 +64,12 @@ export async function POST(req: NextRequest) {
         now,
       ],
     });
+
+    // Revalidate blueprint pages so new stack appears immediately
+    revalidatePath("/blueprint");
+    revalidatePath("/zh/blueprint");
+    revalidatePath(`/blueprint/${slug}`);
+    revalidatePath(`/stack/${slug}`);
 
     return Response.json({ slug, saved: true });
   } catch (err: any) {
