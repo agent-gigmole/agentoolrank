@@ -1,0 +1,15 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./queries": "./src/queries.ts",
+    "./rate-limit": "./src/rate-limit.ts"
+  },
+  "dependencies": {
+    "@libsql/client": "*",
+    "zod": "*"
+  }
+}

@@ -46,6 +46,7 @@ Thumbs.db
 *.tsbuildinfo
 # typescript
 # vercel
+.turbo/
 .vercel
 # Vercel
 .vscode/
