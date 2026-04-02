@@ -1,5 +1,33 @@
 # LOG.md — 变更日志
 
+## 2026-04-01 — Turborepo monorepo 重构 + marketing-tools 创建
+
+### monorepo 重构
+- 从单体 Next.js 项目重构为 Turborepo monorepo
+- apps/agent-tools: 原 AgentoolRank 主站
+- apps/marketing-tools: 新项目 AIMarketRank（营销 AI 工具目录）
+- packages/ui + packages/db + packages/seo: 共享包抽离
+
+### marketing-tools (AIMarketRank) 创建
+- 市场研究: 10 方向分析 → 3 方向深度研究（教育/商品图/营销）→ Codex 二次意见 → 选定营销方向
+- 骨架创建: 品牌设计 + prompt 模板 + 分类体系
+- Turso aimarketrank 数据库创建
+- Vercel marketing-tools project 创建
+- 爬虫种子列表 60 个营销工具，开始爬取
+
+### 模型切换
+- GLM-5 → Llama 4 Scout → DeepSeek V3 官方 API（最终稳定选择）
+
+### Blueprint SEO + Intelligence 展示
+- Blueprint SEO 详情页 /blueprint/[slug] — canonical URL + 75+ 静态页
+- Tool Intelligence 展示页 — 9 区块展示组件 + 464/464 数据 100% 覆盖
+- 图片拖拽上传 + Setup Instructions 一键复制块
+- 保存蓝图后 revalidatePath 即时刷新
+
+### Featured 邮件 + GSC
+- Featured 邮件发送 10 封（0xzap0x@gmail.com SMTP）
+- GSC 报告: 739 URL 发现，44 展示，0 点击（新站正常）
+
 ## 2026-04-01 Tool Intelligence 全量重新生成 — 464/464 (100%)
 
 - 发现之前"444/461 已覆盖"记录不准确：Turso 上 intelligence 列实际全空

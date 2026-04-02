@@ -2,14 +2,15 @@
 
 ## 当前阶段
 
-壁垒建设 + Launch 并行
+Turborepo monorepo 双站运营 + marketing-tools MVP
 
 ## 目标
 
-1. 建立可持续增长的护城河（SEO + 数据壁垒）
-2. 继续 Launch 计划
+1. marketing-tools (AIMarketRank) 快速上线 MVP
+2. agent-tools (AgentoolRank) 继续 Launch + 壁垒运营
+3. 共享包逐步抽离复用
 
-## 已完成阶段
+## 已完成阶段（agent-tools）
 
 - [x] Phase 1: 数据引擎（爬虫 + 排名 + 基础页面 + 部署）
 - [x] Phase 2: 完整 MVP（LLM 内容 + 对比页 + SEO + GSC）
@@ -18,29 +19,43 @@
 - [x] Phase 5: AI-First 搜索（Turso + AI SDK v6 + Blueprint + Kimi K2.5）
 - [x] Tool Intelligence Layer: 464/464 高质量分析档案（100% 覆盖）
 - [x] Codex 对抗性审查 + 7 项安全修复 + 模型切换
+- [x] 壁垒建设: GitHub 真实信号指标 + Blueprint SEO 页面
+- [x] Blueprint SEO 详情页 /blueprint/[slug] — 75+ 静态页
+- [x] Tool Intelligence 展示页 — 9 区块 + 100% 数据覆盖
+- [x] Featured 邮件发送 10 封
+- [x] 模型切换: GLM-5 → Llama 4 Scout → DeepSeek V3 官方 API
 
-## 紧急：壁垒建设（用户要求立即执行）
+## 已完成阶段（monorepo）
 
-### 任务 A：GitHub 真实信号指标 ✅
-- [x] 在每日爬虫里加：issue 响应中位数、90天 commit 数、文档链接是否 404
-- [x] 写入 tools 表新字段（issue_response_hours, docs_status）+ commit_count_90d 填充
-- [x] 这些数据比 README 蒸馏有价值，竞品手动抄不走
+- [x] Turborepo monorepo 重构: apps/agent-tools + apps/marketing-tools + packages/*
+- [x] 市场研究: 10 方向 → 3 深度 → Codex 二次意见 → 营销方向
+- [x] marketing-tools 骨架: 品牌 + prompt + 分类
+- [x] Turso aimarketrank 数据库创建
+- [x] Vercel marketing-tools project 创建
+- [x] 爬虫种子列表 60 个营销工具
 
-### 任务 B：Blueprint 模板库 SEO 页面 ✅
-- [x] 用户保存的 Blueprint 自动变成 SEO 索引页
-- [x] /blueprint 索引页 + /blueprint/[slug] 详情页（canonical URL）
-- [x] 每个保存的蓝图就是一个长尾 SEO 页面（75+ 静态页）
-- [x] 目标：用户帮你建护城河
+## marketing-tools MVP（进行中）
 
-## Launch（继续）
+### Phase 1: 数据引擎
+- [x] 种子列表 60 个营销工具
+- [ ] 爬虫采集完成（正在进行）
+- [ ] LLM 内容生成
+- [ ] 分类整理 + 数据清洗
 
-### Launch Day 1 ✅
-- [x] X Article 发布
-- [x] X 互动评论开始
+### Phase 2: 页面 + 部署
+- [ ] 首页 / 分类页 / 详情页 / 搜索页
+- [ ] SEO 基础（meta tags + JSON-LD + sitemap）
+- [ ] Vercel 部署上线
+
+### Phase 3: 差异化
+- [ ] Marketing Intelligence（复用 agent-tools 模式）
+- [ ] Blueprint Generator（营销场景）
+
+## agent-tools 运营（并行）
 
 ### Launch Day 2
+- [x] Featured 邮件发送
 - [ ] Data Story 发布
-- [ ] Featured 邮件
 
 ### Launch Day 3-7
 - [ ] Reddit/HN/Dev.to 分享
@@ -52,15 +67,11 @@
 - [ ] 数据复盘
 - [ ] Newsletter 第一期
 
-## 并行任务
+## 观察项
 
-- [x] Tool Intelligence 展示页开发（代码完成，数据已填充）
-- [x] **Intelligence 数据重新生成** — 464/464 (100%) 全量完成
-  - [x] 排查数据丢失根因：subagent batch 15 创建了错误的 tool_intelligence 表
-  - [x] 重新运行 Claude subagent 深度分析（24 批并行）
-  - [x] 写入完成后验证：464/464 覆盖
-- [ ] GSC 数据积累观察（739 URL 已发现）
-- [ ] 埋点数据观察（blueprint_generated → blueprint_saved → tool_click）
+- [ ] GSC 数据积累（739 URL 发现，44 展示，0 点击）
+- [ ] 埋点数据（blueprint_generated → blueprint_saved → tool_click）
+- [ ] marketing-tools 域名选择
 
 ## 阻塞项
 
