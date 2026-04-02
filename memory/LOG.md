@@ -1,5 +1,25 @@
 # LOG.md — 变更日志
 
+## 2026-04-01 — marketing-tools 数据填充 + 部署上线
+
+### 数据清理与填充
+- GitHub 爬虫采集 60 个工具 → 发现大量非营销工具（LangChain/LlamaIndex 等开发框架）
+- 清理删除 47 个非营销工具，补充 40 个付费 SaaS 工具（Semrush/Jasper/HubSpot/GetResponse 等）
+- 最终 52 个工具：32 paid + 10 freemium + 10 open-source
+- 每个付费工具带 affiliate 佣金信息存入 affiliate_url + intelligence
+- 关键教训：GitHub 爬虫只能找到开源工具，付费 SaaS 需要从 web 搜索+手动录入
+
+### Intelligence + 翻译
+- 开源工具 Intelligence 3 批并行生成（60/60 完成）
+- DeepSeek API 批量翻译 52 个工具：tagline→description（中文）+ pros + use_cases
+- 一次 API 调用完成全部翻译（省钱）
+
+### 部署上线
+- marketing-tools 独立部署修复：共享代码复制到本地，移除 workspace 依赖
+- Build 修复：db.ts process.cwd()→:memory: fallback + schema.ts URL 校验放宽
+- 中文版 /zh 首页 + 搜索页 + 中英导航切换
+- 上线：marketing-tools-three.vercel.app
+
 ## 2026-04-01 — Turborepo monorepo 重构 + marketing-tools 创建
 
 ### monorepo 重构
