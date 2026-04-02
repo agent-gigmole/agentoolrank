@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Nav } from "@/components/Nav";
+import { RootFooter } from "@/components/RootFooter";
 
 export const metadata: Metadata = {
   title: "AI 营销工具导航 — 找到最适合你的 AI 营销工具 | AIMarketRank",
@@ -6,5 +8,11 @@ export const metadata: Metadata = {
 };
 
 export default function ZhLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Nav locale="zh" />
+      {children}
+      <RootFooter />
+    </>
+  );
 }
