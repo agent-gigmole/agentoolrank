@@ -1,5 +1,5 @@
-import { db } from "@repo/db";
-import { searchStacks } from "@repo/db/queries";
+import { db } from "@/lib/db";
+import { searchStacks } from "@/lib/queries";
 import { NextRequest } from "next/server";
 
 const LLM_API_KEY = process.env.LLM_API_KEY; // DeepSeek or any OpenAI-compatible

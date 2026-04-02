@@ -1,4 +1,4 @@
-import { db } from "@repo/db";
+import { db } from "@/lib/db";
 import { NextRequest } from "next/server";
 
 // Quick fuzzy search — returns tools + stacks matching the query

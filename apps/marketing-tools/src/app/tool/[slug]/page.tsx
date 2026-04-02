@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getToolBySlug, getTools, getToolSnapshots } from "@repo/db/queries";
-import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
-import { StarChart } from "@repo/ui/StarChart";
+import { getToolBySlug, getTools, getToolSnapshots } from "@/lib/queries";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { StarChart } from "@/components/StarChart";
 import type { Metadata } from "next";
-import type { Tool } from "@repo/db/schema";
+import type { Tool } from "@/lib/schema";
 
 export const revalidate = 86400; // 24 hours
 

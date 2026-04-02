@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { db } from "@repo/db";
-import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
+import { db } from "@/lib/db";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { CategoryTabs } from "./CategoryTabs";
 import type { Metadata } from "next";
 

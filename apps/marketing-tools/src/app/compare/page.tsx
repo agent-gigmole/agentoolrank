@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getComparisonPairs } from "@repo/db/queries";
+import { getComparisonPairs } from "@/lib/queries";
 import type { Metadata } from "next";
 
 export const revalidate = 43200; // 12h

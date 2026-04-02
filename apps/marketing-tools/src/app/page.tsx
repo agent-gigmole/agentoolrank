@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCategories, getTools, getToolCount, getLastRefreshTime } from "@repo/db/queries";
+import { getCategories, getTools, getToolCount, getLastRefreshTime } from "@/lib/queries";
 import { ToolCard } from "@/components/ToolCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import type { Metadata } from "next";

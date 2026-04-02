@@ -1,6 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import { db } from "@repo/db";
+import { db } from "@/lib/db";
 
 export const runtime = "edge";
 

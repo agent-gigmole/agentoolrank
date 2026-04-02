@@ -1,4 +1,4 @@
-import { getNewTools } from "@repo/db/queries";
+import { getNewTools } from "@/lib/queries";
 import { ToolCard } from "@/components/ToolCard";
 import type { Metadata } from "next";
 

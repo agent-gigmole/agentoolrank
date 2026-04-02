@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getStackBySlug, getStacks, getToolBySlug } from "@repo/db/queries";
-import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
-import { StackFlow } from "@repo/ui/StackFlow";
+import { getStackBySlug, getStacks, getToolBySlug } from "@/lib/queries";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { StackFlow } from "@/components/StackFlow";
 import type { Metadata } from "next";
-import type { Tool } from "@repo/db/schema";
+import type { Tool } from "@/lib/schema";
 
 export const revalidate = 86400;
 

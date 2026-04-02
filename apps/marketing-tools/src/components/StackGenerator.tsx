@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { StackFlow } from "@repo/ui/StackFlow";
+import { StackFlow } from "@/components/StackFlow";
 
 interface StackTool {
   tool_id: string;

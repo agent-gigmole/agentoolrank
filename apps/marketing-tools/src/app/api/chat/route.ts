@@ -1,7 +1,7 @@
 import { streamText, convertToModelMessages } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-import { db } from "@repo/db";
-import { checkRateLimit } from "@repo/db/rate-limit";
+import { db } from "@/lib/db";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { NextRequest } from "next/server";
 
 // GLM-5 via OpenRouter (OpenAI-compatible)

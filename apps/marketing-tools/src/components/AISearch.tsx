@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useState, useRef, useEffect, useCallback, type DragEvent } from "react";
-import { StackFlow } from "@repo/ui/StackFlow";
+import { StackFlow } from "@/components/StackFlow";
 import Link from "next/link";
 import type { Locale } from "@/i18n/types";
 

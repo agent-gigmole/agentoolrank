@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { getTools, getCategories } from "@repo/db/queries";
+import { getTools, getCategories } from "@/lib/queries";
 import { ToolCard } from "@/components/ToolCard";
-import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import type { Metadata } from "next";
 
 export const revalidate = 43200;

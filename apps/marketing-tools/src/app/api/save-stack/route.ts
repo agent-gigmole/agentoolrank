@@ -1,5 +1,5 @@
-import { db } from "@repo/db";
-import { checkRateLimit } from "@repo/db/rate-limit";
+import { db } from "@/lib/db";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 

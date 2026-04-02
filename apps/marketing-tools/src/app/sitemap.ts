@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { db } from "@repo/db";
-import { getComparisonPairs, getStacks } from "@repo/db/queries";
+import { db } from "@/lib/db";
+import { getComparisonPairs, getStacks } from "@/lib/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";

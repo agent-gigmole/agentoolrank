@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getToolBySlug } from "@repo/db/queries";
-import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
-import type { Tool } from "@repo/db/schema";
+import { getToolBySlug } from "@/lib/queries";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
+import type { Tool } from "@/lib/schema";
 import type { Metadata } from "next";
 
 export const revalidate = 86400; // 24h

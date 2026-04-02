@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getTrendingTools, getNewTools, getToolCount } from "@repo/db/queries";
-import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
+import { getTrendingTools, getNewTools, getToolCount } from "@/lib/queries";
+import { Breadcrumbs, BreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import type { Metadata } from "next";
 

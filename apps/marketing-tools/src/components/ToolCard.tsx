@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Tool } from "@repo/db/schema";
+import type { Tool } from "@/lib/schema";
 
 function formatStars(stars: number | null): string {
   if (stars === null) return "N/A";
