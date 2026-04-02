@@ -8,9 +8,8 @@ function getDb() {
     return createClient({ url, authToken });
   }
 
-  // Local/build: use SQLite file (resolve from project root)
-  const dbPath = `${process.cwd()}/db/local.db`;
-  return createClient({ url: `file:${dbPath}` });
+  // Fallback: in-memory for build time (all data is in Turso)
+  return createClient({ url: ":memory:" });
 }
 
 export const db = getDb();

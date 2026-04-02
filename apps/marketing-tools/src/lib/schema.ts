@@ -28,8 +28,8 @@ export const ToolSchema = z.object({
   tagline: z.string().default(""),
   description: z.string().default(""),
   logo_url: z.string().default(""),
-  website_url: z.string().url().or(z.literal("")),
-  github_url: z.string().url().optional(),
+  website_url: z.string().default(""),
+  github_url: z.string().optional(),
 
   // Dual-axis classification
   category_tags: z.array(z.string()).default([]),
@@ -59,7 +59,7 @@ export const ToolSchema = z.object({
   // Metadata
   source: ToolSourceEnum,
   pricing: PricingEnum,
-  affiliate_url: z.string().url().nullish(),
+  affiliate_url: z.string().nullish(),
   content_status: ContentStatusEnum.default("pending"),
 
   // Intelligence (deep analysis JSON)
