@@ -1,5 +1,12 @@
 import { createClient } from "@libsql/client";
 
+function localDatabasePath(cwd: string): string {
+  const normalizedCwd = cwd.replaceAll("\\", "/").replace(/\/$/, "");
+  return /\/apps\/[^/]+$/.test(normalizedCwd)
+    ? `${normalizedCwd}/db/local.db`
+    : `${normalizedCwd}/apps/agent-tools/db/local.db`;
+}
+
 function getDb() {
   const url = process.env.TURSO_DATABASE_URL;
   const authToken = process.env.TURSO_AUTH_TOKEN;
@@ -8,8 +15,7 @@ function getDb() {
     return createClient({ url, authToken });
   }
 
-  // Local/build: use SQLite file (resolve from project root)
-  const dbPath = `${process.cwd()}/db/local.db`;
+  const dbPath = localDatabasePath(process.cwd());
   return createClient({ url: `file:${dbPath}` });
 }
 

@@ -4,7 +4,7 @@
  * Usage: bun run scripts/init-db.ts
  */
 import { readFileSync } from "fs";
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 const CATEGORIES = [
   { slug: "agent-frameworks", name: "Agent Frameworks", description: "Code-first libraries and SDKs for building, orchestrating, and deploying autonomous AI agents", icon: "🏗️" },
@@ -24,7 +24,7 @@ async function main() {
   console.log("Initializing database...");
 
   // Run schema
-  const schema = readFileSync("db/schema.sql", "utf-8");
+  const schema = readFileSync("apps/agent-tools/db/schema.sql", "utf-8");
   const statements = schema
     .split(";")
     .map((s) => s.trim())

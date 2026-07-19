@@ -10,7 +10,7 @@
  * 2. Parse popular awesome-lists for repo links
  * 3. Deduplicate against existing DB entries
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN) {

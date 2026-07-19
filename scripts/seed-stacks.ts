@@ -4,7 +4,7 @@
  *
  * Usage: bun run scripts/seed-stacks.ts
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 interface StackLayer {
   name: string;

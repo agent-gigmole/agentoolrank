@@ -5,7 +5,7 @@
  *
  * Usage: GITHUB_TOKEN=xxx bun run scripts/generate-stacks.ts [--limit=20]
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 import { $ } from "bun";
 
 const LIMIT = parseInt(process.argv.find((a) => a.startsWith("--limit="))?.split("=")[1] ?? "20");

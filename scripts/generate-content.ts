@@ -6,7 +6,7 @@
  *
  * Usage: ANTHROPIC_API_KEY=xxx bun run scripts/generate-content.ts [--limit 10]
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!API_KEY) {
