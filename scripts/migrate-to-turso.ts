@@ -14,7 +14,9 @@ if (!TURSO_URL || !TURSO_TOKEN) {
   process.exit(1);
 }
 
-const local = createClient({ url: `file:${join(process.cwd(), "db", "local.db")}` });
+const local = createClient({
+  url: `file:${join(process.cwd(), "apps", "agent-tools", "db", "local.db")}`,
+});
 const remote = createClient({ url: TURSO_URL, authToken: TURSO_TOKEN });
 
 async function migrateTable(table: string, batchSize = 50) {

@@ -8,6 +8,10 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint"
   },
+  "dependencies": {
+    "@libsql/client": "*",
+    "@repo/db": "workspace:*"
+  },
   "devDependencies": {
     "turbo": "^2"
   },

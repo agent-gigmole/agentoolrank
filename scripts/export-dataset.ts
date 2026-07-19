@@ -4,7 +4,7 @@
  *
  * Usage: bun run scripts/export-dataset.ts [--output-dir /path/to/dir]
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 const OUTPUT_DIR = process.argv.find((a) => a.startsWith("--output-dir="))?.split("=")[1] ?? "/tmp/awesome-ai-agent-tools";
 

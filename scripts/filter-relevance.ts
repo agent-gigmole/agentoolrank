@@ -5,7 +5,7 @@
  *
  * Usage: bun run scripts/filter-relevance.ts [--dry-run]
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 

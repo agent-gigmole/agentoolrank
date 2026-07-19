@@ -6,8 +6,8 @@
  *
  * Usage: GITHUB_TOKEN=xxx bun run scripts/crawl-github.ts
  */
-import { db } from "../src/lib/db";
-import { ToolSchema } from "../src/lib/schema";
+import { db } from "@repo/db";
+import { ToolSchema } from "@repo/db/schema";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN) {

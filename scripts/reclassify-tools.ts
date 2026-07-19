@@ -6,7 +6,7 @@
  *
  * Usage: bun run scripts/reclassify-tools.ts
  */
-import { db } from "../src/lib/db";
+import { db } from "@repo/db";
 
 // More precise category patterns (order matters - first match wins for primary)
 const CATEGORY_RULES: Array<{
