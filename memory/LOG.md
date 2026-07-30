@@ -356,3 +356,13 @@
 - 三重保障: Turso DB + backup JSON + progress log
 - 累计完成: 100/444 (batch 0-3: 80, batch 6: 20)
 2026-03-31T19:54:35Z | Batch 16-17: 40/40 intelligence 写入 Turso + 本地备份（prompt-optimizer, autochain, llmflows, typechat, vision-agent, taskingai 等）| Turso 总计 360, backup.json 总计 340
+
+## 2026-07-30 GSC流量快照(90天,闲聊session拉取)
+- 最近90天(4/29~7/27):点击22 | 曝光2408 | CTR0.91% | 均排18.2(第2页)
+- 按月:4月0点击/81曝光→5月6/880(见顶)→6月7/844→7月9/603(曝光回落)
+- ★判定:非"自然增长中",是上线后卡低位、7月曝光下滑。90天22点击≈0.24/天,基本无真实流量
+- 定位模糊数据长相:大量曝光是品牌词自曝光(agentool/agentools/agent rank/agent tool),没命中真实需求词
+- 排名太靠后:真实词多排40-75名够不到点击
+- ★唯一正反馈:对比页X vs Y — goose-vs-open-webui(7点击/排名9)、anything-llm-vs-dify(2点击)。对比页是唯一有效SEO模式
+- 拉取方式:bun没装,用python pyjwt手动签service account JWT换token调GSC API(gsc-service-account.json)
+- 战略含义:若救此站→All-in对比页重新定位;否则认未验证成功
