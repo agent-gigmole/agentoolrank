@@ -73,7 +73,7 @@ export function StackGenerator({ query }: { query: string }) {
       <div className="border border-gray-200 rounded-xl p-8 text-center">
         <div className="inline-block w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mb-3" />
         <p className="text-gray-600">Generating custom tool stack for your query...</p>
-        <p className="text-xs text-gray-400 mt-1">Analyzing 463 tools to find the best combination</p>
+        <p className="text-xs text-gray-400 mt-1">Analyzing 600+ tools to find the best combination</p>
       </div>
     );
   }
