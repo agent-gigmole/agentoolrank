@@ -48,6 +48,8 @@ async def main(path):
                 elif k == "select": await page.locator(v[0].removeprefix("css=")).first.select_option(v[1], timeout=15000)
                 elif k == "upload": await page.locator(v[0].removeprefix("css=")).first.set_input_files(v[1], timeout=15000)
                 elif k == "wait": await page.wait_for_timeout(v)
+                elif k == "frame_click":  # [iframe selector, selector inside it]
+                    await page.frame_locator(v[0].removeprefix("css=")).locator(v[1].removeprefix("css=")).first.click(timeout=15000)
                 elif k == "click_xy": await page.mouse.click(v[0], v[1])  # viewport coords, e.g. read off a screenshot
                 elif k == "type": await page.keyboard.type(v, delay=30)
                 elif k == "insert_text":  # [selector, text]: focus then insert like a paste (keeps newlines in rich editors)
