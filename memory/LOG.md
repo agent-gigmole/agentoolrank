@@ -396,3 +396,7 @@
 - CF 账户已定位（Tensam.th@gmail.com，到期 2027-03-27）；domain-check skill 明文存 cfat_ token（已告知用户）；GitHub owner agent-gigmole
 - 花钱台账 docs/ops/spend-ledger.md；.vercelignore 加 apps/*/data；commits 617a9b1、d5317c2
 - 坑：旧 next-server 占端口致新路由 404；LLM 起官方名须给 README 证据
+
+## 2026-10-01 进入 Goal 模式
+- 用户问"开 goal 模式了吗"：此前只设了 harness 字段，未完成准入。现补齐：TASK.md 写 `模式: goal` + 可机检结束条件 + 预算 + T1–T11 ticket（T9–T11 为 human 闸/阻塞），PRE-FLIGHT memsearch 无跨项目直接命中，预加载本项目已知坑 6 条。
+- 外循环需要会话持续运行：由用户启动 /loop 驱动（Claude 无法自行开启 /loop）。

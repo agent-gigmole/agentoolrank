@@ -1,5 +1,103 @@
 # TASK.md — 当前任务
 
+## 模式: goal（2026-10-01 进入）
+
+- **GOAL**：G1+G2 里能自主完成的部分全部上线，漏斗可测、AI 可查询、提交可审核。
+- **结束条件（机检）**：下面 T1–T8 全部 done ∧ `cd apps/agent-tools && npm test` 全绿 ∧ `npx turbo run build --filter=agent-tools` 成功 ∧ 线上 `/ /submit /alternatives/claude-code /llms.txt /api/mcp` 全部返回 200（/api/mcp 用 POST initialize）。
+- **预算**：最多 12 个 ticket；LLM 花费 ≤ $2（记 docs/ops/spend-ledger.md）；截止 2026-10-07。
+- **闸**：部署/push 已获常设授权（auto memory deploy-authorization）；花钱、凭证、删数据、改动已有表结构 → human。只新增表（CREATE TABLE IF NOT EXISTS）算 auto。
+- **PRE-FLIGHT 预加载（已知坑，动手前先检查）**：
+  - turbo strict env：新增环境变量必须写进 turbo.json build.env（GOTCHAS#turbo-strict-env）
+  - edge 路由不能在无 TURSO_* 时 import @repo/db（process.cwd）
+  - 本机测试前 `ss -ltnp` 查端口，旧 next-server 会让新路由 404（GOTCHAS#stale-next-server-port）
+  - CLI 部署靠 .vercelignore 防密钥；部署后审计文件清单
+  - LLM 批量补数据：只补空 + dry-run + 预算闸 + 回滚文件（GOTCHAS#llm-display-name-needs-evidence）
+  - 分析：服务端 /api/e 收事件，不装第三方脚本；navigator.webdriver 为真不上报；UTM 进 sessionStorage（imagehub 做法）
+- 每轮结束 LOG 记 `human-intervention=N / auto-resolved=M / 熔断=K`
+
+### Ticket Backlog
+
+### T1 自建分析 /api/e + events 表
+- 状态: todo
+- 依赖: -
+- 验收: vitest 覆盖事件校验；线上 POST /api/e 返回 204，events 表出现该事件
+- 闸: auto
+- 失败: 0
+
+### T2 前端埋点：page_view / submit_view / submit_done，UTM 捕获
+- 状态: todo
+- 依赖: T1
+- 验收: 线上访问 /?utm_source=selftest 与 /submit 后，events 表出现 src=selftest 的 page_view 与 submit_view
+- 闸: auto
+- 失败: 0
+
+### T3 漏斗报表脚本（看板/周报用）
+- 状态: todo
+- 依赖: T2
+- 验收: `bun run scripts/funnel-report.ts` 输出 7 天 访问→提交页→提交 计数，退出码 0
+- 闸: auto
+- 失败: 0
+
+### T4 公开 JSON API /api/v1/tools、/api/v1/tools/[slug]
+- 状态: todo
+- 依赖: -
+- 验收: 线上 GET 返回 200 JSON，含 name/stars/alternatives；vitest 覆盖序列化
+- 闸: auto
+- 失败: 0
+
+### T5 MCP 服务器 /api/mcp（search_tools / get_tool / get_alternatives）
+- 状态: todo
+- 依赖: T4
+- 验收: 线上 POST initialize 与 tools/list 返回 200 且列出 3 个工具；tools/call search_tools 返回结果
+- 闸: auto
+- 失败: 0
+
+### T6 审核脚本 review-submissions（LLM 判相关性 + 生成资料 + 入库 + 标记）
+- 状态: todo
+- 依赖: -
+- 验收: `--dry-run` 对 pending 提交给出 approve/reject 与理由，退出码 0；vitest 覆盖入库行构造
+- 闸: auto
+- 失败: 0
+
+### T7 本地每日任务：新工具补展示名 + alternatives（GitHub 恢复前先本地 cron）
+- 状态: todo
+- 依赖: -
+- 验收: `bun run scripts/daily-enrich.ts --dry-run` 退出码 0；crontab 有一条每日任务
+- 闸: auto
+- 失败: 0
+
+### T8 related_tools 填充（复用 TF-IDF，互补工具）
+- 状态: todo
+- 依赖: -
+- 验收: tools 表 related_tools 非空 ≥ 400 条；详情页显示
+- 闸: auto
+- 失败: 0
+
+### T9 push 本地 commit + 重新启用 daily-update
+- 状态: blocked
+- 依赖: -
+- 验收: origin/main 与本地一致；Actions 下一次运行 success
+- 闸: human
+- 失败: 0
+- 备注: 等 GitHub token（Chrome 说明 A）
+
+### T10 Stripe 结账 $19 快速审核 / $49 首页推荐 7 天
+- 状态: blocked
+- 依赖: T1
+- 验收: 线上创建 checkout session 成功并立即 expire；metadata.site=agentoolrank
+- 闸: human
+- 失败: 0
+- 备注: 等 Stripe key（Chrome 说明 B；checkout key 已存，ops key 待存）
+
+### T11 重复工具清理（embedchain、gpt-index）
+- 状态: blocked
+- 依赖: -
+- 验收: 两条记录不存在，旧 URL 301 到新页
+- 闸: human
+- 失败: 0
+- 备注: 删数据，等用户批准
+
+
 ## 当前阶段
 
 重启：双边平台转向 + G1-G4（2026-09-30 起，Claude 为总负责人）
