@@ -80,3 +80,14 @@ describe("pairsFromAlternatives", () => {
     expect(pairsFromAlternatives(tools, 2)).toEqual(["aider-vs-claude-code", "claude-code-vs-codex", "aider-vs-codex"]);
   });
 });
+
+import { categoryTitle } from "./alternatives";
+
+describe("categoryTitle", () => {
+  it("includes count, open-source, year and ranking basis", () => {
+    expect(categoryTitle("Coding Agents", 20, 2026)).toBe("20 Best Open-Source Coding Agents in 2026 (Ranked by GitHub Activity)");
+  });
+  it("drops the count when there are very few tools", () => {
+    expect(categoryTitle("Sandboxes", 2, 2026)).toBe("Best Open-Source Sandboxes in 2026 (Ranked by GitHub Activity)");
+  });
+});

@@ -101,3 +101,7 @@ export function pairsFromAlternatives(tools: Array<{ id: string; alternatives: s
   }
   return out;
 }
+
+export function categoryTitle(category: string, count: number, year: number): string {
+  return `${count >= 3 ? `${count} ` : ""}Best Open-Source ${category} in ${year} (Ranked by GitHub Activity)`;
+}

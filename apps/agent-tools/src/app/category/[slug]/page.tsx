@@ -3,6 +3,7 @@ import { getTools, getCategories } from "@repo/db/queries";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
+import { categoryTitle } from "@/lib/alternatives";
 
 export const revalidate = 43200;
 
@@ -13,9 +14,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const categories = await getCategories();
   const category = categories.find((c) => c.slug === slug);
   if (!category) return {};
+  const top = await getTools({ category: slug, limit: 3 });
   return {
-    title: `Best ${category.name} — AI Agent Tools Directory`,
-    description: `Discover the best ${category.name.toLowerCase()} for AI agents. ${category.description}`,
+    title: categoryTitle(category.name, category.tool_count ?? 0, new Date().getFullYear()),
+    description: `Compare the best open-source ${category.name.toLowerCase()}${top.length ? ` like ${top.map((t) => t.name).join(", ")}` : ""}, ranked by live GitHub stars, growth and commit activity. ${category.description}`.slice(0, 300),
+    alternates: { canonical: `/category/${slug}` },
   };
 }
 
@@ -56,9 +59,15 @@ export default async function CategoryPage({ params }: Props) {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-2xl">{category.icon}</span>
-            <h1 className="text-3xl font-bold text-gray-900">{category.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{categoryTitle(category.name, tools.length, new Date().getFullYear())}</h1>
           </div>
         <p className="text-gray-600">{category.description}</p>
+        {tools.length >= 3 && (
+          <p className="text-gray-600 mt-2">
+            Top picks right now: {tools.slice(0, 3).map((t) => t.name).join(", ")}. Every tool below is open source and ranked by
+            live GitHub activity (stars, 30-day star growth, commits and releases), refreshed daily.
+          </p>
+        )}
         <p className="text-sm text-gray-400 mt-1">{tools.length} tools</p>
       </div>
 
