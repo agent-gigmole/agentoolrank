@@ -210,3 +210,22 @@
 
 ## gsc-pull-pyjwt
 - 本机没 bun 时，用 python pyjwt 签 service account JWT（gsc-service-account.json）换 access token 直接调 GSC searchAnalytics API；该 service account 有 agentoolrank.com 权限
+
+## turbo-strict-env
+- Turborepo 2.x 默认 strict env 模式：任务只能看到 turbo.json 中 `env`/`globalEnv` 声明的变量，Vercel 注入的 TURSO_* 等被静默过滤
+- 症状：packages/db 拿不到 TURSO_DATABASE_URL，回退 `${process.cwd()}/db/local.db`，edge 路由在 "Collecting page data" 报 `process.cwd not supported in Edge Runtime`
+- 修复：turbo.json `tasks.build.env` 声明 `TURSO_*`、`LLM_*`、`NEXT_PUBLIC_*`、`GSC_*`（通配符可用）
+
+## vercel-monorepo-rootdir
+- 单 repo 多 app 的 Vercel 项目必须设 rootDirectory（如 apps/agent-tools），否则在根目录跑 `turbo run build` 构建全部 app，任一暂停/坏掉的 app 失败即整个部署 ERROR
+- 设置：Vercel API `PATCH /v9/projects/{id}` body `{"rootDirectory":"apps/agent-tools"}`
+- 教训：重构后没人看部署状态，线上旧版挂了半年——重构后必须 `vercel ls` / 实测线上版本
+
+## vercel-cli-deploy-vercelignore
+- `vercel deploy` 从本地上传整个目录（不看 .gitignore 以外的保护），.env*、service account JSON、local.db 会被上传
+- 先写 .vercelignore 排除 .env*、*service-account*.json、memory/、docs/、data/、*.db，再用 `vercel deploy --prod --yes --token $VERCEL_TOKEN --scope <team>` 部署；可先审计上传文件列表
+- Vercel API 从 gitSource 创建部署只能部署已 push 的 commit；本地 git push 不可用时只能 CLI 本地部署
+
+## gh-actions-schedule-60day-disable
+- 公开仓库 60 天无 commit 活动，GitHub 自动停用 schedule 触发的 workflow；需 push 新 commit 并在 Actions 页面/`gh workflow enable` 重新启用
+- 本项目 daily-update 最后运行 2026-06-02；且 3-28 起已因 bun.lock 不同步（#bun-lock-sync）连续失败——定时任务要有失败告警，否则静默断更

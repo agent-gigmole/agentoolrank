@@ -21,6 +21,12 @@
 
 ## G1 任务清单（截止 2026-10-07）
 
+- [x] 生产部署恢复（rootDirectory + turbo env + .vercelignore，CLI 本地部署，2026-10-01）
+- [x] Vercel 商用资格核实：已是 Pro（2026-10-01）
+- [x] daily-update 失败根因：bun.lock 不同步（已重生成，待 push）
+- [ ] **阻塞：GitHub 凭据 → push 本地 7+ commit + 重新启用 daily-update 定时任务**（数据自 03-31 冻结）
+- [ ] 填充 tools.alternatives / related_tools（464 条全空）+ 细化类目
+
 - [ ] /api/e 自建分析端点（服务端转发，过滤 webdriver，记录 UTM）
 - [ ] 前端埋点：访问 → 提交页 → 提交 → 付款 四步事件
 - [ ] 看板接入漏斗数据
@@ -41,7 +47,8 @@
 
 - [ ] Stripe 受限 key（是否共用 TENSO LLC）
 - [ ] Cloudflare zone token（agentoolrank.com）
-- [ ] Vercel 团队 / Pro
+- [x] Vercel Pro（已是 Pro，10-01 核实）
+- [ ] GitHub 凭据（push + Actions）
 - [ ] PostHog project（可选）
 - [ ] 个人 Reddit / HN 账号是否可用
 

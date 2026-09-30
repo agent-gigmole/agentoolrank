@@ -377,3 +377,12 @@
 - AIMarketRank 暂停
 - 提炼：vercel-deployment 晋升「Hobby 禁商用」；PROMOTION_LOG 登记候选 2 条（跨项目凭证、目录站作者付费）
 - ⚠ 提醒：project.config.yml harness 为空，建议配 goal-mode（+ 花钱动作叠加 spend-control）
+
+## 2026-10-01 部署恢复 + 数据管道断更诊断
+- 用户一次性授权日常部署/push（测试+build 过就部署、线上实测、自行回滚；花钱/凭证/删数据仍逐次问），写入 auto memory + 看板
+- 发现自 4-02 monorepo 重构（f9dd8ae）起 Vercel 所有部署 ERROR，线上一直是 ae35d6a；项目已是 Pro（商用 OK）
+- 根因1：无 rootDirectory，根目录 turbo build 全部 app，暂停的 marketing-tools 失败 → API PATCH rootDirectory=apps/agent-tools
+- 根因2：turbo strict env 过滤 TURSO_*，packages/db 回退 process.cwd() 本地库，edge 路由 /api/badge/[slug] 报 "process.cwd not supported in Edge Runtime" → turbo.json build.env 声明（2c3e32d）
+- GitHub 凭据全 401 → 改 `npx vercel deploy --prod` 本地部署，先加 .vercelignore（dda8efc，审计 2291 文件无密钥）→ READY，全路由 200
+- 数据自 03-31 冻结：daily-update 3-28 起 bun frozen-lockfile 失败（已重生成 bun.lock），06-02 后 GitHub 60 天无活动停定时任务；需 GitHub 凭据 push + 重新启用
+- alternatives/related_tools 464 条全空；类目过粗

@@ -76,3 +76,8 @@
 | 跨项目密钥 / Stripe 共用 TENSO / CF zone token / Vercel Hobby 禁商用 | GOTCHAS.md#cross-project-credentials |
 | GSC 拉取 / pyjwt / service account / 无 bun | GOTCHAS.md#gsc-pull-pyjwt |
 | 运营看板 / :8792 / docs/ops/overview | LOG.md#2026-09-30 |
+| turbo strict env / TURSO 被过滤 / process.cwd Edge Runtime | GOTCHAS.md#turbo-strict-env |
+| Vercel monorepo rootDirectory / 部署全 ERROR / 多 app | GOTCHAS.md#vercel-monorepo-rootdir |
+| vercel CLI 本地部署 / .vercelignore / 密钥上传 | GOTCHAS.md#vercel-cli-deploy-vercelignore |
+| GitHub Actions 定时任务停用 / 60 天无活动 / daily-update 断更 | GOTCHAS.md#gh-actions-schedule-60day-disable |
+| 部署恢复 / 数据冻结诊断 / GitHub 凭据 401 | LOG.md#2026-10-01 |

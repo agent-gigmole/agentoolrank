@@ -39,7 +39,19 @@
 - GSC 最新：7月 9点击/720曝光，8月 4/987，9月 3/241；对比页仍是唯一有排名的页型（goose-vs-open-webui、claude-code-vs-openhands 均排 7.5）
 - 运营看板 docs/ops/overview/index.html（已 commit），0.0.0.0:8792 nohup python http.server → http://moneyflow-wsl.tailf1c73f.ts.net:8792/（重启机器需重起）
 - AIMarketRank（marketing-tools）暂停，不买域名
-- 花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md；Vercel Hobby 禁商用，收钱前需升 Pro
+- 花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md；Vercel 项目已是 Pro（10-01 核实），商用 OK
+
+## 2026-10-01 部署恢复 + 数据管道断更诊断
+
+- **生产部署已恢复**：agentoolrank.com 现为最新代码（此前自 4-02 monorepo 重构 f9dd8ae 起所有 Vercel 部署 ERROR，线上一直是 ae35d6a 旧版）
+  - Vercel 项目 ai-directory（prj_uOa07Fn6wZVejr5Ia74dSd7oBs4G，team gigmoles-projects）**已是 Pro → 商用 OK**
+  - 修复：API PATCH rootDirectory=apps/agent-tools；turbo.json build.env 声明 TURSO_*/LLM_*/NEXT_PUBLIC_*/GSC_*（commit 2c3e32d）；新增 .vercelignore（commit dda8efc）
+  - 部署方式（当前）：仓库根 `npx vercel@latest deploy --prod --yes --token $VERCEL_TOKEN --scope gigmoles-projects`
+  - 首页/详情/对比/sitemap/badge/zh/blueprint 全 200
+- **日常部署授权**：用户一次性授权测试+build 过即部署/push、线上实测、自行回滚；花钱/凭证/删数据仍逐次问（auto memory deploy-authorization + 看板）
+- **数据自 2026-03-31 冻结**：daily-update Action 自 3-28 起 `bun install --frozen-lockfile` 失败；已重生成 bun.lock（在 2c3e32d）；最后运行 06-02 后 GitHub 60 天无活动停了定时任务
+- **阻塞：GitHub 凭据失效**（git push / gh / env GITHUB_TOKEN 全 401）→ 本地 7+ commit 未 push，无法重启 daily-update
+- 数据缺陷：tools.alternatives/related_tools 464 条全空；类目过粗（claude-code 与 llama-cpp 同在 agent-frameworks）
 
 ## 进行中 — G1 第 1 周计划（截止 2026-10-07）
 
@@ -52,7 +64,7 @@
 
 - Stripe：是否共用 TENSO LLC + 建受限 key（checkout 用 statement_descriptor_suffix ≤22 字符 + metadata.site）
 - Cloudflare zone token（agentoolrank.com 在用户另一个 CF 账户）
-- Vercel 团队 / 升 Pro（Hobby 禁商用）
+- **GitHub 凭据（gh auth / PAT）→ push + 重新启用 daily-update**（最高优先）
 - PostHog project（如不用自建 /api/e）
 - 个人 Reddit / HN 账号是否可用于发帖
 
