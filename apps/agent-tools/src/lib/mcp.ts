@@ -6,6 +6,11 @@ export interface McpDeps {
   search: (query: string, limit: number) => Promise<PublicTool[]>;
   get: (slug: string) => Promise<PublicTool | null>;
   getMany: (slugs: string[]) => Promise<PublicTool[]>;
+  submit: (
+    input: { url: unknown; name: unknown; tagline: unknown; email: unknown; github_url: unknown },
+    opts: { src: string; maxBudgetUsd?: number; deadlineDays?: number; wantFeatured?: boolean },
+  ) => Promise<unknown>;
+  status: (id: number, token: string) => Promise<unknown | null>;
 }
 
 type JsonRpcRequest = { jsonrpc: "2.0"; id?: string | number | null; method: string; params?: Record<string, unknown> };
@@ -36,6 +41,34 @@ const TOOLS = [
     description: "List open-source alternatives to a tool, with GitHub stats for each, to compare options.",
     inputSchema: { type: "object", properties: { slug: { type: "string" } }, required: ["slug"] },
   },
+  {
+    name: "submit_tool",
+    description:
+      "List an AI agent tool (framework, coding agent, MCP server, memory/RAG, evals, browser agent...) on AgentoolRank. Free listing is queued; the response lists every paid option (price, days to go live, checkout_url for your human to pay) and recommends the cheapest one that fits max_budget_usd / deadline_days. Returns submission_id + status_token for get_submission_status.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        url: { type: "string", description: "Product website (https://...)" },
+        name: { type: "string" },
+        tagline: { type: "string", description: "One sentence, max 160 chars" },
+        email: { type: "string", description: "Maker's email, used only to say when the listing is live" },
+        github_url: { type: "string", description: "https://github.com/owner/repo if open source" },
+        max_budget_usd: { type: "number", description: "Optional: the most your human will pay" },
+        deadline_days: { type: "number", description: "Optional: must be live within this many days" },
+        want_featured: { type: "boolean", description: "Optional: wants homepage placement" },
+      },
+      required: ["url", "name", "tagline", "email"],
+    },
+  },
+  {
+    name: "get_submission_status",
+    description: "Check review status of a submission (pending/approved/rejected, queue position, listing URL).",
+    inputSchema: {
+      type: "object",
+      properties: { submission_id: { type: "number" }, status_token: { type: "string" } },
+      required: ["submission_id", "status_token"],
+    },
+  },
 ];
 
 function text(data: unknown, isError = false) {
@@ -60,6 +93,19 @@ async function callTool(name: string, args: Record<string, unknown>, deps: McpDe
       if (!tool) return text(`No tool with slug "${slug}". Use search_tools first.`, true);
       return text({ tool: tool.slug, alternatives: await deps.getMany(tool.alternatives) });
     }
+    case "submit_tool": {
+      const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? v : undefined);
+      return text(
+        await deps.submit(
+          { url: args.url, name: args.name, tagline: args.tagline, email: args.email, github_url: args.github_url },
+          { src: "mcp", maxBudgetUsd: num(args.max_budget_usd), deadlineDays: num(args.deadline_days), wantFeatured: args.want_featured === true },
+        ),
+      );
+    }
+    case "get_submission_status": {
+      const s = await deps.status(Number(args.submission_id), String(args.status_token ?? ""));
+      return s ? text(s) : text("Unknown submission_id or wrong status_token.", true);
+    }
     default:
       return text(`Unknown tool: ${name}`, true);
   }
@@ -78,7 +124,8 @@ export async function handleMcp(msg: JsonRpcRequest, deps: McpDeps): Promise<Jso
           protocolVersion: SUPPORTED_VERSIONS.includes(requested) ? requested : SUPPORTED_VERSIONS[0],
           capabilities: { tools: {} },
           serverInfo: { name: "agentoolrank", version: "1.0.0" },
-          instructions: "Find and compare open-source AI agent tools. Start with search_tools, then get_tool or get_alternatives.",
+          instructions:
+            "Find and compare open-source AI agent tools: start with search_tools, then get_tool or get_alternatives. To list a tool, call submit_tool; it returns all pricing options up front and a status token.",
         },
       };
     }

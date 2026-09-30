@@ -6,9 +6,12 @@ describe("PLANS", () => {
     expect(PLANS.fast.amount).toBe(1900);
     expect(PLANS.featured.amount).toBe(4900);
     expect(PLANS.featured.featuredDays).toBe(7);
+    expect(PLANS.priority.amount).toBe(900);
+    expect(PLANS.priority.reviewHours).toBe(72);
   });
   it("isPlan guards input", () => {
     expect(isPlan("fast")).toBe(true);
+    expect(isPlan("priority")).toBe(true);
     expect(isPlan("free")).toBe(false);
     expect(isPlan(undefined)).toBe(false);
   });

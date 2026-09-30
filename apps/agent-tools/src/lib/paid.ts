@@ -2,7 +2,17 @@
 import { db } from "@repo/db";
 import { PLANS, isPlan, type Plan } from "./plans";
 
-// Additive only: created on first use.
+// Additive only: created on first use. payments is the source of truth for paid plans
+// (submissions.plan predates the $9 "priority" tier and its CHECK can't hold it).
+const CREATE_PAYMENTS = `CREATE TABLE IF NOT EXISTS payments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  submission_id INTEGER NOT NULL,
+  plan TEXT NOT NULL,
+  amount_cents INTEGER NOT NULL,
+  stripe_session TEXT NOT NULL UNIQUE,
+  src TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+)`;
 const CREATE_FEATURED = `CREATE TABLE IF NOT EXISTS featured (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   slug TEXT NOT NULL,
@@ -39,10 +49,14 @@ export async function confirmSession(sessionId: string): Promise<Confirmation> {
 
   const submissionId = Number(s.metadata.submission_id);
   const slug = String(s.metadata.slug ?? "");
+  await db.execute(CREATE_PAYMENTS);
   await db.execute({
-    sql: "UPDATE submissions SET plan = ?, note = CASE WHEN note LIKE ? THEN note ELSE trim(note || ' paid:' || ?) END WHERE id = ?",
-    args: [plan, `%${sessionId}%`, sessionId, submissionId],
+    sql: "INSERT OR IGNORE INTO payments (submission_id, plan, amount_cents, stripe_session, src) VALUES (?, ?, ?, ?, ?)",
+    args: [submissionId, plan, Number(s.amount_total ?? PLANS[plan].amount), sessionId, String(s.metadata.src ?? "")],
   });
+  if (plan !== "priority") {
+    await db.execute({ sql: "UPDATE submissions SET plan = ? WHERE id = ?", args: [plan, submissionId] });
+  }
   if (PLANS[plan].featuredDays > 0) {
     await db.execute(CREATE_FEATURED);
     await db.execute({

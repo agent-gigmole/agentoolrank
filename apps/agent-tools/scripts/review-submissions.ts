@@ -78,6 +78,15 @@ async function main() {
     return;
   }
 
+  // Paid plans live in the payments table (priority/fast/featured); fall back to submissions.plan.
+  try {
+    const paidRows = (await db.execute("SELECT submission_id, plan FROM payments")).rows as unknown as Array<{ submission_id: number; plan: string }>;
+    const paidBy = new Map(paidRows.map((p) => [Number(p.submission_id), p.plan]));
+    for (const s of subs) if (paidBy.has(Number(s.id))) s.plan = paidBy.get(Number(s.id))!;
+  } catch {
+    // no payments yet
+  }
+
   // Refresh badge status so badge holders move up.
   const pages = new Map<number, { html: string; text: string }>();
   for (const s of subs) {

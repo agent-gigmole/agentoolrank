@@ -2,24 +2,33 @@
 // statement suffix AGENTOOLRANK, metadata.site=agentoolrank for reconciliation).
 
 export const PLANS = {
+  priority: {
+    amount: 900,
+    name: "AgentoolRank priority review",
+    description: "Your tool is reviewed within 72 hours instead of waiting in the free queue.",
+    featuredDays: 0,
+    reviewHours: 72,
+  },
   fast: {
     amount: 1900,
     name: "AgentoolRank fast-track review",
     description: "Your tool is reviewed within 24 hours instead of waiting in the free queue.",
     featuredDays: 0,
+    reviewHours: 24,
   },
   featured: {
     amount: 4900,
     name: "AgentoolRank featured listing (7 days)",
     description: "Fast-track review plus 7 days in the Featured section of the AgentoolRank homepage.",
     featuredDays: 7,
+    reviewHours: 24,
   },
 } as const;
 
 export type Plan = keyof typeof PLANS;
 
 export function isPlan(v: unknown): v is Plan {
-  return v === "fast" || v === "featured";
+  return v === "priority" || v === "fast" || v === "featured";
 }
 
 export function checkoutForm(o: { plan: Plan; submissionId: number; slug: string; email: string; src: string; baseUrl: string }): URLSearchParams {

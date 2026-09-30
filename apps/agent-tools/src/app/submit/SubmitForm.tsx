@@ -13,7 +13,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
 function PaidOptions({ slug }: { slug: string }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState("");
-  async function buy(plan: "fast" | "featured") {
+  async function buy(plan: "priority" | "fast" | "featured") {
     setBusy(plan);
     setErr("");
     track("checkout_click", `/submit#${plan}`);
@@ -37,7 +37,12 @@ function PaidOptions({ slug }: { slug: string }) {
   return (
     <div className="border border-gray-200 rounded-xl p-6">
       <p className="font-semibold text-gray-900 mb-3">Don&apos;t want to wait?</p>
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div className="grid sm:grid-cols-3 gap-3">
+        <button type="button" onClick={() => buy("priority")} disabled={busy !== null}
+          className="text-left border border-gray-300 rounded-lg p-4 hover:border-blue-500 disabled:opacity-60">
+          <div className="font-semibold">Priority · $9</div>
+          <div className="text-sm text-gray-600">Reviewed within 72 hours.</div>
+        </button>
         <button type="button" onClick={() => buy("fast")} disabled={busy !== null}
           className="text-left border border-gray-300 rounded-lg p-4 hover:border-blue-500 disabled:opacity-60">
           <div className="font-semibold">Fast-track review · $19</div>

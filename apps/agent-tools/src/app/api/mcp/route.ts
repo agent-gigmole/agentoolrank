@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { getToolBySlug, searchTools } from "@repo/db/queries";
 import { toPublicTool } from "@/lib/public-api";
 import { handleMcp, type McpDeps } from "@/lib/mcp";
+import { createSubmission, submissionStatus } from "@/lib/submit-core";
 
 // MCP endpoint (Streamable HTTP, stateless, JSON responses only — no SSE stream).
 // Add to a client as: { "url": "https://agentoolrank.com/api/mcp" }
@@ -21,6 +22,15 @@ function deps(): McpDeps {
     },
     getMany: async (slugs) =>
       (await Promise.all(slugs.map((s) => getToolBySlug(s)))).filter((t) => t !== null).map((t) => toPublicTool(t, baseUrl)),
+    submit: async (input, opts) => {
+      const r = await createSubmission(input, opts);
+      if (r.kind === "invalid") return { status: "invalid", errors: r.errors };
+      if (r.kind === "spam") return { status: "invalid" };
+      if (r.kind === "listed") return { status: "already_listed", slug: r.slug, listing_url: r.url };
+      const { kind: _kind, ...rest } = r;
+      return { status: "queued", ...rest };
+    },
+    status: (id, token) => submissionStatus(id, token),
   };
 }
 
