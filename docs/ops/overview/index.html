@@ -32,7 +32,7 @@
 <body>
 <main>
   <h1>AgentoolRank 看板</h1>
-  <p class="muted">更新于 2026-09-30（北京时间）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
+  <p class="muted">更新于 2026-10-01（北京时间）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
 
   <div class="kpis">
     <div class="kpi"><b>$0</b><span>收入 / 0 单</span></div>
@@ -143,6 +143,9 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 修好了部署：4 月重构以后所有部署都失败，线上一直是旧版本。现在已经能正常发布，这次部署后所有页面都返回 200。</li>
+    <li>2026-10-01 查明每日数据更新从 3 月底起一直失败，原因是 lockfile 不同步，已在本地修好；推送代码、重新启用任务要等 GitHub token（Chrome 说明的 A 部分）。</li>
+    <li>2026-10-01 写好 Claude in Chrome 操作说明，确认 Vercel 已经是 Pro 套餐，决定不开 PostHog。</li>
     <li>2026-09-30 重启项目：调研 PeerPush，定目标 G1–G4，建这个看板，向 imagehub 核对资源。</li>
   </ul>
 </main>
