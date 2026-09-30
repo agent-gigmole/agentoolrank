@@ -68,3 +68,15 @@ describe("taglineMentionsName", () => {
     expect(taglineMentionsName("Dify", "")).toBe(false);
   });
 });
+
+import { pairsFromAlternatives } from "./alternatives";
+
+describe("pairsFromAlternatives", () => {
+  it("pairs each top tool with its first k alternatives, canonical order, de-duplicated", () => {
+    const tools = [
+      { id: "claude-code", alternatives: ["aider", "codex", "openhands"] },
+      { id: "codex", alternatives: ["claude-code", "aider"] },
+    ];
+    expect(pairsFromAlternatives(tools, 2)).toEqual(["aider-vs-claude-code", "claude-code-vs-codex", "aider-vs-codex"]);
+  });
+});

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { db } from "@repo/db";
 import { getComparisonPairs, getStacks } from "@repo/db/queries";
+import { pairsFromAlternatives } from "@/lib/alternatives";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
@@ -51,8 +52,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Comparison pages (long-tail SEO: "X vs Y")
   const comparePairs = await getComparisonPairs(8);
-  const comparePages: MetadataRoute.Sitemap = comparePairs.map((pair) => ({
-    url: `${baseUrl}/compare/${pair.slugA}-vs-${pair.slugB}`,
+  // Plus each top tool vs its closest alternatives (higher-intent pairs than same-category combos)
+  const topWithAlts = await db.execute("SELECT id, alternatives FROM tools WHERE alternatives != '[]' ORDER BY score DESC LIMIT 150");
+  const altPairs = pairsFromAlternatives(
+    topWithAlts.rows.map((r) => {
+      const row = r as unknown as { id: string; alternatives: string };
+      let alts: string[] = [];
+      try { alts = JSON.parse(row.alternatives); } catch {}
+      return { id: row.id, alternatives: alts };
+    }),
+    3,
+  );
+  const compareSlugs = [...new Set([...comparePairs.map((p) => `${p.slugA}-vs-${p.slugB}`), ...altPairs])];
+  const comparePages: MetadataRoute.Sitemap = compareSlugs.map((slug) => ({
+    url: `${baseUrl}/compare/${slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.5,

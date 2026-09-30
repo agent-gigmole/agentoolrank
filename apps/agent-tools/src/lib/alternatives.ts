@@ -89,3 +89,15 @@ export function alternativesTitle(name: string, count: number, year: number): st
 export function taglineMentionsName(name: string, tagline: string): boolean {
   return tagline.trim().toLowerCase().startsWith(name.trim().toLowerCase());
 }
+
+/** Canonical "a-vs-b" slugs for each tool and its first k alternatives (tools given in priority order). */
+export function pairsFromAlternatives(tools: Array<{ id: string; alternatives: string[] }>, k: number): string[] {
+  const out: string[] = [];
+  for (const t of tools) {
+    for (const alt of t.alternatives.slice(0, k)) {
+      const slug = compareSlug(t.id, alt);
+      if (!out.includes(slug)) out.push(slug);
+    }
+  }
+  return out;
+}

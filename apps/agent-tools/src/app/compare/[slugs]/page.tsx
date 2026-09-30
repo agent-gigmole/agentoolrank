@@ -4,6 +4,7 @@ import { getToolBySlug } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Tool } from "@repo/db/schema";
 import type { Metadata } from "next";
+import { compareSlug } from "@/lib/alternatives";
 
 export const revalidate = 86400; // 24h
 
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!a || !b) return {};
   return {
     title: `${a.name} vs ${b.name} — AI Agent Tool Comparison`,
+    alternates: { canonical: `/compare/${compareSlug(a.id, b.id)}` },
     description: `Compare ${a.name} and ${b.name}. Side-by-side comparison of features, GitHub activity, pros & cons.`,
   };
 }
