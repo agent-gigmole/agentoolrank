@@ -10,6 +10,8 @@ log="data/ops-logs/$(date +%F).log"
   bun run scripts/review-submissions.ts --apply --free=3
   echo "== funnel (7d)"
   bun run scripts/funnel-report.ts 7
+  echo "== indexnow"
+  bun run scripts/indexnow.ts
   echo "== search console (28d)"
   python3 scripts/gsc_report.py 28
 } >> "$log" 2>&1
