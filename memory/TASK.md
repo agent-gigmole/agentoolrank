@@ -39,16 +39,16 @@
 - 失败: 0
 
 ### T4 公开 JSON API /api/v1/tools、/api/v1/tools/[slug]
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: 线上 GET 返回 200 JSON，含 name/stars/alternatives；vitest 覆盖序列化
+- 验收: 线上 GET 返回 200 JSON，含 name/stars/alternatives；vitest 覆盖序列化（线上 /api/v1/tools?q= 与 /api/v1/tools/langgraph 返回 200 JSON ✓；vitest ✓）
 - 闸: auto
 - 失败: 0
 
 ### T5 MCP 服务器 /api/mcp（search_tools / get_tool / get_alternatives）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: T4
-- 验收: 线上 POST initialize 与 tools/list 返回 200 且列出 3 个工具；tools/call search_tools 返回结果
+- 验收: 线上 POST initialize 与 tools/list 返回 200 且列出 3 个工具；tools/call search_tools 返回结果（线上 initialize(2025-06-18)/通知 202/tools/list 3 个/tools/call get_alternatives ✓）
 - 闸: auto
 - 失败: 0
 
@@ -95,7 +95,7 @@
 - 验收: 两条记录不存在，旧 URL 301 到新页
 - 闸: human
 - 失败: 0
-- 备注: 删数据，等用户批准
+- 备注: 删数据，等用户批准；另发现 Letta 出现两条、部分名字仍小写（ragflow/voltagent 可能也是重复行），清理前先列清单给用户
 
 
 ## 当前阶段
