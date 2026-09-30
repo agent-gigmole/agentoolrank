@@ -74,12 +74,12 @@
 - 失败: 0
 
 ### T9 push 本地 commit + 重新启用 daily-update
-- 状态: blocked
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: origin/main 与本地一致；Actions 下一次运行 success
-- 闸: human
+- 验收: origin/main 与本地一致 ✓、workflow_dispatch run 36751990678 success ✓、Turso 463/464 当天刷新 ✓
+- 闸: human（用户已给 GitHub token）
 - 失败: 0
-- 备注: 等 GitHub token（Chrome 说明 A）
+- 备注: workflow 改为只刷新已上架工具指标（--existing），删除覆盖式 migrate-to-turso
 
 ### T10 Stripe 结账 $19 快速审核 / $49 首页推荐 7 天
 - 状态: blocked
@@ -122,7 +122,8 @@
 - [x] 生产部署恢复（rootDirectory + turbo env + .vercelignore，CLI 本地部署，2026-10-01）
 - [x] Vercel 商用资格核实：已是 Pro（2026-10-01）
 - [x] daily-update 失败根因：bun.lock 不同步（已重生成，待 push）
-- [ ] **阻塞：GitHub 凭据 → push 本地 7+ commit + 重新启用 daily-update 定时任务**（数据自 03-31 冻结）
+- [x] GitHub 凭据 → push 本地 commit + 重新启用 daily-update（2026-10-01，run 36751990678 success，Turso 463/464 刷新）
+- [ ] daily-update 有 1 个仓库刷新失败待查（463/464）
 - [x] 填充 tools.alternatives（460/464，2026-10-01）
 - [ ] related_tools 填充 + 细化类目
 - [x] /llms.txt + vitest 测试基建（2026-10-01）
@@ -153,7 +154,7 @@
 - [ ] Stripe 受限 key（是否共用 TENSO LLC）
 - [ ] Cloudflare zone token（agentoolrank.com）
 - [x] Vercel Pro（已是 Pro，10-01 核实）
-- [ ] GitHub 凭据（push + Actions）
+- [x] GitHub 凭据（fine-grained token，~/.config/secrets/github-agentoolrank，2026-10-01）
 - [ ] PostHog project（可选）
 - [ ] 个人 Reddit / HN 账号是否可用
 

@@ -400,3 +400,12 @@
 ## 2026-10-01 进入 Goal 模式
 - 用户问"开 goal 模式了吗"：此前只设了 harness 字段，未完成准入。现补齐：TASK.md 写 `模式: goal` + 可机检结束条件 + 预算 + T1–T11 ticket（T9–T11 为 human 闸/阻塞），PRE-FLIGHT memsearch 无跨项目直接命中，预加载本项目已知坑 6 条。
 - 外循环需要会话持续运行：由用户启动 /loop 驱动（Claude 无法自行开启 /loop）。
+
+## 2026-10-01（晚）GitHub 恢复 + daily-update 修复重启（T9 done）
+- 用户存好 fine-grained token（~/.config/secrets/github-agentoolrank，只含 agentoolrank Contents/Actions/Workflows RW，无 Secrets 权限）；Claude in Chrome 重新启用 daily-update
+- 坑：`!` 前缀跑 save-secret 收不到键盘输入（第一次存失败）→ 改为普通 WSL 终端运行，Chrome 说明 + 看板已改（4d3e980）
+- 坑：~/.bashrc 失效全局 GITHUB_TOKEN 让 gh 认证失败 → `unset GITHUB_TOKEN; export GH_TOKEN=...`；push 用一次性 URL + `-c credential.helper=`，不写 remote
+- workflow 诊断：bun.lock 已修，但后续步骤仍会挂（脚本 import ../src/lib/db，monorepo 后根 src 不存在）；更危险的是 migrate-to-turso 用 INSERT OR REPLACE 以 3 月 local.db 整行覆盖 Turso，修通会冲掉 alternatives/展示名
+- 修复 7b1c5da：crawl-github `--existing`（只 UPDATE 已上架工具指标 + metric_snapshots）、import 改 packages/db；workflow 只剩 install → crawl --existing → compute-rankings，contents: read；删 cleanup/filter/migrate/提交 local.db/sitemap ping
+- 结果：push 成功、Vercel git 自动部署 READY（4 月后首次）、run 36751990678 success、Turso 463/464 刷新（1 个失败待查），alternatives 460 / intelligence 464 / 展示名完好，Claude Code 85k→148.7k 星
+- human-intervention=1（存 token + 启用 workflow）/ auto-resolved=3 / 熔断=0

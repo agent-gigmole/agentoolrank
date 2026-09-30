@@ -84,3 +84,8 @@
 | 端口被旧 next-server 占用 / 新路由 404 / ss -ltnp | GOTCHAS.md#stale-next-server-port |
 | 展示名 / 仓库名→官方名 / README 证据 / raw.githubusercontent 无 token | GOTCHAS.md#llm-display-name-needs-evidence |
 | llms.txt / alternatives 页 / /submit / vitest | LOG.md#2026-10-01 |
+| ! 前缀无 stdin / save-secret 收不到输入 / 普通 WSL 终端 | GOTCHAS.md#bang-prefix-no-stdin |
+| 全局 GITHUB_TOKEN 失效 / gh 401 / GH_TOKEN / 一次性 push URL | GOTCHAS.md#stale-global-github-token |
+| 修 CI 只修一步 / 后续步骤也坏 / workflow 逐步审读 | GOTCHAS.md#ci-fix-check-all-steps |
+| migrate-to-turso 覆盖 / INSERT OR REPLACE / 远端事实源 / --existing | GOTCHAS.md#remote-source-of-truth-no-overwrite-sync |
+| GitHub 恢复 / daily-update 修复重启 / T9 | LOG.md#2026-10-01 |

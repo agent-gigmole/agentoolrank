@@ -239,3 +239,21 @@
 - 必须先抓 README 标题 / 首图 alt 作为证据喂给 LLM；raw.githubusercontent.com/<owner>/<repo>/HEAD/README.md 无需 token、不占 GitHub API 限额
 - 批量改名前写回滚备份文件（本项目 apps/agent-tools/data/display-names-backup-2026-09-30.json）
 - crawl-github upsert 不覆盖 name，但新入库工具仍是仓库名 → 每日管道需接入改名脚本
+
+## bang-prefix-no-stdin
+- Claude Code 里用 `!` 前缀运行的命令没有交互 stdin：`read -s` 之类的存密钥脚本收不到键盘输入，会静默存空/失败
+- 需要用户输入密钥的脚本，一律让用户在**普通 WSL 终端**运行，文档里不要写 `! save-secret ...`
+
+## stale-global-github-token
+- ~/.bashrc 导出了失效的全局 GITHUB_TOKEN，gh 优先用它 → 401，即使另有有效 token
+- 用法：`unset GITHUB_TOKEN; export GH_TOKEN=$(cat ~/.config/secrets/github-agentoolrank)`
+- push 不写入 remote：`T=$(cat ~/.config/secrets/github-agentoolrank); git -c credential.helper= push -q https://x-access-token:$T@github.com/agent-gigmole/agentoolrank.git main`（勿打印 token）
+- token 权限：仅 agentoolrank 仓库 Contents/Actions/Workflows RW，无 Secrets 权限（改 repo secrets 需用户）
+
+## ci-fix-check-all-steps
+- 修 CI 不能只修报错那一步：报错步骤后面的每一步都可能已坏（本项目 bun.lock 修好后，后续脚本 import ../src/lib/db 在 monorepo 重构后已不存在）
+- 修前逐步审读 workflow 每一步的"现在还成立吗"，最好 workflow_dispatch 实跑验证
+
+## remote-source-of-truth-no-overwrite-sync
+- daily-update 原有 migrate-to-turso（INSERT OR REPLACE 以 local.db 整行覆盖 Turso）+ 提交 local.db；Turso 成为事实源（alternatives/展示名/intelligence 都只在 Turso）后，修通这条路径会用 3 月旧数据冲掉线上数据
+- 规则：远端成为事实源后，所有"本地库→远端"覆盖式同步步骤必须删除；每日任务只对远端做按 id 的 UPDATE（crawl-github --existing），不插入/改名/删除

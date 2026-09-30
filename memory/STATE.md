@@ -50,7 +50,7 @@
   - 首页/详情/对比/sitemap/badge/zh/blueprint 全 200
 - **日常部署授权**：用户一次性授权测试+build 过即部署/push、线上实测、自行回滚；花钱/凭证/删数据仍逐次问（auto memory deploy-authorization + 看板）
 - **数据自 2026-03-31 冻结**：daily-update Action 自 3-28 起 `bun install --frozen-lockfile` 失败；已重生成 bun.lock（在 2c3e32d）；最后运行 06-02 后 GitHub 60 天无活动停了定时任务
-- **阻塞：GitHub 凭据失效**（git push / gh / env GITHUB_TOKEN 全 401）→ 本地 7+ commit 未 push，无法重启 daily-update
+- ~~阻塞：GitHub 凭据失效~~ → 已于 10-01 晚解决（见下方 GitHub 恢复段）
 - 数据缺陷：tools.alternatives/related_tools 464 条全空；类目过粗（claude-code 与 llama-cpp 同在 agent-frameworks）
 
 ## 2026-10-01（下午）新功能上线（Vercel CLI 本地部署，线上已验证）
@@ -63,10 +63,23 @@
 - **花钱台账** docs/ops/spend-ledger.md；.vercelignore 加 apps/*/data
 - commits：617a9b1（llms.txt+vitest）、d5317c2（alternatives+submit+展示名）及 docs
 - **账户事实**：agentoolrank.com 在 CF 账户 "Tensam.th@gmail.com's Account"（ID db304ebc5bd6e6c38cee8c8275982830），CF 注册、auto-renew、到期 2027-03-27；~/.claude/skills/domain-check/SKILL.md 明文存该账户 cfat_ 账户级 token（安全隐患，已告知用户）；GitHub 仓库 owner = 个人账号 agent-gigmole（public）
-- **GitHub 仍无法 push**，部署仍走 CLI 本地部署
+
+## 2026-10-01（晚）GitHub 恢复 + daily-update 重启（T9 done）
+
+- **GitHub 凭据**：fine-grained token 存 `~/.config/secrets/github-agentoolrank`（owner agent-gigmole，仅 agentoolrank 仓库 Contents/Actions/Workflows RW，**无 Secrets 权限**）
+  - 用法：`unset GITHUB_TOKEN; export GH_TOKEN=$(cat ~/.config/secrets/github-agentoolrank)`（~/.bashrc 有失效全局 GITHUB_TOKEN）
+  - push：`T=$(cat ~/.config/secrets/github-agentoolrank); git -c credential.helper= push -q https://x-access-token:$T@github.com/agent-gigmole/agentoolrank.git main`（不写入 remote）
+- **push 已恢复**：本地与 origin/main 一致；Vercel git 自动部署 READY（4 月后首次）→ 部署可回到 git push 驱动
+- **daily-update 已重新启用并修复**（commit 7b1c5da）：
+  - crawl-github.ts 新增 `--existing`：从 Turso 读已上架工具，按已有 id UPDATE 指标 + 写 metric_snapshots，不插入/改名/删除；import 改为 ../packages/db/src/index；compute-rankings 同改
+  - workflow 只剩 install → crawl --existing → compute-rankings，permissions contents: read；删除 cleanup/filter 自动删、migrate-to-turso（INSERT OR REPLACE 会用 3 月 local.db 覆盖 Turso）、提交 local.db、Google sitemap ping
+  - workflow_dispatch run 36751990678 success；Turso 463/464 当天刷新（1 个仓库失败待查）；alternatives 460、intelligence 464、展示名完好；Claude Code 星数 85k→148.7k
+- **Turso 现为唯一数据源**，local.db 不再同步到远端
+- 新工具发现（discover/插入）已从每日任务移除 → 新工具入库需另走 /submit 审核或单独脚本
 
 ## 进行中 / 下一步
 
+- [ ] 查 daily-update 463/464 中失败的 1 个仓库
 - [ ] 每日管道接入 generate-alternatives + generate-display-names（新工具入库仍是仓库名、无替代品）
 - [ ] 审核脚本 review-submissions（处理 submissions 队列）
 - [ ] /api/e 自建分析（服务端转发、webdriver 不上报、UTM 带进 Stripe metadata.src）
@@ -78,7 +91,6 @@
 
 - Stripe：是否共用 TENSO LLC + 建受限 key（checkout 用 statement_descriptor_suffix ≤22 字符 + metadata.site）
 - Cloudflare zone token（agentoolrank.com 在 CF 账户 Tensam.th@gmail.com，账户已定位）
-- **GitHub 凭据（gh auth / PAT）→ push + 重新启用 daily-update**（最高优先）
 - PostHog project（如不用自建 /api/e）
 - 个人 Reddit / HN 账号是否可用于发帖
 
