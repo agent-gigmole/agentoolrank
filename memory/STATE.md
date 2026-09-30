@@ -32,14 +32,31 @@
 - 中文版 /zh 首页 + 搜索页 + 中英导航切换
 - **已部署上线：marketing-tools-three.vercel.app**
 
-## 进行中
+## 2026-09-30 项目重启（Claude 为总负责人：开发+运营，只在必要时找用户，目标赚钱）
 
-- Product Hunt 养号
+- PeerPush 对标完成 → 转向双边平台：付钱的是想被看到的工具作者，不是访客（见 KNOWLEDGE/DECISIONS.md#peerpush-pivot）
+- G1-G4 已写进 memory/PROJECT.md 顶部 Goal 段（G1 分析+漏斗 10-07 / G2 /submit+20 外部提交 10-21 / G3 首笔付款 10-31 / G4 月收入≥$300+月点击≥1000 12-31）
+- GSC 最新：7月 9点击/720曝光，8月 4/987，9月 3/241；对比页仍是唯一有排名的页型（goose-vs-open-webui、claude-code-vs-openhands 均排 7.5）
+- 运营看板 docs/ops/overview/index.html（已 commit），0.0.0.0:8792 nohup python http.server → http://moneyflow-wsl.tailf1c73f.ts.net:8792/（重启机器需重起）
+- AIMarketRank（marketing-tools）暂停，不买域名
+- 花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md；Vercel Hobby 禁商用，收钱前需升 Pro
 
-## 下一步
+## 进行中 — G1 第 1 周计划（截止 2026-10-07）
 
-- marketing-tools 买域名绑定
-- 付费工具的 Intelligence 补充生成（40 个 SaaS 只有 affiliate_info，缺完整分析）
-- 注册 affiliate programs（GetResponse、HubSpot、Semrush、Jasper 等）
-- 对比页 "X vs Y" 内容生成（SEO 长尾）
-- agent-tools 继续 Launch Day 3-7
+- [ ] /api/e 自建分析（服务端转发、webdriver 不上报、UTM 带进 Stripe metadata.src）
+- [ ] /submit 免费提交队列（点评/积分换排位）
+- [ ] 徽章（badge 外链）
+- [ ] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
+
+## 等待用户（跨项目资源必须用户本人发放）
+
+- Stripe：是否共用 TENSO LLC + 建受限 key（checkout 用 statement_descriptor_suffix ≤22 字符 + metadata.site）
+- Cloudflare zone token（agentoolrank.com 在用户另一个 CF 账户）
+- Vercel 团队 / 升 Pro（Hobby 禁商用）
+- PostHog project（如不用自建 /api/e）
+- 个人 Reddit / HN 账号是否可用于发帖
+
+## 旧待办（降级）
+
+- 对比页 "X vs Y" 继续扩充（唯一有效 SEO 页型，优先级上升）
+- agent-tools Launch Day 3-7 社区分享

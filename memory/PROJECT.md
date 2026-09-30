@@ -1,6 +1,22 @@
 # PROJECT.md — 目标 / 约束 / 验收标准
 
-## 目标
+## 🎯 当前 Goal（2026-09-30 用户授权：Claude 为项目总负责人，开发+运营，只在必要时找用户）
+
+**总目标：让 AgentoolRank 产生收入并逐步放大。** 北极星 = 每周陌生人付款单数；辅助 = 每周创作者提交数、Google 点击。
+**核心转向（学 PeerPush）：** 付钱的是想被看到的工具作者，不是访客 → 做 /submit（免费队列 + $19 快速上线 + $49 首页推荐 7 天）、徽章外链、积分换排队、日/周榜、MCP 服务器、对比页 + alternatives 页。
+花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md（零收入期能免费就免费、不为加速付钱、单渠道 ≤$50 先测后报、记台账 docs/ops/spend-ledger.md）。
+
+| # | 目标 | 截止 | 衡量 |
+|---|---|---|---|
+| G1 | 站内分析 + 提交漏斗全程可测 | 2026-10-07 | 访问→提交页→提交→付款 可见 |
+| G2 | /submit 上线，20 个外部提交 | 2026-10-21 | DB 非本人提交数 |
+| G3 | 第一笔陌生人付款 | 2026-10-31 | Stripe |
+| G4 | 月收入 ≥ $300；Google 月点击 ≥ 1000 | 2026-12-31 | Stripe / GSC |
+
+看板：docs/ops/overview/index.html，服务于 0.0.0.0:8792（nohup python http.server，重启机器需重起），http://moneyflow-wsl.tailf1c73f.ts.net:8792/
+AIMarketRank（marketing-tools）暂停，不买域名，等主站跑通。
+
+## 目标（原始）
 
 构建 AI Agent 工具导航站，通过数据驱动 + LLM 自动化内容生产，靠 SEO 吸引流量变现。垂直方向：AI Agent 工具。
 

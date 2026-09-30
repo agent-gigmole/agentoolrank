@@ -80,3 +80,11 @@
 - **结论**: B — 用 Claude subagent 读 GitHub README 分析
 - **实施**: 脚本批量调度 subagent，每个工具读 README + 生成 capabilities/integrations/limitations 档案
 - **日期**: 2026-03-30
+
+## peerpush-pivot
+- **背景**: 2026-09-30 重启。纯 SEO 目录站 6 个月几乎零流量（9 月 3 点击），无变现
+- **对标**: PeerPush — 110 万月访问/DR75，靠工具作者付费（$39/$89/$229 + 竞价位 $5 起），免费队列用"点评他人换积分"排位，日/周/月榜 + MCP/API + alternatives/用途/人群页
+- **洞察**: 目录站付钱的是想被看到的工具作者，不是访客；作者提交后会自带流量（徽章外链、分享上榜）
+- **结论**: 转向双边平台 — /submit（免费队列 + $19 快速上线 + $49 首页推荐 7 天）、徽章、积分换排队、榜单、MCP、对比页+alternatives 页
+- **目标**: G1-G4 见 memory/PROJECT.md；北极星 = 每周陌生人付款单数
+- **日期**: 2026-09-30

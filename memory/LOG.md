@@ -366,3 +366,12 @@
 - ★唯一正反馈:对比页X vs Y — goose-vs-open-webui(7点击/排名9)、anything-llm-vs-dify(2点击)。对比页是唯一有效SEO模式
 - 拉取方式:bun没装,用python pyjwt手动签service account JWT换token调GSC API(gsc-service-account.json)
 - 战略含义:若救此站→All-in对比页重新定位;否则认未验证成功
+
+## 2026-09-30 项目重启 — PeerPush 对标 + 双边平台转向 + G1-G4 + 运营看板
+- 用户授权 Claude 为总负责人（开发+运营，只在必要时找用户），目标赚钱
+- 调研 PeerPush：自报 110 万月访问 / 3.2 万订阅 / DR75 dofollow；$39/$89/$229 三档 + 竞价位 $5 起；点评他人每条 80 分换免费队列排位；日/周/月榜；MCP+API；alternatives/用途/人群页
+- 核心结论：目录站付钱的是工具作者（想被看到），作者自带流量 → 转向双边平台
+- GSC：7月 9点击/720曝光，8月 4/987，9月 3/241；对比页唯一有排名（goose-vs-open-webui、claude-code-vs-openhands 排 7.5）
+- 设定 G1-G4 写入 PROJECT.md；建看板 docs/ops/overview/index.html（0.0.0.0:8792，Tailscale http://moneyflow-wsl.tailf1c73f.ts.net:8792/）
+- 消息总线问 imagehub(pixtidy)：不代发密钥；Stripe 可共用 TENSO LLC 需用户拍板+建受限 key；claude-ops.key 不得复用；agentoolrank.com 在另一 CF 账户；无发信服务；PostHog 需用户建 project；品牌账号不跨品牌；Vercel Hobby 禁商用
+- AIMarketRank 暂停

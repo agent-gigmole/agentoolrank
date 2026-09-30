@@ -72,3 +72,7 @@
 | issue 响应中位数 / closed issues / createdAt closedAt | LOG.md#2026-03-30 |
 | docs_status / HEAD 请求 / homepageUrl 检查 | LOG.md#2026-03-30 |
 | ALTER TABLE 幂等迁移 / duplicate column 静默跳过 | LOG.md#2026-03-30 |
+| PeerPush 对标 / 双边平台 / 作者付费 / /submit / G1-G4 | DECISIONS.md#peerpush-pivot |
+| 跨项目密钥 / Stripe 共用 TENSO / CF zone token / Vercel Hobby 禁商用 | GOTCHAS.md#cross-project-credentials |
+| GSC 拉取 / pyjwt / service account / 无 bun | GOTCHAS.md#gsc-pull-pyjwt |
+| 运营看板 / :8792 / docs/ops/overview | LOG.md#2026-09-30 |

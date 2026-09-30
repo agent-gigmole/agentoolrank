@@ -199,3 +199,14 @@
 - 正确做法：旧路由页面添加 `<link rel="canonical" href="/blueprint/[slug]">` 指向新路由
 - Sitemap 中新路由给高 priority（0.6-0.7），旧路由降级（0.4-0.5）
 - Google 会逐渐合并权重到 canonical URL
+
+## cross-project-credentials
+- 跨项目资源（Stripe key、Cloudflare token、PostHog、品牌账号）不能从兄弟项目（如 imagehub/pixtidy）借用：对方明确不代发任何密钥，claude-ops.key 不得复用，品牌账号不跨品牌共用
+- 必须由用户本人发放：Stripe 可共用 TENSO LLC 但需用户拍板 + 自建受限 key；checkout 用 statement_descriptor_suffix（≤22 字符）+ metadata.site 区分站点，UTM 写进 metadata.src
+- agentoolrank.com 在用户另一个 Cloudflare 账户，需单独 zone token
+- pixtidy 无发信服务（只有 CF Email Routing），发信要另找
+- **Vercel Hobby 禁止商用**，站点开始收钱前必须升 Pro
+- 花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md
+
+## gsc-pull-pyjwt
+- 本机没 bun 时，用 python pyjwt 签 service account JWT（gsc-service-account.json）换 access token 直接调 GSC searchAnalytics API；该 service account 有 agentoolrank.com 权限

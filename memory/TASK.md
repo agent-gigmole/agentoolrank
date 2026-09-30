@@ -2,66 +2,49 @@
 
 ## 当前阶段
 
-Turborepo monorepo 双站运营 + marketing-tools 优化
+重启：双边平台转向 + G1-G4（2026-09-30 起，Claude 为总负责人）
 
-## 目标
+## 目标（详见 memory/PROJECT.md 顶部 Goal）
 
-1. marketing-tools (AIMarketRank) 优化 + 变现
-2. agent-tools (AgentoolRank) 继续 Launch + 运营
-3. 共享包逐步复用
+- G1 站内分析 + 提交漏斗全程可测（2026-10-07）
+- G2 /submit 上线，20 个外部提交（2026-10-21）
+- G3 第一笔陌生人付款（2026-10-31）
+- G4 月收入 ≥ $300；Google 月点击 ≥ 1000（2026-12-31）
 
-## 已完成阶段（agent-tools）
+## 已完成（重启准备）
 
-- [x] Phase 1-5 全部完成
-- [x] Tool Intelligence 464/464 (100%)
-- [x] Blueprint SEO 详情页 + Intelligence 展示页
-- [x] 图片拖拽 + Setup Instructions 块
-- [x] 模型切换 → DeepSeek V3 官方 API
-- [x] Featured 邮件 10 封
-- [x] 壁垒建设完成
+- [x] PeerPush 对标调研 + 双边平台转向决策
+- [x] 新 GSC 快照（7-9 月）
+- [x] G1-G4 写进 PROJECT.md
+- [x] 运营看板 docs/ops/overview/index.html（:8792 Tailscale 可访问）
+- [x] 经消息总线向 imagehub 询资源（结论：密钥不代发，需用户本人发放）
 
-## 已完成阶段（marketing-tools）
+## G1 任务清单（截止 2026-10-07）
 
-- [x] 市场研究 10 方向 → 选定 AI 营销自动化
-- [x] Turborepo monorepo 重构
-- [x] 骨架创建 + Turso + Vercel project
-- [x] 爬虫 60 个工具 → 清理 → 52 个（32 paid + 10 freemium + 10 open-source）
-- [x] 40 个付费 SaaS 入库（带 affiliate 佣金信息）
-- [x] Intelligence 生成（开源部分 60/60）
-- [x] 中文翻译 52 个工具（tagline + pros + use_cases）
-- [x] 中文版 /zh + 中英导航切换
-- [x] 部署上线 marketing-tools-three.vercel.app
+- [ ] /api/e 自建分析端点（服务端转发，过滤 webdriver，记录 UTM）
+- [ ] 前端埋点：访问 → 提交页 → 提交 → 付款 四步事件
+- [ ] 看板接入漏斗数据
+- [ ] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
 
-## marketing-tools 下一步
+## G2 任务清单（截止 2026-10-21）
 
-### 变现基础
-- [ ] 买域名（aimarketrank.com 或类似）
-- [ ] 注册 affiliate programs（GetResponse/HubSpot/Semrush/Jasper/Copy.ai）
-- [ ] 付费工具 Intelligence 补充（40 个 SaaS 缺完整分析）
-- [ ] 工具详情页加 affiliate 链接按钮
+- [ ] /submit 页面 + DB 表（区分本人/外部提交）
+- [ ] 免费队列 + 点评/积分换排位机制
+- [ ] 付费档位设计：$19 快速上线 / $49 首页推荐 7 天（Stripe 待用户 key）
+- [ ] 徽章（badge）外链 + 上榜作者邮件
+- [ ] 日/周榜页
+- [ ] alternatives 页 + 对比页扩充
+- [ ] MCP 服务器 / API（让 AI 可查询）
+- [ ] 外联：向工具作者发邀请提交
 
-### SEO 内容
-- [ ] "X vs Y" 对比页批量生成（Semrush vs Ahrefs, Jasper vs Copy.ai 等）
-- [ ] Blueprint 营销场景模板（content stack, email stack 等）
-- [ ] GSC 提交 sitemap
+## 等待用户
 
-### 扩充工具库
-- [ ] 补充更多付费工具（目标 100+）
-- [ ] 特别是 Ads/Social Media 分类（当前只有 2-3 个）
+- [ ] Stripe 受限 key（是否共用 TENSO LLC）
+- [ ] Cloudflare zone token（agentoolrank.com）
+- [ ] Vercel 团队 / Pro
+- [ ] PostHog project（可选）
+- [ ] 个人 Reddit / HN 账号是否可用
 
-## agent-tools 运营（并行）
+## 暂停
 
-### Launch Day 3-7
-- [ ] Reddit/HN/Dev.to 分享
-- [ ] Product Hunt 准备
-- [ ] 持续 X 互动
-
-### Launch Day 8-14
-- [ ] Product Hunt 正式发布
-- [ ] Newsletter 第一期
-
-## 观察项
-
-- [ ] GSC 数据积累（agent-tools: 739 URL, 44 展示）
-- [ ] marketing-tools 域名选择
-- [ ] affiliate 佣金跟踪方案
+- AIMarketRank（marketing-tools）全部待办暂停，不买域名，等主站跑通
