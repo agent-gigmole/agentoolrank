@@ -330,3 +330,7 @@
 ## stripe-key-via-vercel-api
 - 生产密钥写入 Vercel：用 API 从本地文件读值，type=sensitive、target=production，不打印值；monorepo 还需 turbo.json build.env 声明，否则被 strict env 过滤
 - Stripe 无 key 时 /api/checkout 返回 503（不崩）；live 自测建 session 后立即 expire
+
+## pkill-f-kills-own-shell
+- `pkill -f "<pattern>"` 在 Claude Code 的 Bash 里会连同当前 shell 一起杀掉（当前 shell 的命令行里也含这个 pattern），表现为 Exit code 144、后续命令都没执行。10-01 踩了两次（crawl-github、http.server 8792）。
+- 做法：用方括号技巧 `pgrep -f "http.serve[r] 8792"` / `pkill -f "crawl-githu[b]"`，或先 `pgrep` 拿到 PID 再 `kill <pid>`；长期服务交给 systemd --user 管理，用 `systemctl --user restart` 而不是 pkill。

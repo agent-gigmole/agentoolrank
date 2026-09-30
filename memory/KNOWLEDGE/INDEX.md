@@ -110,3 +110,4 @@
 | X 发帖 / tweetTextarea_0 / insert_text 换行 / OG 卡片缓存 | GOTCHAS.md#x-compose-post |
 | Stripe key 写 Vercel / sensitive / turbo 透传 / 无 key 503 | GOTCHAS.md#stripe-key-via-vercel-api |
 | T10 Stripe / T14 X 首帖 / T15 agent 提交付费 / $9 priority | LOG.md#2026-10-01 凌晨 T10 |
+| pkill -f 杀掉自己 / Exit code 144 / 方括号 pattern | GOTCHAS.md#pkill-f-kills-own-shell |

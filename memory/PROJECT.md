@@ -13,7 +13,7 @@
 | G3 | 第一笔陌生人付款 | 2026-10-31 | Stripe |
 | G4 | 月收入 ≥ $300；Google 月点击 ≥ 1000 | 2026-12-31 | Stripe / GSC |
 
-看板：docs/ops/overview/index.html，服务于 0.0.0.0:8792（nohup python http.server，重启机器需重起），http://moneyflow-wsl.tailf1c73f.ts.net:8792/
+看板：docs/ops/overview/index.html，服务于 0.0.0.0:8792（systemd --user 服务 agentoolrank-dashboard，Linger=yes，开机自启；页头时间取 document.lastModified，60 秒 meta refresh），http://moneyflow-wsl.tailf1c73f.ts.net:8792/
 AIMarketRank（marketing-tools）暂停，不买域名，等主站跑通。
 
 ## 目标（原始）

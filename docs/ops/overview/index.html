@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="60">
 <title>AgentoolRank 看板</title>
 <style>
   :root { --bg:#fff; --fg:#16181d; --muted:#5b6270; --line:#e4e7ec; --soft:#f5f7fb; --accent:#1f5eff; --ok:#117a3d; --warn:#9a6400; --bad:#b42318; }
@@ -32,7 +33,7 @@
 <body>
 <main>
   <h1>AgentoolRank 看板</h1>
-  <p class="muted">更新于 2026-10-01（北京时间）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
+  <p class="muted">更新于 <span id="updated">…</span>（文件修改时间，每 60 秒自动刷新）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
 
   <div class="kpis">
     <div class="kpi"><b>$0</b><span>收入 / 0 单</span></div>
@@ -176,5 +177,12 @@
     <li>2026-09-30 重启项目：调研 PeerPush，定目标 G1–G4，建这个看板，向 imagehub 核对资源。</li>
   </ul>
 </main>
+<script>
+  (function () {
+    var d = new Date(document.lastModified);
+    var el = document.getElementById("updated");
+    if (el && !isNaN(d)) el.textContent = d.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false }) + "（北京时间）";
+  })();
+</script>
 </body>
 </html>
