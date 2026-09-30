@@ -41,7 +41,7 @@ export function checkoutForm(o: { plan: Plan; submissionId: number; slug: string
   f.set("line_items[0][price_data][product_data][name]", p.name);
   f.set("line_items[0][price_data][product_data][description]", p.description);
   f.set("payment_intent_data[statement_descriptor_suffix]", "AGENTOOLRANK");
-  f.set("customer_email", o.email);
+  if (o.email) f.set("customer_email", o.email); // listed-tool upgrades: Stripe asks for the email
   f.set("success_url", `${o.baseUrl}/submit/thanks?session_id={CHECKOUT_SESSION_ID}`);
   f.set("cancel_url", `${o.baseUrl}/submit?canceled=1`);
   for (const [k, v] of Object.entries({ site: "agentoolrank", submission_id: String(o.submissionId), slug: o.slug, plan: o.plan, src: o.src })) {

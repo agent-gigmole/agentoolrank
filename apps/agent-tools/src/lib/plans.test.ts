@@ -35,3 +35,12 @@ describe("checkoutForm", () => {
     expect(f.get("cancel_url")).toBe("https://agentoolrank.com/submit?canceled=1");
   });
 });
+
+describe("checkoutForm for an already-listed tool", () => {
+  const f = checkoutForm({ plan: "featured", submissionId: 0, slug: "dify", email: "", src: "", baseUrl: "https://agentoolrank.com" });
+  it("omits customer_email so Stripe collects it, and keeps the slug", () => {
+    expect(f.has("customer_email")).toBe(false);
+    expect(f.get("metadata[slug]")).toBe("dify");
+    expect(f.get("metadata[submission_id]")).toBe("0");
+  });
+});

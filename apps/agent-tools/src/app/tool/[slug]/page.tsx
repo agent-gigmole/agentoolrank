@@ -5,6 +5,7 @@ import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
+import { MaintainerBox } from "@/components/MaintainerBox";
 
 export const revalidate = 86400; // 24 hours
 
@@ -522,6 +523,7 @@ export default async function ToolPage({ params }: Props) {
             </div>
           </Section>
         )}
+              <MaintainerBox slug={tool.id} name={tool.name} paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} />
       </main>
     </>
   );

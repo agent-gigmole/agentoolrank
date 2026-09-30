@@ -18,7 +18,12 @@ export async function POST(req: NextRequest) {
     sql: "SELECT id, slug, email, src FROM submissions WHERE slug = ? AND status != 'rejected' ORDER BY id DESC LIMIT 1",
     args: [body.slug.slice(0, 100)],
   });
-  const sub = r.rows[0] as unknown as { id: number; slug: string; email: string; src: string } | undefined;
+  let sub = r.rows[0] as unknown as { id: number; slug: string; email: string; src: string } | undefined;
+  if (!sub && body.plan === "featured") {
+    // Already-listed tool (no submission): maintainers can buy a featured slot from the tool page.
+    const listed = await db.execute({ sql: "SELECT id FROM tools WHERE id = ?", args: [body.slug.slice(0, 100)] });
+    if (listed.rows.length > 0) sub = { id: 0, slug: body.slug, email: "", src: typeof (body as { src?: unknown }).src === "string" ? String((body as { src?: unknown }).src).slice(0, 200) : "" };
+  }
   if (!sub) return Response.json({ error: "Submit your tool first." }, { status: 404 });
 
   try {
