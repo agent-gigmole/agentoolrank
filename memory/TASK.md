@@ -131,18 +131,22 @@
 - [ ] 每日管道接入 alternatives + 展示名脚本（新工具入库仍是仓库名）
 - [ ] 重复工具清理（embedchain≡mem0、gpt-index≡llama-index，删数据待用户批准）
 
-- [ ] /api/e 自建分析端点（服务端转发，过滤 webdriver，记录 UTM）
-- [ ] 前端埋点：访问 → 提交页 → 提交 → 付款 四步事件
+- [x] /api/e 自建分析端点（T1，2026-10-01）
+- [x] 前端埋点：访问 → 提交页 → 提交（T2，2026-10-01；付款步待 Stripe）
+- [x] 漏斗报表 scripts/funnel-report.ts（T3）
+- [x] **G1「漏斗可测」已达成**（2026-10-01）
 - [ ] 看板接入漏斗数据
 - [~] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
   - [x] PeerPush 提交 → 免费队列 #4190（2026-10-01）
   - [ ] PeerPush 改用户名（@hello2502 → agentoolrank，入口未找到）
   - [ ] 评估 PeerPush 点评积分换排位（注意 seo-geo：互评刷票类不做）
-  - [ ] Peerlist onboarding：等用户决定用谁的真名（品牌名被拒，产品挂个人 Project）
-  - [ ] X：等用户提供旧号
-  - [ ] Product Hunt：用户个人号 @ethan_tan11，10/10 后再评估（pixtidy 10/03 发布占用）
+  - [x] Peerlist：Ethan Tan 个人主页 + AgentoolRank 项目（2026-10-01）
+  - [x] X：已登录用户个人号 Zephyr @hwak8666621（不改资料）
+  - [ ] X 首帖：草稿已发 Telegram，等用户确认后再发
+  - [ ] Product Hunt：用户个人号 @ethan_tan11（Google 登录 tensam.th），10/10 后再用（pixtidy 10/03 发布占用）
   - [x] launch kit docs/ops/launch-kit/（logo、4 截图、kit.md）+ scripts/winbrowser（2026-10-01）
-- [ ] /alternatives 页 tagline 以工具名开头时省略名字（"Claude Code — Claude Code is ..." 重复）
+- [x] /alternatives 页 tagline 以工具名开头时省略名字（2026-10-01）
+- [x] 全站品牌名统一 AgentoolRank（2026-10-01）
 
 ## G2 任务清单（截止 2026-10-21）
 
@@ -165,8 +169,9 @@
 - [x] GitHub 凭据（fine-grained token，~/.config/secrets/github-agentoolrank，2026-10-01）
 - [ ] PostHog project（可选）
 - [ ] 个人 Reddit / HN 账号是否可用
-- [ ] X 旧号
-- [ ] Peerlist 用谁的真名
+- [x] X 旧号（2026-10-01）
+- [x] Peerlist 真名 Ethan Tan（2026-10-01）
+- [ ] X 首帖确认
 
 ## 暂停
 

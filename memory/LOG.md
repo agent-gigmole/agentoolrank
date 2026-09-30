@@ -424,3 +424,14 @@
 ## 2026-10-01 Peerlist 完成
 - 用户确认 Peerlist 用真名 "Ethan Tan"。个人主页 https://peerlist.io/agentoolrank（资料 55%，可互动），项目 AgentoolRank（AI + DevTool，logo，444 字描述）已加。Launchpad 周发布未用。
 - 坑：Peerlist 分类是 div 下拉（#categories 点开后点 [role=option]），描述是 contenteditable，头像/Logo 上传后有裁剪弹窗需点可见的 Save。
+
+## 2026-10-01（深夜）自建统计 T1–T3 + X 登录 + 品牌统一
+- Peerlist 完成（真名 Ethan Tan，https://peerlist.io/agentoolrank，项目 AgentoolRank AI + DevTool）
+- X：用户存旧号 ~/.config/secrets/accounts/agentoolrank-x.json；登录 /i/flow/login → 邮箱后按 Enter → 验证码发 tensam 邮箱读不到 → 点"使用密码"fill_secret 登录成功。账号是用户个人号 Zephyr @hwak8666621（已认证、23 粉、中文），不改资料；首帖草稿发 Telegram 等确认（对外身份闸）。PH 为 Google 登录 tensam.th，10/10 后用
+- agentkit remote 明文 token 经总线交给 agentkit session 处理完毕
+- T1/T2/T3 done：src/lib/events.ts + /api/e + components/Analytics.tsx + SubmitForm 埋点 + scripts/funnel-report.ts；线上验证 curl 无 UA 被过滤、Chrome selftest 记录成功（country=ES）；vitest 5 文件 30 测试
+- 品牌名统一 AgentoolRank；替代品页 tagline 不重复名字；commits ce57020、a3a180c
+- G1「漏斗可测」达成（付款步待 Stripe）
+- 看板链接重发 Telegram（服务仍在）
+- 坑：push 到显式 URL 不更新 origin/main 跟踪引用（status 假 ahead，需 git fetch）；X "继续"文本匹配误中"使用手机继续"；X 验证码可切"使用密码"
+- human-intervention=2（Peerlist 真名、X 旧号）/ auto-resolved=3（假 ahead、X 按钮误点、X 验证码）/ 熔断=0

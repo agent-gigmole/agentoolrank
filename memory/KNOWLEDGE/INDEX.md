@@ -97,3 +97,6 @@
 | PeerPush 免费队列 #4190 / 40% off 挽留 / 用户名 @hello2502 | GOTCHAS.md#peerpush-free-queue-retention-offer |
 | 复用 imagehub venv 只读 / PH 个人号排期 | GOTCHAS.md#shared-browser-venv-readonly |
 | Part D 账号注册 / launch kit / scripts/winbrowser | LOG.md#2026-10-01（夜） |
+| push 显式 URL / origin/main 假 ahead / git fetch 核实 | GOTCHAS.md#push-explicit-url-stale-tracking-ref |
+| X 登录 / 继续按钮误点使用手机 / Enter / 使用密码 / 个人号不改资料 | GOTCHAS.md#x-login-flow |
+| 自建统计 /api/e / events 表 / Analytics.tsx / funnel-report / T1–T3 | LOG.md#2026-10-01（深夜） |

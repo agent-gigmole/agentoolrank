@@ -85,35 +85,43 @@
   - task_act：password 框摘要显示 `<hidden>`；`fill_secret` 步骤从文件读密码、不打印
 - **品牌邮箱** hello@agentoolrank.com：Cloudflare Email Routing → 0xzap0x@gmail.com，gmail_secondary MCP 可读验证码
 - **PeerPush**：邮箱验证码注册（用户名自动 @hello2502，改名入口未找到）；AgentoolRank 已提交（AI + Developer Tools / Software Comparison / AI Developers / Free / Web，logo+截图+first comment）→ 免费队列 **#4190（约 70 天）**，40% off 挽留折扣按 spend-control 拒绝；账号 ~/.config/secrets/accounts/agentoolrank-peerpush.json（600）
-- **Peerlist**：email+随机密码注册并验证（~/.config/secrets/accounts/agentoolrank-peerlist.json，600），username agentoolrank 已占；onboarding 要求真人姓名，"AgentoolRank Team" 被拒 → **暂停，等用户决定用谁的真名**（产品作为 Project 挂个人名下）。一次 Peerlist 密码曾经页面摘要泄露到会话输出，已作废并重生成
-- **X**：imagehub 无 X 号 → 等用户提供旧号
+- **Peerlist 完成**：真名 Ethan Tan；个人主页 https://peerlist.io/agentoolrank（资料 55%，可互动），项目 AgentoolRank（AI + DevTool）；账号 ~/.config/secrets/accounts/agentoolrank-peerlist.json（600）
+- **X 已登录**：账号 ~/.config/secrets/accounts/agentoolrank-x.json（登录邮箱 tensam.th@gmail.com）；是用户个人 build-in-public 号 Zephyr @hwak8666621（已认证、23 粉、中文）→ **不改资料**，只发 AgentoolRank 进展；**首帖草稿已发 Telegram，等用户确认再发**（对外身份闸）
 - **Product Hunt**：只有用户个人 maker 号 ethan tan @ethan_tan11（OAuth GitHub tensam / Google tensam.th），pixtidy 10/03 北京 15:01 用它发布 → **10/10 前不用于 agentoolrank、不改资料**
 - **launch kit** docs/ops/launch-kit/（logo-512.png、4 张截图、kit.md 文案 + 账号状态表）；看板已更新
-- 待修小 bug：/alternatives 页开头 "Claude Code — Claude Code is ..." 名字重复（tagline 以名字开头时应省略）
 
-## 进行中 / 下一步
+## 2026-10-01（深夜）自建统计 T1–T3 上线 + 品牌统一
 
-- [ ] /alternatives 页 tagline 以工具名开头时省略名字重复
-- [ ] PeerPush 改用户名（@hello2502 → agentoolrank）；评估点评积分换排位
-- [ ] Peerlist onboarding 等真名；X 等旧号；PH 10/10 后再用
+- **T1 /api/e**：src/lib/events.ts（parseEvent 白名单 page_view/submit_done/outbound_click/badge_copy/checkout_click；referrer 只存域名且去掉本站；isBotUserAgent；sourceFromUrl 读 utm_*/ref）+ app/api/e（sendBeacon 文本体；events 表首用 CREATE TABLE IF NOT EXISTS + idx；国家取 x-vercel-ip-country）
+- **T2 埋点**：components/Analytics.tsx（路由变化发 page_view、捕获出站点击、navigator.webdriver 不上报、sessionStorage 存 sid/src）；SubmitForm 发 submit_done / badge_copy
+- **T3**：scripts/funnel-report.ts（7 天漏斗，排除 selftest），退出码 0
+- 线上验证：curl 无 UA 被过滤；专用 Chrome 访问 /submit?utm_source=selftest&utm_medium=check 记录成功（country=ES，出口在西班牙）；vitest 5 文件 30 测试全绿
+- **G1「漏斗可测」已达成**（付款步待 Stripe）
+- 品牌名全站统一为 **AgentoolRank**（原 "AgenTool Rank"/"AgenToolRank"）；/alternatives 页 tagline 以工具名开头时不重复名字（taglineMentionsName）
+- commits ce57020、a3a180c 已在 origin/main
+- 看板 http://moneyflow-wsl.tailf1c73f.ts.net:8792/ 仍在跑（用户关了标签页，链接已重发 Telegram）
+- agentkit 远程 URL 明文 token 问题已移交 agentkit session（已改 remote、Telegram 通知用户撤销 GitHub CLI 授权并删 ~/.bashrc 失效 GITHUB_TOKEN）
 
+## 进行中 / 下一步（goal 模式：T4–T8 待做）
+
+- [ ] T4 公开 JSON API /api/v1/tools
+- [ ] T5 MCP 服务器 /api/mcp
+- [ ] T6 审核脚本 review-submissions
+- [ ] T7 本地每日 enrich（新工具展示名 + alternatives）
+- [ ] T8 related_tools 填充
 - [ ] 查 daily-update 463/464 中失败的 1 个仓库
-- [ ] 每日管道接入 generate-alternatives + generate-display-names（新工具入库仍是仓库名、无替代品）
-- [ ] 审核脚本 review-submissions（处理 submissions 队列）
-- [ ] /api/e 自建分析（服务端转发、webdriver 不上报、UTM 带进 Stripe metadata.src）
-- [ ] MCP 服务器 / API
-- [ ] 重复工具清理（待用户批准删数据）：embedchain≡mem0、gpt-index≡llama-index 指向同一仓库
-- [~] 目录提交：PeerPush 已进免费队列 #4190；Peerlist 暂停；其余目录待做
+- [ ] X 首帖：等用户在 Telegram 确认后再发
+- [ ] Product Hunt：用户个人号（Google 登录 tensam.th@gmail.com），10/10 后再用
+- [ ] PeerPush 改用户名（@hello2502）；其余目录提交
+- [ ] 看板接入漏斗数据
 
 ## 等待用户（跨项目资源必须用户本人发放）
 
-- Stripe：是否共用 TENSO LLC + 建受限 key（checkout 用 statement_descriptor_suffix ≤22 字符 + metadata.site）
-- Cloudflare zone token（agentoolrank.com 在 CF 账户 Tensam.th@gmail.com，账户已定位）
-- PostHog project（如不用自建 /api/e）
-- 个人 Reddit / HN 账号是否可用于发帖
-- X 旧号；Peerlist 用谁的真名
+- X 首帖确认（草稿已在 Telegram）
+- Stripe：是否共用 TENSO LLC + 建受限 key（T10）
+- 重复工具删除批准（T11：embedchain≡mem0、gpt-index≡llama-index）
+- Cloudflare zone token；个人 Reddit / HN 账号是否可用
 
 ## 旧待办（降级）
 
-- 对比页 "X vs Y" 继续扩充（唯一有效 SEO 页型，优先级上升）
-- agent-tools Launch Day 3-7 社区分享
+- 对比页 "X vs Y" 继续扩充（唯一有效 SEO 页型）；类目过粗

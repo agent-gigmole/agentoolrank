@@ -286,3 +286,12 @@
 ## shared-browser-venv-readonly
 - 复用其他项目（imagehub/pixtidy）的 Windows venv（C:\pixtidy-browser\venv）时：只读复用，不 pip install/升级、不改其文件、不写其目录；自己用独立 Chrome profile + 端口 + 工作目录
 - 共用账号（用户个人 PH maker 号）先问持有项目的发布排期，避开其发布窗口
+
+## push-explicit-url-stale-tracking-ref
+- `git push https://...@github.com/owner/repo.git main`（显式 URL，不经 remote 名）不会更新 `refs/remotes/origin/main` → `git status` 仍显示 "ahead N"，是假象
+- 核实：`git fetch`（或 ls-remote）后再看；不要据此重复 push 或以为 push 失败
+
+## x-login-flow
+- 入口 /i/flow/login；输入邮箱后**按 Enter** 提交 —— 按文本匹配"继续"会误中"使用手机继续"
+- 默认发邮箱验证码（到 tensam.th@gmail.com，Claude 的 gmail_secondary 是 0xzap0x，读不到）→ 点右上"使用密码"，用 fill_secret 填密码即可登录
+- 该号是用户个人 build-in-public 号（Zephyr @hwak8666621），不改资料；每条对外发帖先经用户确认（对外身份闸）
