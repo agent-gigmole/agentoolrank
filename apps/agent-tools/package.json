@@ -6,15 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.48",
     "@ai-sdk/react": "^3.0.143",
     "@libsql/client": "^0.17.2",
     "@repo/db": "*",
-    "@repo/ui": "*",
     "@repo/seo": "*",
+    "@repo/ui": "*",
     "@vercel/og": "^0.11.1",
     "ai": "^6.0.141",
     "dotenv": "^17.3.1",
@@ -33,7 +34,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   },
   "trustedDependencies": [
     "sharp",
