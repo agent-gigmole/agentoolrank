@@ -25,7 +25,12 @@
 - [x] Vercel 商用资格核实：已是 Pro（2026-10-01）
 - [x] daily-update 失败根因：bun.lock 不同步（已重生成，待 push）
 - [ ] **阻塞：GitHub 凭据 → push 本地 7+ commit + 重新启用 daily-update 定时任务**（数据自 03-31 冻结）
-- [ ] 填充 tools.alternatives / related_tools（464 条全空）+ 细化类目
+- [x] 填充 tools.alternatives（460/464，2026-10-01）
+- [ ] related_tools 填充 + 细化类目
+- [x] /llms.txt + vitest 测试基建（2026-10-01）
+- [x] 展示名修正（276 条，README 证据 + LLM）（2026-10-01）
+- [ ] 每日管道接入 alternatives + 展示名脚本（新工具入库仍是仓库名）
+- [ ] 重复工具清理（embedchain≡mem0、gpt-index≡llama-index，删数据待用户批准）
 
 - [ ] /api/e 自建分析端点（服务端转发，过滤 webdriver，记录 UTM）
 - [ ] 前端埋点：访问 → 提交页 → 提交 → 付款 四步事件
@@ -34,12 +39,14 @@
 
 ## G2 任务清单（截止 2026-10-21）
 
-- [ ] /submit 页面 + DB 表（区分本人/外部提交）
+- [x] /submit 页面 + /api/submit + submissions 表（2026-10-01 上线）
+- [ ] 审核脚本 review-submissions
 - [ ] 免费队列 + 点评/积分换排位机制
 - [ ] 付费档位设计：$19 快速上线 / $49 首页推荐 7 天（Stripe 待用户 key）
-- [ ] 徽章（badge）外链 + 上榜作者邮件
+- [~] 徽章 HTML 已在提交成功页给出（挂徽章优先审）；上榜作者邮件未做
 - [ ] 日/周榜页
-- [ ] alternatives 页 + 对比页扩充
+- [x] /alternatives/[slug] 页（460 条 sitemap）
+- [ ] 对比页扩充
 - [ ] MCP 服务器 / API（让 AI 可查询）
 - [ ] 外联：向工具作者发邀请提交
 

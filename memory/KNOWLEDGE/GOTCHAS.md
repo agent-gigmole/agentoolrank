@@ -229,3 +229,13 @@
 ## gh-actions-schedule-60day-disable
 - 公开仓库 60 天无 commit 活动，GitHub 自动停用 schedule 触发的 workflow；需 push 新 commit 并在 Actions 页面/`gh workflow enable` 重新启用
 - 本项目 daily-update 最后运行 2026-06-02；且 3-28 起已因 bun.lock 不同步（#bun-lock-sync）连续失败——定时任务要有失败告警，否则静默断更
+
+## stale-next-server-port
+- 本机起 dev/start 时若端口已被旧 next-server 占用，新进程可能没真正接管，请求打到旧进程 → 新加的路由全 404，误以为代码有 bug
+- 先 `ss -ltnp | grep <port>` 查占用进程，kill 旧进程或换端口，再验证
+
+## llm-display-name-needs-evidence
+- 让 LLM 从仓库名推官方产品名，没有证据时会张冠李戴（mem0→embedchain、lobehub→Lobe Chat）
+- 必须先抓 README 标题 / 首图 alt 作为证据喂给 LLM；raw.githubusercontent.com/<owner>/<repo>/HEAD/README.md 无需 token、不占 GitHub API 限额
+- 批量改名前写回滚备份文件（本项目 apps/agent-tools/data/display-names-backup-2026-09-30.json）
+- crawl-github upsert 不覆盖 name，但新入库工具仍是仓库名 → 每日管道需接入改名脚本

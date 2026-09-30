@@ -386,3 +386,13 @@
 - GitHub 凭据全 401 → 改 `npx vercel deploy --prod` 本地部署，先加 .vercelignore（dda8efc，审计 2291 文件无密钥）→ READY，全路由 200
 - 数据自 03-31 冻结：daily-update 3-28 起 bun frozen-lockfile 失败（已重生成 bun.lock），06-02 后 GitHub 60 天无活动停定时任务；需 GitHub 凭据 push + 重新启用
 - alternatives/related_tools 464 条全空；类目过粗
+
+## 2026-10-01（下午）llms.txt / alternatives / submit / 展示名 上线
+- /llms.txt（src/lib/llms.ts + route）；apps/agent-tools 引入 vitest，24 单测全绿
+- alternatives：TF-IDF 预筛 30 + LLM(OpenRouter deepseek-v3.2) → 460/464，$0.256；/alternatives/[slug] 页 + ItemList JSON-LD + sitemap 460 条 + 详情页入口
+- 展示名：330 条是仓库名，抓 README 标题/alt 作证据（302/330）→ LLM 给官方名，更新 276 条，备份 data/display-names-backup-2026-09-30.json；无证据时 LLM 会错（mem0→embedchain、lobehub→Lobe Chat）
+- /submit + /api/submit（IP 限速、去重、alreadyListed、CREATE TABLE IF NOT EXISTS）；线上 e2e selftest id=1 已 rejected
+- 发现重复工具 embedchain≡mem0、gpt-index≡llama-index（删数据待批）
+- CF 账户已定位（Tensam.th@gmail.com，到期 2027-03-27）；domain-check skill 明文存 cfat_ token（已告知用户）；GitHub owner agent-gigmole
+- 花钱台账 docs/ops/spend-ledger.md；.vercelignore 加 apps/*/data；commits 617a9b1、d5317c2
+- 坑：旧 next-server 占端口致新路由 404；LLM 起官方名须给 README 证据

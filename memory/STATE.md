@@ -53,17 +53,31 @@
 - **阻塞：GitHub 凭据失效**（git push / gh / env GITHUB_TOKEN 全 401）→ 本地 7+ commit 未 push，无法重启 daily-update
 - 数据缺陷：tools.alternatives/related_tools 464 条全空；类目过粗（claude-code 与 llama-cpp 同在 agent-frameworks）
 
-## 进行中 — G1 第 1 周计划（截止 2026-10-07）
+## 2026-10-01（下午）新功能上线（Vercel CLI 本地部署，线上已验证）
 
+- **/llms.txt**：src/lib/llms.ts + app/llms.txt/route.ts（类目 / Top100 / 对比页 / 提交入口）
+- **vitest**：apps/agent-tools `npm test` = vitest run，4 文件 24 单测全绿
+- **/alternatives/[slug]**：src/lib/alternatives.ts（TF-IDF 预筛 30 → LLM JSON → compareSlug）+ scripts/generate-alternatives.ts（默认只补空，--all/--dry-run/--limit，预算闸 $0.6，OpenRouter deepseek/deepseek-v3.2，并发 6）→ 460/464 已填（4 个无替代品），花费 $0.256；页面含对比表 + ItemList JSON-LD + /compare 内链 + canonical；sitemap 460 条；详情页 "See all N alternatives"
+- **展示名修正**：330/464 工具名原为仓库名；src/lib/display-names.ts + scripts/generate-display-names.ts（raw.githubusercontent README 标题/图片 alt 作证据 → LLM 给官方名），更新 276 条；回滚文件 apps/agent-tools/data/display-names-backup-2026-09-30.json；crawl-github upsert 不覆盖 name（修正保留），但新工具入库仍是仓库名
+- **/submit 免费提交**：src/lib/submissions.ts + /api/submit（每 IP 每小时 5 次、已上架返回 alreadyListed、URL 去重、首调 CREATE TABLE IF NOT EXISTS submissions）+ SubmitForm 成功页给排位与徽章 HTML（挂徽章优先审，FREE_REVIEWS_PER_DAY=3）；Nav 加 Submit；线上 selftest 提交 id=1 已标 rejected
+- **花钱台账** docs/ops/spend-ledger.md；.vercelignore 加 apps/*/data
+- commits：617a9b1（llms.txt+vitest）、d5317c2（alternatives+submit+展示名）及 docs
+- **账户事实**：agentoolrank.com 在 CF 账户 "Tensam.th@gmail.com's Account"（ID db304ebc5bd6e6c38cee8c8275982830），CF 注册、auto-renew、到期 2027-03-27；~/.claude/skills/domain-check/SKILL.md 明文存该账户 cfat_ 账户级 token（安全隐患，已告知用户）；GitHub 仓库 owner = 个人账号 agent-gigmole（public）
+- **GitHub 仍无法 push**，部署仍走 CLI 本地部署
+
+## 进行中 / 下一步
+
+- [ ] 每日管道接入 generate-alternatives + generate-display-names（新工具入库仍是仓库名、无替代品）
+- [ ] 审核脚本 review-submissions（处理 submissions 队列）
 - [ ] /api/e 自建分析（服务端转发、webdriver 不上报、UTM 带进 Stripe metadata.src）
-- [ ] /submit 免费提交队列（点评/积分换排位）
-- [ ] 徽章（badge 外链）
+- [ ] MCP 服务器 / API
+- [ ] 重复工具清理（待用户批准删数据）：embedchain≡mem0、gpt-index≡llama-index 指向同一仓库
 - [ ] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
 
 ## 等待用户（跨项目资源必须用户本人发放）
 
 - Stripe：是否共用 TENSO LLC + 建受限 key（checkout 用 statement_descriptor_suffix ≤22 字符 + metadata.site）
-- Cloudflare zone token（agentoolrank.com 在用户另一个 CF 账户）
+- Cloudflare zone token（agentoolrank.com 在 CF 账户 Tensam.th@gmail.com，账户已定位）
 - **GitHub 凭据（gh auth / PAT）→ push + 重新启用 daily-update**（最高优先）
 - PostHog project（如不用自建 /api/e）
 - 个人 Reddit / HN 账号是否可用于发帖

@@ -81,3 +81,6 @@
 | vercel CLI 本地部署 / .vercelignore / 密钥上传 | GOTCHAS.md#vercel-cli-deploy-vercelignore |
 | GitHub Actions 定时任务停用 / 60 天无活动 / daily-update 断更 | GOTCHAS.md#gh-actions-schedule-60day-disable |
 | 部署恢复 / 数据冻结诊断 / GitHub 凭据 401 | LOG.md#2026-10-01 |
+| 端口被旧 next-server 占用 / 新路由 404 / ss -ltnp | GOTCHAS.md#stale-next-server-port |
+| 展示名 / 仓库名→官方名 / README 证据 / raw.githubusercontent 无 token | GOTCHAS.md#llm-display-name-needs-evidence |
+| llms.txt / alternatives 页 / /submit / vitest | LOG.md#2026-10-01 |
