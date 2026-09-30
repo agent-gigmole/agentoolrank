@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { getCategories, getTools, getToolCount, getLastRefreshTime } from "@repo/db/queries";
+import { getCategories, getTools, getToolCount, getLastRefreshTime, getToolBySlug } from "@repo/db/queries";
 import { ToolCard } from "@/components/ToolCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { featuredSlugs } from "@/lib/paid";
 import type { Metadata } from "next";
 
-export const revalidate = 43200; // 12 hours
+export const revalidate = 3600; // 1 hour (featured slots start soon after payment)
 
 export const metadata: Metadata = {
   alternates: {
@@ -20,6 +21,10 @@ export default async function HomePage() {
     getToolCount(),
     getLastRefreshTime(),
   ]);
+
+  const featured = (await Promise.all((await featuredSlugs()).map((slug) => getToolBySlug(slug)))).filter(
+    (t): t is NonNullable<typeof t> => t !== null,
+  );
 
   const refreshAgo = lastRefresh
     ? getTimeAgo(new Date(lastRefresh))
@@ -71,6 +76,30 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Featured (paid placement, clearly labeled) */}
+      <section className="mb-12">
+        <div className="flex items-baseline justify-between mb-4">
+          <h2 className="text-xl font-semibold text-gray-900">Featured</h2>
+          <Link href="/submit" className="text-sm text-blue-600 hover:underline">
+            {featured.length > 0 ? "Get featured →" : "Your agent tool here · $49/week →"}
+          </Link>
+        </div>
+        {featured.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {featured.map((tool) => (
+              <div key={tool.id} className="relative">
+                <span className="absolute -top-2 right-3 z-10 text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Sponsored</span>
+                <ToolCard tool={tool} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Link href="/submit" className="block border border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-500 hover:border-blue-400 hover:text-blue-600">
+            Building an AI agent tool? List it free, or get it in front of every visitor here.
+          </Link>
+        )}
       </section>
 
       {/* Categories Grid */}

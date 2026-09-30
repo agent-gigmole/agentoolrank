@@ -1,6 +1,7 @@
 // Server-side helpers for paid plans: Stripe calls (REST, no SDK) and recording upgrades.
 import { db } from "@repo/db";
 import { PLANS, isPlan, type Plan } from "./plans";
+import { activeFeatured, type FeaturedRow } from "./featured";
 
 // Additive only: created on first use. payments is the source of truth for paid plans
 // (submissions.plan predates the $9 "priority" tier and its CHECK can't hold it).
@@ -70,8 +71,8 @@ export async function confirmSession(sessionId: string): Promise<Confirmation> {
 /** Slugs currently featured (ignores the table not existing yet). */
 export async function featuredSlugs(): Promise<string[]> {
   try {
-    const r = await db.execute("SELECT DISTINCT slug FROM featured WHERE starts_at <= datetime('now') AND ends_at > datetime('now') ORDER BY starts_at DESC LIMIT 6");
-    return r.rows.map((x) => String((x as unknown as { slug: string }).slug));
+    const r = await db.execute("SELECT slug, starts_at, ends_at FROM featured WHERE ends_at > datetime('now')");
+    return activeFeatured(r.rows as unknown as FeaturedRow[], new Date());
   } catch {
     return [];
   }
