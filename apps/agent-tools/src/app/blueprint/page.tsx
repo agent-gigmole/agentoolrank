@@ -7,9 +7,9 @@ import type { Metadata } from "next";
 export const revalidate = 3600; // 1 hour
 
 export const metadata: Metadata = {
-  title: "AI Project Blueprints — Ready-to-Build Tool Combinations | AgentoolRank",
+  title: "AI Project Blueprints: Ready-to-Build Tool Stacks | AgentoolRank",
   description:
-    "Browse 70+ AI project blueprints with step-by-step execution plans. Each blueprint shows exactly which tools to use, how to combine them, and what it costs. From RAG chatbots to trading systems.",
+    "70+ AI project blueprints with step-by-step plans: which tools to use, how to combine them and what it costs. From RAG chatbots to trading systems.",
   openGraph: {
     title: "AI Project Blueprints — Ready-to-Build Tool Combinations",
     description: "70+ blueprints with execution plans, cost estimates, and tool stacks for AI projects.",

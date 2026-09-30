@@ -17,6 +17,7 @@ function getWeekLabel(): string {
 }
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/weekly" },
   title: "AI Agent Weekly — Top Trending Tools This Week",
   description:
     "Weekly digest of the fastest-growing AI agent tools. See what's trending in agent frameworks, coding assistants, RAG, and more.",

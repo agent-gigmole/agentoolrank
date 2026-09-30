@@ -23,7 +23,7 @@ const categoryNameZh: Record<string, string> = {
 export const metadata: Metadata = {
   title: "AgentoolRank — 数据驱动的 AI Agent 工具目录",
   description:
-    "463 个 AI Agent 工具，按 GitHub 活跃度排名，每日更新。描述你想构建的项目，AI 为你生成完整的技术蓝图。",
+    "600+ 个开源 AI Agent 工具，按 GitHub 活跃度排名，每日更新。描述你想构建的项目，AI 为你生成完整的技术蓝图。",
   alternates: {
     canonical: "https://agentoolrank.com/zh",
     languages: { en: "https://agentoolrank.com" },
