@@ -1,6 +1,6 @@
 # TASK.md — 当前任务
 
-## 模式: goal（2026-10-01 进入）
+## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
 - **GOAL**：G1+G2 里能自主完成的部分全部上线，漏斗可测、AI 可查询、提交可审核。
 - **结束条件（机检）**：下面 T1–T8 全部 done ∧ `cd apps/agent-tools && npm test` 全绿 ∧ `npx turbo run build --filter=agent-tools` 成功 ∧ 线上 `/ /submit /alternatives/claude-code /llms.txt /api/mcp` 全部返回 200（/api/mcp 用 POST initialize）。
@@ -83,12 +83,38 @@
 - 备注: workflow 改为只刷新已上架工具指标（--existing），删除覆盖式 migrate-to-turso
 
 ### T10 Stripe 结账 $19 快速审核 / $49 首页推荐 7 天
-- 状态: blocked
+- 状态: todo
 - 依赖: T1
 - 验收: 线上创建 checkout session 成功并立即 expire；metadata.site=agentoolrank
 - 闸: human
 - 失败: 0
-- 备注: 等 Stripe key（Chrome 说明 B；checkout key 已存，ops key 待存）
+- 备注: 等 Stripe key（Chrome 说明 B；checkout key 已存，ops key 待存）；10-01 checkout key 已存（~/.config/stripe/agentoolrank-checkout.key），可开工；ops 只读 key 仍缺（只影响报表）
+
+### 第 2 轮目标（G2 20 个外部提交 by 10-21 / G3 第一笔陌生付款 by 10-31）
+- 结束条件（机检）：T10、T12、T13 done ∧ 测试全绿 ∧ build 过 ∧ 线上 /submit 显示付费档且 checkout session 可创建（立即 expire）
+- 预算：LLM ≤ $2；不花推广费
+
+### T12 对比页扩充：按 GSC 有曝光的查询补 X vs Y / alternatives 内链
+- 状态: todo
+- 依赖: -
+- 验收: scripts/gsc-pull 输出 28 天查询；新增/加强的对比页 URL 进 sitemap 且 200
+- 闸: auto
+- 失败: 0
+
+### T13 首页「Featured」位 + 提交成功页付费选项（$19 快速审核 / $49 首页推荐 7 天）
+- 状态: todo
+- 依赖: T10
+- 验收: 有 featured_until 的工具在首页显示；vitest 覆盖到期逻辑
+- 闸: auto
+- 失败: 0
+
+### T14 X 首帖（build in public）
+- 状态: blocked
+- 依赖: -
+- 验收: 帖子发布且链接带 utm_source=x，events 表能看到来访
+- 闸: human
+- 失败: 0
+- 备注: 草稿已发 Telegram，等用户回「发」
 
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked

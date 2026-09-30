@@ -435,3 +435,9 @@
 - 看板链接重发 Telegram（服务仍在）
 - 坑：push 到显式 URL 不更新 origin/main 跟踪引用（status 假 ahead，需 git fetch）；X "继续"文本匹配误中"使用手机继续"；X 验证码可切"使用密码"
 - human-intervention=2（Peerlist 真名、X 旧号）/ auto-resolved=3（假 ahead、X 按钮误点、X 验证码）/ 熔断=0
+
+## 2026-10-01 Goal 模式第 1 轮收敛
+- T1–T9 全部 done（T7 并入 T6）；结束条件复跑：vitest 9 文件 49 测试全绿、turbo build 成功、线上 / /submit /alternatives/claude-code /llms.txt 200、/api/mcp POST initialize 200。
+- 偏差：T8 related 覆盖 247/464（验收写 ≥400），原因是其余工具无可匹配集成数据，未硬凑。
+- 本轮 human-intervention=4（GitHub token、Stripe key、Part D 账号、真名）/ auto-resolved=6 / 熔断=0。
+- 第 2 轮开启：T10 Stripe（checkout key 已到位）、T12 对比页扩充、T13 Featured 位、T14 X 首帖（human）、T11 去重（human）。
