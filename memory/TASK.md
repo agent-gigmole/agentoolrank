@@ -53,9 +53,9 @@
 - 失败: 0
 
 ### T6 审核脚本 review-submissions（LLM 判相关性 + 生成资料 + 入库 + 标记）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: `--dry-run` 对 pending 提交给出 approve/reject 与理由，退出码 0；vitest 覆盖入库行构造
+- 验收: `--dry-run` 对 pending 提交给出 approve/reject 与理由，退出码 0；vitest 覆盖入库行构造（--try browser-use.com → approve/browser-web-agents ✓，canva.com → reject ✓；队列 dry-run 退出码 0 ✓；vitest ✓；WSL cron 每天 21:30 scripts/daily-ops.sh 审核 + 漏斗日志 ✓）
 - 闸: auto
 - 失败: 0
 
