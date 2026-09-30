@@ -18,23 +18,23 @@
 ### Ticket Backlog
 
 ### T1 自建分析 /api/e + events 表
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: vitest 覆盖事件校验；线上 POST /api/e 返回 204，events 表出现该事件
+- 验收: vitest 覆盖事件校验；线上 POST /api/e 返回 204，events 表出现该事件（线上 /api/e 204 ✓；events 表写入 ✓；爬虫 UA 被过滤 ✓；vitest ✓）
 - 闸: auto
 - 失败: 0
 
 ### T2 前端埋点：page_view / submit_view / submit_done，UTM 捕获
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: T1
-- 验收: 线上访问 /?utm_source=selftest 与 /submit 后，events 表出现 src=selftest 的 page_view 与 submit_view
+- 验收: 线上访问 /?utm_source=selftest 与 /submit 后，events 表出现 src=selftest 的 page_view 与 submit_view（真实浏览器访问 /submit?utm_source=selftest 记录 page_view，src=selftest/check ✓）
 - 闸: auto
 - 失败: 0
 
 ### T3 漏斗报表脚本（看板/周报用）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: T2
-- 验收: `bun run scripts/funnel-report.ts` 输出 7 天 访问→提交页→提交 计数，退出码 0
+- 验收: `bun run scripts/funnel-report.ts` 输出 7 天 访问→提交页→提交 计数，退出码 0（bun run scripts/funnel-report.ts 退出码 0 ✓）
 - 闸: auto
 - 失败: 0
 
