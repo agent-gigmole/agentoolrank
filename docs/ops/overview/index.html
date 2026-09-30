@@ -144,6 +144,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 工具详情页新增「Works with」：列出和这个工具有集成关系、常一起用的工具（例如 LangGraph → LangChain、LiteLLM、Mem0）。按真实集成数据生成，覆盖 247 个工具，剩下的没有可靠数据就不显示。</li>
     <li>2026-10-01 AI 可以直接查本站了：公开 API（/api/v1/tools）和 MCP 服务器（https://agentoolrank.com/api/mcp，三个工具：搜索、查详情、查替代品）都已上线并实测通过。搜索也改好了，比如搜 "coding agent" 现在返回 SWE-agent、Codex、Claude Code，而不是不相关的工具。</li>
     <li>2026-10-01 自建访问统计上线：每次访问、提交、复制徽章、点出站链接都会记录来源（UTM），自动过滤爬虫，不用第三方统计。漏斗报表：<code>bun run scripts/funnel-report.ts</code>。站名统一成 AgentoolRank。</li>
     <li>2026-10-01 Peerlist：用你确认的名字 Ethan Tan 建了个人主页 peerlist.io/agentoolrank，AgentoolRank 作为项目挂在下面。</li>

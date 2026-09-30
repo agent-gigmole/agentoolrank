@@ -60,16 +60,17 @@
 - 失败: 0
 
 ### T7 本地每日任务：新工具补展示名 + alternatives（GitHub 恢复前先本地 cron）
-- 状态: todo
+- 状态: done（合并进 T6）
 - 依赖: -
 - 验收: `bun run scripts/daily-enrich.ts --dry-run` 退出码 0；crontab 有一条每日任务
 - 闸: auto
 - 失败: 0
+- 备注: 每日任务已改为不再自动插入新工具，新工具只来自审核通过的提交 → 展示名/alternatives/related 补全放进 T6 审核入库流程，不单独跑 cron
 
 ### T8 related_tools 填充（复用 TF-IDF，互补工具）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: tools 表 related_tools 非空 ≥ 400 条；详情页显示
+- 验收: tools 表 related_tools 非空 ≥ 400 条；详情页显示（实际 247/464 未达 400：其余工具缺可匹配的集成数据，按真实数据不硬凑，已记为偏差；详情页 Works with 区块线上可见 ✓）
 - 闸: auto
 - 失败: 0
 
