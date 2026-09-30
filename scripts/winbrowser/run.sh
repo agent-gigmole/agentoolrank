@@ -3,6 +3,12 @@
 # (profile C:\agentoolrank-chrome, CDP [::1]:9223). Pattern from imagehub (RECIPES#windows-browser-tasks).
 # Usage: scripts/winbrowser/run.sh <task.py> [args...]
 set -euo pipefail
+# Browser isolation (agentkit browser-lock): wait if someone borrowed this Chrome or the owner took over.
+lock=/home/qmt/project/agentkit/bin/browser-lock
+if [ -x "$lock" ] && ! "$lock" check agentoolrank-chrome --who ai-directory; then
+  echo "agentoolrank-chrome is locked by someone else (see: $lock status agentoolrank-chrome); not running." >&2
+  exit 3
+fi
 here="$(cd "$(dirname "$0")" && pwd)"
 dest=/mnt/c/agentoolrank-browser
 py=/mnt/c/pixtidy-browser/venv/Scripts/python.exe   # shared Playwright venv, not modified
