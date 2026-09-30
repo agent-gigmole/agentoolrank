@@ -451,3 +451,11 @@
 - daily-ops.sh + crontab `30 21 * * *`（CST=北京 21:30），日志 data/ops-logs/（gitignore）
 - 发现：crontab 明文 TELEGRAM_BOT_TOKEN（已告知，未改）；重复工具 Letta ×2、ragflow/voltagent 小写名疑似重复 → 补进 T11；会话环境仍带失效 GITHUB_TOKEN → env -u
 - vitest 9 文件 49 测试
+
+## 2026-10-01 凌晨 T10 Stripe + T14 X 首帖 + T15 agent-first 提交与付费
+- T10：plans.ts（服务端定价、statement_descriptor_suffix=AGENTOOLRANK、session+payment_intent metadata）、/api/checkout（无 key 503）、/submit/thanks（Stripe 核实 paid 后幂等记录）、paid.ts（Stripe REST；新表 payments、featured）。用户 Telegram 回「配」→ Vercel API 写 STRIPE_SECRET_KEY（sensitive/production，值未打印），turbo.json 透传；live 自测建单→读取→expire
+- T14：用户回「发」→ Zephyr @hwak8666621 首帖 https://x.com/hwak8666621/status/2105370588521111867 （?ref=x）；task_act 新增 insert_text 步骤；X 卡片缓存旧 OG 标题
+- T15（用户提出）：$9 priority 新档；offers.ts buildOffers + recommendPlan；submit-core.ts 共享三入口（网页/REST/MCP）+ submission_tokens；状态 API；懒创建 checkout（303）；MCP submit_tool/get_submission_status；llms.txt agent 提交段；成功页三档按钮。submissions.plan CHECK 约束不改表，改用 payments 表。线上 e2e 全通过，selftest id 1、2 rejected；vitest 11 文件 63 测试
+- 用户问 agent 提交友好度 → Telegram 答复现状与补齐计划（MCP 上架 Smithery/mcp.so）
+- 坑：CHECK 约束挡新枚举 → 另开事实表不改表；agent 付款链接懒创建 session；对 agent 不做挽留，一次列全档位、按约束推荐最便宜
+- human-intervention=3（Stripe key 批准「配」、X 发帖批准「发」、T15 方向由用户提出）/ auto-resolved=2（CHECK 约束绕行、X 换行用 insert_text）/ 熔断=0

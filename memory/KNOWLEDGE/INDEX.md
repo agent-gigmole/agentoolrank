@@ -105,3 +105,8 @@
 | related_tools / 互补≠相似 / integrations 双向 | GOTCHAS.md#related-by-integrations-not-similarity |
 | crontab 明文 token / crontab -l 回显 | GOTCHAS.md#crontab-plaintext-secrets |
 | 公开 API / MCP / 审核脚本 review-submissions / daily-ops cron / T4–T8 | LOG.md#2026-10-01 凌晨 |
+| CHECK 约束挡新枚举 / 不改表 / payments 事实表 | GOTCHAS.md#check-constraint-new-enum-use-fact-table |
+| agent-first 提交付费 / offers / recommendPlan / 懒创建 checkout / submission token | GOTCHAS.md#agent-first-submit-and-pay |
+| X 发帖 / tweetTextarea_0 / insert_text 换行 / OG 卡片缓存 | GOTCHAS.md#x-compose-post |
+| Stripe key 写 Vercel / sensitive / turbo 透传 / 无 key 503 | GOTCHAS.md#stripe-key-via-vercel-api |
+| T10 Stripe / T14 X 首帖 / T15 agent 提交付费 / $9 priority | LOG.md#2026-10-01 凌晨 T10 |

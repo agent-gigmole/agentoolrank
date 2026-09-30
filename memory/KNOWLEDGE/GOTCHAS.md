@@ -312,3 +312,21 @@
 
 ## crontab-plaintext-secrets
 - 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN，`crontab -l` 会打印进会话；编辑 crontab 时用 `crontab -l | grep -v ... ` 或只追加，避免整份回显；已告知用户，未改动
+
+## check-constraint-new-enum-use-fact-table
+- 已有表列带 CHECK（如 submissions.plan IN ('free','fast','featured')）挡住新枚举值（priority）时：SQLite 改 CHECK 要重建表 = 改表 = 人工闸
+- 做法：不动旧表，另开事实表（payments：submission_id/plan/amount/stripe_session）记付费事实，读取方（review-submissions 排序）改从事实表判断
+
+## agent-first-submit-and-pay
+- 面向 AI agent 的提交/付费：一次返回全部档位（免费 + 付费，按价格排序，含交付期/权益），再给 recommendPlan（在预算/期限/是否需推荐位约束内选最便宜档）；**不做挽留弹窗/锚定话术**
+- 付款链接**懒创建**：返回 `/api/v1/submissions/{id}/checkout?plan=&token=`，点开时才建 Stripe session 并 303 → 避免每次提交都生成一堆未用会话
+- 提交返回 per-submission token（submission_tokens 表），状态/结账接口要 token，错 token 统一 404（不泄露存在性）
+- 网页 /api/submit、REST POST /api/v1/submissions、MCP submit_tool 共用 submit-core，避免三处逻辑漂移；llms.txt 写明 agent 提交入口
+
+## x-compose-post
+- X 发帖：打开 compose/post，[data-testid=tweetTextarea_0] 用 keyboard.insert_text（type/fill 会丢换行或触发快捷键）→ [data-testid=tweetButton] → 从个人主页取最新 permalink（task_latest_post.py）
+- X 链接卡片会缓存旧 OG 标题（改名后仍显示 AgenTool Rank），短期无法强刷；发帖前先确认 OG 正确
+
+## stripe-key-via-vercel-api
+- 生产密钥写入 Vercel：用 API 从本地文件读值，type=sensitive、target=production，不打印值；monorepo 还需 turbo.json build.env 声明，否则被 strict env 过滤
+- Stripe 无 key 时 /api/checkout 返回 503（不崩）；live 自测建 session 后立即 expire

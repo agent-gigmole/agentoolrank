@@ -114,15 +114,33 @@
 - vitest 9 文件 49 测试全绿；turbo build 过；线上 / /submit /alternatives/claude-code /llms.txt /api/mcp 均 200
 - commits：b305fe2、fdcc869、88ebdf4、fdddf75（均已 push）
 
-## Goal 第 2 轮（进行中，见 TASK.md）
+## 2026-10-01 凌晨 T10 / T14 / T15 done（Goal 第 2 轮）
+
+- **T10 Stripe 结账上线**：src/lib/plans.ts（服务端定价，statement_descriptor_suffix=AGENTOOLRANK，session + payment_intent metadata site/submission_id/slug/plan/src）；/api/checkout（无 key 返回 503）；/submit/thanks 向 Stripe 核实 paid 后幂等记录；src/lib/paid.ts 走 Stripe REST（无 SDK），新表 payments、featured（只新增表）
+  - Vercel 生产 env STRIPE_SECRET_KEY = agentoolrank-checkout restricted key（用户 Telegram 回「配」批准；sensitive/production，经 Vercel API 从本地文件写入，值未打印）；turbo.json build.env 已透传
+  - live 自测：建 session → 读取 → expire
+- **价格阶梯**：free / **$9 priority（72h 审核，新增）** / $19 fast / $49 featured（首页推荐 7 天）
+- **T15 agent-first 提交与付费**（用户提出）：
+  - src/lib/offers.ts：buildOffers（免费 + 3 付费档按价格排序，付费档 checkout_url 为懒创建链接）+ recommendPlan（按预算/期限/是否要推荐位选约束内最便宜档）
+  - src/lib/submit-core.ts 共享提交逻辑：/api/submit、POST /api/v1/submissions、MCP submit_tool 共用；新表 submission_tokens
+  - GET /api/v1/submissions/{id}?token= 查状态；GET /api/v1/submissions/{id}/checkout?plan=&token= 点开时才建 Stripe session 并 303 跳转
+  - MCP 新增 submit_tool / get_submission_status，instructions 更新；llms.txt 新增 "For AI agents: list a tool"；网页成功页展示三档付费按钮
+  - submissions.plan 有 CHECK(free/fast/featured) → **不改表**，付费事实记 payments 表；review-submissions 从 payments 判优先级
+  - 线上 e2e：MCP 提交 → 4 档 + 推荐 → 状态 → 错 token 404 → checkout 303 到 Stripe（fast $19）后 expire；selftest submissions id 1、2 均已 rejected
+  - vitest 11 文件 63 测试全绿
+- **T14 X 首帖已发**（用户回「发」）：https://x.com/hwak8666621/status/2105370588521111867 ，链接 agentoolrank.com/?ref=x（sourceFromUrl 读 ref）
+  - 发帖方法：compose/post 页 [data-testid=tweetTextarea_0] 用 keyboard.insert_text 保留换行（task_act 新增 insert_text 步骤）→ [data-testid=tweetButton] → task_latest_post.py 取 permalink
+  - X 链接卡片缓存旧 OG 标题（AgenTool Rank），暂无法强刷
+- 用户问"站点对 agent 提交友好吗"→ 已在 Telegram 答复；后续计划把 MCP 上架 Smithery / mcp.so 等 MCP 目录
+
+## Goal 第 2 轮剩余（见 TASK.md）
 
 - 目标：G2 20 个外部提交（10-21）/ G3 首笔陌生付款（10-31）
-- 结束条件：T10、T12、T13 done ∧ 测试全绿 ∧ build 过 ∧ 线上 /submit 显示付费档且 checkout session 可创建（立即 expire）
-- [ ] T10 Stripe 结账（$19 快速审核 / $49 首页推荐 7 天；key 已到位）
+- [x] T10 Stripe　[x] T14 X 首帖　[x] T15 agent-first 提交+付费
 - [ ] T12 对比页扩充（按 GSC 有曝光查询）
-- [ ] T13 首页 Featured 位 + 提交成功页付费选项（依赖 T10）
-- [ ] T14 X 首帖（human：等用户确认草稿）
-- [ ] T11 重复工具清理（human 批准删数据）：embedchain≡mem0、gpt-index≡llama-index、**Letta ×2**，ragflow / voltagent 小写名可能也是重复行
+- [ ] T13 首页 Featured 位展示（featured 表已建，依赖 T10 已满足）
+- [ ] T11 重复工具清理（human 批准删数据）：embedchain≡mem0、gpt-index≡llama-index、Letta ×2，ragflow / voltagent 小写名疑似重复
+- [ ] MCP 上架 Smithery / mcp.so 等
 
 ## 其他待办
 
@@ -138,7 +156,6 @@
 
 ## 等待用户（跨项目资源必须用户本人发放）
 
-- X 首帖确认（草稿已在 Telegram）
 - 重复工具删除批准（T11）
 - Cloudflare zone token；个人 Reddit / HN 账号是否可用
 
