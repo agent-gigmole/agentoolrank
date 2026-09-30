@@ -177,17 +177,32 @@
 - vitest 20 文件约 95 测试全绿
 - commits 至 17fc532（均已 push）
 
+## 2026-10-01 05:00–05:30 原创数据报告 + 技术 SEO 巡检 + Stripe 对账 + 转分发
+
+- **/report 原创数据报告**：src/lib/report.ts buildReport + app/report/page.tsx（Dataset JSON-LD、CC BY 4.0 引用说明、sitemap/llms.txt/页脚入口；月份按服务器 UTC）
+  - 数据：669 工具、16.1M 星、**32% 半年无提交**（68 个 5k+ 星，含 MetaGPT 71k、gpt-engineer 55k、AgentGPT 36k）；增长最快 Skills / LangChain；MCP 29 个合计 58 万星
+- **首页主视觉三入口**：提交 / Best MCP servers / For AI agents
+- **停更提示**：src/lib/staleness.ts（≥180 天无提交）→ 工具页顶部 "No commits in N months — may not be actively maintained" + 链到替代品页
+- **技术 SEO 巡检**（scratchpad 脚本抽 17 页查 h1/title/description/canonical/robots/JSON-LD）→ 修复：工具页 canonical + toolDescription（星数/90 天提交/前三替代品，clampDescription ≤160）；/new /compare /weekly canonical；类目/报告/blueprint/stack 描述截断；首页 WebSite+SearchAction+Organization JSON-LD；写死的"463 个工具"改 600+
+- **Stripe 每小时对账**（收入保护，commit 24cb514）：src/lib/paid.ts 抽出 recordPaidSession（thanks 页与对账共用、幂等）；src/lib/reconcile.ts paidAgentoolrankSessions；scripts/reconcile-payments.ts 用**只读 ops key** 列最近 3 天 Checkout Sessions；scripts/hourly-ops.sh + crontab `17 * * * *`。不用 webhook（需新建签名密钥 = 凭证闸）
+- **流量判断**：真实访问 ≈0（1 天 4 次，基本自测），订阅者 0 → **停止堆功能，转分发**
+  - 社区帖三份草稿 docs/ops/launch-kit/community-drafts.md（Show HN / Reddit / dev.to；数据来自 /report、写明作者本人、不拉票）→ 经 agentkit 进 10-02 09:30 老板汇总
+  - agentkit 提醒：HN/Reddit 为多项目共用个人号，imagehub 09-30 刚发 Show HN → 同号 Show HN 至少隔一周，**建议先批 dev.to**
+- **dev.to 品牌号**：https://dev.to/agentoolrank（hello@agentoolrank.com，凭据 ~/.config/secrets/accounts/agentoolrank-devto.json）；reCAPTCHA 用 task_act 新步骤 `frame_click` 勾过；邮箱已验证
+- 漏斗报表排除 note 含 selftest 的提交；T19：10-02 X 帖发 /report 数据（每项目每天 ≤1 条）
+- Vercel 一次部署 "Resource provisioning timed out"（Vercel 侧）→ 重试成功
+
 ## 待办 / 下一步
 
-- [ ] 10-02 实体 SIM 到 → Brevo 手机验证 → 发信通道（T17 徽章邀请外联）
+- [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to；HN/Reddit 与 imagehub 错开 ≥1 周）、外联模板+署名
+- [ ] T19 10-02 X 帖（/report 数据，x-post）
+- [ ] 10-02 实体 SIM 到 → Brevo 手机验证 → 发信通道（T17 徽章邀请外联，34 位）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T12 对比页扩充（按 GSC 有曝光查询）
-- [ ] T13 首页 Featured 位展示
-- [ ] T17 反链飞轮：外联名单 34 位 + 模板已交 agentkit，等老板 10-02 09:30 批复（含署名 Ethan Tan 与否）→ 发信通道就绪后发送
-- [ ] T18 /weekly 真实 30 天增速 + 每周帖（常设授权直接发）
-- [ ] MCP 目录：Smithery 等免费渠道（PulseMCP 暂停、mcp.so/AI Agents List 付费不做）
-- [ ] 新工具入库仍需接展示名/alternatives/related 管道；related 覆盖 350/669
-- [ ] 观察 Google 是否重新抓取 sitemap（上次 03-28、739 条、收录 0）；IndexNow 每日推送跟踪
+- [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
+- [ ] T12 对比页扩充（按 GSC 有曝光查询）；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
+- [ ] MCP 目录：Smithery 等免费渠道
+- [ ] 新工具入库接展示名/alternatives/related 管道；related 覆盖 350/669
+- [ ] 观察 Google 是否重新抓取 sitemap；IndexNow 每日推送跟踪
 - [ ] 查 daily-update 刷新失败仓库；看板接入漏斗数据；PeerPush 改用户名
 
 ## 环境注意

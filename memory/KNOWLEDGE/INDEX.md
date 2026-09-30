@@ -128,3 +128,9 @@
 | 外联邮箱 / GitHub 条款 / 公开联系邮箱取证 / 角色信箱排除 | GOTCHAS.md#outreach-github-tos-public-contact |
 | 标题公式 toolTitle/compareTitle / 测试样例超长 | GOTCHAS.md#seo-title-length-test-sample |
 | MaintainerBox / featured 无提交记录 / 数据驱动 FAQ / /agents / IndexNow | LOG.md#2026-10-01 04:30–05:00 |
+| reCAPTCHA 复选框 frame_click / 表单提交失败清空 / dev.to 注册 | GOTCHAS.md#recaptcha-checkbox-frame-click |
+| Stripe 对账 / 无 webhook / 只读 key / 关页面丢单 / hourly-ops | GOTCHAS.md#stripe-reconcile-readonly-key |
+| Vercel Resource provisioning timed out / 重试 | GOTCHAS.md#vercel-provisioning-timeout |
+| 零流量 / 停止堆功能 / 转分发 / 共用个人号错开 Show HN | GOTCHAS.md#zero-traffic-stop-building |
+| SEO 巡检脚本 urllib SSL 超时 / curl 复核 | GOTCHAS.md#seo-audit-script-ssl-timeout |
+| /report 数据报告 / 停更提示 / SEO 巡检 / 对账 / dev.to | LOG.md#2026-10-01 05:00–05:30 |
