@@ -117,10 +117,10 @@
 - 备注: 草稿已发 Telegram，等用户回「发」
 
 ### T15 为 AI agent 优化的提交 + 付费流程（用户 10-01 02:54 提出）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: T10
 - 设计：MCP 新工具 submit_tool / get_submission_status + POST /api/v1/submissions（JSON）；返回 queue_position、eta_days、status_token、badge_html、offers[]（free / $9 priority 72h / $19 fast 24h / $49 featured 7d，每档 what_you_get + eta + 真实价值数据，不夸大）；agent 可传 max_budget_usd、deadline_days → 返回 recommended_plan（满足期限的最便宜档）；付款 = 按需生成 Stripe checkout_url 交给人付（GET .../checkout?plan=&token=，懒创建）；不对 agent 做挽留弹窗，降级选项直接写在 offers 里；llms.txt 写明流程。以后接 agent 支付协议。
-- 验收: vitest 覆盖 offers/recommend；线上 MCP tools/call submit_tool（selftest 后标 rejected）返回 offers 与 status_token；get_submission_status 返回状态；checkout 端点生成 session 并立即 expire
+- 验收: vitest 覆盖 offers/recommend；线上 MCP tools/call submit_tool（selftest 后标 rejected）返回 offers 与 status_token；get_submission_status 返回状态；checkout 端点生成 session 并立即 expire（线上 MCP submit_tool → queued + 4 档 offers + recommended ✓；get_submission_status ✓，错 token 404 ✓；checkout 链接 303 到 Stripe（fast \$19）后立即 expire ✓；selftest 提交已标 rejected ✓；vitest 63 ✓）
 - 闸: auto
 - 失败: 0
 
