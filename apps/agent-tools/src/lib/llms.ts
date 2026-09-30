@@ -40,6 +40,8 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     `- [Weekly report](${baseUrl}/weekly): fastest-growing tools this week`,
     `- [Stacks](${baseUrl}/blueprint): tool combinations for common builds (RAG chatbot, code review agent, ...)`,
     `- [Submit a tool](${baseUrl}/submit): free listing for AI agent tools`,
+    `- [JSON API](${baseUrl}/api/v1/tools?q=rag): public read-only API, e.g. /api/v1/tools?q=...&limit=20 and /api/v1/tools/{slug}`,
+    `- [MCP server](${baseUrl}/api/mcp): Streamable HTTP MCP endpoint with tools search_tools, get_tool, get_alternatives`,
     `- [Sitemap](${baseUrl}/sitemap.xml)`,
     "",
   ];
