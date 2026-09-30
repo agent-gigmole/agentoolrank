@@ -287,6 +287,11 @@ export default async function ToolPage({ params }: Props) {
     }
   }
 
+  // "Works with": tools that integrate with this one (from integration data)
+  const worksWith = (await Promise.all(tool.related_tools.slice(0, 6).map((id) => getToolBySlug(id)))).filter(
+    (t): t is Tool => t !== null,
+  );
+
   // Get same-category tools for comparison links
   const primaryCategory = tool.category_tags[0] ?? null;
   const categoryPeers = primaryCategory
@@ -473,6 +478,29 @@ export default async function ToolPage({ params }: Props) {
             <Link href={`/alternatives/${tool.id}`} className="inline-block mt-3 text-sm text-blue-600 hover:underline">
               See all {tool.alternatives.length} {tool.name} alternatives →
             </Link>
+          </Section>
+        )}
+        {/* Works with */}
+        {worksWith.length > 0 && (
+          <Section title={`Works with ${tool.name}`}>
+            <p className="text-sm text-gray-500 mb-3">Tools that integrate with {tool.name}, often used together in the same stack.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {worksWith.map((t) => (
+                <Link
+                  key={t.id}
+                  href={`/tool/${t.id}`}
+                  className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-gray-400 transition-all"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-400">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-medium text-sm">{t.name}</div>
+                    <div className="text-xs text-gray-500">{t.tagline}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </Section>
         )}
         {/* Compare with peers */}
