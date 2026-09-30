@@ -420,3 +420,7 @@
 - 坑：CDP 新实例绑 127.0.0.1 而非 [::1]；Windows python 读不到 WSL 路径；页面摘要打印 input value → Peerlist 密码泄露到会话（已作废重生成，改 <hidden> + fill_secret）；headlessui combobox 用 click_role option；Peerlist input 摘要名是 id；弹窗按钮 css=button:has-text('X'):visible
 - 发现小 bug：/alternatives 页 "Claude Code — Claude Code is ..." 名字重复
 - human-intervention=1（用户给方向 + imagehub 资源确认）/ auto-resolved=4 / 熔断=0
+
+## 2026-10-01 Peerlist 完成
+- 用户确认 Peerlist 用真名 "Ethan Tan"。个人主页 https://peerlist.io/agentoolrank（资料 55%，可互动），项目 AgentoolRank（AI + DevTool，logo，444 字描述）已加。Launchpad 周发布未用。
+- 坑：Peerlist 分类是 div 下拉（#categories 点开后点 [role=option]），描述是 contenteditable，头像/Logo 上传后有裁剪弹窗需点可见的 Save。
