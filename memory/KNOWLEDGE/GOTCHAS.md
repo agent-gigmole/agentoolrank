@@ -269,6 +269,7 @@
 - task_act 每步打印页面摘要时会输出 input 的 value → 填过的密码直接进会话输出/日志（Peerlist 密码泄露一次，已作废重生成）
 - 修复：摘要里 `type=password` 的框显示 `<hidden>`；新增 `fill_secret` 步骤从 600 权限文件读密码填入，全程不打印
 - 规则：任何"回显页面状态"的调试输出都要默认遮蔽密码/token 类字段；imagehub 的 task_act.py 同款问题（已建议，未改其文件）
+- **第二入口（10-01 再踩，泄露 Resend 密码）**：摘要里的 ERRORS 段用 `[class*=error]` 选元素，选中了带 error 类的 input 本身并打印其 value → 所有摘要文本函数对 type=password 统一返回 <hidden>，ERRORS 排除 INPUT/TEXTAREA/SELECT。遮蔽要在"取文本"的公共函数做，而不是逐个输出段打补丁
 
 ## ui-automation-selectors-peerlist-peerpush
 - headlessui combobox：选中后 placeholder 会变，别按 placeholder 重新定位；用 `click_role option`（get_by_role("option", name=...)）选
@@ -334,3 +335,39 @@
 ## pkill-f-kills-own-shell
 - `pkill -f "<pattern>"` 在 Claude Code 的 Bash 里会连同当前 shell 一起杀掉（当前 shell 的命令行里也含这个 pattern），表现为 Exit code 144、后续命令都没执行。10-01 踩了两次（crawl-github、http.server 8792）。
 - 做法：用方括号技巧 `pgrep -f "http.serve[r] 8792"` / `pkill -f "crawl-githu[b]"`，或先 `pgrep` 拿到 PID 再 `kill <pid>`；长期服务交给 systemd --user 管理，用 `systemctl --user restart` 而不是 pkill。
+
+## repo-renamed-org-dedupe
+- GitHub 仓库换组织（block/goose → aaif-goose/goose）后，搜索结果里的 full_name 与库里 github_repo 不同 → 按 owner/repo 判"已上架"会漏判，slug 冲突时加组织前缀另起一条 → 8 条重复（已撤回）
+- 做法：按**仓库名**（以及 API 返回的重定向后 full_name）判已上架；slug 冲突即视为已存在，不自动另起前缀 slug
+
+## website-url-normalize-and-safeparse
+- 爬虫/LLM 给的"官网"可能是裸域名（www.funasr.com）或邮箱 → Zod url() 校验失败 → SSG 预渲染（/new）抛 ZodError → 整个部署失败；同时去重删掉的旧 URL 在失败期间短暂 404
+- 修复两层：①入库前规范化（无协议补 https://；无效或含用户名 → 回退 github_url）；②查询层 parseTools 用 safeParse，坏行跳过 + console.warn，getToolBySlug 同 → 单条坏数据不再拖垮构建
+- 规则：SSG 构建读 DB 时，schema 校验必须是"逐行容错"，不是整批 parse
+
+## rollback-file-timestamp
+- 回滚/备份文件按日期命名（display-names-backup-YYYY-MM-DD.json）同日再跑会被覆盖，第一次的原值丢失（本次可由 github_repo 还原）
+- 规则：备份文件名带时间戳到秒，且写入前若存在则不覆盖
+
+## twilio-30038-otp-dropped
+- 用 Twilio 号码接第三方（Brevo）手机验证 OTP：发送方显示已发，Twilio 日志错误码 30038（OTP 类消息被 Twilio 防滥用拦截丢弃）→ 虚拟号收不到验证码
+- 不要反复重试（可能触发发送方风控）；改用实体 SIM（10-02 到，分给 ai-directory）
+
+## captcha-turnstile-vs-recaptcha-cdp
+- CDP 控制的 Chrome（专用 profile，端口 9223）：Cloudflare Turnstile（Resend 注册）一直不过；Google reCAPTCHA（Brevo）能过
+- 选服务时优先 reCAPTCHA / 无验证码的；遇 Turnstile 直接换供应商或请人工，别死磕
+- Brevo 地址栏不接受 "#" → 写 "Unit 4670"
+
+## mcp-registry-dns-publish
+- 官方 MCP Registry 发布（com.agentoolrank/agent-tools v1.0.0，remote streamable-http）流程：
+  1. 生成 ed25519 私钥（~/.config/secrets/mcp-registry-agentoolrank.pem，600）
+  2. 在 agentoolrank.com 加 TXT `v=MCPv1; k=ed25519; p=<公钥 base64>`
+  3. `mcp-publisher login dns --domain agentoolrank.com --private-key <hex>`（v1.8.1）
+  4. apps/agent-tools/mcp/server.json（name 用反向域名 com.agentoolrank/…，remotes type streamable-http + url）→ `mcp-publisher publish`
+- DNS 认证无需 GitHub OAuth，适合品牌域名命名空间
+
+## mcp-directories-status
+- PulseMCP：全站暂停收录；mcp.so：仅 $39 付费或工单；AI Agents List：资格审核过但仅 $29/$49 档 → 零收入期按 spend-control 都不付
+
+## mcp-category-by-llm-purpose
+- "名字含 MCP"≠MCP server（很多是客户端/框架）→ tag-mcp.ts 先关键词取候选（44）再让 LLM 判主要用途，只给 29 个加 mcp-servers 标签；类目表 INSERT OR IGNORE

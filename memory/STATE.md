@@ -37,7 +37,7 @@
 - PeerPush 对标完成 → 转向双边平台：付钱的是想被看到的工具作者，不是访客（见 KNOWLEDGE/DECISIONS.md#peerpush-pivot）
 - G1-G4 已写进 memory/PROJECT.md 顶部 Goal 段（G1 分析+漏斗 10-07 / G2 /submit+20 外部提交 10-21 / G3 首笔付款 10-31 / G4 月收入≥$300+月点击≥1000 12-31）
 - GSC 最新：7月 9点击/720曝光，8月 4/987，9月 3/241；对比页仍是唯一有排名的页型（goose-vs-open-webui、claude-code-vs-openhands 均排 7.5）
-- 运营看板 docs/ops/overview/index.html（已 commit），0.0.0.0:8792 nohup python http.server → http://moneyflow-wsl.tailf1c73f.ts.net:8792/（重启机器需重起）
+- 运营看板 docs/ops/overview/index.html（已 commit），0.0.0.0:8792 systemd --user agentoolrank-dashboard → http://moneyflow-wsl.tailf1c73f.ts.net:8792/
 - AIMarketRank（marketing-tools）暂停，不买域名
 - 花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md；Vercel 项目已是 Pro（10-01 核实），商用 OK
 
@@ -133,32 +133,46 @@
   - X 链接卡片缓存旧 OG 标题（AgenTool Rank），暂无法强刷
 - 用户问"站点对 agent 提交友好吗"→ 已在 Telegram 答复；后续计划把 MCP 上架 Smithery / mcp.so 等 MCP 目录
 
-## Goal 第 2 轮剩余（见 TASK.md）
+## 2026-10-01 03:17–04:40 正式 /goal + 去重 + 扩量 T16 + MCP 类目/Registry + 发信尝试
 
-- 目标：G2 20 个外部提交（10-21）/ G3 首笔陌生付款（10-31）
-- [x] T10 Stripe　[x] T14 X 首帖　[x] T15 agent-first 提交+付费
+- **正式 Goal**（写在 PROJECT.md 顶部与看板）：完全负责人、盈利并滚动放大；每轮问"推动收入了吗"；spend-control；不可逆走人工闸；看板实时；经验反哺 agentkit
+- **agentkit 新规**（$AGENTKIT_ROOT/shared/harnesses/owner-goal.md）：
+  - 账号一律自己注册：品牌邮箱 hello@agentoolrank.com，gmail_secondary 读验证码
+  - 需要老板的事统一 `bus-send agentkit` 汇总（每天 09:30），**不直接发老板 Telegram**
+  - X 统一用老板大号 Zephyr；发帖走 x-post skill（官方 API，~/workspace/twitter-intel/.venv），每项目每天 ≤1 条、写明作者本人
+  - 浏览器借用 browser-lock：agentoolrank-chrome 端口 9223，run.sh 开跑前 check，被占用退出码 3
+- **老板批复（经 agentkit）**：
+  - ① 去重已执行：删 embedchain/gpt-index/memgpt/opendevin/agent-llm/quiver/autogpt/privategpt（保留内容完整的一条）；74 个工具 alternatives/related 引用改指保留条目；备份 apps/agent-tools/data/dedupe-backup-2026-10-01.json；src/lib/merged.ts + next.config redirects（/tool、/alternatives 308）+ compare 页 permanentRedirect
+  - ② PH：10/10 后老板本人在 agentoolrank-chrome 用 tensam.th Google 登录一次（**提前一天报 agentkit**）
+  - ③ 每周榜单帖常设授权直接发：weekly-post.ts --post 走 x-post，文案含"我自己做的 AgentoolRank"
+- **T16 扩量 done**：scripts/expand-tools.ts（16 组 GitHub 主题搜索，近 90 天活跃 ≥300 星，1263 结果；pickCandidates 去重/去 fork/去 awesome；按仓库名判已上架；4 并发）+ scripts/judge.ts（与审核共用取证 + LLM 判定）
+  - 结果：新增约 205 → **库内 669**，拒绝率 24%，metrics 668/669，官方名 123，alternatives 217（$0.115），related 覆盖 350/669，sitemap 899→2250
+  - 首轮换组织仓库误建 8 条重复已撤回（备份 data/reverted-expand-dupes-2026-10-01.json）
+  - 展示名回滚文件改为时间戳文件名（同日同名曾被覆盖，原值可由 github_repo 还原）
+- **数据健壮性**：website_url 规范化（无协议加 https://，无效/含用户名改用 github_url）；expand-tools 入库前 siteUrl 规范化；packages/db/src/queries.ts parseTools 用 safeParse 跳过坏行并告警（getToolBySlug 同）
+- **MCP Servers 类目**：scripts/tag-mcp.ts（44 候选 → LLM 判主要用途 → 29 个加 mcp-servers 标签，categories INSERT OR IGNORE）；/category/mcp-servers "29 Best Open-Source MCP Servers in 2026 (Ranked by GitHub Activity)"
+- **类目页 SEO**：categoryTitle "N Best Open-Source X in 2026 (Ranked by GitHub Activity)"、导语列前三、canonical
+- **官方 MCP Registry 已发布** com.agentoolrank/agent-tools v1.0.0（remote streamable-http）；DNS 认证：ed25519 私钥 ~/.config/secrets/mcp-registry-agentoolrank.pem，TXT `v=MCPv1` 在 agentoolrank.com；mcp-publisher v1.8.1；server.json 在 apps/agent-tools/mcp/
+- **发信（未完成）**：Resend 注册被 Cloudflare Turnstile 挡（CDP 控制 Chrome）；Brevo 账号 hello@agentoolrank.com 已建（Ethan Tan / TENSO LLC，地址 "Unit 4670"），发信前需手机验证；Twilio +19047347766 收 OTP 被 30038 丢弃 → **等实体 SIM（10-02，分给 ai-directory）**
+- **目录站**：PulseMCP 全站暂停收录；mcp.so 仅 $39 或工单；AI Agents List 资格通过、草稿已存、仅 $29/$49 → 零收入期全部不付
+- **安全**：task_act 摘要 ERRORS 选到带值 input 打印了 Resend 密码（已作废）→ 所有摘要函数 type=password 返回 <hidden>，ERRORS 排除 INPUT/TEXTAREA/SELECT
+- **看板**：systemd --user agentoolrank-dashboard（Linger，开机自启）+ document.lastModified + 60s refresh
+- **花钱**：OpenRouter 既有余额累计约 $0.53；现金 $0
+
+## 待办 / 下一步
+
+- [ ] 10-02 实体 SIM 到 → Brevo 手机验证 → 发信通道（T17 徽章邀请外联）
+- [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] T12 对比页扩充（按 GSC 有曝光查询）
-- [ ] T13 首页 Featured 位展示（featured 表已建，依赖 T10 已满足）
-- [ ] T11 重复工具清理（human 批准删数据）：embedchain≡mem0、gpt-index≡llama-index、Letta ×2，ragflow / voltagent 小写名疑似重复
-- [ ] MCP 上架 Smithery / mcp.so 等
-
-## 其他待办
-
-- [ ] 查 daily-update 463/464 中失败的 1 个仓库
-- [ ] Product Hunt：用户个人号，10/10 后再用
-- [ ] PeerPush 改用户名（@hello2502）；其余目录提交
-- [ ] 看板接入漏斗数据
+- [ ] T13 首页 Featured 位展示
+- [ ] T17 反链飞轮：徽章邀请（模板先经 agentkit 给老板过目）
+- [ ] T18 /weekly 真实 30 天增速 + 每周帖（常设授权直接发）
+- [ ] MCP 目录：Smithery 等免费渠道（PulseMCP 暂停、mcp.so/AI Agents List 付费不做）
+- [ ] 新工具入库仍需接展示名/alternatives/related 管道；related 覆盖 350/669
+- [ ] 查 daily-update 刷新失败仓库；看板接入漏斗数据；PeerPush 改用户名
 
 ## 环境注意
 
-- 本会话环境仍带失效 GITHUB_TOKEN（~/.bashrc 已注释，但旧 shell 继承）→ git/gh 命令前 `env -u GITHUB_TOKEN`
-- 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知用户，未改动）
-
-## 等待用户（跨项目资源必须用户本人发放）
-
-- 重复工具删除批准（T11）
-- Cloudflare zone token；个人 Reddit / HN 账号是否可用
-
-## 旧待办（降级）
-
-- 类目过粗（claude-code 与 llama-cpp 同在 agent-frameworks）
+- 会话环境可能仍带失效 GITHUB_TOKEN → git/gh 前 `env -u GITHUB_TOKEN`
+- 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知，未改动）
+- 长期服务用 systemctl --user，不用 pkill -f

@@ -111,3 +111,13 @@
 | Stripe key 写 Vercel / sensitive / turbo 透传 / 无 key 503 | GOTCHAS.md#stripe-key-via-vercel-api |
 | T10 Stripe / T14 X 首帖 / T15 agent 提交付费 / $9 priority | LOG.md#2026-10-01 凌晨 T10 |
 | pkill -f 杀掉自己 / Exit code 144 / 方括号 pattern | GOTCHAS.md#pkill-f-kills-own-shell |
+| 页面摘要泄露密码第二入口 / ERRORS [class*=error] 选到 input | GOTCHAS.md#page-summary-leaks-input-values |
+| 仓库换组织 / 扩量重复 / slug 冲突加前缀 / 按仓库名判已上架 | GOTCHAS.md#repo-renamed-org-dedupe |
+| website_url 裸域名 / ZodError 构建失败 / 查询层 safeParse 跳坏行 | GOTCHAS.md#website-url-normalize-and-safeparse |
+| 回滚文件同日覆盖 / 备份文件名带时间戳 | GOTCHAS.md#rollback-file-timestamp |
+| Twilio 30038 / OTP 被丢弃 / 虚拟号收不到验证码 / 实体 SIM | GOTCHAS.md#twilio-30038-otp-dropped |
+| Turnstile vs reCAPTCHA / CDP 浏览器 / Resend 挡 Brevo 过 | GOTCHAS.md#captcha-turnstile-vs-recaptcha-cdp |
+| 官方 MCP Registry 发布 / DNS 认证 / mcp-publisher / server.json | GOTCHAS.md#mcp-registry-dns-publish |
+| PulseMCP 暂停 / mcp.so 付费 / AI Agents List 付费 | GOTCHAS.md#mcp-directories-status |
+| MCP Servers 类目 / tag-mcp / LLM 判主要用途 | GOTCHAS.md#mcp-category-by-llm-purpose |
+| 正式 goal / 去重 / T16 扩量 669 / MCP Registry / Brevo | LOG.md#2026-10-01 03:17–04:40 |
