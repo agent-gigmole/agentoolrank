@@ -9,5 +9,5 @@ export interface Gainer {
 export function weeklyPostText(tools: Gainer[], weekLabel: string, baseUrl: string): string {
   const lines = tools.slice(0, 5).map((t, i) => `${i + 1}. ${t.name} +${Math.round(t.gain).toLocaleString("en-US")}`);
   const host = baseUrl.replace(/^https?:\/\//, "");
-  return [`本周（${weekLabel}）GitHub 上涨星最快的 AI Agent 开源工具：`, "", ...lines, "", "每天自动更新的榜单和替代品对比：", `${host}/weekly?ref=x-weekly`].join("\n");
+  return [`本周（${weekLabel}）GitHub 上涨星最快的 AI Agent 开源工具：`, "", ...lines, "", "榜单是我自己做的 AgentoolRank，每天自动更新，也有替代品对比：", `${host}/weekly?ref=x-weekly`].join("\n");
 }

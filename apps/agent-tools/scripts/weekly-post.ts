@@ -1,6 +1,7 @@
 /**
- * Draft the weekly X post from the fastest-growing tools and send it to Telegram for approval.
- * Usage: bun run scripts/weekly-post.ts [--send]
+ * Weekly X post from the fastest-growing tools. Owner granted standing approval (2026-10-01) to post
+ * directly on the owner's main account via the x-post skill (official API, ≤1 post/day, author disclosed).
+ * Usage: bun run scripts/weekly-post.ts [--post]   (without --post: print only)
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
@@ -25,6 +26,11 @@ const now = new Date();
 const label = `${now.getMonth() + 1}/${now.getDate()}`;
 const text = weeklyPostText(tools, label, "https://agentoolrank.com") + (week.length >= 5 ? "" : "\n\n（注：数据是 30 天增速，攒满 7 天每日数据后改为真实周增量）");
 console.log(text);
-if (process.argv.includes("--send")) {
-  spawnSync("telegram-topic", ["send", "目录站", `[目录站] 本周 X 帖草稿，回「发」即发：\n\n${text}`], { stdio: "inherit" });
+if (process.argv.includes("--post")) {
+  const { writeFileSync } = await import("node:fs");
+  const file = new URL(`../data/ops-logs/weekly-post-${now.toISOString().slice(0, 10)}.txt`, import.meta.url).pathname;
+  writeFileSync(file, text);
+  const home = process.env.HOME;
+  const r = spawnSync(`${home}/workspace/twitter-intel/.venv/bin/python`, [`${home}/.claude/skills/x-post/post_tweet.py`, "-f", file], { encoding: "utf8" });
+  console.log(r.stdout, r.stderr);
 }
