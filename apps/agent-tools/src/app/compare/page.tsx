@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 export const revalidate = 43200; // 12h
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/compare" },
   title: "AI Agent Tool Comparisons — Side-by-Side Reviews",
   description:
     "Compare top AI agent tools head-to-head. Side-by-side feature comparisons, GitHub metrics, pros & cons for popular agent frameworks, coding assistants, and more.",

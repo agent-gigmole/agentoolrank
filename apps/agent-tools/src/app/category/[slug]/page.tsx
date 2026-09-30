@@ -4,6 +4,7 @@ import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import { categoryTitle } from "@/lib/alternatives";
+import { clampDescription } from "@/lib/titles";
 
 export const revalidate = 43200;
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const top = await getTools({ category: slug, limit: 3 });
   return {
     title: categoryTitle(category.name, category.tool_count ?? 0, new Date().getFullYear()),
-    description: `Compare the best open-source ${category.name.toLowerCase()}${top.length ? ` like ${top.map((t) => t.name).join(", ")}` : ""}, ranked by live GitHub stars, growth and commit activity. ${category.description}`.slice(0, 300),
+    description: clampDescription(`Compare the best open-source ${category.name.toLowerCase()}${top.length ? ` like ${top.map((t) => t.name).join(", ")}` : ""}, ranked by live GitHub stars, growth and commit activity.`),
     alternates: { canonical: `/category/${slug}` },
   };
 }

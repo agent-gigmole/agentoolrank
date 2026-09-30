@@ -4,6 +4,7 @@ import { getStackBySlug, getStacks, getToolBySlug } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { StackFlow } from "@repo/ui/StackFlow";
 import type { Metadata } from "next";
+import { clampDescription } from "@/lib/titles";
 import type { Tool } from "@repo/db/schema";
 
 export const revalidate = 86400;
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${stack.title} — AI Project Blueprint`,
-    description: `${stack.description} ${stack.layers.length} layers, ${totalTools} tools. See the full execution plan.`,
+    description: clampDescription(`${stack.description} ${stack.layers.length} layers, ${totalTools} tools. See the full execution plan.`),
     alternates: {
       canonical: `${baseUrl}/blueprint/${slug}`,
     },

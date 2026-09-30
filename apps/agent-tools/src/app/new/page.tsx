@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 export const revalidate = 43200; // 12h
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/new" },
   title: "New AI Agent Tools This Week",
   description: "Discover the latest AI agent tools added to our directory. Updated daily.",
 };

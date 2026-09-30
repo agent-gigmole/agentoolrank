@@ -35,3 +35,22 @@ export function toolTitle(name: string, tagline: string, githubStars: number | n
 export function compareTitle(a: string, b: string, year: number): string {
   return `${a} vs ${b} (${year}): GitHub Stats, Features & Which to Choose`;
 }
+
+/** Meta descriptions: keep within ~160 chars, cut at a word boundary. */
+export function clampDescription(s: string, max = 160): string {
+  const clean = s.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max - 1);
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[.,;:\s-]+$/, "") + "…";
+}
+
+export function toolDescription(t: { name: string; tagline: string; stars: number | null; commits90: number | null; alternatives: string[] }): string {
+  const parts = [`${t.name}: ${shortTagline(withoutLeadingName(t.name, t.tagline), 90)}.`];
+  const facts = [t.stars != null ? `${stars(t.stars).replace("★", "")} GitHub stars` : "", t.commits90 != null ? `${t.commits90} commits in 90 days` : ""].filter(Boolean);
+  if (facts.length) parts.push(`${facts.join(", ")}.`);
+  if (t.alternatives.length) {
+    const a = t.alternatives.slice(0, 3);
+    parts.push(`Compare with ${a.length > 1 ? `${a.slice(0, -1).join(", ")} and ${a[a.length - 1]}` : a[0]}.`);
+  }
+  return clampDescription(parts.join(" "));
+}

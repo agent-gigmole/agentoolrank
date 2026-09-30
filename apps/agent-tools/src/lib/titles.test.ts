@@ -28,3 +28,19 @@ describe("titles", () => {
     expect(t).not.toMatch(/\b(and|or|the|for|with|to|of|a|an|in)\s·/);
   });
 });
+
+import { clampDescription, toolDescription } from "./titles";
+
+describe("descriptions", () => {
+  it("clampDescription cuts at a word boundary and adds an ellipsis", () => {
+    const d = clampDescription("word ".repeat(60), 160);
+    expect(d.length).toBeLessThanOrEqual(160);
+    expect(d.endsWith("…")).toBe(true);
+    expect(clampDescription("short one", 160)).toBe("short one");
+  });
+  it("toolDescription adds stars, activity and alternatives, within 160 chars", () => {
+    const d = toolDescription({ name: "Dify", tagline: "Platform for agentic workflows.", stars: 158000, commits90: 700, alternatives: ["Flowise", "Langflow", "n8n"] });
+    expect(d).toBe("Dify: Platform for agentic workflows. 158k GitHub stars, 700 commits in 90 days. Compare with Flowise, Langflow and n8n.");
+    expect(d.length).toBeLessThanOrEqual(160);
+  });
+});

@@ -32,6 +32,21 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "AgentoolRank",
+              url: "https://agentoolrank.com",
+              potentialAction: { "@type": "SearchAction", target: "https://agentoolrank.com/search?q={search_term_string}", "query-input": "required name=search_term_string" },
+            },
+            { "@context": "https://schema.org", "@type": "Organization", name: "AgentoolRank", url: "https://agentoolrank.com", logo: "https://agentoolrank.com/icon", email: "hello@agentoolrank.com" },
+          ]),
+        }}
+      />
       {/* Hero — AI Search */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">

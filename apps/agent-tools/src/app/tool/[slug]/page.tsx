@@ -6,7 +6,7 @@ import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
 import { MaintainerBox } from "@/components/MaintainerBox";
-import { toolTitle } from "@/lib/titles";
+import { toolTitle, toolDescription } from "@/lib/titles";
 import { staleness } from "@/lib/staleness";
 
 export const revalidate = 86400; // 24 hours
@@ -18,12 +18,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tool = await getToolBySlug(slug);
   if (!tool) return {};
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
-  const desc = tool.tagline || tool.description.slice(0, 160);
+  const altNames = (await Promise.all(tool.alternatives.slice(0, 3).map((id) => getToolBySlug(id)))).filter(Boolean).map((t) => t!.name);
+  const desc = toolDescription({ name: tool.name, tagline: tool.tagline || tool.description, stars: tool.github_stars, commits90: tool.commit_count_90d, alternatives: altNames });
   const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(tool.name)}&icon=🔧&tools=${tool.github_stars || 0}`;
 
   return {
     title: toolTitle(tool.name, tool.tagline, tool.github_stars),
     description: desc,
+    alternates: { canonical: `/tool/${tool.id}` },
     openGraph: {
       title: tool.name,
       description: desc,

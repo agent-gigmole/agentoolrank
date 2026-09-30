@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `State of Open-Source AI Agent Tools — ${monthLabel()} (Data Report)`,
     description:
-      "Which open-source AI agent tools are growing fastest, which are actually maintained, and how many popular projects have gone quiet. Computed from live GitHub data across 600+ tools.",
+      "Which open-source AI agent tools are growing fastest, which are still maintained, and how many popular ones went quiet. Live GitHub data, 600+ tools.",
     alternates: { canonical: "/report" },
   };
 }

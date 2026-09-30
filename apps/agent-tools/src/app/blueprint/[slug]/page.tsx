@@ -5,6 +5,7 @@ import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { StackFlow } from "@repo/ui/StackFlow";
 import { InstructionBlock } from "@repo/ui/InstructionBlock";
 import type { Metadata } from "next";
+import { clampDescription } from "@/lib/titles";
 import type { Tool } from "@repo/db/schema";
 
 export const revalidate = 3600;
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${stack.title} — AI Project Blueprint | AgentoolRank`,
-    description: `${stack.description} ${stack.layers.length} layers, ${totalTools} tools. Step-by-step execution plan with tool recommendations.`,
+    description: clampDescription(`${stack.description} ${stack.layers.length} layers, ${totalTools} tools. Step-by-step plan with tool picks.`),
     alternates: {
       canonical: `${baseUrl}/blueprint/${slug}`,
     },
