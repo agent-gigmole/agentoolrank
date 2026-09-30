@@ -75,6 +75,11 @@ export default async function HomePage() {
               </a>
             ))}
           </div>
+          <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+            <Link href="/submit" className="text-blue-600 hover:underline">Building an agent tool? List it free →</Link>
+            <Link href="/category/mcp-servers" className="text-blue-600 hover:underline">Best MCP servers →</Link>
+            <Link href="/agents" className="text-blue-600 hover:underline">For AI agents: MCP / API →</Link>
+          </div>
         </div>
       </section>
 
