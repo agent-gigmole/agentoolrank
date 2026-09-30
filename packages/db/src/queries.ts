@@ -2,6 +2,17 @@ import { type InValue } from "@libsql/client";
 import { db } from "./index";
 import { ToolSchema, CategorySchema, type Tool, type Category } from "./schema";
 
+/** Parse many tool rows; a single malformed row is logged and skipped instead of failing the page/build. */
+function parseTools(rows: unknown[]): Tool[] {
+  const out: Tool[] = [];
+  for (const row of rows) {
+    const r = ToolSchema.safeParse(parseJsonFields(row as Record<string, unknown>));
+    if (r.success) out.push(r.data);
+    else console.warn(`skipping invalid tool row ${(row as { id?: string }).id}: ${r.error.issues.map((i) => i.path.join(".")).join(", ")}`);
+  }
+  return out;
+}
+
 function parseJsonFields(row: Record<string, unknown>): Record<string, unknown> {
   const jsonFields = [
     "category_tags", "industry_tags", "pros", "cons",
@@ -47,10 +58,7 @@ export async function getTools(options?: {
   args.push(limit, offset);
 
   const result = await db.execute({ sql, args });
-  return result.rows.map((row) => {
-    const parsed = parseJsonFields(row as Record<string, unknown>);
-    return ToolSchema.parse(parsed);
-  });
+  return parseTools(result.rows);
 }
 
 export async function getToolBySlug(slug: string): Promise<Tool | null> {
@@ -59,8 +67,7 @@ export async function getToolBySlug(slug: string): Promise<Tool | null> {
     args: [slug],
   });
   if (result.rows.length === 0) return null;
-  const parsed = parseJsonFields(result.rows[0] as Record<string, unknown>);
-  return ToolSchema.parse(parsed);
+  return parseTools([result.rows[0]])[0] ?? null;
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -75,10 +82,7 @@ export async function getNewTools(days: number = 7, limit: number = 20): Promise
     sql: `SELECT * FROM tools WHERE created_at >= datetime('now', '-' || ? || ' days') ORDER BY created_at DESC LIMIT ?`,
     args: [days, limit],
   });
-  return result.rows.map((row) => {
-    const parsed = parseJsonFields(row as Record<string, unknown>);
-    return ToolSchema.parse(parsed);
-  });
+  return parseTools(result.rows);
 }
 
 export async function getToolCount(): Promise<number> {
@@ -152,10 +156,7 @@ export async function getTrendingTools(limit: number = 10): Promise<Tool[]> {
     sql: "SELECT * FROM tools WHERE star_velocity_30d IS NOT NULL AND content_status = 'complete' ORDER BY star_velocity_30d DESC LIMIT ?",
     args: [limit],
   });
-  return result.rows.map((row) => {
-    const parsed = parseJsonFields(row as Record<string, unknown>);
-    return ToolSchema.parse(parsed);
-  });
+  return parseTools(result.rows);
 }
 
 /**
@@ -215,7 +216,7 @@ export async function searchTools(query: string, limit: number = 20): Promise<To
   const keywords = query.toLowerCase().split(/[^a-z0-9.+#-]+/).filter((k) => k.length > 1 && !stop.has(k)).slice(0, 8);
   if (keywords.length === 0) {
     const result = await db.execute({ sql: "SELECT * FROM tools ORDER BY score DESC LIMIT ?", args: [limit] });
-    return result.rows.map((row) => ToolSchema.parse(parseJsonFields(row as Record<string, unknown>)));
+    return parseTools(result.rows);
   }
 
   const parts: string[] = [];
@@ -232,7 +233,7 @@ export async function searchTools(query: string, limit: number = 20): Promise<To
   args.push(limit);
   const sql = `SELECT * FROM (SELECT *, (${parts.join(" + ")}) AS match_score FROM tools) WHERE match_score > 0 ORDER BY match_score DESC, score DESC LIMIT ?`;
   const result = await db.execute({ sql, args });
-  return result.rows.map((row) => ToolSchema.parse(parseJsonFields(row as Record<string, unknown>)));
+  return parseTools(result.rows);
 }
 
 /**

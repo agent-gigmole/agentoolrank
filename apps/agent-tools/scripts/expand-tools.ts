@@ -30,6 +30,17 @@ async function search(q: string): Promise<GhRepo[]> {
   return (await res.json()).items as GhRepo[];
 }
 
+function siteUrl(r: GhRepo): string {
+  const raw = (r.homepage ?? "").trim();
+  if (!raw) return r.html_url;
+  const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    return new URL(withScheme).toString().replace(/\/$/, "");
+  } catch {
+    return r.html_url;
+  }
+}
+
 const slugOf = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 async function main() {
@@ -63,7 +74,7 @@ async function main() {
       if (ids.has(slug) || repoNames.has(repoName.toLowerCase())) continue; // probably the same tool under a moved org
       ids.add(slug); // reserve before the slow LLM call so parallel workers don't double-insert
       repoNames.add(repoName.toLowerCase());
-      const verdict = await judge(repoName, r.homepage || r.html_url, r.description ?? "", "", await readme(r.html_url), categories);
+      const verdict = await judge(repoName, siteUrl(r), r.description ?? "", "", await readme(r.html_url), categories);
       judged++;
       if (!verdict || verdict.decision !== "approve") {
         rejected++;
@@ -71,7 +82,7 @@ async function main() {
         continue;
       }
       if (apply) {
-        const row = { ...toolRowFromReview({ slug, name: repoName, url: r.homepage || r.html_url, github_url: r.html_url, tagline: (r.description ?? "").slice(0, 160) }, verdict), source: "github" as const, github_stars: r.stargazers_count };
+        const row = { ...toolRowFromReview({ slug, name: repoName, url: siteUrl(r), github_url: r.html_url, tagline: (r.description ?? "").slice(0, 160) }, verdict), source: "github" as const, github_stars: r.stargazers_count };
         const cols = Object.keys(row);
         await db.execute({ sql: `INSERT OR IGNORE INTO tools (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never });
       }
