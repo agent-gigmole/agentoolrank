@@ -42,6 +42,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     "- Keep submission_id and status_token; GET status_url to see when the listing is live.",
     "",
     "## Optional",
+    `- [State of open-source AI agent tools](${baseUrl}/report): monthly data report — fastest-growing, most active and inactive tools, category growth (CC BY 4.0)`,
     `- [New tools](${baseUrl}/new): recently added tools`,
     `- [Weekly report](${baseUrl}/weekly): fastest-growing tools this week`,
     `- [Stacks](${baseUrl}/blueprint): tool combinations for common builds (RAG chatbot, code review agent, ...)`,
