@@ -5,6 +5,8 @@ import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
 import { alternativesTitle, compareSlug, taglineMentionsName } from "@/lib/alternatives";
+import { alternativesFaq } from "@/lib/faq";
+import { FaqSection } from "@/components/FaqSection";
 
 export const revalidate = 86400; // 24h
 
@@ -163,6 +165,7 @@ export default async function AlternativesPage({ params }: Props) {
             );
           })}
         </ol>
+        <FaqSection faq={alternativesFaq(tool, alts)} />
       </main>
     </>
   );

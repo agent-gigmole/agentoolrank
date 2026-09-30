@@ -7,6 +7,8 @@ import type { Metadata } from "next";
 import { compareSlug } from "@/lib/alternatives";
 import { canonicalToolId } from "@/lib/merged";
 import { compareTitle } from "@/lib/titles";
+import { compareFaq } from "@/lib/faq";
+import { FaqSection } from "@/components/FaqSection";
 
 export const revalidate = 86400; // 24h
 
@@ -184,7 +186,8 @@ export default async function ComparePage({ params }: Props) {
           </Link>
         ))}
       </div>
-    </main>
+      <FaqSection faq={compareFaq(toolA, toolB)} />
+      </main>
     </>
   );
 }
