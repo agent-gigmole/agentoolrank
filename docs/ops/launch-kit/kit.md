@@ -26,10 +26,13 @@ Makers can submit their agent tools for free and get a badge with live star coun
 ## MCP / agent registries
 | Registry | Status |
 |---|---|
+| PulseMCP | ✗ submissions paused site-wide (2026-10-01) |
+| mcp.so | ⏸ only $39 paid auto-submit or a support ticket; not paid (spend-control) |
+| AI Agents List | ⏸ account hello@agentoolrank.com (creds agentoolrank-aiagentslist.json), eligibility PASSED, draft saved; only paid tiers $29/$49 → not paid (zero-revenue rule) |
 | Official MCP Registry (registry.modelcontextprotocol.io) | ✅ com.agentoolrank/agent-tools v1.0.0, remote streamable-http https://agentoolrank.com/api/mcp — DNS auth (TXT v=MCPv1 on agentoolrank.com; private key ~/.config/secrets/mcp-registry-agentoolrank.pem). Re-publish: bump version in apps/agent-tools/mcp/server.json, `mcp-publisher login dns …` then `mcp-publisher publish` (2026-10-01) |
 
 ## Email sending
 | Service | Status |
 |---|---|
 | Resend | ✗ signup blocked by Cloudflare Turnstile under CDP-controlled Chrome (2026-10-01) |
-| Brevo | ✅ account hello@agentoolrank.com (free 300/day, Ethan Tan / TENSO LLC address), credentials ~/.config/secrets/accounts/agentoolrank-brevo.json; sending blocked until phone verification — waiting for physical SIM line ② (agentkit); may buy a Twilio number if outreach becomes the bottleneck |
+| Brevo | ✅ account hello@agentoolrank.com (free 300/day, Ethan Tan / TENSO LLC address), credentials ~/.config/secrets/accounts/agentoolrank-brevo.json; sending blocked until phone verification. 10-01 03:33 tried Twilio +19047347766 once: Brevo said code sent, nothing received in 300s (Twilio shows Messaging disabled / no A2P). Not retried; waiting for agentkit test or SIM line ② |
