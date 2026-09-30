@@ -375,3 +375,5 @@
 - 设定 G1-G4 写入 PROJECT.md；建看板 docs/ops/overview/index.html（0.0.0.0:8792，Tailscale http://moneyflow-wsl.tailf1c73f.ts.net:8792/）
 - 消息总线问 imagehub(pixtidy)：不代发密钥；Stripe 可共用 TENSO LLC 需用户拍板+建受限 key；claude-ops.key 不得复用；agentoolrank.com 在另一 CF 账户；无发信服务；PostHog 需用户建 project；品牌账号不跨品牌；Vercel Hobby 禁商用
 - AIMarketRank 暂停
+- 提炼：vercel-deployment 晋升「Hobby 禁商用」；PROMOTION_LOG 登记候选 2 条（跨项目凭证、目录站作者付费）
+- ⚠ 提醒：project.config.yml harness 为空，建议配 goal-mode（+ 花钱动作叠加 spend-control）
