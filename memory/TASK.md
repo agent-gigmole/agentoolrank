@@ -128,9 +128,9 @@
 冷启动内容少 → T16；无反链飞轮 → T17；替代品页 ✅；无 wedge → 定位「为 AI agent 服务的目录」（MCP 可查、agent 可提交付费）+ 上架 MCP 目录；无回访环 → T18；没熬够 → G4 到 12-31，每周复盘。
 
 ### T16 冷启动扩量：新增一批 agent 工具（LLM 质检，优先 MCP servers / 新兴 agent 项目）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: 新增 ≥150 个工具且每个都有展示名/intelligence/alternatives；质检拒绝率记录；sitemap 同步
+- 验收: 新增 ≥150 个工具且每个都有展示名/intelligence/alternatives；质检拒绝率记录；sitemap 同步（新增约 205 个，库内 669；质检拒绝率 24%；官方名/alternatives/related 已补；sitemap 899→2250；另加 mcp-servers 类目 29 个）
 - 闸: auto
 - 失败: 0
 
