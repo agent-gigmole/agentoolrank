@@ -69,7 +69,7 @@ async function main() {
   if (dryRun) return;
 
   mkdirSync(new URL("../data", import.meta.url).pathname, { recursive: true });
-  const backup = new URL(`../data/display-names-backup-${new Date().toISOString().slice(0, 10)}.json`, import.meta.url).pathname;
+  const backup = new URL(`../data/display-names-backup-${new Date().toISOString().replace(/[:.]/g, "-")}.json`, import.meta.url).pathname;
   writeFileSync(backup, JSON.stringify(Object.fromEntries(changed.map((r) => [r.id, r.name])), null, 2));
   await db.batch(changed.map((r) => ({ sql: "UPDATE tools SET name = ? WHERE id = ?", args: [updates[r.id], r.id] })), "write");
   console.log(`updated ${changed.length}; rollback file: ${backup}`);
