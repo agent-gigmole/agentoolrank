@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AI Tool Stack Builder — What do you want to build?",
   description:
-    "Describe your project and get an AI-recommended tool stack with flow diagram. Powered by data from 463+ AI agent tools.",
+    "Describe your project and get an AI-recommended tool stack with flow diagram. Powered by data from 600+ AI agent tools.",
   alternates: {
     canonical: "https://agentoolrank.com/search",
     languages: { zh: "https://agentoolrank.com/zh/search" },
