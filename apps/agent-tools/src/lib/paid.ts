@@ -44,7 +44,13 @@ export interface Confirmation {
 /** Verify a Checkout Session with Stripe and record the upgrade once (idempotent on session id). */
 export async function confirmSession(sessionId: string): Promise<Confirmation> {
   if (!/^cs_(live|test)_[A-Za-z0-9]+$/.test(sessionId)) return { paid: false };
-  const s = await stripe(`checkout/sessions/${sessionId}`);
+  return recordPaidSession(await stripe(`checkout/sessions/${sessionId}`));
+}
+
+/** Record a paid Checkout Session (from the thanks page or reconciliation). Idempotent on session id. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function recordPaidSession(s: any): Promise<Confirmation> {
+  const sessionId = String(s.id);
   const plan = s.metadata?.plan;
   if (s.payment_status !== "paid" || s.metadata?.site !== "agentoolrank" || !isPlan(plan)) return { paid: false };
 
