@@ -38,7 +38,7 @@ Why: the owner's local GitHub token expired. Claude Code can't push code, and th
    - Leave all other permissions as "No access".
 3. Click **Generate token**.
 4. 🔑 **OWNER:** the token (`github_pat_…`) is shown once. Stop here and tell the owner:
-   "Copy the token, then run in Claude Code: `! save-secret github-agentoolrank` and paste it."
+   "Copy the token, then run in a normal WSL terminal (not inside Claude Code): `save-secret github-agentoolrank` and paste it."
 
 ---
 
@@ -52,13 +52,13 @@ Why: AgentoolRank will sell paid listings ($19 fast-track listing, $49 featured 
 3. Permissions: set **Checkout Sessions → Write**. Everything else: **None**.
 4. Click **Create key**.
 5. 🔑 **OWNER:** the key (`rk_live_…`) is shown once. Stop and tell the owner:
-   "Copy the key, then run in Claude Code: `! stripe-save-key agentoolrank-checkout` and paste it."
+   "Copy the key, then run in a normal WSL terminal (not inside Claude Code): `stripe-save-key agentoolrank-checkout` and paste it."
 
 ### B2. Read-only key for reporting
 1. Create another restricted key. **Key name:** `agentoolrank-ops`
 2. Permissions: set every resource to **Read** (use the "Read" column header if there is one). No Write anywhere.
 3. Create key.
-4. 🔑 **OWNER:** "Copy the key, then run: `! stripe-save-key agentoolrank-ops` and paste it."
+4. 🔑 **OWNER:** "Copy the key, then run in a normal WSL terminal: `stripe-save-key agentoolrank-ops` and paste it."
 
 ### B3. Business description — add AgentoolRank
 1. Settings → Business → Business details → Edit **Product description**.
@@ -92,7 +92,7 @@ Note: agentoolrank.com is **not** in the account named "0xzap0x@gmail.com's Acco
 4. **Zone Resources:** Include → Specific zone → `agentoolrank.com`
 5. TTL: end date 90 days from today.
 6. Continue → Create Token.
-7. 🔑 **OWNER:** "Copy the token, then run: `! cf-save-token agentoolrank` and paste it."
+7. 🔑 **OWNER:** "Copy the token, then run in a normal WSL terminal: `cf-save-token agentoolrank` and paste it."
 
 ---
 
@@ -115,7 +115,7 @@ Accounts (create in this order; skip one if blocked and report why):
 For every account:
 - Password: 🔑 **OWNER** types the password (use their password manager). You don't choose it or see it.
 - Phone / SMS / CAPTCHA: 🔑 **OWNER**.
-- After it's created: tell the owner "run: `! save-account <service>` (x / producthunt / peerlist / peerpush) to save the login for Claude Code."
+- After it's created: tell the owner "run in a normal WSL terminal: `save-account <service>` (x / producthunt / peerlist / peerpush) to save the login for Claude Code."
 
 ---
 
