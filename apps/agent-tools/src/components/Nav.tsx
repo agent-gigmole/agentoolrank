@@ -21,6 +21,9 @@ export function Nav({ locale = "en" }: { locale?: Locale }) {
           <Link href="/weekly" className="text-gray-600 hover:text-gray-900 transition-colors">
             {isZh ? "周报" : "Weekly"}
           </Link>
+          <Link href="/submit" className="text-gray-600 hover:text-gray-900 transition-colors">
+            {isZh ? "提交工具" : "Submit"}
+          </Link>
           <Link
             href={`${prefix}/search`}
             className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"

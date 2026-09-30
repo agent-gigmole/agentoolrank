@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/weekly`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${baseUrl}/compare`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
     { url: `${baseUrl}/search`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${baseUrl}/submit`, changeFrequency: "monthly", priority: 0.6 },
     // Chinese locale pages
     { url: `${baseUrl}/zh`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${baseUrl}/zh/blueprint`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
@@ -38,6 +39,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     };
   });
+
+  // Alternatives pages (high-intent: "X alternatives")
+  const withAlts = await db.execute("SELECT id FROM tools WHERE alternatives IS NOT NULL AND alternatives != '[]' ORDER BY score DESC");
+  const alternativesPages: MetadataRoute.Sitemap = withAlts.rows.map((row) => ({
+    url: `${baseUrl}/alternatives/${(row as unknown as { id: string }).id}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
 
   // Comparison pages (long-tail SEO: "X vs Y")
   const comparePairs = await getComparisonPairs(8);
@@ -69,5 +79,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: s.slug.startsWith("custom-") ? 0.6 : 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...toolPages, ...comparePages, ...stackPages, ...blueprintPages];
+  return [...staticPages, ...categoryPages, ...toolPages, ...alternativesPages, ...comparePages, ...stackPages, ...blueprintPages];
 }

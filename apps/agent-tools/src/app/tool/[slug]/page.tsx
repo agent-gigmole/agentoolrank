@@ -470,6 +470,9 @@ export default async function ToolPage({ params }: Props) {
                 </Link>
               ))}
             </div>
+            <Link href={`/alternatives/${tool.id}`} className="inline-block mt-3 text-sm text-blue-600 hover:underline">
+              See all {tool.alternatives.length} {tool.name} alternatives →
+            </Link>
           </Section>
         )}
         {/* Compare with peers */}

@@ -39,6 +39,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     `- [New tools](${baseUrl}/new): recently added tools`,
     `- [Weekly report](${baseUrl}/weekly): fastest-growing tools this week`,
     `- [Stacks](${baseUrl}/blueprint): tool combinations for common builds (RAG chatbot, code review agent, ...)`,
+    `- [Submit a tool](${baseUrl}/submit): free listing for AI agent tools`,
     `- [Sitemap](${baseUrl}/sitemap.xml)`,
     "",
   ];

@@ -16,3 +16,4 @@ discussion_notes.md
 .turbo
 **/.turbo
 apps/*/db/local.db
+apps/*/data
