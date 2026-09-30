@@ -83,12 +83,12 @@
 - 备注: workflow 改为只刷新已上架工具指标（--existing），删除覆盖式 migrate-to-turso
 
 ### T10 Stripe 结账 $19 快速审核 / $49 首页推荐 7 天
-- 状态: todo
+- 状态: blocked
 - 依赖: T1
 - 验收: 线上创建 checkout session 成功并立即 expire；metadata.site=agentoolrank
 - 闸: human
 - 失败: 0
-- 备注: 等 Stripe key（Chrome 说明 B；checkout key 已存，ops key 待存）；10-01 checkout key 已存（~/.config/stripe/agentoolrank-checkout.key），可开工；ops 只读 key 仍缺（只影响报表）
+- 备注: 等 Stripe key（Chrome 说明 B；checkout key 已存，ops key 待存）；10-01 checkout key 已存（~/.config/stripe/agentoolrank-checkout.key），可开工；ops 只读 key 仍缺（只影响报表）；10-01 代码已上线（无 key 时 503、付费选项隐藏），live 建单→读取→expire 自测通过；只差把 key 配到 Vercel STRIPE_SECRET_KEY（改凭证闸，已 Telegram 请示）
 
 ### 第 2 轮目标（G2 20 个外部提交 by 10-21 / G3 第一笔陌生付款 by 10-31）
 - 结束条件（机检）：T10、T12、T13 done ∧ 测试全绿 ∧ build 过 ∧ 线上 /submit 显示付费档且 checkout session 可创建（立即 expire）
