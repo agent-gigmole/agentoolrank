@@ -19,4 +19,12 @@ describe("titles", () => {
   it("compareTitle", () => {
     expect(compareTitle("Claude Code", "Codex", 2026)).toBe("Claude Code vs Codex (2026): GitHub Stats, Features & Which to Choose");
   });
+
+  it("drops a leading 'Name is a/an' so the name isn't repeated", () => {
+    expect(toolTitle("Claude Code", "Claude Code is an agentic coding tool that lives in your terminal", 148700)).toBe("Claude Code: Agentic coding tool that lives in your terminal · 149k★");
+  });
+  it("never ends a trimmed description on a dangling connector word", () => {
+    const t = toolTitle("FastMCP", "The fast, Pythonic way to build MCP servers and clients", 28000);
+    expect(t).not.toMatch(/\b(and|or|the|for|with|to|of|a|an|in)\s·/);
+  });
 });

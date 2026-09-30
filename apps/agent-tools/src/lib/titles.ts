@@ -15,10 +15,20 @@ export function shortTagline(tagline: string, max: number): string {
   return cut.slice(0, Math.max(cut.lastIndexOf(" "), 0) || max).replace(/[.,;:\s-]+$/, "");
 }
 
+const DANGLING = /\s+(and|or|the|for|with|to|of|a|an|in|on|that|which|by|your)$/i;
+
+function withoutLeadingName(name: string, tagline: string): string {
+  const esc = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const t = tagline.replace(new RegExp(`^\\s*${esc}\\s+(is|are)\\s+(an?\\s+|the\\s+)?`, "i"), "");
+  return t === tagline ? t : t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 export function toolTitle(name: string, tagline: string, githubStars: number | null): string {
+  tagline = withoutLeadingName(name, tagline);
   const suffix = githubStars ? ` · ${stars(githubStars)}` : "";
   const room = 70 - name.length - 2 - suffix.length;
-  const desc = tagline && room > 15 ? shortTagline(tagline, room) : "";
+  let desc = tagline && room > 15 ? shortTagline(tagline, room) : "";
+  while (DANGLING.test(desc)) desc = desc.replace(DANGLING, "");
   return desc ? `${name}: ${desc}${suffix}` : `${name} — Open-Source AI Agent Tool: Stats & Alternatives${suffix}`;
 }
 
