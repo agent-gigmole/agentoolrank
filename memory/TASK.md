@@ -95,9 +95,9 @@
 - 预算：LLM ≤ $2；不花推广费
 
 ### T12 对比页扩充：按 GSC 有曝光的查询补 X vs Y / alternatives 内链
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: -
-- 验收: scripts/gsc-pull 输出 28 天查询；新增/加强的对比页 URL 进 sitemap 且 200
+- 验收: scripts/gsc-pull 输出 28 天查询；新增/加强的对比页 URL 进 sitemap 且 200（gsc_report.py 28 天输出 ✓；sitemap 对比页 261→609 ✓；canonical ✓；GSC 数据量太小，改用 Top150×3 替代品生成对比对）
 - 闸: auto
 - 失败: 0
 

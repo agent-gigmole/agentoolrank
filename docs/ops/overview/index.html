@@ -39,7 +39,7 @@
     <div class="kpi"><b>$0</b><span>累计已付</span></div>
     <div class="kpi"><b>3</b><span>9 月 Google 点击（曝光 241）</span></div>
     <div class="kpi"><b>464</b><span>已收录工具</span></div>
-    <div class="kpi"><b>261</b><span>对比页（唯一有点击的页型）</span></div>
+    <div class="kpi"><b>609</b><span>对比页（唯一有点击的页型）</span></div>
     <div class="kpi"><b>460</b><span>alternatives 页（10-01 上线）</span></div>
     <div class="kpi"><b>0</b><span>创作者提交 / 付费</span></div>
   </div>
@@ -155,6 +155,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 对比页从 261 个扩到 609 个（热门工具 × 最接近的替代品），并加了 canonical 防止重复内容。依据：近 28 天对比页占 44% 的曝光，拿到了全部点击。Google 搜索数据以后每天自动记进运营日志。</li>
     <li>2026-10-01 首页新增 Featured 推荐位：有人付费后显示他的工具（标注 Sponsored）；没人付费时显示"Your agent tool here · $49/week"引导。</li>
     <li>2026-10-01 你那边的配合项全部完成，我逐项核对过：Stripe 只读 key 能读余额和交易；业务描述里已经写了 AgentoolRank；Cloudflare token 有效期到 12-29，只能管 agentoolrank.com。</li>
     <li>2026-10-01 AI agent 可以直接提交了（你提的方向）：通过 MCP 的 submit_tool，或者 POST /api/v1/submissions，一次就能拿到排队位置、4 档价格（免费 / $9 72 小时 / $19 24 小时 / $49 首页推荐 7 天）、按预算和期限推荐的档位，以及给主人的付款链接；之后凭 token 查进度。不对 agent 做挽留弹窗。线上全流程测过（测试付款单已作废）。</li>
