@@ -157,6 +157,16 @@
 - 闸: auto（老板 10-01 授权大号发帖规则：每天 ≤1 条、真实有用、写明作者本人）
 - 失败: 0
 
+### 社交账号排期（agentkit 统一登记，SOCIAL_CALENDAR.md）
+- 老板 HN/Reddit/PH/X 都是多项目共用；发前经总线向 agentkit 登记（X 每日常设帖除外）
+- ai-directory：Show HN 最早 10-07（需老板先批草稿）；PH 最早 10-10；Reddit 每天 ≤1 条带链接帖、同 subreddit 隔 14 天
+- 发完把链接回 agentkit
+
+### T20 每周邮件简报（代码已就绪 10-01）
+- 状态: blocked（Brevo 手机验证 → API key，SIM 10-02；订阅者目前 0）
+- scripts/weekly-newsletter.ts（无 key 只出预览）+ /unsubscribe（subscriber_tokens 新表）；weekly-ops.sh 周一自动发
+- 闸: auto（发给主动订阅者的交易性质邮件）
+
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked
 - 依赖: -

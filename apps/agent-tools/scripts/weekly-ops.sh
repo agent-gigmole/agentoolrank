@@ -5,3 +5,4 @@ cd "$(dirname "$0")/.."
 export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
 unset GITHUB_TOKEN
 bun run scripts/weekly-post.ts --post >> "data/ops-logs/weekly-$(date +%F).log" 2>&1
+bun run scripts/weekly-newsletter.ts --send >> "data/ops-logs/weekly-$(date +%F).log" 2>&1
