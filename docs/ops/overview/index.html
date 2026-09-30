@@ -121,15 +121,24 @@
     <li>每周一在这页写复盘：数据、做了什么、下周做什么。</li>
   </ul>
 
-  <h2>③ 需要你配合（只有这几件只能你来做）</h2>
+  <h2>③ 需要你配合：交给 Claude in Chrome</h2>
+  <p>把这份说明发给 Claude in Chrome，让它照着做：<a href="chrome-brief.md"><b>chrome-brief.md</b></a>（英文，分 A–D 四部分）。<br>
+  <span class="muted">发给它的话可以直接用：「请打开 http://moneyflow-wsl.tailf1c73f.ts.net:8792/chrome-brief.md ，按里面的步骤做，做完给我最终报告。」如果它打不开 Tailscale 地址，就把文件内容复制粘贴给它。</span></p>
+  <p class="muted">标 🔑 的地方它会停下来交给你。原因只有一个：密钥和密码只显示一次，不能经过它的对话。你复制之后，在 Claude Code 里运行对应的 <code>!</code> 命令粘贴进去，输入不会显示，也不会进命令历史。</p>
   <ul class="todo">
-    <li><span class="tag warn">收款</span><b>Stripe：</b>能不能用 TENSO LLC 账户同时给 AgentoolRank 收款？可以的话，在后台建两个受限 key，用 <code>~/.local/bin/stripe-save-key</code> 存到本机：① agentoolrank-checkout（只开 Checkout Sessions Write）；② agentoolrank-ops（只读）。</li>
-    <li><span class="tag warn">域名</span><b>Cloudflare：</b>agentoolrank.com 不在 imagehub 用的那个 Cloudflare 账户里。请在它所在的账户里给我一个只管这个 zone 的 token（DNS + Email Routing），我用来配 hello@agentoolrank.com 收件转发，也作为品牌账号的注册邮箱。</li>
-    <li><span class="tag warn">托管</span><b>Vercel：</b>要收钱的站点不能放在 Hobby 套餐下（条款不允许商用）。请确认 agentoolrank 现在在哪个团队下，是否可以移到 Pro 团队。</li>
-    <li><span class="tag">分析</span><b>PostHog：</b>在后台新建一个 AgentoolRank 项目，把 project key 给我。（也可以不开，我先把事件存到自己的数据库。）</li>
-    <li><span class="tag warn">授权</span><b>日常部署：</b>项目用的 goal-mode 规则里，部署和 git push 默认每次都要问你。可以一次性授权吗？范围只限 agentoolrank 的代码改动：先跑测试，build 通过就部署，部署后在线上验证；出问题我自己回滚。花钱、改凭证、删数据这三类仍然每次都问你。</li>
-    <li><span class="tag">账号</span><b>社交账号：</b>我会用品牌邮箱注册 X、Product Hunt、Peerlist、PeerPush 等品牌账号。要是遇到手机验证或验证码，会在 Telegram 叫你。你个人的 Reddit / HN 账号能不能用来发 AgentoolRank？默认不用。</li>
+    <li><span class="tag warn">A · GitHub</span><b>Chrome 做：</b>重新启用每日数据更新任务，创建只管 agentoolrank 仓库的 token。<br>
+      <b>你做：</b>① 复制 token，运行 <code>! save-secret github-agentoolrank</code>。② 如果 GitHub 要求 2FA，由你来验证。<br>
+      <span class="muted">为什么：本机的 GitHub 登录早就失效了，代码推不上去；每日数据更新也从 6 月起停了，现在数据还停在 3 月 31 日。这一步最急。</span></li>
+    <li><span class="tag warn">B · Stripe</span><b>Chrome 做：</b>在 TENSO LLC 的 Stripe 账户里建两个受限 key（结账用、只读报表用），在业务描述里加上 AgentoolRank。<br>
+      <b>你做：</b>① 复制结账 key，运行 <code>! stripe-save-key agentoolrank-checkout</code>。② 复制只读 key，运行 <code>! stripe-save-key agentoolrank-ops</code>。③ 如果 Stripe 要求审核或补材料，由你处理。<br>
+      <span class="muted">默认和 pixtidy 共用 TENSO LLC 收款，卡账单上显示 TENSO* AGENTOOLRANK。如果你不想共用，直接告诉我。</span></li>
+    <li><span class="tag warn">C · Cloudflare</span><b>Chrome 做：</b>找到 agentoolrank.com 所在的账户，开通 hello@agentoolrank.com 转发到你的 Gmail（验证邮件它会在 Gmail 里自己点），再建一个只管这个域名的 token。<br>
+      <b>你做：</b>① 如果它找不到账户，告诉它用哪个登录。② 复制 token，运行 <code>! cf-save-token agentoolrank</code>。</li>
+    <li><span class="tag">D · 品牌账号</span><b>Chrome 做：</b>用 hello@agentoolrank.com 注册 X、Product Hunt、Peerlist、PeerPush，统一填好名称、简介和头像；在 PeerPush 走免费队列提交本站，插队和折扣弹窗一律拒绝。<br>
+      <b>你做：</b>① 每个账号的密码由你输入。② 手机验证码和人机验证由你来。③ 每个账号建好后运行 <code>! save-account x</code>、<code>! save-account producthunt</code>、<code>! save-account peerlist</code>、<code>! save-account peerpush</code>，这样我以后可以自己发帖和维护。</li>
+    <li class="done"><span class="tag ok">不用做了</span>Vercel：查过了，本站本来就在 Pro 团队下，可以商用。PostHog：不开了，我把事件直接存进自己的数据库，少一个账号。Reddit/HN 个人号：默认不用。</li>
   </ul>
+  <p class="muted">全部做完后，把 Chrome 的最终报告转发给我，或者在 Telegram 说一声"做完了"，我会逐项核对 key 能不能用。</p>
   <p class="muted">其余的开发、内容、上架、联系作者、复盘都由我来做，不再找你。要花钱（超过 $50，或者长期固定支出）时，先把数据和账算好给你看。</p>
 
   <h2>更新日志</h2>
