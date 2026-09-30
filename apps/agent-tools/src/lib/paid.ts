@@ -1,0 +1,64 @@
+// Server-side helpers for paid plans: Stripe calls (REST, no SDK) and recording upgrades.
+import { db } from "@repo/db";
+import { PLANS, isPlan, type Plan } from "./plans";
+
+// Additive only: created on first use.
+const CREATE_FEATURED = `CREATE TABLE IF NOT EXISTS featured (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  slug TEXT NOT NULL,
+  starts_at TEXT NOT NULL DEFAULT (datetime('now')),
+  ends_at TEXT NOT NULL,
+  stripe_session TEXT NOT NULL UNIQUE
+)`;
+
+export async function stripe(path: string, init?: { method?: string; body?: URLSearchParams }) {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY not configured");
+  const res = await fetch(`https://api.stripe.com/v1/${path}`, {
+    method: init?.method ?? "GET",
+    headers: { Authorization: `Bearer ${key}`, ...(init?.body ? { "Content-Type": "application/x-www-form-urlencoded" } : {}) },
+    body: init?.body,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(`Stripe ${res.status}: ${data?.error?.message ?? "error"}`);
+  return data;
+}
+
+export interface Confirmation {
+  paid: boolean;
+  plan?: Plan;
+  slug?: string;
+}
+
+/** Verify a Checkout Session with Stripe and record the upgrade once (idempotent on session id). */
+export async function confirmSession(sessionId: string): Promise<Confirmation> {
+  if (!/^cs_(live|test)_[A-Za-z0-9]+$/.test(sessionId)) return { paid: false };
+  const s = await stripe(`checkout/sessions/${sessionId}`);
+  const plan = s.metadata?.plan;
+  if (s.payment_status !== "paid" || s.metadata?.site !== "agentoolrank" || !isPlan(plan)) return { paid: false };
+
+  const submissionId = Number(s.metadata.submission_id);
+  const slug = String(s.metadata.slug ?? "");
+  await db.execute({
+    sql: "UPDATE submissions SET plan = ?, note = CASE WHEN note LIKE ? THEN note ELSE trim(note || ' paid:' || ?) END WHERE id = ?",
+    args: [plan, `%${sessionId}%`, sessionId, submissionId],
+  });
+  if (PLANS[plan].featuredDays > 0) {
+    await db.execute(CREATE_FEATURED);
+    await db.execute({
+      sql: `INSERT OR IGNORE INTO featured (slug, ends_at, stripe_session) VALUES (?, datetime('now', '+${PLANS[plan].featuredDays} days'), ?)`,
+      args: [slug, sessionId],
+    });
+  }
+  return { paid: true, plan, slug };
+}
+
+/** Slugs currently featured (ignores the table not existing yet). */
+export async function featuredSlugs(): Promise<string[]> {
+  try {
+    const r = await db.execute("SELECT DISTINCT slug FROM featured WHERE starts_at <= datetime('now') AND ends_at > datetime('now') ORDER BY starts_at DESC LIMIT 6");
+    return r.rows.map((x) => String((x as unknown as { slug: string }).slug));
+  } catch {
+    return [];
+  }
+}

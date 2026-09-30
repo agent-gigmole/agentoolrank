@@ -10,7 +10,52 @@ type Result =
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
 
-export function SubmitForm() {
+function PaidOptions({ slug }: { slug: string }) {
+  const [busy, setBusy] = useState<string | null>(null);
+  const [err, setErr] = useState("");
+  async function buy(plan: "fast" | "featured") {
+    setBusy(plan);
+    setErr("");
+    track("checkout_click", `/submit#${plan}`);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, plan }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      setErr(data.error ?? "Could not start checkout.");
+    } catch {
+      setErr("Network error, please try again.");
+    }
+    setBusy(null);
+  }
+  return (
+    <div className="border border-gray-200 rounded-xl p-6">
+      <p className="font-semibold text-gray-900 mb-3">Don&apos;t want to wait?</p>
+      <div className="grid sm:grid-cols-2 gap-3">
+        <button type="button" onClick={() => buy("fast")} disabled={busy !== null}
+          className="text-left border border-gray-300 rounded-lg p-4 hover:border-blue-500 disabled:opacity-60">
+          <div className="font-semibold">Fast-track review · $19</div>
+          <div className="text-sm text-gray-600">Reviewed within 24 hours.</div>
+        </button>
+        <button type="button" onClick={() => buy("featured")} disabled={busy !== null}
+          className="text-left border-2 border-blue-500 rounded-lg p-4 hover:bg-blue-50 disabled:opacity-60">
+          <div className="font-semibold">Featured · $49</div>
+          <div className="text-sm text-gray-600">Fast-track + 7 days in the homepage Featured section.</div>
+        </button>
+      </div>
+      <p className="text-xs text-gray-500 mt-3">One-time payment. Not approved in review? Full refund.</p>
+      {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
+    </div>
+  );
+}
+
+export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: boolean }) {
   const [status, setStatus] = useState<"idle" | "loading">("idle");
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
@@ -65,6 +110,7 @@ export function SubmitForm() {
             Estimated review in about {result.waitDays} day{result.waitDays === 1 ? "" : "s"}. We&apos;ll email you when your page is live.
           </p>
         </div>
+        {paymentsEnabled && <PaidOptions slug={result.slug} />}
         <div className="border border-gray-200 rounded-xl p-6">
           <p className="font-semibold text-gray-900">Get reviewed first: add the badge</p>
           <p className="text-sm text-gray-600 mt-1 mb-3">

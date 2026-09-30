@@ -16,7 +16,8 @@
         "LLM_BASE_URL",
         "LLM_MODEL",
         "NEXT_PUBLIC_*",
-        "GSC_*"
+        "GSC_*",
+        "STRIPE_SECRET_KEY"
       ]
     },
     "dev": {
