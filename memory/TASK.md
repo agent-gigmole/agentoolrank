@@ -83,7 +83,7 @@
 - 备注: workflow 改为只刷新已上架工具指标（--existing），删除覆盖式 migrate-to-turso
 
 ### T10 Stripe 结账 $19 快速审核 / $49 首页推荐 7 天
-- 状态: blocked
+- 状态: done（2026-10-01，用户 Telegram 回「配」）
 - 依赖: T1
 - 验收: 线上创建 checkout session 成功并立即 expire；metadata.site=agentoolrank
 - 闸: human
@@ -109,7 +109,7 @@
 - 失败: 0
 
 ### T14 X 首帖（build in public）
-- 状态: blocked
+- 状态: done（2026-10-01，用户回「发」）https://x.com/hwak8666621/status/2105370588521111867，链接 agentoolrank.com/?ref=x
 - 依赖: -
 - 验收: 帖子发布且链接带 utm_source=x，events 表能看到来访
 - 闸: human

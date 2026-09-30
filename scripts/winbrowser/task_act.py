@@ -48,6 +48,9 @@ async def main(path):
                 elif k == "select": await page.locator(v[0].removeprefix("css=")).first.select_option(v[1], timeout=15000)
                 elif k == "upload": await page.locator(v[0].removeprefix("css=")).first.set_input_files(v[1], timeout=15000)
                 elif k == "wait": await page.wait_for_timeout(v)
+                elif k == "insert_text":  # [selector, text]: focus then insert like a paste (keeps newlines in rich editors)
+                    await page.locator(v[0].removeprefix("css=")).first.click(timeout=15000)
+                    await page.keyboard.insert_text(v[1])
                 elif k == "fill_secret":  # [selector, path to a file holding the value]; value is never printed
                     secret = open(v[1], encoding="utf-8").read().strip()
                     await page.locator(v[0].removeprefix("css=")).first.fill(secret, timeout=15000)
