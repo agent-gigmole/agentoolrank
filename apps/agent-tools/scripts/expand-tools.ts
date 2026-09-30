@@ -36,6 +36,8 @@ async function main() {
   const tools = (await db.execute("SELECT id, github_owner, github_repo FROM tools")).rows as unknown as Array<{ id: string; github_owner: string | null; github_repo: string | null }>;
   const listed = new Set(tools.filter((t) => t.github_owner).map((t) => `${t.github_owner}/${t.github_repo}`.toLowerCase()));
   const ids = new Set(tools.map((t) => t.id));
+  // Repos move between orgs (block/goose → aaif-goose/goose); a repo-name match means "already listed".
+  const repoNames = new Set(tools.filter((t) => t.github_repo).map((t) => String(t.github_repo).toLowerCase()));
   const categories = (await db.execute("SELECT slug, name FROM categories")).rows as unknown as Array<{ slug: string; name: string }>;
 
   const all: GhRepo[] = [];
@@ -52,28 +54,32 @@ async function main() {
 
   let added = 0, rejected = 0, judged = 0;
   const rejectedLog: string[] = [];
-  for (const r of candidates) {
-    if (added >= MAX_ADD || spentUsd >= MAX_USD) break;
-    const repoName = r.full_name.split("/")[1];
-    let slug = slugOf(repoName);
-    if (ids.has(slug)) slug = slugOf(r.full_name.replace("/", "-"));
-    if (ids.has(slug)) continue;
-    const verdict = await judge(repoName, r.homepage || r.html_url, r.description ?? "", "", await readme(r.html_url), categories);
-    judged++;
-    if (!verdict || verdict.decision !== "approve") {
-      rejected++;
-      rejectedLog.push(`${r.full_name}: ${verdict?.reason ?? "unparseable"}`);
-      continue;
+  const queue = [...candidates];
+  async function worker() {
+    while (queue.length && added < MAX_ADD && spentUsd < MAX_USD) {
+      const r = queue.shift()!;
+      const repoName = r.full_name.split("/")[1];
+      const slug = slugOf(repoName);
+      if (ids.has(slug) || repoNames.has(repoName.toLowerCase())) continue; // probably the same tool under a moved org
+      ids.add(slug); // reserve before the slow LLM call so parallel workers don't double-insert
+      repoNames.add(repoName.toLowerCase());
+      const verdict = await judge(repoName, r.homepage || r.html_url, r.description ?? "", "", await readme(r.html_url), categories);
+      judged++;
+      if (!verdict || verdict.decision !== "approve") {
+        rejected++;
+        rejectedLog.push(`${r.full_name}: ${verdict?.reason ?? "unparseable"}`);
+        continue;
+      }
+      if (apply) {
+        const row = { ...toolRowFromReview({ slug, name: repoName, url: r.homepage || r.html_url, github_url: r.html_url, tagline: (r.description ?? "").slice(0, 160) }, verdict), source: "github" as const, github_stars: r.stargazers_count };
+        const cols = Object.keys(row);
+        await db.execute({ sql: `INSERT OR IGNORE INTO tools (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never });
+      }
+      added++;
+      if (added % 20 === 0) console.log(`progress added=${added} judged=${judged} spent=$${spentUsd.toFixed(3)}`);
     }
-    if (apply) {
-      const row = { ...toolRowFromReview({ slug, name: repoName, url: r.homepage || r.html_url, github_url: r.html_url, tagline: (r.description ?? "").slice(0, 160) }, verdict), source: "github" as const, github_stars: r.stargazers_count };
-      const cols = Object.keys(row);
-      await db.execute({ sql: `INSERT OR IGNORE INTO tools (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never });
-    }
-    ids.add(slug);
-    added++;
-    if (added % 20 === 0) console.log(`progress added=${added} judged=${judged} spent=$${spentUsd.toFixed(3)}`);
   }
+  await Promise.all(Array.from({ length: 4 }, worker));
   console.log(`done judged=${judged} added=${added} rejected=${rejected} (reject rate ${(100 * rejected / Math.max(judged, 1)).toFixed(0)}%) spent=$${spentUsd.toFixed(3)}`);
   console.log("sample rejections:\n  " + rejectedLog.slice(0, 12).join("\n  "));
 }
