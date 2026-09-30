@@ -1,10 +1,11 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Tool } from "@repo/db/schema";
 import type { Metadata } from "next";
 import { compareSlug } from "@/lib/alternatives";
+import { canonicalToolId } from "@/lib/merged";
 
 export const revalidate = 86400; // 24h
 
@@ -86,6 +87,8 @@ export default async function ComparePage({ params }: Props) {
   const { slugs } = await params;
   const parsed = parseSlugs(slugs);
   if (!parsed) notFound();
+  const [a, b] = [canonicalToolId(parsed[0]), canonicalToolId(parsed[1])];
+  if (a !== parsed[0] || b !== parsed[1]) permanentRedirect(`/compare/${compareSlug(a, b)}`);
 
   const [toolA, toolB] = await Promise.all([
     getToolBySlug(parsed[0]),
