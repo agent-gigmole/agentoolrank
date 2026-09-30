@@ -5,7 +5,7 @@
  *
  * Usage: bun run scripts/compute-rankings.ts
  */
-import { db } from "../src/lib/db";
+import { db } from "../packages/db/src/index";
 
 function percentileRank(values: number[], value: number): number {
   const sorted = [...values].sort((a, b) => a - b);

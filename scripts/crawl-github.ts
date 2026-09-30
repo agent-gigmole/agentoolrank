@@ -6,8 +6,7 @@
  *
  * Usage: GITHUB_TOKEN=xxx bun run scripts/crawl-github.ts
  */
-import { db } from "../src/lib/db";
-import { ToolSchema } from "../src/lib/schema";
+import { db } from "../packages/db/src/index";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN) {
@@ -195,7 +194,7 @@ async function checkDocsStatus(url: string | null): Promise<"ok" | "404" | "unkn
 
 const DRY_RUN = process.argv.includes("--dry-run");
 
-async function fetchAndUpsertRepo(owner: string, name: string): Promise<boolean> {
+async function fetchAndUpsertRepo(owner: string, name: string, existingId?: string): Promise<boolean> {
   try {
     const data = await graphql<RepoData>(REPO_QUERY, { owner, name, since: NINETY_DAYS_AGO });
     const repo = data.repository;
@@ -232,6 +231,22 @@ async function fetchAndUpsertRepo(owner: string, name: string): Promise<boolean>
       console.log(`    docs_status=${docsStatus}`);
       console.log(`    homepage=${repo.homepageUrl ?? 'none'}`);
       console.log(`    last_commit=${lastCommit ?? '?'}`);
+      return true;
+    }
+
+    if (existingId) {
+      // --existing mode: refresh metrics of an already-listed tool, never insert or rename.
+      await db.execute({
+        sql: `UPDATE tools SET github_stars = ?, last_commit_date = ?, commit_count_90d = ?, release_count_6m = ?,
+              issue_response_hours = ?, docs_status = ?, data_refreshed_at = ?, updated_at = ? WHERE id = ?`,
+        args: [repo.stargazerCount, lastCommit, commitCount90d, recentReleases, issueResponseHours, docsStatus, now, now, existingId],
+      });
+      await db.execute({
+        sql: `INSERT OR REPLACE INTO metric_snapshots (tool_id, date, github_stars, commit_count_90d, release_count_6m)
+              VALUES (?, ?, ?, ?, ?)`,
+        args: [existingId, new Date().toISOString().slice(0, 10), repo.stargazerCount, commitCount90d, recentReleases],
+      });
+      console.log(`  ✓ ${existingId} (★${repo.stargazerCount})`);
       return true;
     }
 
@@ -393,10 +408,24 @@ async function main() {
   // Check for discovered repos file (from discover-repos.ts)
   let repos: Array<[string, string]> = SEED_REPOS;
 
+  // --existing: refresh only tools already in the DB (daily job). No inserts, no deletes.
+  const existingMode = process.argv.includes("--existing");
+  const existingIds = new Map<string, string>(); // "owner/name" -> tool id
+  if (existingMode) {
+    const rows = await db.execute("SELECT id, github_owner, github_repo FROM tools WHERE github_owner IS NOT NULL AND github_repo IS NOT NULL");
+    for (const r of rows.rows as unknown as Array<{ id: string; github_owner: string; github_repo: string }>) {
+      const key = `${r.github_owner}/${r.github_repo}`.toLowerCase();
+      if (!existingIds.has(key)) existingIds.set(key, r.id);
+    }
+  }
+
   const useDiscovered = process.argv.includes("--discovered");
   const seedOnly = process.argv.includes("--seed-only");
 
-  if (useDiscovered) {
+  if (existingMode) {
+    repos = [...existingIds.keys()].map((k) => k.split("/") as [string, string]);
+    console.log(`Existing mode: refreshing ${repos.length} listed tools`);
+  } else if (useDiscovered) {
     try {
       const file = Bun.file("scripts/discovered-repos.json");
       if (await file.exists()) {
@@ -441,7 +470,7 @@ async function main() {
 
   for (const [owner, name] of repos) {
     console.log(`${owner}/${name}`);
-    const ok = await fetchAndUpsertRepo(owner, name);
+    const ok = await fetchAndUpsertRepo(owner, name, existingIds.get(`${owner}/${name}`.toLowerCase()));
     if (ok) success++;
     else failed++;
 
