@@ -210,29 +210,29 @@ export async function getStackBySlug(slug: string): Promise<Stack | null> {
 }
 
 export async function searchTools(query: string, limit: number = 20): Promise<Tool[]> {
-  // Split query into keywords for better matching
-  const keywords = query.toLowerCase().split(/\s+/).filter((k) => k.length > 1);
-  const likePatterns = keywords.map((k) => `%${k}%`);
+  // Rank by how many query keywords match (name/tagline weigh most), then by overall score.
+  const stop = new Set(["ai", "the", "for", "and", "with", "tool", "tools", "open", "source"]);
+  const keywords = query.toLowerCase().split(/[^a-z0-9.+#-]+/).filter((k) => k.length > 1 && !stop.has(k)).slice(0, 8);
+  if (keywords.length === 0) {
+    const result = await db.execute({ sql: "SELECT * FROM tools ORDER BY score DESC LIMIT ?", args: [limit] });
+    return result.rows.map((row) => ToolSchema.parse(parseJsonFields(row as Record<string, unknown>)));
+  }
 
-  // Match if ANY keyword appears in name, tagline, or description
-  const conditions = likePatterns.map(
-    () => "(name LIKE ? OR tagline LIKE ? OR description LIKE ?)"
-  );
+  const parts: string[] = [];
   const args: Array<string | number> = [];
-  for (const p of likePatterns) {
-    args.push(p, p, p);
+  for (const k of keywords) {
+    const p = `%${k}%`;
+    parts.push(
+      "(CASE WHEN lower(name) LIKE ? THEN 4 ELSE 0 END + CASE WHEN lower(tagline) LIKE ? THEN 3 ELSE 0 END" +
+        " + CASE WHEN category_tags LIKE ? THEN 3 ELSE 0 END + CASE WHEN lower(description) LIKE ? THEN 1 ELSE 0 END" +
+        " + CASE WHEN lower(intelligence) LIKE ? THEN 1 ELSE 0 END)",
+    );
+    args.push(p, p, p, p, p);
   }
   args.push(limit);
-
-  const sql = conditions.length > 0
-    ? `SELECT * FROM tools WHERE ${conditions.join(" OR ")} ORDER BY score DESC LIMIT ?`
-    : `SELECT * FROM tools ORDER BY score DESC LIMIT ?`;
-
+  const sql = `SELECT * FROM (SELECT *, (${parts.join(" + ")}) AS match_score FROM tools) WHERE match_score > 0 ORDER BY match_score DESC, score DESC LIMIT ?`;
   const result = await db.execute({ sql, args });
-  return result.rows.map((row) => {
-    const parsed = parseJsonFields(row as Record<string, unknown>);
-    return ToolSchema.parse(parsed);
-  });
+  return result.rows.map((row) => ToolSchema.parse(parseJsonFields(row as Record<string, unknown>)));
 }
 
 /**
