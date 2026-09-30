@@ -371,3 +371,25 @@
 
 ## mcp-category-by-llm-purpose
 - "名字含 MCP"≠MCP server（很多是客户端/框架）→ tag-mcp.ts 先关键词取候选（44）再让 LLM 判主要用途，只给 29 个加 mcp-servers 标签；类目表 INSERT OR IGNORE
+
+## indexnow-key-verification-delay
+- 新 IndexNow 密钥文件（public/<key>.txt）部署后首次推送返回 403 SiteVerificationNotCompleted —— 搜索引擎还没抓密钥文件；约 15 分钟后重试即 200。不要改 key/换方案，等一会再推
+- key 记 docs/ops/indexnow-key.txt；scripts/indexnow.ts 进 daily-ops 每日推
+
+## google-sitemap-resubmit-service-account
+- GSC sitemap 重新提交：service account 需 webmasters（写）scope，`PUT https://www.googleapis.com/webmasters/v3/sites/{site}/sitemaps/{feedpath}` → 204
+- 先 GET sitemaps 看 lastDownloaded/contents：本站发现 Google 上次下载是 03-28、只记 739 条、收录 0 —— 站点扩量后 Google 并不会自动知道，要主动重提交
+
+## sitemap-lastmodified-real-dates
+- sitemap lastModified 全写"今天"会被搜索引擎当噪音忽略；改用数据真实刷新时间（data_refreshed_at）
+
+## mcp-registry-jwt-short-lived
+- mcp-publisher 的 registry JWT 很快过期；每次 publish 前重新 `mcp-publisher login dns ...`，否则 401
+
+## outreach-github-tos-public-contact
+- GitHub 条款禁止把 GitHub 上的用户资料（含 commit/profile 邮箱）用于未经请求的邮件 → 外联邮箱只能来自项目官网或 README 中公开写出的联系方式，并记录出处
+- 过滤：noreply/example/图片文件名（logo@2x.png 类误匹配）；排除 security@/license@/legal@/privacy@/careers@ 等专用角色信箱（用途不符）；多个候选时优先项目自有域名
+- 模板无推销、给具体排名/页面/徽章、含退订；名单文件（含邮箱）不入库；发之前经老板批
+
+## seo-title-length-test-sample
+- 标题测试失败时先核对样例本身：一次失败是测试样例期望值超 70 字符，实现截断正确 → 改样例。判断标准是"预期行为是否被正确编码"，不是哪边好改

@@ -121,3 +121,10 @@
 | PulseMCP 暂停 / mcp.so 付费 / AI Agents List 付费 | GOTCHAS.md#mcp-directories-status |
 | MCP Servers 类目 / tag-mcp / LLM 判主要用途 | GOTCHAS.md#mcp-category-by-llm-purpose |
 | 正式 goal / 去重 / T16 扩量 669 / MCP Registry / Brevo | LOG.md#2026-10-01 03:17–04:40 |
+| IndexNow 403 SiteVerificationNotCompleted / 密钥验证延迟 | GOTCHAS.md#indexnow-key-verification-delay |
+| Google sitemap 重新提交 / service account PUT 204 / lastDownloaded 03-28 | GOTCHAS.md#google-sitemap-resubmit-service-account |
+| sitemap lastModified 真实日期 / data_refreshed_at | GOTCHAS.md#sitemap-lastmodified-real-dates |
+| MCP Registry JWT 过期 / 重新 login dns | GOTCHAS.md#mcp-registry-jwt-short-lived |
+| 外联邮箱 / GitHub 条款 / 公开联系邮箱取证 / 角色信箱排除 | GOTCHAS.md#outreach-github-tos-public-contact |
+| 标题公式 toolTitle/compareTitle / 测试样例超长 | GOTCHAS.md#seo-title-length-test-sample |
+| MaintainerBox / featured 无提交记录 / 数据驱动 FAQ / /agents / IndexNow | LOG.md#2026-10-01 04:30–05:00 |

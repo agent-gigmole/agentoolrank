@@ -159,16 +159,35 @@
 - **看板**：systemd --user agentoolrank-dashboard（Linger，开机自启）+ document.lastModified + 60s refresh
 - **花钱**：OpenRouter 既有余额累计约 $0.53；现金 $0
 
+## 2026-10-01 04:30–05:00 搜索提交 + 收入入口 + SEO/GEO + 外联合规
+
+- **IndexNow**：密钥文件 public/<key>.txt（key 记 docs/ops/indexnow-key.txt）；首推 403 SiteVerificationNotCompleted，约 15 分钟后重试 200（2250 URL）；scripts/indexnow.ts 已进 daily-ops
+- **Google sitemap 重新提交**：service account（webmasters 写 scope）PUT → 204；发现 Google 上次下载 sitemap 是 **2026-03-28、只记 739 条、收录 0** → 需观察下次抓取
+- **收入入口**：工具页「Maintain X?」MaintainerBox（复制 README 徽章 / $49 首页推荐 7 天）；/api/checkout 支持已上架工具无提交记录买 featured（submission_id=0，不传 customer_email 由 Stripe 收集）；线上建单后立即 expire 验证
+- **SEO/GEO**：
+  - src/lib/titles.ts：toolTitle「名称: 一句话说明 · 星数」≤70 字符（去 "X is a" 前缀、不留悬空连接词）；compareTitle「A vs B (年份): GitHub Stats, Features & Which to Choose」
+  - src/lib/faq.ts 数据驱动 FAQ（替代品页/对比页，可见内容 + FAQPage JSON-LD，缺数据跳过该问）
+  - sitemap lastModified 改用 data_refreshed_at（不再全是今天）
+  - /agents 页（MCP / API / agent 代提交文档）+ 页脚入口 + sitemap
+  - MCP Registry 发布 **v1.0.1**（websiteUrl → /agents；registry JWT 短时效，发布前重新 `login dns`）
+- **外联合规**（agentkit 提醒：GitHub 条款禁止用 GitHub 资料发未经请求邮件）：
+  - src/lib/contact.ts extractContactEmails：只取官网/README 公开邮箱；排除 noreply/example/图片文件名；排除 security@/license@/legal@/privacy@/careers@ 等专用信箱；优先项目域名
+  - outreach-list 改为官网→README 取证并记录出处 → **34 位**（官网 20、README 14）；名单 data/outreach/candidates.json **不入库**
+  - 模板 src/lib/outreach.ts（排名/页面/徽章，无推销，含退订）→ 经 agentkit 交老板 **10-02 09:30 汇总批**；署名是否用 Ethan Tan 待老板确认
+- vitest 20 文件约 95 测试全绿
+- commits 至 17fc532（均已 push）
+
 ## 待办 / 下一步
 
 - [ ] 10-02 实体 SIM 到 → Brevo 手机验证 → 发信通道（T17 徽章邀请外联）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] T12 对比页扩充（按 GSC 有曝光查询）
 - [ ] T13 首页 Featured 位展示
-- [ ] T17 反链飞轮：徽章邀请（模板先经 agentkit 给老板过目）
+- [ ] T17 反链飞轮：外联名单 34 位 + 模板已交 agentkit，等老板 10-02 09:30 批复（含署名 Ethan Tan 与否）→ 发信通道就绪后发送
 - [ ] T18 /weekly 真实 30 天增速 + 每周帖（常设授权直接发）
 - [ ] MCP 目录：Smithery 等免费渠道（PulseMCP 暂停、mcp.so/AI Agents List 付费不做）
 - [ ] 新工具入库仍需接展示名/alternatives/related 管道；related 覆盖 350/669
+- [ ] 观察 Google 是否重新抓取 sitemap（上次 03-28、739 条、收录 0）；IndexNow 每日推送跟踪
 - [ ] 查 daily-update 刷新失败仓库；看板接入漏斗数据；PeerPush 改用户名
 
 ## 环境注意

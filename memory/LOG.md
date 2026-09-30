@@ -474,3 +474,12 @@
 - pkill -f 再踩一次；看板改 systemd --user
 - 花钱：OpenRouter 余额累计 ~$0.53，现金 $0
 - human-intervention=3（去重批准、PH 登录安排、每周帖常设授权，均经 agentkit）/ auto-resolved=6（ZodError 构建失败、换组织重复、回滚文件覆盖、密码泄露遮蔽、Turnstile→改 Brevo、pkill 自杀）/ 熔断=1（Twilio OTP 30038 → 停止重试，等实体 SIM）
+
+## 2026-10-01 04:30–05:00 搜索提交 + 收入入口 + SEO/GEO + 外联合规
+- IndexNow：public/<key>.txt，首推 403 SiteVerificationNotCompleted → 约 15 分钟后 200（2250 URL）；scripts/indexnow.ts 进 daily-ops
+- Google sitemap：service account（webmasters 写 scope）PUT 重提交 204；上次下载 03-28、739 条、收录 0
+- 收入：MaintainerBox（徽章 / $49 featured）；/api/checkout 支持已上架工具 submission_id=0 买 featured，Stripe 收集邮箱；线上建单即 expire
+- SEO/GEO：titles.ts（toolTitle ≤70、compareTitle 年份+Which to Choose）；faq.ts 数据驱动 FAQ + FAQPage JSON-LD；sitemap lastModified=data_refreshed_at；/agents 页 + 页脚 + sitemap；MCP Registry v1.0.1（websiteUrl→/agents，JWT 过期需重新 login dns）
+- 外联合规：contact.ts extractContactEmails（官网/README 公开邮箱、排除 noreply/example/图片名/专用角色信箱、优先项目域名）；outreach-list 官网→README 取证记出处 → 34 位（官网 20、README 14），candidates.json 不入库；outreach.ts 模板（无推销、含退订）经 agentkit 交老板 10-02 09:30 批
+- 测试：vitest 20 文件约 95；一例标题测试样例本身超 70 字符 → 改样例不改实现（实现截断正确，已核实非迁就 bug）
+- human-intervention=1（外联模板 + 署名待老板批，经 agentkit）/ auto-resolved=3（IndexNow 403 等验证后重试、MCP Registry JWT 过期重新 login、测试样例写错）/ 熔断=0
