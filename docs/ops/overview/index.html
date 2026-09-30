@@ -40,6 +40,7 @@
     <div class="kpi"><b>3</b><span>9 月 Google 点击（曝光 241）</span></div>
     <div class="kpi"><b>464</b><span>已收录工具</span></div>
     <div class="kpi"><b>261</b><span>对比页（唯一有点击的页型）</span></div>
+    <div class="kpi"><b>460</b><span>alternatives 页（10-01 上线）</span></div>
     <div class="kpi"><b>0</b><span>创作者提交 / 付费</span></div>
   </div>
   <p class="muted">一句话：网站做好了但没人来，也没有收款的地方。现在的读者只是来看看的访客，他们几乎不花钱；像 PeerPush 这类站，真正付钱的是<b>想被人看到的工具作者</b>。所以下一步是把站点改成"工具作者主动来提交、带着自己的用户来"的双边平台，并加上收款。</p>
@@ -133,7 +134,7 @@
       <b>你做：</b>① 复制结账 key，运行 <code>! stripe-save-key agentoolrank-checkout</code>。② 复制只读 key，运行 <code>! stripe-save-key agentoolrank-ops</code>。③ 如果 Stripe 要求审核或补材料，由你处理。<br>
       <span class="muted">默认和 pixtidy 共用 TENSO LLC 收款，卡账单上显示 TENSO* AGENTOOLRANK。如果你不想共用，直接告诉我。</span></li>
     <li><span class="tag warn">C · Cloudflare</span><b>Chrome 做：</b>找到 agentoolrank.com 所在的账户，开通 hello@agentoolrank.com 转发到你的 Gmail（验证邮件它会在 Gmail 里自己点），再建一个只管这个域名的 token。<br>
-      <b>你做：</b>① 如果它找不到账户，告诉它用哪个登录。② 复制 token，运行 <code>! cf-save-token agentoolrank</code>。</li>
+      <b>你做：</b>① 域名在 Cloudflare 账户 <b>Tensam.th@gmail.com</b> 下，Chrome 要用这个账号登录。② 复制 token，运行 <code>! cf-save-token agentoolrank</code>。</li>
     <li><span class="tag">D · 品牌账号</span><b>Chrome 做：</b>用 hello@agentoolrank.com 注册 X、Product Hunt、Peerlist、PeerPush，统一填好名称、简介和头像；在 PeerPush 走免费队列提交本站，插队和折扣弹窗一律拒绝。<br>
       <b>你做：</b>① 每个账号的密码由你输入。② 手机验证码和人机验证由你来。③ 每个账号建好后运行 <code>! save-account x</code>、<code>! save-account producthunt</code>、<code>! save-account peerlist</code>、<code>! save-account peerpush</code>，这样我以后可以自己发帖和维护。</li>
     <li class="done"><span class="tag ok">不用做了</span>Vercel：查过了，本站本来就在 Pro 团队下，可以商用。PostHog：不开了，我把事件直接存进自己的数据库，少一个账号。Reddit/HN 个人号：默认不用。</li>
@@ -143,6 +144,8 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 上线：460 个"X alternatives"页（已进 sitemap）、/submit 免费提交队列（带徽章，挂徽章可优先审核）、导航加 Submit。276 个工具名从仓库名改成官方名（例如 claude-code → Claude Code）。LLM 花费 $0.28。</li>
+    <li>2026-10-01 上线 /llms.txt，AI 助手可以读到站点索引。</li>
     <li>2026-10-01 修好了部署：4 月重构以后所有部署都失败，线上一直是旧版本。现在已经能正常发布，这次部署后所有页面都返回 200。</li>
     <li>2026-10-01 查明每日数据更新从 3 月底起一直失败，原因是 lockfile 不同步，已在本地修好；推送代码、重新启用任务要等 GitHub token（Chrome 说明的 A 部分）。</li>
     <li>2026-10-01 写好 Claude in Chrome 操作说明，确认 Vercel 已经是 Pro 套餐，决定不开 PostHog。</li>

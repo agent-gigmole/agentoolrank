@@ -70,11 +70,11 @@ Why: AgentoolRank will sell paid listings ($19 fast-track listing, $49 featured 
 
 ## Part C — Cloudflare (the account that holds `agentoolrank.com`)
 
-Note: agentoolrank.com is **not** in the account named "0xzap0x@gmail.com's Account" (ID `ba9838a0…`, which holds pixtidy.com). It's in a different Cloudflare account of the owner.
+Note: agentoolrank.com is **not** in the account named "0xzap0x@gmail.com's Account" (ID `ba9838a0…`, which holds pixtidy.com). It's in the account "Tensam.th@gmail.com's Account".
 
-### C1. Find the account
-1. Open https://dash.cloudflare.com → the account switcher. Find the account that lists **agentoolrank.com** under Websites/Domains. If you can't find it, STOP and ask the owner which login to use.
-2. Report the account name and the domain's registrar/status.
+### C1. Open the right account
+1. Open https://dash.cloudflare.com and switch to the account **"Tensam.th@gmail.com's Account"** (Account ID `db304ebc5bd6e6c38cee8c8275982830`). It holds agentoolrank.com (registered at Cloudflare, auto-renew on, expires 2027-03-27). If the owner's current login can't see it, STOP and ask the owner to log in as tensam.th@gmail.com.
+2. Report that you're in the right account.
 
 ### C2. Brand email: hello@agentoolrank.com
 1. agentoolrank.com → **Email** → **Email Routing** → Get started / Enable. Accept the MX/TXT records Cloudflare proposes (it adds them itself).
