@@ -3,7 +3,7 @@ project:
   description: "AI Agent 工具导航站，数据驱动 + LLM 自动化内容，靠 SEO 获取流量"
   language: "typescript"
   python_version: ""
-  harness: ""
+  harness: "goal-mode"
 
 commands:
   test: "npm test"
