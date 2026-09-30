@@ -102,9 +102,9 @@
 - 失败: 0
 
 ### T13 首页「Featured」位 + 提交成功页付费选项（$19 快速审核 / $49 首页推荐 7 天）
-- 状态: todo
+- 状态: done（2026-10-01）
 - 依赖: T10
-- 验收: 有 featured_until 的工具在首页显示；vitest 覆盖到期逻辑
+- 验收: 有 featured_until 的工具在首页显示；vitest 覆盖到期逻辑（activeFeatured vitest ✓；线上首页显示空位引导 ✓；付费档期写入 featured 表后显示 Sponsored 卡片）
 - 闸: auto
 - 失败: 0
 
@@ -122,6 +122,30 @@
 - 设计：MCP 新工具 submit_tool / get_submission_status + POST /api/v1/submissions（JSON）；返回 queue_position、eta_days、status_token、badge_html、offers[]（free / $9 priority 72h / $19 fast 24h / $49 featured 7d，每档 what_you_get + eta + 真实价值数据，不夸大）；agent 可传 max_budget_usd、deadline_days → 返回 recommended_plan（满足期限的最便宜档）；付款 = 按需生成 Stripe checkout_url 交给人付（GET .../checkout?plan=&token=，懒创建）；不对 agent 做挽留弹窗，降级选项直接写在 offers 里；llms.txt 写明流程。以后接 agent 支付协议。
 - 验收: vitest 覆盖 offers/recommend；线上 MCP tools/call submit_tool（selftest 后标 rejected）返回 offers 与 status_token；get_submission_status 返回状态；checkout 端点生成 session 并立即 expire（线上 MCP submit_tool → queued + 4 档 offers + recommended ✓；get_submission_status ✓，错 token 404 ✓；checkout 链接 303 到 Stripe（fast \$19）后立即 expire ✓；selftest 提交已标 rejected ✓；vitest 63 ✓）
 - 闸: auto
+- 失败: 0
+
+### 目录站六大死因对照（用户 10-01 提供，作为第 2/3 轮优先级依据）
+冷启动内容少 → T16；无反链飞轮 → T17；替代品页 ✅；无 wedge → 定位「为 AI agent 服务的目录」（MCP 可查、agent 可提交付费）+ 上架 MCP 目录；无回访环 → T18；没熬够 → G4 到 12-31，每周复盘。
+
+### T16 冷启动扩量：新增一批 agent 工具（LLM 质检，优先 MCP servers / 新兴 agent 项目）
+- 状态: todo
+- 依赖: -
+- 验收: 新增 ≥150 个工具且每个都有展示名/intelligence/alternatives；质检拒绝率记录；sitemap 同步
+- 闸: auto
+- 失败: 0
+
+### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
+- 状态: todo
+- 依赖: -
+- 验收: 模板经用户同意；每天 ≤10 封限速发送；徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）可追踪
+- 闸: human（对外发送）
+- 失败: 0
+
+### T18 回访环：每周增长榜 /weekly 用真实 30 天增速重做 + 每周 X 帖草稿自动生成
+- 状态: todo
+- 依赖: -
+- 验收: /weekly 显示本周星数增长前 20（来自 metric_snapshots）；scripts 生成 X 帖草稿并发 Telegram
+- 闸: auto（发帖本身仍需用户确认或事先授权）
 - 失败: 0
 
 ### T11 重复工具清理（embedchain、gpt-index）
