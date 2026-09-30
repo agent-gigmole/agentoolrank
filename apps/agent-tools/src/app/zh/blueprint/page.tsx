@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const revalidate = 3600; // 1 hour
 
 export const metadata: Metadata = {
-  title: "AI 项目蓝图库 — 即用工具组合方案 | AgenToolRank",
+  title: "AI 项目蓝图库 — 即用工具组合方案 | AgentoolRank",
   description:
     "浏览 70+ 个 AI 项目蓝图，附完整执行计划。每个蓝图精确展示该用哪些工具、如何组合、成本多少。从 RAG 聊天机器人到量化交易系统。",
   alternates: {

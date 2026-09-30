@@ -9,7 +9,7 @@ export function Nav({ locale = "en" }: { locale?: Locale }) {
     <nav className="border-b border-gray-200 bg-white">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
         <Link href={`${prefix}/`} className="font-bold text-gray-900 text-lg">
-          AgenTool Rank
+          AgentoolRank
         </Link>
         <div className="flex items-center gap-4 text-sm">
           <Link href={`${prefix}/blueprint`} className="text-gray-600 hover:text-gray-900 transition-colors">

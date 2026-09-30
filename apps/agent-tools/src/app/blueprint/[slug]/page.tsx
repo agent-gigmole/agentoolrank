@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(stack.title)}&icon=${encodeURIComponent(stack.icon)}&difficulty=${stack.difficulty}&layers=${stack.layers.length}&tools=${totalTools}&desc=${encodeURIComponent((stack.description || "").slice(0, 120))}&layer_names=${encodeURIComponent(layerNames)}`;
 
   return {
-    title: `${stack.title} — AI Project Blueprint | AgenToolRank`,
+    title: `${stack.title} — AI Project Blueprint | AgentoolRank`,
     description: `${stack.description} ${stack.layers.length} layers, ${totalTools} tools. Step-by-step execution plan with tool recommendations.`,
     alternates: {
       canonical: `${baseUrl}/blueprint/${slug}`,

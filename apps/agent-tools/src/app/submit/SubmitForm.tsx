@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { badgeHtml } from "@/lib/submissions";
+import { track } from "@/components/Analytics";
 
 type Result =
   | { kind: "queued"; slug: string; position: number; waitDays: number; name: string }
@@ -37,6 +38,7 @@ export function SubmitForm() {
         setResult({ kind: "listed", slug: data.slug });
       } else {
         setResult({ kind: "queued", slug: data.slug, position: data.position, waitDays: data.waitDays, name: form.name });
+        track("submit_done");
       }
     } catch {
       setError("Network error, please try again.");
@@ -73,6 +75,7 @@ export function SubmitForm() {
             type="button"
             onClick={() => {
               navigator.clipboard.writeText(snippet).then(() => setCopied(true), () => {});
+              track("badge_copy");
             }}
             className="mt-3 px-4 py-2 text-sm bg-gray-900 text-white rounded-lg hover:bg-gray-700"
           >

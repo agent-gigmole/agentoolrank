@@ -2,7 +2,7 @@ import { AISearch } from "@/components/AISearch";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI 工具栈构建器 — 你想构建什么？ | AgenToolRank",
+  title: "AI 工具栈构建器 — 你想构建什么？ | AgentoolRank",
   description:
     "描述你的项目，AI 为你推荐工具栈并生成流程图。基于 463+ AI Agent 工具的数据驱动推荐。",
   alternates: {

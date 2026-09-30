@@ -6,7 +6,7 @@
     "aiBuilder": "AI 构建器"
   },
   "home": {
-    "title": "AgenTool Rank",
+    "title": "AgentoolRank",
     "subtitle": "描述你想构建什么，AI 为你推荐工具栈。",
     "toolCount": "{count} 个 AI Agent 工具，数据驱动排名",
     "trending": "热门工具",
@@ -68,10 +68,10 @@
     }
   },
   "footer": {
-    "tagline": "AgenTool Rank — 数据驱动的 AI Agent 工具目录"
+    "tagline": "AgentoolRank — 数据驱动的 AI Agent 工具目录"
   },
   "meta": {
-    "title": "AgenTool Rank — 数据驱动的 AI Agent 工具目录",
+    "title": "AgentoolRank — 数据驱动的 AI Agent 工具目录",
     "description": "463 个 AI Agent 工具，按 GitHub 活跃度排名，每日更新。描述你想构建的项目，AI 为你生成完整的技术蓝图。"
   },
   "categories": {

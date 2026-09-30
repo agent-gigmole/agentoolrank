@@ -30,7 +30,7 @@ export default async function HomePage() {
       {/* Hero — AI Search */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          AgenTool Rank
+          AgentoolRank
         </h1>
         <p className="text-lg text-gray-600 mb-1">
           Describe what you want to build. AI recommends the tool stack.

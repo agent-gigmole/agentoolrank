@@ -58,3 +58,13 @@ describe("alternativesTitle", () => {
     expect(alternativesTitle("Dify", 1, 2026)).toBe("Best Dify Alternative in 2026 (Open Source)");
   });
 });
+
+import { taglineMentionsName } from "./alternatives";
+
+describe("taglineMentionsName", () => {
+  it("detects taglines that already start with the tool name", () => {
+    expect(taglineMentionsName("Claude Code", "Claude Code is an agentic coding tool")).toBe(true);
+    expect(taglineMentionsName("llama.cpp", "LLM inference in C/C++")).toBe(false);
+    expect(taglineMentionsName("Dify", "")).toBe(false);
+  });
+});

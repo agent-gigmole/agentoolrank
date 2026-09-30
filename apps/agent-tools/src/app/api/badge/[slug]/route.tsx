@@ -55,7 +55,7 @@ export async function GET(
           }}
         >
           <span style={{ fontSize: "14px" }}>⚡</span>
-          <span>AgenTool Rank</span>
+          <span>AgentoolRank</span>
         </div>
         {/* Right: tool info */}
         <div

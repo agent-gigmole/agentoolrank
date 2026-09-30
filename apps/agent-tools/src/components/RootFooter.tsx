@@ -11,8 +11,8 @@ export function RootFooter() {
       <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
         <span>
           {isZh
-            ? "AgenTool Rank — 数据驱动的 AI Agent 工具目录"
-            : "AgenTool Rank — Data-driven AI agent tools directory"}
+            ? "AgentoolRank — 数据驱动的 AI Agent 工具目录"
+            : "AgentoolRank — Data-driven AI agent tools directory"}
         </span>
         <div className="flex items-center gap-4">
           <a

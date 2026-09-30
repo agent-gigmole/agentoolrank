@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { RootNav } from "@/components/RootNav";
 import { RootFooter } from "@/components/RootFooter";
+import { Analytics } from "@/components/Analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,14 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AgenTool Rank — AI Agent Tools Directory, Ranked by Data",
+  title: "AgentoolRank — AI Agent Tools Directory, Ranked by Data",
   description: "Data-driven directory of AI agent tools. Ranked by GitHub activity, updated daily. Find frameworks, orchestration tools, coding agents, and more.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com"),
   openGraph: {
-    title: "AgenTool Rank — AI Agent Tools Directory",
+    title: "AgentoolRank — AI Agent Tools Directory",
     description: "Data-driven directory of AI agent tools. Ranked by GitHub activity, updated daily.",
     type: "website",
-    siteName: "AgenTool Rank",
+    siteName: "AgentoolRank",
   },
 };
 
@@ -40,6 +41,7 @@ export default function RootLayout({
         <RootNav />
         <div className="flex-1">{children}</div>
         <RootFooter />
+        <Analytics />
       </body>
     </html>
   );

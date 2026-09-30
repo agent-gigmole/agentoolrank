@@ -84,3 +84,8 @@ export function alternativesTitle(name: string, count: number, year: number): st
     ? `Best ${name} Alternative in ${year} (Open Source)`
     : `${count} Best ${name} Alternatives in ${year} (Open Source)`;
 }
+
+/** True when the tagline already opens with the tool's name ("Claude Code is ..."), so we don't print it twice. */
+export function taglineMentionsName(name: string, tagline: string): boolean {
+  return tagline.trim().toLowerCase().startsWith(name.trim().toLowerCase());
+}

@@ -21,7 +21,7 @@ const categoryNameZh: Record<string, string> = {
 };
 
 export const metadata: Metadata = {
-  title: "AgenTool Rank — 数据驱动的 AI Agent 工具目录",
+  title: "AgentoolRank — 数据驱动的 AI Agent 工具目录",
   description:
     "463 个 AI Agent 工具，按 GitHub 活跃度排名，每日更新。描述你想构建的项目，AI 为你生成完整的技术蓝图。",
   alternates: {
@@ -44,7 +44,7 @@ export default async function ZhHomePage() {
     <main className="max-w-6xl mx-auto px-4 py-8">
       {/* Hero — AI Search */}
       <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">AgenTool Rank</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-3">AgentoolRank</h1>
         <p className="text-lg text-gray-600 mb-1">
           描述你想构建什么，AI 为你推荐工具栈。
         </p>

@@ -4,7 +4,7 @@ import { getToolBySlug } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
-import { alternativesTitle, compareSlug } from "@/lib/alternatives";
+import { alternativesTitle, compareSlug, taglineMentionsName } from "@/lib/alternatives";
 
 export const revalidate = 86400; // 24h
 
@@ -92,8 +92,14 @@ export default async function AlternativesPage({ params }: Props) {
         <Breadcrumbs items={crumbs} />
         <h1 className="text-3xl font-bold text-gray-900 mb-3">{alternativesTitle(tool.name, alts.length, year)}</h1>
         <p className="text-gray-600 mb-2">
-          <Link href={`/tool/${tool.id}`} className="font-medium text-gray-900 hover:underline">{tool.name}</Link>
-          {tool.tagline ? ` — ${tool.tagline}.` : "."}
+          {taglineMentionsName(tool.name, tool.tagline) ? (
+            <>{tool.tagline.replace(/\.?$/, ".")}</>
+          ) : (
+            <>
+              <Link href={`/tool/${tool.id}`} className="font-medium text-gray-900 hover:underline">{tool.name}</Link>
+              {tool.tagline ? ` — ${tool.tagline.replace(/\.?$/, ".")}` : "."}
+            </>
+          )}
           {intel.key_differentiator ? ` ${intel.key_differentiator}` : ""}
         </p>
         <p className="text-gray-600 mb-8">
