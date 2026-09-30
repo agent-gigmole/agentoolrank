@@ -134,7 +134,15 @@
 - [ ] /api/e 自建分析端点（服务端转发，过滤 webdriver，记录 UTM）
 - [ ] 前端埋点：访问 → 提交页 → 提交 → 付款 四步事件
 - [ ] 看板接入漏斗数据
-- [ ] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
+- [~] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
+  - [x] PeerPush 提交 → 免费队列 #4190（2026-10-01）
+  - [ ] PeerPush 改用户名（@hello2502 → agentoolrank，入口未找到）
+  - [ ] 评估 PeerPush 点评积分换排位（注意 seo-geo：互评刷票类不做）
+  - [ ] Peerlist onboarding：等用户决定用谁的真名（品牌名被拒，产品挂个人 Project）
+  - [ ] X：等用户提供旧号
+  - [ ] Product Hunt：用户个人号 @ethan_tan11，10/10 后再评估（pixtidy 10/03 发布占用）
+  - [x] launch kit docs/ops/launch-kit/（logo、4 截图、kit.md）+ scripts/winbrowser（2026-10-01）
+- [ ] /alternatives 页 tagline 以工具名开头时省略名字（"Claude Code — Claude Code is ..." 重复）
 
 ## G2 任务清单（截止 2026-10-21）
 
@@ -157,6 +165,8 @@
 - [x] GitHub 凭据（fine-grained token，~/.config/secrets/github-agentoolrank，2026-10-01）
 - [ ] PostHog project（可选）
 - [ ] 个人 Reddit / HN 账号是否可用
+- [ ] X 旧号
+- [ ] Peerlist 用谁的真名
 
 ## 暂停
 

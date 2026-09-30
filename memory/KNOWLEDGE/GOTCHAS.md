@@ -257,3 +257,32 @@
 ## remote-source-of-truth-no-overwrite-sync
 - daily-update 原有 migrate-to-turso（INSERT OR REPLACE 以 local.db 整行覆盖 Turso）+ 提交 local.db；Turso 成为事实源（alternatives/展示名/intelligence 都只在 Turso）后，修通这条路径会用 3 月旧数据冲掉线上数据
 - 规则：远端成为事实源后，所有"本地库→远端"覆盖式同步步骤必须删除；每日任务只对远端做按 id 的 UPDATE（crawl-github --existing），不插入/改名/删除
+
+## cdp-loopback-v4-or-v6
+- Windows Chrome `--remote-debugging-port` 实际监听地址不固定：imagehub 的实例在 `[::1]:9222`，本项目新开的实例在 `127.0.0.1:9223`
+- browser.py 取 `/json/version` 时 127.0.0.1 与 [::1] 两个回环都试（无代理 opener），不要写死其一
+
+## windows-python-wsl-paths
+- WSL 调 Windows 侧 python.exe 时，脚本参数里的 WSL 路径（/home/...）Windows 读不到 → run.sh 先把文件参数复制到 Windows 工作目录（C:\agentoolrank-browser）再传 Windows 路径
+
+## page-summary-leaks-input-values
+- task_act 每步打印页面摘要时会输出 input 的 value → 填过的密码直接进会话输出/日志（Peerlist 密码泄露一次，已作废重生成）
+- 修复：摘要里 `type=password` 的框显示 `<hidden>`；新增 `fill_secret` 步骤从 600 权限文件读密码填入，全程不打印
+- 规则：任何"回显页面状态"的调试输出都要默认遮蔽密码/token 类字段；imagehub 的 task_act.py 同款问题（已建议，未改其文件）
+
+## ui-automation-selectors-peerlist-peerpush
+- headlessui combobox：选中后 placeholder 会变，别按 placeholder 重新定位；用 `click_role option`（get_by_role("option", name=...)）选
+- Peerlist 表单 input 在摘要里显示的是 id 不是 name → 用 `#firstName` 定位
+- 弹窗（modal）里的按钮与底层页面同名 → `css=button:has-text('X'):visible`
+
+## personal-network-no-brand-persona
+- Peerlist 等"个人职业网络"onboarding 要求真人姓名，"AgentoolRank Team" 被拒；用品牌冒充个人既违反平台规则也不合适
+- 做法：停下问用户用谁的真名，产品以 Project 形式挂在真人账号下；不自造假名
+
+## peerpush-free-queue-retention-offer
+- PeerPush 选 "Join the free queue" 后会弹 40% off 挽留折扣；按 spend-control 拒绝，选 Wait ~70 days → 队列 #4190
+- 注册用户名自动生成（@hello2502），设置里暂未找到改名入口
+
+## shared-browser-venv-readonly
+- 复用其他项目（imagehub/pixtidy）的 Windows venv（C:\pixtidy-browser\venv）时：只读复用，不 pip install/升级、不改其文件、不写其目录；自己用独立 Chrome profile + 端口 + 工作目录
+- 共用账号（用户个人 PH maker 号）先问持有项目的发布排期，避开其发布窗口

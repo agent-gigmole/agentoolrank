@@ -409,3 +409,14 @@
 - 修复 7b1c5da：crawl-github `--existing`（只 UPDATE 已上架工具指标 + metric_snapshots）、import 改 packages/db；workflow 只剩 install → crawl --existing → compute-rankings，contents: read；删 cleanup/filter/migrate/提交 local.db/sitemap ping
 - 结果：push 成功、Vercel git 自动部署 READY（4 月后首次）、run 36751990678 success、Turso 463/464 刷新（1 个失败待查），alternatives 460 / intelligence 464 / 展示名完好，Claude Code 85k→148.7k 星
 - human-intervention=1（存 token + 启用 workflow）/ auto-resolved=3 / 熔断=0
+
+## 2026-10-01（夜）Part D：外部账号注册 + PeerPush 提交
+- 用户让 Claude 自己注册 Part D 账号（hello@agentoolrank.com；X/PH 用他旧号，问 imagehub 要）。imagehub：无 X 号；PH 只有用户个人 maker 号 @ethan_tan11，pixtidy 10/03 北京 15:01 发布要用 → 10/10 前不用于 agentoolrank；允许只读复用 C:\pixtidy-browser\venv
+- 建 scripts/winbrowser（专用 profile C:\agentoolrank-chrome、端口 9223、工作目录 C:\agentoolrank-browser）
+- hello@agentoolrank.com：CF Email Routing → 0xzap0x@gmail.com，gmail_secondary MCP 自取验证码
+- PeerPush：注册成功（@hello2502，改名待办）→ 提交 AgentoolRank → 免费队列 #4190（~70 天），40% off 挽留折扣拒绝（spend-control）
+- Peerlist：注册+验证通过，username agentoolrank；onboarding 要真人姓名，品牌名被拒 → 暂停等用户定真名
+- launch kit docs/ops/launch-kit/ + 看板更新（commit 41c92b7、92960ae）
+- 坑：CDP 新实例绑 127.0.0.1 而非 [::1]；Windows python 读不到 WSL 路径；页面摘要打印 input value → Peerlist 密码泄露到会话（已作废重生成，改 <hidden> + fill_secret）；headlessui combobox 用 click_role option；Peerlist input 摘要名是 id；弹窗按钮 css=button:has-text('X'):visible
+- 发现小 bug：/alternatives 页 "Claude Code — Claude Code is ..." 名字重复
+- human-intervention=1（用户给方向 + imagehub 资源确认）/ auto-resolved=4 / 熔断=0

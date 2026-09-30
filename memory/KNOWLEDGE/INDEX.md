@@ -89,3 +89,11 @@
 | 修 CI 只修一步 / 后续步骤也坏 / workflow 逐步审读 | GOTCHAS.md#ci-fix-check-all-steps |
 | migrate-to-turso 覆盖 / INSERT OR REPLACE / 远端事实源 / --existing | GOTCHAS.md#remote-source-of-truth-no-overwrite-sync |
 | GitHub 恢复 / daily-update 修复重启 / T9 | LOG.md#2026-10-01 |
+| CDP 127.0.0.1 vs [::1] / 端口 9223 / 两个回环都试 | GOTCHAS.md#cdp-loopback-v4-or-v6 |
+| Windows python 读不到 WSL 路径 / run.sh 复制文件参数 | GOTCHAS.md#windows-python-wsl-paths |
+| 页面摘要打印 input value / 密码泄露 / <hidden> / fill_secret | GOTCHAS.md#page-summary-leaks-input-values |
+| headlessui combobox / click_role option / Peerlist #firstName / 弹窗按钮 :visible | GOTCHAS.md#ui-automation-selectors-peerlist-peerpush |
+| Peerlist 真人姓名 / 品牌不能冒充个人 | GOTCHAS.md#personal-network-no-brand-persona |
+| PeerPush 免费队列 #4190 / 40% off 挽留 / 用户名 @hello2502 | GOTCHAS.md#peerpush-free-queue-retention-offer |
+| 复用 imagehub venv 只读 / PH 个人号排期 | GOTCHAS.md#shared-browser-venv-readonly |
+| Part D 账号注册 / launch kit / scripts/winbrowser | LOG.md#2026-10-01（夜） |

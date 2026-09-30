@@ -77,7 +77,25 @@
 - **Turso 现为唯一数据源**，local.db 不再同步到远端
 - 新工具发现（discover/插入）已从每日任务移除 → 新工具入库需另走 /submit 审核或单独脚本
 
+## 2026-10-01（夜）Part D 外部账号 + 目录提交
+
+- **Windows 浏览器自动化** scripts/winbrowser/（run.sh / browser.py / task_act.py / task_peek.py / task_links.py / task_select_options.py / task_launch_kit.py / task_check_logins.py）
+  - 专用 Chrome profile `C:\agentoolrank-chrome`，CDP 端口 **9223**，工作目录 `C:\agentoolrank-browser`；复用 imagehub 的 `C:\pixtidy-browser\venv`（**只读复用：不 pip install/升级、不改其文件、不写其目录**）
+  - browser.py 同时尝试 127.0.0.1 与 [::1]（本实例绑 127.0.0.1:9223）；run.sh 把文件参数复制到 Windows 侧
+  - task_act：password 框摘要显示 `<hidden>`；`fill_secret` 步骤从文件读密码、不打印
+- **品牌邮箱** hello@agentoolrank.com：Cloudflare Email Routing → 0xzap0x@gmail.com，gmail_secondary MCP 可读验证码
+- **PeerPush**：邮箱验证码注册（用户名自动 @hello2502，改名入口未找到）；AgentoolRank 已提交（AI + Developer Tools / Software Comparison / AI Developers / Free / Web，logo+截图+first comment）→ 免费队列 **#4190（约 70 天）**，40% off 挽留折扣按 spend-control 拒绝；账号 ~/.config/secrets/accounts/agentoolrank-peerpush.json（600）
+- **Peerlist**：email+随机密码注册并验证（~/.config/secrets/accounts/agentoolrank-peerlist.json，600），username agentoolrank 已占；onboarding 要求真人姓名，"AgentoolRank Team" 被拒 → **暂停，等用户决定用谁的真名**（产品作为 Project 挂个人名下）。一次 Peerlist 密码曾经页面摘要泄露到会话输出，已作废并重生成
+- **X**：imagehub 无 X 号 → 等用户提供旧号
+- **Product Hunt**：只有用户个人 maker 号 ethan tan @ethan_tan11（OAuth GitHub tensam / Google tensam.th），pixtidy 10/03 北京 15:01 用它发布 → **10/10 前不用于 agentoolrank、不改资料**
+- **launch kit** docs/ops/launch-kit/（logo-512.png、4 张截图、kit.md 文案 + 账号状态表）；看板已更新
+- 待修小 bug：/alternatives 页开头 "Claude Code — Claude Code is ..." 名字重复（tagline 以名字开头时应省略）
+
 ## 进行中 / 下一步
+
+- [ ] /alternatives 页 tagline 以工具名开头时省略名字重复
+- [ ] PeerPush 改用户名（@hello2502 → agentoolrank）；评估点评积分换排位
+- [ ] Peerlist onboarding 等真名；X 等旧号；PH 10/10 后再用
 
 - [ ] 查 daily-update 463/464 中失败的 1 个仓库
 - [ ] 每日管道接入 generate-alternatives + generate-display-names（新工具入库仍是仓库名、无替代品）
@@ -85,7 +103,7 @@
 - [ ] /api/e 自建分析（服务端转发、webdriver 不上报、UTM 带进 Stripe metadata.src）
 - [ ] MCP 服务器 / API
 - [ ] 重复工具清理（待用户批准删数据）：embedchain≡mem0、gpt-index≡llama-index 指向同一仓库
-- [ ] 把 AgentoolRank 免费提交到 PeerPush / Peerlist 等目录
+- [~] 目录提交：PeerPush 已进免费队列 #4190；Peerlist 暂停；其余目录待做
 
 ## 等待用户（跨项目资源必须用户本人发放）
 
@@ -93,6 +111,7 @@
 - Cloudflare zone token（agentoolrank.com 在 CF 账户 Tensam.th@gmail.com，账户已定位）
 - PostHog project（如不用自建 /api/e）
 - 个人 Reddit / HN 账号是否可用于发帖
+- X 旧号；Peerlist 用谁的真名
 
 ## 旧待办（降级）
 
