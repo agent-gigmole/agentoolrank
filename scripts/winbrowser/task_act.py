@@ -14,13 +14,13 @@ from playwright.async_api import async_playwright
 from browser import ensure_chrome
 
 SUMMARY_JS = """() => {
-  const t = el => (el.innerText || el.value || el.getAttribute('aria-label') || el.placeholder || '').trim().replace(/\\s+/g,' ').slice(0,70);
+  const t = el => (el.type === 'password' ? '<hidden>' : (el.innerText || el.value || el.getAttribute('aria-label') || el.placeholder || '')).trim().replace(/\\s+/g,' ').slice(0,70);
   const vis = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
   return {
     h: [...document.querySelectorAll('h1,h2,h3')].filter(vis).map(t).filter(Boolean).slice(0,10),
     buttons: [...document.querySelectorAll('button,a[role=button],input[type=submit],[role=option],[role=link]')].filter(vis).map(t).filter(Boolean).slice(0,25),
     inputs: [...document.querySelectorAll('input:not([type=hidden]),textarea,select')].filter(vis).map(e => (e.name||e.id||e.type)+':'+(e.placeholder||e.getAttribute('aria-label')||'')+(e.value?'='+(e.type==='password'?'<hidden>':String(e.value).slice(0,30)):'')).slice(0,25),
-    errors: [...document.querySelectorAll('[role=alert],.error,.errors,.invalid-feedback,[class*=error]')].filter(vis).map(t).filter(Boolean).slice(0,6),
+    errors: [...document.querySelectorAll('[role=alert],.error,.errors,.invalid-feedback,[class*=error]')].filter(e => vis(e) && !['INPUT','TEXTAREA','SELECT'].includes(e.tagName)).map(t).filter(Boolean).slice(0,6),
     text: document.body.innerText.replace(/\\s+/g,' ').slice(0,600),
     captcha: !!document.querySelector('iframe[src*=captcha],iframe[src*=turnstile],iframe[src*=recaptcha],.g-recaptcha,.cf-turnstile,iframe[title*=challenge]')
   };
@@ -48,6 +48,8 @@ async def main(path):
                 elif k == "select": await page.locator(v[0].removeprefix("css=")).first.select_option(v[1], timeout=15000)
                 elif k == "upload": await page.locator(v[0].removeprefix("css=")).first.set_input_files(v[1], timeout=15000)
                 elif k == "wait": await page.wait_for_timeout(v)
+                elif k == "click_xy": await page.mouse.click(v[0], v[1])  # viewport coords, e.g. read off a screenshot
+                elif k == "type": await page.keyboard.type(v, delay=30)
                 elif k == "insert_text":  # [selector, text]: focus then insert like a paste (keeps newlines in rich editors)
                     await page.locator(v[0].removeprefix("css=")).first.click(timeout=15000)
                     await page.keyboard.insert_text(v[1])

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.agentoolrank/agent-tools",
+  "title": "AgentoolRank",
+  "description": "Search, compare and list 460+ open-source AI agent tools ranked by live GitHub activity.",
+  "websiteUrl": "https://agentoolrank.com",
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://agentoolrank.com/api/mcp"
+    }
+  ]
+}

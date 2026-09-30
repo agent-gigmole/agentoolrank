@@ -9,7 +9,7 @@ async def main(url, wait):
         print("URL:", pg.url)
         print("TITLE:", await pg.title())
         info = await pg.evaluate("""() => {
-          const t = el => (el.innerText || el.value || el.getAttribute('aria-label') || el.placeholder || '').trim().replace(/\\s+/g,' ').slice(0,80);
+          const t = el => (el.type === 'password' ? '<hidden>' : (el.innerText || el.value || el.getAttribute('aria-label') || el.placeholder || '')).trim().replace(/\\s+/g,' ').slice(0,80);
           return {
             h: [...document.querySelectorAll('h1,h2,h3')].map(t).filter(Boolean).slice(0,15),
             buttons: [...document.querySelectorAll('button,a[role=button],input[type=submit]')].map(t).filter(Boolean).slice(0,30),
