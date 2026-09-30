@@ -198,8 +198,8 @@
 
 ## 等待用户
 
-- [ ] Stripe 受限 key（是否共用 TENSO LLC）
-- [ ] Cloudflare zone token（agentoolrank.com）
+- [x] Stripe 受限 key（checkout + ops 均已存并验证，10-01）
+- [x] Cloudflare zone token（~/.config/cloudflare/agentoolrank.token，到期 2026-12-29，10-01 验证）
 - [x] Vercel Pro（已是 Pro，10-01 核实）
 - [x] GitHub 凭据（fine-grained token，~/.config/secrets/github-agentoolrank，2026-10-01）
 - [ ] PostHog project（可选）

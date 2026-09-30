@@ -122,7 +122,7 @@
     <li>每周一在这页写复盘：数据、做了什么、下周做什么。</li>
   </ul>
 
-  <h2>③ 需要你配合：交给 Claude in Chrome</h2>
+  <h2>③ 需要你配合：交给 Claude in Chrome（10-01 已全部完成，我逐项核对过）</h2>
   <p>把这份说明发给 Claude in Chrome，让它照着做：<a href="chrome-brief.md"><b>chrome-brief.md</b></a>（英文，分 A–D 四部分）。<br>
   <span class="muted">发给它的话可以直接用：「请打开 http://moneyflow-wsl.tailf1c73f.ts.net:8792/chrome-brief.md ，按里面的步骤做，做完给我最终报告。」如果它打不开 Tailscale 地址，就把文件内容复制粘贴给它。</span></p>
   <p class="muted">标 🔑 的地方它会停下来交给你。原因只有一个：密钥和密码只显示一次，不能经过它的对话。你复制之后，打开一个普通的 WSL 终端窗口（不要在 Claude Code 里用 ! 运行，那里收不到输入）运行对应命令并粘贴，输入不会显示，也不会进命令历史。</p>
@@ -130,12 +130,12 @@
     <li class="done"><span class="tag ok">A · 已完成</span><b>Chrome 做：</b>重新启用每日数据更新任务，创建只管 agentoolrank 仓库的 token。<br>
       <b>你做：</b>① 复制 token，运行 <code>save-secret github-agentoolrank</code>。② 如果 GitHub 要求 2FA，由你来验证。<br>
       <span class="muted">为什么：本机的 GitHub 登录早就失效了，代码推不上去；每日数据更新也从 6 月起停了，现在数据还停在 3 月 31 日。这一步最急。</span></li>
-    <li><span class="tag warn">B · Stripe</span><b>Chrome 做：</b>在 TENSO LLC 的 Stripe 账户里建两个受限 key（结账用、只读报表用），在业务描述里加上 AgentoolRank。<br>
+    <li class="done"><span class="tag ok">B · 已完成 10-01</span><b>Chrome 做：</b>在 TENSO LLC 的 Stripe 账户里建两个受限 key（结账用、只读报表用），在业务描述里加上 AgentoolRank。<br>
       <b>你做：</b>① 复制结账 key，运行 <code>stripe-save-key agentoolrank-checkout</code>。② 复制只读 key，运行 <code>stripe-save-key agentoolrank-ops</code>。③ 如果 Stripe 要求审核或补材料，由你处理。<br>
       <span class="muted">默认和 pixtidy 共用 TENSO LLC 收款，卡账单上显示 TENSO* AGENTOOLRANK。如果你不想共用，直接告诉我。</span></li>
-    <li><span class="tag warn">C · Cloudflare</span><b>Chrome 做：</b>找到 agentoolrank.com 所在的账户，开通 hello@agentoolrank.com 转发到你的 Gmail（验证邮件它会在 Gmail 里自己点），再建一个只管这个域名的 token。<br>
+    <li class="done"><span class="tag ok">C · 已完成 10-01</span><b>Chrome 做：</b>找到 agentoolrank.com 所在的账户，开通 hello@agentoolrank.com 转发到你的 Gmail（验证邮件它会在 Gmail 里自己点），再建一个只管这个域名的 token。<br>
       <b>你做：</b>① 域名在 Cloudflare 账户 <b>Tensam.th@gmail.com</b> 下，Chrome 要用这个账号登录。② 复制 token，运行 <code>cf-save-token agentoolrank</code>。</li>
-    <li><span class="tag warn">D · 品牌账号（进行中）</span><b>现状：</b>PeerPush ✅ 已提交免费队列 #4190；Peerlist ✅ Ethan Tan 个人主页 + AgentoolRank 项目；X ✅ 已登录你的个人号 Zephyr（没改资料）；Product Hunt ⏸ 10/10 以后再用（pixtidy 10/3 要用它发布）。<br><b>Chrome 做：</b>用 hello@agentoolrank.com 注册 X、Product Hunt、Peerlist、PeerPush，统一填好名称、简介和头像；在 PeerPush 走免费队列提交本站，插队和折扣弹窗一律拒绝。<br>
+    <li class="done"><span class="tag ok">D · 已完成 10-01</span><b>现状：</b>PeerPush ✅ 已提交免费队列 #4190；Peerlist ✅ Ethan Tan 个人主页 + AgentoolRank 项目；X ✅ 已登录你的个人号 Zephyr（没改资料）；Product Hunt ⏸ 10/10 以后再用（pixtidy 10/3 要用它发布）。<br><b>Chrome 做：</b>用 hello@agentoolrank.com 注册 X、Product Hunt、Peerlist、PeerPush，统一填好名称、简介和头像；在 PeerPush 走免费队列提交本站，插队和折扣弹窗一律拒绝。<br>
       <b>你做：</b>① 每个账号的密码由你输入。② 手机验证码和人机验证由你来。③ 每个账号建好后运行 <code>save-account x</code>、<code>save-account producthunt</code>、<code>save-account peerlist</code>、<code>save-account peerpush</code>，这样我以后可以自己发帖和维护。</li>
     <li class="done"><span class="tag ok">不用做了</span>Vercel：查过了，本站本来就在 Pro 团队下，可以商用。PostHog：不开了，我把事件直接存进自己的数据库，少一个账号。Reddit/HN 个人号：默认不用。</li>
   </ul>
@@ -144,6 +144,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 你那边的配合项全部完成，我逐项核对过：Stripe 只读 key 能读余额和交易；业务描述里已经写了 AgentoolRank；Cloudflare token 有效期到 12-29，只能管 agentoolrank.com。</li>
     <li>2026-10-01 AI agent 可以直接提交了（你提的方向）：通过 MCP 的 submit_tool，或者 POST /api/v1/submissions，一次就能拿到排队位置、4 档价格（免费 / $9 72 小时 / $19 24 小时 / $49 首页推荐 7 天）、按预算和期限推荐的档位，以及给主人的付款链接；之后凭 token 查进度。不对 agent 做挽留弹窗。线上全流程测过（测试付款单已作废）。</li>
     <li>2026-10-01 X 首帖已发（你的 Zephyr 号）：https://x.com/hwak8666621/status/2105370588521111867 ，链接带 ?ref=x，从 X 来的访问能在统计里单独看到。</li>
     <li>2026-10-01 收费功能做好了：$19 快速审核（24 小时内审完）/ $49 首页推荐 7 天。已用真实 Stripe 账户测试（建单后立即作废，没有扣款）。已配好 key（你 02:53 回了「配」），现在可以收钱了。</li>
