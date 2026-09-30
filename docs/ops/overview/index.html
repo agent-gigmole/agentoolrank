@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentoolRank 看板</title>
+<style>
+  :root { --bg:#fff; --fg:#16181d; --muted:#5b6270; --line:#e4e7ec; --soft:#f5f7fb; --accent:#1f5eff; --ok:#117a3d; --warn:#9a6400; --bad:#b42318; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0f1115; --fg:#e8eaee; --muted:#9aa3b2; --line:#262a33; --soft:#171a21; --accent:#6d93ff; --ok:#4cc38a; --warn:#e0a84a; --bad:#f07167; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.7 -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 28px 16px 80px; }
+  h1 { font-size: 28px; line-height:1.3; margin: 0 0 4px; }
+  h2 { font-size: 21px; margin: 40px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  h3 { font-size: 16px; margin: 20px 0 6px; color: var(--muted); }
+  .muted { color: var(--muted); font-size: 14px; }
+  .kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap:10px; margin: 16px 0; }
+  .kpi { background: var(--soft); border:1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+  .kpi b { display:block; font-size: 21px; }
+  .kpi span { font-size: 13px; color: var(--muted); }
+  ul { padding-left: 20px; } li { margin: 6px 0; }
+  .todo { list-style: none; padding: 0; }
+  .todo li { background: var(--soft); border:1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
+  .tag { display:inline-block; font-size:12px; padding: 0 8px; border-radius: 99px; border:1px solid currentColor; margin-right: 6px; white-space:nowrap; }
+  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+  a { color: var(--accent); overflow-wrap:anywhere; }
+  table { width:100%; border-collapse: collapse; font-size: 14px; display:block; overflow-x:auto; }
+  th, td { text-align:left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>AgentoolRank 看板</h1>
+  <p class="muted">更新于 2026-09-30（北京时间）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
+
+  <div class="kpis">
+    <div class="kpi"><b>$0</b><span>收入 / 0 单</span></div>
+    <div class="kpi"><b>$0</b><span>累计已付</span></div>
+    <div class="kpi"><b>3</b><span>9 月 Google 点击（曝光 241）</span></div>
+    <div class="kpi"><b>464</b><span>已收录工具</span></div>
+    <div class="kpi"><b>261</b><span>对比页（唯一有点击的页型）</span></div>
+    <div class="kpi"><b>0</b><span>创作者提交 / 付费</span></div>
+  </div>
+  <p class="muted">一句话：网站做好了但没人来，也没有收款的地方。现在的读者只是来看看的访客，他们几乎不花钱；像 PeerPush 这类站，真正付钱的是<b>想被人看到的工具作者</b>。所以下一步是把站点改成"工具作者主动来提交、带着自己的用户来"的双边平台，并加上收款。</p>
+
+  <h2>目标（我自己定的，按期复盘）</h2>
+  <p><b>长期目标：</b>让 AgentoolRank 产生收入并逐步放大。北极星指标 = <b>每周陌生人付款单数</b>；辅助指标 = 每周创作者提交数、Google 点击数。</p>
+  <table>
+    <tr><th>#</th><th>目标</th><th>截止</th><th>衡量方式</th></tr>
+    <tr><td>G1</td><td>能看清数据：站内分析 + 提交漏斗全程可测</td><td>10-07</td><td>能看到 访问→提交页→提交→付款 每一步的数字</td></tr>
+    <tr><td>G2</td><td>创作者提交通道上线，拿到 20 个外部提交（免费也算）</td><td>10-21</td><td>数据库里非本人提交数</td></tr>
+    <tr><td>G3</td><td><b>第一笔陌生人付款</b></td><td>10-31</td><td>Stripe 出现非本人付款</td></tr>
+    <tr><td>G4</td><td>月收入 ≥ $300；Google 月点击 ≥ 1,000</td><td>12-31</td><td>Stripe 当月净收入 / GSC</td></tr>
+  </table>
+  <p class="muted">每一步都要回答"它推动哪个 G"。没按时做到，先写复盘再调整，不偷偷改目标。花钱规则沿用 AgentKit spend-control：零收入期能免费就免费；不为加速付钱；单渠道 ≤ $50 先测后报，每笔都记台账。</p>
+
+  <h2>① 已经做了什么</h2>
+  <h3>产品（3–4 月）</h3>
+  <ul>
+    <li>从 GitHub 自动抓取并排名 464 个 AI Agent 工具，每个都有 LLM 生成的深度分析（Intelligence 100% 覆盖）。</li>
+    <li>页面：首页、分类、详情、261 个 "X vs Y" 对比页、Stack/Blueprint 方案页、周报页、中文版；sitemap、JSON-LD、动态 OG 图、徽章 API、订阅接口都有。</li>
+    <li>另外一个站 AIMarketRank（营销工具，52 个工具）部署在 vercel 子域名，还没买域名。</li>
+  </ul>
+  <h3>结果（诚实版）</h3>
+  <ul>
+    <li class="bad">流量基本为零：7 月 9 次点击，8 月 4 次，9 月 3 次。曝光主要来自品牌词，真正有需求的词排在 40–90 名。</li>
+    <li class="ok">唯一有效的页型是对比页：goose-vs-open-webui 排第 7.5 名，claude-code-vs-openhands、cursor-vs-kodus-ai 都在前 10 名。</li>
+    <li class="bad">没有收款、没有站内分析、不发邮件；4 月以后基本停更。</li>
+  </ul>
+  <h3>今天（9-30）</h3>
+  <ul>
+    <li>调研了 PeerPush 为什么流量大（结论见下一节）。</li>
+    <li>和 imagehub 项目核对了资源：它不代发任何密钥，收款、域名、分析的账号都要你本人开通（见 ③）。</li>
+    <li>定了目标 G1–G4，建了这个看板。</li>
+  </ul>
+
+  <h2>PeerPush 为什么流量大，我们能学什么</h2>
+  <ol>
+    <li><b>付钱的是工具作者，他们也带来流量。</b>作者提交产品后会把页面转发给自己的用户、朋友来点赞。它公布的数字是每月 110 万访问、3.2 万订阅（第三方列表写的是 82 万，都是它自己报的数，大头是作者自己）。→ 我们要做"提交你的工具"入口，给作者一个值得转发的页面和徽章。</li>
+    <li><b>给别人写点评可以换免费上架。</b>每写一条通过审核的点评得 80 分，积分高就能在免费队列里往前排，于是作者每天都回来。→ 抄这个设计，用积分换排队位置。</li>
+    <li><b>DR 75 的 dofollow 外链。</b>"100 个上架目录"之类的清单都会推荐它，做 SEO 的人愿意为这个外链付钱。→ 我们的外链权重还很低，现在卖不上价；要先靠作者挂徽章、以及上各种目录清单，把外链积累起来。</li>
+    <li><b>一个商品卖三档：</b>免费（排队）/ $39 立即上线 / $89 推广 7 天 / $229 推广 30 天，另有竞价广告位 $5 起。→ 我们先低价：免费 / $19 快速上线 / $49 首页推荐 7 天，等有流量再涨价。</li>
+    <li><b>每天和每周的榜单</b>（Product of the Day/Week）让作者有转发的理由，站内也有人每天回来看。</li>
+    <li><b>AI 能直接读它的数据</b>（MCP 服务器 + API，Claude、Cursor 可以直接查）。→ 这和我们做 AI Agent 工具最对口：做一个 AgentoolRank MCP，上架到各 MCP 目录，本身就能带来外链和开发者。</li>
+    <li><b>程序化 SEO 页型：</b>alternatives、用途、人群、平台。→ 我们已证明对比页有效，下一步补 "X alternatives" 页。</li>
+  </ol>
+
+  <h2>② 接下来怎么做</h2>
+  <h3>第 1 周（10-01 ~ 10-07）→ G1</h3>
+  <ul>
+    <li>加站内分析：浏览器事件发到自己的 /api/e，由服务端转发，不装第三方脚本（imagehub 的做法）。</li>
+    <li>做 <b>/submit</b>：作者填网址，AI 自动补全信息，进免费队列；页面上显示排在第几位。</li>
+    <li>做 <b>"Featured on AgentoolRank"</b> 徽章和挂徽章的说明，挂了徽章的作者排序靠前（这就是外链来源）。</li>
+    <li>把 AgentoolRank 免费提交到 PeerPush、Peerlist、launch 目录清单这些地方（走免费队列，不付插队费）。</li>
+  </ul>
+  <h3>第 2–3 周 → G2</h3>
+  <ul>
+    <li>Stripe 结账（$19 / $49），带 statement_descriptor_suffix 和 site metadata。前提：你开通了 key，Vercel 换成允许商用的套餐。</li>
+    <li>对比页全力做：从 GSC 找有曝光的词，补 "X alternatives" 和热门对比，更新旧对比页里的数据。</li>
+    <li>积分系统：点评别的工具可以换排队位置；每天、每周榜单页。</li>
+    <li>AgentoolRank MCP 服务器 + llms.txt，上架 Smithery、mcp.so、Glama 这些 MCP 目录。</li>
+    <li>联系 GitHub 排名前 50 的工具作者（每天最多几封，每封单独写）："你的项目上榜了，这是你的徽章"。</li>
+  </ul>
+  <h3>第 4 周以后 → G3 / G4</h3>
+  <ul>
+    <li>每周自动生成周报并发送；订阅人数上来后卖赞助位。</li>
+    <li>收费工具加联盟链接；AIMarketRank 继续暂停，等主站跑通再说。</li>
+    <li>每周一在这页写复盘：数据、做了什么、下周做什么。</li>
+  </ul>
+
+  <h2>③ 需要你配合（只有这几件只能你来做）</h2>
+  <ul class="todo">
+    <li><span class="tag warn">收款</span><b>Stripe：</b>能不能用 TENSO LLC 账户同时给 AgentoolRank 收款？可以的话，在后台建两个受限 key，用 <code>~/.local/bin/stripe-save-key</code> 存到本机：① agentoolrank-checkout（只开 Checkout Sessions Write）；② agentoolrank-ops（只读）。</li>
+    <li><span class="tag warn">域名</span><b>Cloudflare：</b>agentoolrank.com 不在 imagehub 用的那个 Cloudflare 账户里。请在它所在的账户里给我一个只管这个 zone 的 token（DNS + Email Routing），我用来配 hello@agentoolrank.com 收件转发，也作为品牌账号的注册邮箱。</li>
+    <li><span class="tag warn">托管</span><b>Vercel：</b>要收钱的站点不能放在 Hobby 套餐下（条款不允许商用）。请确认 agentoolrank 现在在哪个团队下，是否可以移到 Pro 团队。</li>
+    <li><span class="tag">分析</span><b>PostHog：</b>在后台新建一个 AgentoolRank 项目，把 project key 给我。（也可以不开，我先把事件存到自己的数据库。）</li>
+    <li><span class="tag">账号</span><b>社交账号：</b>我会用品牌邮箱注册 X、Product Hunt、Peerlist、PeerPush 等品牌账号。要是遇到手机验证或验证码，会在 Telegram 叫你。你个人的 Reddit / HN 账号能不能用来发 AgentoolRank？默认不用。</li>
+  </ul>
+  <p class="muted">其余的开发、内容、上架、联系作者、复盘都由我来做，不再找你。要花钱（超过 $50，或者长期固定支出）时，先把数据和账算好给你看。</p>
+
+  <h2>更新日志</h2>
+  <ul>
+    <li>2026-09-30 重启项目：调研 PeerPush，定目标 G1–G4，建这个看板，向 imagehub 核对资源。</li>
+  </ul>
+</main>
+</body>
+</html>
