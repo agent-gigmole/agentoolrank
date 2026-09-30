@@ -19,7 +19,7 @@ async function main() {
   const [sessions] = await q<{ n: number }>(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${real} AND name='page_view'`);
   const [views] = await q<{ n: number }>(`SELECT COUNT(*) n FROM events WHERE ${real} AND name='page_view'`);
   const [submitView] = await q<{ n: number }>(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${real} AND name='page_view' AND path='/submit'`);
-  const [submitDone] = await q<{ n: number }>(`SELECT COUNT(*) n FROM submissions WHERE created_at >= ${since} AND src NOT LIKE '%selftest%'`).catch(() => [{ n: 0 }]);
+  const [submitDone] = await q<{ n: number }>(`SELECT COUNT(*) n FROM submissions WHERE created_at >= ${since} AND src NOT LIKE '%selftest%' AND note NOT LIKE '%selftest%'`).catch(() => [{ n: 0 }]);
   const [paid] = await q<{ n: number }>(`SELECT COUNT(*) n FROM submissions WHERE created_at >= ${since} AND plan != 'free'`).catch(() => [{ n: 0 }]);
 
   console.log(`Last ${days} days`);

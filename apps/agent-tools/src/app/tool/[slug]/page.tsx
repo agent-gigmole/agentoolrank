@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
 import { MaintainerBox } from "@/components/MaintainerBox";
 import { toolTitle } from "@/lib/titles";
+import { staleness } from "@/lib/staleness";
 
 export const revalidate = 86400; // 24 hours
 
@@ -324,6 +325,18 @@ export default async function ToolPage({ params }: Props) {
           <div>
             <h1 className="text-3xl font-bold text-gray-900">{tool.name}</h1>
             <p className="text-gray-600 mt-1">{tool.tagline}</p>
+            {(() => {
+              const st = staleness(tool.last_commit_date, new Date());
+              if (!st.stale) return null;
+              return (
+                <p className="mt-2 text-sm bg-amber-50 text-amber-800 border border-amber-200 rounded-lg px-3 py-1.5 inline-block">
+                  No commits in {st.months} months — may not be actively maintained.{" "}
+                  {tool.alternatives.length > 0 && (
+                    <Link href={`/alternatives/${tool.id}`} className="underline font-medium">See maintained alternatives →</Link>
+                  )}
+                </p>
+              );
+            })()}
             <div className="flex items-center gap-2 mt-2">
               <span className={`text-xs px-2 py-0.5 rounded-full ${
                 tool.pricing === "open-source" ? "bg-green-100 text-green-800" :
