@@ -3,8 +3,8 @@
   "name": "com.agentoolrank/agent-tools",
   "title": "AgentoolRank",
   "description": "Search, compare and list 460+ open-source AI agent tools ranked by live GitHub activity.",
-  "websiteUrl": "https://agentoolrank.com",
-  "version": "1.0.0",
+  "websiteUrl": "https://agentoolrank.com/agents",
+  "version": "1.0.1",
   "remotes": [
     {
       "type": "streamable-http",

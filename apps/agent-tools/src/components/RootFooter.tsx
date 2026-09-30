@@ -15,6 +15,12 @@ export function RootFooter() {
             : "AgentoolRank — Data-driven AI agent tools directory"}
         </span>
         <div className="flex items-center gap-4">
+          <a href="/agents" className="hover:text-gray-600 transition-colors">
+            {isZh ? "给 AI Agent 用（MCP / API）" : "For AI agents (MCP / API)"}
+          </a>
+          <a href="/submit" className="hover:text-gray-600 transition-colors">
+            {isZh ? "提交工具" : "Submit a tool"}
+          </a>
           <a
             href="https://github.com/agent-gigmole/awesome-ai-agent-tools"
             target="_blank"
