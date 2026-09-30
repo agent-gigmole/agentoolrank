@@ -102,26 +102,46 @@
 - 看板 http://moneyflow-wsl.tailf1c73f.ts.net:8792/ 仍在跑（用户关了标签页，链接已重发 Telegram）
 - agentkit 远程 URL 明文 token 问题已移交 agentkit session（已改 remote、Telegram 通知用户撤销 GitHub CLI 授权并删 ~/.bashrc 失效 GITHUB_TOKEN）
 
-## 进行中 / 下一步（goal 模式：T4–T8 待做）
+## 2026-10-01 凌晨 T4–T8 + T6 上线 → Goal 第 1 轮收敛
 
-- [ ] T4 公开 JSON API /api/v1/tools
-- [ ] T5 MCP 服务器 /api/mcp
-- [ ] T6 审核脚本 review-submissions
-- [ ] T7 本地每日 enrich（新工具展示名 + alternatives）
-- [ ] T8 related_tools 填充
+- **T4 公开 API**：src/lib/public-api.ts（toPublicTool 稳定字段、intelligence 只出白名单键；clampLimit）；GET /api/v1/tools（q/category/sort/limit，CORS *，s-maxage 3600）、/api/v1/tools/[slug]
+- **T5 MCP**：src/lib/mcp.ts 手写无状态 Streamable HTTP（只回 JSON、无 SSE、无 SDK）；initialize 协议版本协商（2025-06-18/2025-03-26/2024-11-05）、ping、tools/list、tools/call；工具 search_tools / get_tool / get_alternatives；通知（无 id）→ HTTP 202；/api/mcp GET 405、OPTIONS CORS；线上实测通过；llms.txt 已列 API 与 MCP
+- **搜索**：packages/db searchTools 改为关键词命中加权（name 4 / tagline 3 / category 3 / description 1 / intelligence 1）+ 停用词，再按总分
+- **T8 related_tools**：src/lib/related.ts buildRelated（integrations 名称双向匹配，排除 alternatives，上限 8）+ scripts/fill-related.ts → **247/464**（验收 ≥400 未达，其余无集成数据，不硬凑）；详情页 "Works with {name}" 区块
+- **T7 并入 T6**
+- **T6 审核**：src/lib/review.ts（parseReview 未知类目强制 reject、pricing 兜底 freemium；toolRowFromReview source='manual'；hasBacklink；reviewOrder 付费 > 挂徽章 > 先到）+ scripts/review-submissions.ts（抓官网文本 + README → deepseek-v3.2 只依据证据判定；--apply 入库并跑 generate-alternatives / fill-related；--try 单站测试）；实测 browser-use.com approve、canva.com reject
+- **每日运营 cron**：apps/agent-tools/scripts/daily-ops.sh（unset GITHUB_TOKEN；审核 --apply --free=3 + 7 天漏斗 → data/ops-logs/，已 gitignore）；WSL crontab `30 21 * * *`（系统时区 CST = 北京 21:30）
+- vitest 9 文件 49 测试全绿；turbo build 过；线上 / /submit /alternatives/claude-code /llms.txt /api/mcp 均 200
+- commits：b305fe2、fdcc869、88ebdf4、fdddf75（均已 push）
+
+## Goal 第 2 轮（进行中，见 TASK.md）
+
+- 目标：G2 20 个外部提交（10-21）/ G3 首笔陌生付款（10-31）
+- 结束条件：T10、T12、T13 done ∧ 测试全绿 ∧ build 过 ∧ 线上 /submit 显示付费档且 checkout session 可创建（立即 expire）
+- [ ] T10 Stripe 结账（$19 快速审核 / $49 首页推荐 7 天；key 已到位）
+- [ ] T12 对比页扩充（按 GSC 有曝光查询）
+- [ ] T13 首页 Featured 位 + 提交成功页付费选项（依赖 T10）
+- [ ] T14 X 首帖（human：等用户确认草稿）
+- [ ] T11 重复工具清理（human 批准删数据）：embedchain≡mem0、gpt-index≡llama-index、**Letta ×2**，ragflow / voltagent 小写名可能也是重复行
+
+## 其他待办
+
 - [ ] 查 daily-update 463/464 中失败的 1 个仓库
-- [ ] X 首帖：等用户在 Telegram 确认后再发
-- [ ] Product Hunt：用户个人号（Google 登录 tensam.th@gmail.com），10/10 后再用
+- [ ] Product Hunt：用户个人号，10/10 后再用
 - [ ] PeerPush 改用户名（@hello2502）；其余目录提交
 - [ ] 看板接入漏斗数据
+
+## 环境注意
+
+- 本会话环境仍带失效 GITHUB_TOKEN（~/.bashrc 已注释，但旧 shell 继承）→ git/gh 命令前 `env -u GITHUB_TOKEN`
+- 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知用户，未改动）
 
 ## 等待用户（跨项目资源必须用户本人发放）
 
 - X 首帖确认（草稿已在 Telegram）
-- Stripe：是否共用 TENSO LLC + 建受限 key（T10）
-- 重复工具删除批准（T11：embedchain≡mem0、gpt-index≡llama-index）
+- 重复工具删除批准（T11）
 - Cloudflare zone token；个人 Reddit / HN 账号是否可用
 
 ## 旧待办（降级）
 
-- 对比页 "X vs Y" 继续扩充（唯一有效 SEO 页型）；类目过粗
+- 类目过粗（claude-code 与 llama-cpp 同在 agent-frameworks）

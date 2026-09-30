@@ -100,3 +100,8 @@
 | push 显式 URL / origin/main 假 ahead / git fetch 核实 | GOTCHAS.md#push-explicit-url-stale-tracking-ref |
 | X 登录 / 继续按钮误点使用手机 / Enter / 使用密码 / 个人号不改资料 | GOTCHAS.md#x-login-flow |
 | 自建统计 /api/e / events 表 / Analytics.tsx / funnel-report / T1–T3 | LOG.md#2026-10-01（深夜） |
+| MCP 服务器最小实现 / Streamable HTTP / 通知 202 / 协议版本协商 / 无 SDK | GOTCHAS.md#mcp-minimal-stateless-server |
+| 搜索排序 / OR-LIKE 泛词 / 字段加权 / 停用词 | GOTCHAS.md#search-or-like-ranks-generic-hits |
+| related_tools / 互补≠相似 / integrations 双向 | GOTCHAS.md#related-by-integrations-not-similarity |
+| crontab 明文 token / crontab -l 回显 | GOTCHAS.md#crontab-plaintext-secrets |
+| 公开 API / MCP / 审核脚本 review-submissions / daily-ops cron / T4–T8 | LOG.md#2026-10-01 凌晨 |

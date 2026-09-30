@@ -295,3 +295,20 @@
 - 入口 /i/flow/login；输入邮箱后**按 Enter** 提交 —— 按文本匹配"继续"会误中"使用手机继续"
 - 默认发邮箱验证码（到 tensam.th@gmail.com，Claude 的 gmail_secondary 是 0xzap0x，读不到）→ 点右上"使用密码"，用 fill_secret 填密码即可登录
 - 该号是用户个人 build-in-public 号（Zephyr @hwak8666621），不改资料；每条对外发帖先经用户确认（对外身份闸）
+
+## mcp-minimal-stateless-server
+- 目录站 MCP 服务器无需 SDK：Next.js route 手写 JSON-RPC 即可（Streamable HTTP 允许只回 application/json、不开 SSE、无 session）
+- 必做：initialize 回显客户端请求的协议版本（支持列表内则用它，否则回最新）、ping、tools/list、tools/call（结果放 content[{type:'text'}]）
+- **通知（无 id，如 notifications/initialized）不能回 JSON-RPC 响应 → HTTP 202 空体**；GET 回 405（不支持 SSE 流）；OPTIONS 给 CORS
+- 未知方法 -32601、参数错 -32602；工具业务错误用 result.isError=true 而非 JSON-RPC error
+
+## search-or-like-ranks-generic-hits
+- 多关键词 OR-LIKE 后按"总分/热度"排序 → 泛词（agent、ai）命中几乎所有工具，结果等于热度榜
+- 修复：按字段加权计命中分（name 4 / tagline 3 / category 3 / description 1 / intelligence 1）+ 停用词过滤，先按命中分再按总分
+
+## related-by-integrations-not-similarity
+- "相关/互补工具"不要用 TF-IDF 相似度（那是替代品）；用 integrations 数据双向匹配名称、排除已在 alternatives 的 → 更可信
+- 覆盖率受数据限制（247/464），不为达标硬凑
+
+## crontab-plaintext-secrets
+- 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN，`crontab -l` 会打印进会话；编辑 crontab 时用 `crontab -l | grep -v ... ` 或只追加，避免整份回显；已告知用户，未改动

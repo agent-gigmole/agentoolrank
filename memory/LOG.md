@@ -441,3 +441,13 @@
 - 偏差：T8 related 覆盖 247/464（验收写 ≥400），原因是其余工具无可匹配集成数据，未硬凑。
 - 本轮 human-intervention=4（GitHub token、Stripe key、Part D 账号、真名）/ auto-resolved=6 / 熔断=0。
 - 第 2 轮开启：T10 Stripe（checkout key 已到位）、T12 对比页扩充、T13 Featured 位、T14 X 首帖（human）、T11 去重（human）。
+
+## 2026-10-01 凌晨 /loop 自主推进：T4/T5/T6/T8 技术细节
+- T4：public-api.ts toPublicTool（稳定字段、intelligence 白名单键）+ clampLimit；/api/v1/tools（q/category/sort/limit，CORS *，s-maxage 3600）、/api/v1/tools/[slug]（b305fe2）
+- T5：mcp.ts 手写无状态 Streamable HTTP（JSON 响应、无 SSE、无 SDK）；initialize 协议版本协商 2025-06-18/2025-03-26/2024-11-05、ping、tools/list、tools/call（search_tools/get_tool/get_alternatives）；通知无 id → 202；GET 405、OPTIONS CORS；线上实测通过；llms.txt 列出 API/MCP
+- 搜索：searchTools 原 OR-LIKE 按总分排序 → 泛词命中一切；改为命中加权（name4/tagline3/category3/desc1/intel1）+ 停用词再按总分；"coding agent" → SWE-agent/Codex/Plandex/Claude Code（fdcc869）
+- T8：related.ts buildRelated（integrations 双向名称匹配、排除 alternatives、上限 8）+ fill-related.ts → 247/464；详情页 Works with 区块（88ebdf4）；偏差：≥400 未达，不硬凑
+- T6：review.ts（未知类目强制 reject、pricing 兜底 freemium、source='manual'、hasBacklink、reviewOrder 付费>徽章>先到）+ review-submissions.ts（官网文本+README 证据 → deepseek-v3.2；--apply/--try）；browser-use.com approve、canva.com reject（fdddf75）
+- daily-ops.sh + crontab `30 21 * * *`（CST=北京 21:30），日志 data/ops-logs/（gitignore）
+- 发现：crontab 明文 TELEGRAM_BOT_TOKEN（已告知，未改）；重复工具 Letta ×2、ragflow/voltagent 小写名疑似重复 → 补进 T11；会话环境仍带失效 GITHUB_TOKEN → env -u
+- vitest 9 文件 49 测试
