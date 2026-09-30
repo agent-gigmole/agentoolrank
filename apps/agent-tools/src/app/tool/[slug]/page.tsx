@@ -6,6 +6,7 @@ import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
 import { MaintainerBox } from "@/components/MaintainerBox";
+import { toolTitle } from "@/lib/titles";
 
 export const revalidate = 86400; // 24 hours
 
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(tool.name)}&icon=🔧&tools=${tool.github_stars || 0}`;
 
   return {
-    title: `${tool.name} — AI Agent Tool Review & Alternatives`,
+    title: toolTitle(tool.name, tool.tagline, tool.github_stars),
     description: desc,
     openGraph: {
       title: tool.name,

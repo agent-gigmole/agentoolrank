@@ -6,6 +6,7 @@ import type { Tool } from "@repo/db/schema";
 import type { Metadata } from "next";
 import { compareSlug } from "@/lib/alternatives";
 import { canonicalToolId } from "@/lib/merged";
+import { compareTitle } from "@/lib/titles";
 
 export const revalidate = 86400; // 24h
 
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [a, b] = await Promise.all([getToolBySlug(parsed[0]), getToolBySlug(parsed[1])]);
   if (!a || !b) return {};
   return {
-    title: `${a.name} vs ${b.name} — AI Agent Tool Comparison`,
+    title: compareTitle(a.name, b.name, new Date().getFullYear()),
     alternates: { canonical: `/compare/${compareSlug(a.id, b.id)}` },
     description: `Compare ${a.name} and ${b.name}. Side-by-side comparison of features, GitHub activity, pros & cons.`,
   };
