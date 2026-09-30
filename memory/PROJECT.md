@@ -2,6 +2,8 @@
 
 ## 🎯 当前 Goal（2026-09-30 用户授权：Claude 为项目总负责人，开发+运营，只在必要时找用户）
 
+**用户正式 Goal（2026-10-01 03:17）：** 你是 AgentoolRank（ai-directory）的完全负责人，目标是让项目盈利，并持续滚动地放大收益。自主推进运营、开发和推广，每轮都问『这一步推动收入了吗』；花钱走 spend-control（五问 + 台账），不可逆动作走人工闸；看板实时更新；可泛化的经验反哺 agentkit。
+
 **总目标：让 AgentoolRank 产生收入并逐步放大。** 北极星 = 每周陌生人付款单数；辅助 = 每周创作者提交数、Google 点击。
 **核心转向（学 PeerPush）：** 付钱的是想被看到的工具作者，不是访客 → 做 /submit（免费队列 + $19 快速上线 + $49 首页推荐 7 天）、徽章外链、积分换排队、日/周榜、MCP 服务器、对比页 + alternatives 页。
 花钱遵守 $AGENTKIT_ROOT/shared/harnesses/spend-control.md（零收入期能免费就免费、不为加速付钱、单渠道 ≤$50 先测后报、记台账 docs/ops/spend-ledger.md）。
