@@ -135,7 +135,7 @@
       <span class="muted">默认和 pixtidy 共用 TENSO LLC 收款，卡账单上显示 TENSO* AGENTOOLRANK。如果你不想共用，直接告诉我。</span></li>
     <li><span class="tag warn">C · Cloudflare</span><b>Chrome 做：</b>找到 agentoolrank.com 所在的账户，开通 hello@agentoolrank.com 转发到你的 Gmail（验证邮件它会在 Gmail 里自己点），再建一个只管这个域名的 token。<br>
       <b>你做：</b>① 域名在 Cloudflare 账户 <b>Tensam.th@gmail.com</b> 下，Chrome 要用这个账号登录。② 复制 token，运行 <code>cf-save-token agentoolrank</code>。</li>
-    <li><span class="tag warn">D · 品牌账号（进行中）</span><b>现状：</b>PeerPush ✅ 已提交免费队列 #4190；Peerlist ⏸ 要真人姓名；X ⏸ 等你给旧号；Product Hunt ⏸ 10/10 以后再用（pixtidy 10/3 要用它发布）。<br><b>Chrome 做：</b>用 hello@agentoolrank.com 注册 X、Product Hunt、Peerlist、PeerPush，统一填好名称、简介和头像；在 PeerPush 走免费队列提交本站，插队和折扣弹窗一律拒绝。<br>
+    <li><span class="tag warn">D · 品牌账号（进行中）</span><b>现状：</b>PeerPush ✅ 已提交免费队列 #4190；Peerlist ✅ Ethan Tan 个人主页 + AgentoolRank 项目；X ⏸ 等你给旧号；Product Hunt ⏸ 10/10 以后再用（pixtidy 10/3 要用它发布）。<br><b>Chrome 做：</b>用 hello@agentoolrank.com 注册 X、Product Hunt、Peerlist、PeerPush，统一填好名称、简介和头像；在 PeerPush 走免费队列提交本站，插队和折扣弹窗一律拒绝。<br>
       <b>你做：</b>① 每个账号的密码由你输入。② 手机验证码和人机验证由你来。③ 每个账号建好后运行 <code>save-account x</code>、<code>save-account producthunt</code>、<code>save-account peerlist</code>、<code>save-account peerpush</code>，这样我以后可以自己发帖和维护。</li>
     <li class="done"><span class="tag ok">不用做了</span>Vercel：查过了，本站本来就在 Pro 团队下，可以商用。PostHog：不开了，我把事件直接存进自己的数据库，少一个账号。Reddit/HN 个人号：默认不用。</li>
   </ul>
@@ -144,6 +144,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 Peerlist：用你确认的名字 Ethan Tan 建了个人主页 peerlist.io/agentoolrank，AgentoolRank 作为项目挂在下面。</li>
     <li>2026-10-01 PeerPush：我自己用 hello@agentoolrank.com 注册，AgentoolRank 已提交到免费队列，排第 4190 位（约 70 天）。弹出的"4 折付费插队"已拒绝。</li>
     <li>2026-10-01 每日数据更新恢复了：代码已推到 GitHub，每日任务手动跑了一次，成功。数据从 3 月 31 日更新到今天（例如 Claude Code 的星数从 8.5 万变成 14.9 万）。任务改成了只刷新已上架工具的指标，不会再用旧的本地库覆盖线上数据。</li>
     <li>2026-10-01 上线：460 个"X alternatives"页（已进 sitemap）、/submit 免费提交队列（带徽章，挂徽章可优先审核）、导航加 Submit。276 个工具名从仓库名改成官方名（例如 claude-code → Claude Code）。LLM 花费 $0.28。</li>

@@ -19,6 +19,6 @@ Makers can submit their agent tools for free and get a badge with live star coun
 | Platform | Status |
 |---|---|
 | PeerPush | ✅ hello@agentoolrank.com (email code login), user @hello2502 (rename pending), product https://peerpush.com/p/agentoolrank — free queue #4190, ~70 days (joined 2026-10-01; declined 40% off upsell) |
-| Peerlist | ⏸ email verified, username agentoolrank reserved; profile needs a real person's name (brand names rejected) — waiting on owner |
+| Peerlist | ✅ https://peerlist.io/agentoolrank — personal profile "Ethan Tan" (owner-approved real name), project AgentoolRank (AI, DevTool) added 2026-10-01; Launchpad weekly launch not yet used |
 | X | ⏸ owner has an old account; imagehub doesn't have it — ask owner |
 | Product Hunt | ⏸ owner's personal maker account @ethan_tan11 (OAuth via GitHub tensam / Google tensam.th); pixtidy launches on it 10/3 → don't touch profile, don't use for AgentoolRank before 10/10 |
