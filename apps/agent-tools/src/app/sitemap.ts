@@ -30,22 +30,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Tool detail pages (the SEO long-tail gold)
-  const tools = await db.execute("SELECT id, updated_at FROM tools ORDER BY score DESC");
+  const tools = await db.execute("SELECT id, updated_at, data_refreshed_at FROM tools ORDER BY score DESC");
   const toolPages: MetadataRoute.Sitemap = tools.rows.map((row) => {
-    const r = row as unknown as { id: string; updated_at: string };
+    const r = row as unknown as { id: string; updated_at: string; data_refreshed_at: string | null };
+    const last = [r.updated_at, r.data_refreshed_at].filter(Boolean).sort().pop()!;
     return {
       url: `${baseUrl}/tool/${r.id}`,
-      lastModified: new Date(r.updated_at),
+      lastModified: new Date(last),
       changeFrequency: "weekly" as const,
       priority: 0.6,
     };
   });
 
   // Alternatives pages (high-intent: "X alternatives")
-  const withAlts = await db.execute("SELECT id FROM tools WHERE alternatives IS NOT NULL AND alternatives != '[]' ORDER BY score DESC");
+  const withAlts = await db.execute("SELECT id, data_refreshed_at FROM tools WHERE alternatives IS NOT NULL AND alternatives != '[]' ORDER BY score DESC");
   const alternativesPages: MetadataRoute.Sitemap = withAlts.rows.map((row) => ({
     url: `${baseUrl}/alternatives/${(row as unknown as { id: string }).id}`,
-    lastModified: new Date(),
+    lastModified: new Date(String((row as unknown as { data_refreshed_at: string }).data_refreshed_at ?? Date.now())),
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
