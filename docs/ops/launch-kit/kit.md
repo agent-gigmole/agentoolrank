@@ -29,7 +29,7 @@ Makers can submit their agent tools for free and get a badge with live star coun
 | PulseMCP | ✗ submissions paused site-wide (2026-10-01) |
 | mcp.so | ⏸ only $39 paid auto-submit or a support ticket; not paid (spend-control) |
 | AI Agents List | ⏸ account hello@agentoolrank.com (creds agentoolrank-aiagentslist.json), eligibility PASSED, draft saved; only paid tiers $29/$49 → not paid (zero-revenue rule) |
-| Official MCP Registry (registry.modelcontextprotocol.io) | ✅ com.agentoolrank/agent-tools v1.0.0, remote streamable-http https://agentoolrank.com/api/mcp — DNS auth (TXT v=MCPv1 on agentoolrank.com; private key ~/.config/secrets/mcp-registry-agentoolrank.pem). Re-publish: bump version in apps/agent-tools/mcp/server.json, `mcp-publisher login dns …` then `mcp-publisher publish` (2026-10-01) |
+| Official MCP Registry (registry.modelcontextprotocol.io) | ✅ com.agentoolrank/agent-tools v1.0.0, remote streamable-http https://agentoolrank.com/api/mcp — DNS auth (TXT v=MCPv1 on agentoolrank.com; private key ~/.config/secrets/mcp-registry-agentoolrank.pem). v1.0.1 websiteUrl → /agents. Re-publish: bump version in apps/agent-tools/mcp/server.json, `mcp-publisher login dns …` (registry JWT expires quickly — log in right before publishing) then `mcp-publisher publish` |
 
 ## Email sending
 | Service | Status |
