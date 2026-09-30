@@ -127,7 +127,7 @@
   <span class="muted">发给它的话可以直接用：「请打开 http://moneyflow-wsl.tailf1c73f.ts.net:8792/chrome-brief.md ，按里面的步骤做，做完给我最终报告。」如果它打不开 Tailscale 地址，就把文件内容复制粘贴给它。</span></p>
   <p class="muted">标 🔑 的地方它会停下来交给你。原因只有一个：密钥和密码只显示一次，不能经过它的对话。你复制之后，打开一个普通的 WSL 终端窗口（不要在 Claude Code 里用 ! 运行，那里收不到输入）运行对应命令并粘贴，输入不会显示，也不会进命令历史。</p>
   <ul class="todo">
-    <li><span class="tag warn">A · GitHub</span><b>Chrome 做：</b>重新启用每日数据更新任务，创建只管 agentoolrank 仓库的 token。<br>
+    <li class="done"><span class="tag ok">A · 已完成</span><b>Chrome 做：</b>重新启用每日数据更新任务，创建只管 agentoolrank 仓库的 token。<br>
       <b>你做：</b>① 复制 token，运行 <code>save-secret github-agentoolrank</code>。② 如果 GitHub 要求 2FA，由你来验证。<br>
       <span class="muted">为什么：本机的 GitHub 登录早就失效了，代码推不上去；每日数据更新也从 6 月起停了，现在数据还停在 3 月 31 日。这一步最急。</span></li>
     <li><span class="tag warn">B · Stripe</span><b>Chrome 做：</b>在 TENSO LLC 的 Stripe 账户里建两个受限 key（结账用、只读报表用），在业务描述里加上 AgentoolRank。<br>
@@ -144,6 +144,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-01 每日数据更新恢复了：代码已推到 GitHub，每日任务手动跑了一次，成功。数据从 3 月 31 日更新到今天（例如 Claude Code 的星数从 8.5 万变成 14.9 万）。任务改成了只刷新已上架工具的指标，不会再用旧的本地库覆盖线上数据。</li>
     <li>2026-10-01 上线：460 个"X alternatives"页（已进 sitemap）、/submit 免费提交队列（带徽章，挂徽章可优先审核）、导航加 Submit。276 个工具名从仓库名改成官方名（例如 claude-code → Claude Code）。LLM 花费 $0.28。</li>
     <li>2026-10-01 上线 /llms.txt，AI 助手可以读到站点索引。</li>
     <li>2026-10-01 修好了部署：4 月重构以后所有部署都失败，线上一直是旧版本。现在已经能正常发布，这次部署后所有页面都返回 200。</li>
