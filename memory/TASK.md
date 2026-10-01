@@ -180,6 +180,15 @@
 - 禁止：用 AI 冒充真实用户在 Reddit/Quora 埋品牌词（BOSS_DECISIONS #16）
 - 闸: auto
 
+### T23 对比内容：上架渠道对比 + X vs Y / alternatives 长文
+- 状态: in_progress（第一篇完成：/where-to-list，2026-10-01，commit 191406f）
+- [x] /where-to-list AI agent 工具上架渠道对比（免费 vs 付费，事实逐条核对注明日期，自家短板 + FAQPage，sitemap + /submit 入口，IndexNow 已推）
+- [ ] 可选：站外文章（dev.to 等）canonical 回链 /where-to-list
+- [ ] 更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）
+- [ ] directories.ts CHECKED 过期后重新核对竞品价格/政策
+- 闸: auto（不得冒充第三方；竞品事实必须有来源与核对日期）
+- 失败: 0
+
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked
 - 依赖: -

@@ -192,14 +192,27 @@
 - 漏斗报表排除 note 含 selftest 的提交；T19：10-02 X 帖发 /report 数据（每项目每天 ≤1 条）
 - Vercel 一次部署 "Resource provisioning timed out"（Vercel 侧）→ 重试成功
 
+## 2026-10-01 T20–T23（邮件简报代码 / LLM 迁 Sub2API / GEO / 对比内容第一篇）
+
+- T20 每周邮件简报代码就绪（blocked：Brevo 手机验证，SIM 10-02；订阅者 0）
+- T21 done：批处理 LLM 统一走本机 Sub2API（gpt-5.6-sol），失败回退 OpenRouter；线上 /api/chat 仍 OpenRouter（改线上 env = 凭证闸）
+- T22 GEO：引用源挖掘 + 答案块格式（关键页前 50 字给结论、H2 分段、带数字）
+- dev.to 数据长文已发布（canonical→/report）；外联获老板独立授权（≤10 封/天、署名 Ethan Tan、只用公开邮箱），仅等 Brevo
+- **T23 对比内容第一篇上线**：https://agentoolrank.com/where-to-list（AI agent 工具上架渠道对比：免费 vs 付费）
+  - 数据 apps/agent-tools/src/lib/directories.ts（CHECKED=2026-10-01；PeerPush / AI Agents List / mcp.so / mcpservers.org / 官方 MCP Registry / AgentoolRank，每行带提交页 URL，事实逐条在对方提交页核对）
+  - 页面：answer-first 短答 + 自家产品披露 + 对比表（竞品链接 nofollow）+ "选哪个"如实写自家流量小 + FAQPage JSON-LD + /submit 与 /agents CTA；入 sitemap，/submit 页加入口
+  - commit 191406f，已部署（200）、已 push；IndexNow 推 2253 URL HTTP 200；看板更新日志已记（commit d2d8fed）
+  - CHECKED 日期过期后需重新核对竞品价格/政策（价格会变）
+
 ## 待办 / 下一步
 
-- [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to；HN/Reddit 与 imagehub 错开 ≥1 周）、外联模板+署名
+- [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to 已发；HN/Reddit 与 imagehub 错开 ≥1 周，Show HN 最早 10-07）
 - [ ] T19 10-02 X 帖（/report 数据，x-post）
-- [ ] 10-02 实体 SIM 到 → Brevo 手机验证 → 发信通道（T17 徽章邀请外联，34 位）
+- [ ] T17 外联：10-02 实体 SIM 到 → Brevo 手机验证 → 发信（≤10 封/天）；同时解锁 T20 周报
+- [ ] T23 后续：可选站外文章 canonical 回链 /where-to-list；更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
-- [ ] T12 对比页扩充（按 GSC 有曝光查询）；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
+- [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道
 - [ ] 新工具入库接展示名/alternatives/related 管道；related 覆盖 350/669
 - [ ] 观察 Google 是否重新抓取 sitemap；IndexNow 每日推送跟踪
@@ -210,3 +223,4 @@
 - 会话环境可能仍带失效 GITHUB_TOKEN → git/gh 前 `env -u GITHUB_TOKEN`
 - 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知，未改动）
 - 长期服务用 systemctl --user，不用 pkill -f
+- 非交互 shell 无 bun：用 ~/.bun/bin/bun（ops 脚本已 export PATH）；scripts/indexnow.ts 等含 top-level await 的脚本只能用 bun 跑，npx tsx 报 cjs 错

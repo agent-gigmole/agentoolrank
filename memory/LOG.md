@@ -493,3 +493,10 @@
 - dev.to 品牌号 https://dev.to/agentoolrank 注册完成：首次提交未勾 reCAPTCHA 被拒且表单清空 → task_act 新增 frame_click 勾选直接通过 → 重填提交 → gmail_secondary 读确认邮件完成验证
 - Vercel "Resource provisioning timed out" → 重试成功；漏斗排除 selftest 提交；T19 排 10-02 X 帖
 - human-intervention=1（社区帖待老板批，经 agentkit）/ auto-resolved=4（reCAPTCHA 未勾被拒→frame_click、表单清空→重填、Vercel provisioning 超时→重试、urllib SSL 超时→curl 核对）/ 熔断=0
+
+## 2026-10-01 T23 对比内容第一篇 /where-to-list 上线
+- 页面 https://agentoolrank.com/where-to-list：AI agent 工具上架渠道对比（免费 vs 付费）；数据 src/lib/directories.ts（CHECKED=2026-10-01，PeerPush / AI Agents List / mcp.so / mcpservers.org / 官方 MCP Registry / AgentoolRank，每行带提交页 URL）
+- 结构：answer-first 短答 + 自家产品披露 + 对比表（竞品 nofollow）+ "选哪个"如实写自家流量小 + FAQPage + /submit、/agents CTA；入 sitemap，/submit 加入口
+- commit 191406f 部署 200、已 push；IndexNow 2253 URL HTTP 200；看板记录 d2d8fed
+- 坑：非交互 shell 无 bun → ~/.bun/bin/bun；indexnow.ts 有 top-level await，npx tsx 报 cjs 错，只能 bun 跑
+- human-intervention=0 / auto-resolved=2（bun 不在 PATH→绝对路径、tsx cjs 错→改用 bun）/ 熔断=0

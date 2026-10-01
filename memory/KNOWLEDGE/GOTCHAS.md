@@ -412,3 +412,10 @@
 
 ## seo-audit-script-ssl-timeout
 - 自写 Python urllib 巡检脚本偶发 SSL 握手超时 → 用 curl 复核再判定页面问题，别误报
+
+## bun-path-noninteractive-tla
+- 非交互 shell（Bash 工具 / cron）PATH 不含 ~/.bun/bin → `bun: command not found`；用 `~/.bun/bin/bun run ...` 或脚本内 `export PATH="$HOME/.bun/bin:$PATH"`（daily/hourly/weekly-ops.sh 已这样做）
+- scripts/indexnow.ts 等用 top-level await 的脚本，在无 "type": "module" 的包里 `npx tsx` 会按 CJS 编译报 top-level await 不支持 → 只能用 bun 跑（不要为此改成 async main 包裹，bun 是项目约定运行时）
+
+## comparison-page-facts-dated
+- 竞品对比页（/where-to-list）：竞品价格/政策写进 src/lib/directories.ts 并带 CHECKED 日期 + 每行提交页 URL；页面显式披露"这是自家产品"、如实写自家短板（流量小）；竞品外链 rel=nofollow；价格会变，过期要重新核对
