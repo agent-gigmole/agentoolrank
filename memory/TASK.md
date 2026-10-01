@@ -135,7 +135,7 @@
 - 失败: 0
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
-- 状态: 发送就绪（10-02），待 22:00 CST 第一批 10 封
+- 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封，先 --dry-run 看名单与实时排名
 - 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [ ] 22:00 第一批 [ ] 徽章嵌入数追踪
 - 依赖: -
 - 验收: 模板经用户同意；每天 ≤10 封限速发送；徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）可追踪
@@ -216,6 +216,22 @@
 - [ ] 更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）
 - [ ] directories.ts CHECKED 过期后重新核对竞品价格/政策
 - 闸: auto（不得冒充第三方；竞品事实必须有来源与核对日期）
+- 失败: 0
+
+### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
+- 状态: in_progress（2026-10-02 起）
+- 台账: ~/data/backlinks/directory-log.csv，只用 dirsub.py check/add 读写（scripts/dirlog.sh 已废弃）
+- 进度: 累计 submitted 12 / retry 1 / todo 4（10-02 05:50）
+  - 10-02 新提交 7：futuretools、websitelaunches（之前已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally）、startupstash（Typeform）
+  - retry：purshology
+  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、smithery、producthunt（10/10 后老板本人号）、betterlaunch
+- 目标: agentkit 要求 10-03 前累计 25；skill 规定每天 5–8 站 → 冲突已报 agentkit，待裁定
+- 文案: brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）/ directory-listing-fr.md（fr），bin/write landing-copy
+- [x] 历史提交补录台账 [x] 换用 dirsub.py [x] 浏览器工具补齐（task_tab/frames/tabs/fields/find/screenshot/options，task_act js/key，5ffca5e）
+- [ ] 累计 25（或 agentkit 裁定后的目标）[ ] purshology 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
+- 规矩: 每站做完立刻关标签页；同一平台被风控一次即停（老板 #25）；表单坑见 GOTCHAS#directory-form-pitfalls
+- 相关账号: Google 品牌号 hello@agentoolrank.com（Ethan Tan，老板已批真名）卡扫码，等老板醒后重注册；GitHub 品牌号被风控 → 按 #25 停
+- 闸: auto（用老板已批准的品牌身份；花钱的付费上架逐次问）
 - 失败: 0
 
 ### T11 重复工具清理（embedchain、gpt-index）

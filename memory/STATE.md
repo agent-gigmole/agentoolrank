@@ -320,10 +320,27 @@
 - 已回复 agentkit；**第一批 10-02 22:00 CST（美东 10:00）发 10 封**
 - T20 周报阻塞解除（有 Brevo key 了）；订阅者目前 0，周一 weekly-ops 真正发出
 
+## 2026-10-02 04:45–05:50 目录站加量（共享 skill directory-submission）+ Google/GitHub 品牌号
+
+- **台账统一**：过往目录站提交已补进 ~/data/backlinks/directory-log.csv；之后一律用 agentkit `skills/directory-submission` 的 dirsub.py 做 check/add 并回写（scripts/dirlog.sh 已被取代，不再用）
+- **本轮新提交 7 个**：futuretools、websitelaunches（此前已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally，直接开 tally.so/r/wAAg6W）、startupstash（Typeform）
+- **累计**：submitted 12 / retry 1（purshology）/ todo 4（mcp.so、smithery、producthunt、betterlaunch）
+- **目标冲突**：skill 规定每天 5–8 站，agentkit 目标 10-03 前累计 25 → 已报 agentkit，等裁定
+- **上架文案**：bin/write landing-copy；brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）、drafts/directory-listing-fr.md（fr）
+- **Google 品牌号** hello@agentoolrank.com，姓名 Ethan Tan（老板已批准的真名；agentkit 曾误判为编造，已更正），密码 ~/.config/secrets/accounts/agentoolrank-google.json；卡在扫码一步（老板误扫成 new_ladar 的码），Google session 已过期 → **等老板醒来重新注册**；二维码截图在 ~/data/handoff/
+- **GitHub 品牌号**：注册页风控拦截（访问暂时受限，IP 判为机器人）→ 老板决定 #25：同一平台被风控一次就停，不再尝试
+- **mcp.so issue 路线**：本机 gh 账号 tensam 的 token 不能在外部仓库建 issue → 老板待办 #26（agentkit 建议不做）
+- 老板查 Google Ads $9.9 扣款：不是我们的，已回复
+- **标签页纪律**：Chrome 曾开到 24 个标签、Windows 内存只剩 1.2GB → 每个站做完立刻关它的标签页（task_tabs.py）
+- **浏览器工具**（commit 5ffca5e）：scripts/winbrowser/ task_tab.py（从 skill 复制）、task_frames、task_tabs（列/关标签）、task_fields、task_find、task_screenshot、task_options；task_act 新增 js / key 步骤；task_dialog、task_capture_key 已于 2e2b702 入库
+- 外联：发送脚本就绪，第一批 22:00 CST
+
 ## 近期排期
 
 - **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
+- **今天起**：目录站继续加量（dirsub.py check/add；每站做完关标签页）；等 agentkit 裁定 5–8/天 vs 10-03 前累计 25
+- **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
 - **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
@@ -333,7 +350,8 @@
 
 - [ ] T19 10-02 10:00 发 X 帖（定稿 drafts/x-t19.md），发后看板记链接、查 src=x
 - [ ] T17 22:00 第一批外联；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
-- [ ] commit scripts/winbrowser/task_dialog.py、task_capture_key.py（目前未跟踪）
+- [ ] T25 目录站：累计 12 → 推 todo 4（mcp.so、smithery、producthunt、betterlaunch）+ 新站；purshology 重试；ainewshub 补回执
+- [ ] Google 品牌号：老板醒后重新注册扫码
 - [ ] 确认 10-05 weekly-ops newsletter 实跑（订阅者 0 的空跑路径）
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（canonical→/where-to-list，?ref=devto2）
@@ -342,7 +360,7 @@
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
-- [ ] MCP 目录：Smithery 等免费渠道
+- [ ] MCP 目录：Smithery 等免费渠道（mcp.so issue 路线卡在 gh 权限，老板待办 #26）
 - [ ] 新工具入库接展示名/alternatives/related 管道；related 覆盖 350/669
 - [ ] 观察 Google 是否重新抓取 sitemap；IndexNow 每日推送跟踪
 - [ ] 查 daily-update 刷新失败仓库；PeerPush 改用户名
@@ -354,4 +372,6 @@
 - 会话环境可能仍带失效 GITHUB_TOKEN → git/gh 前 `env -u GITHUB_TOKEN`
 - 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知，未改动）
 - 长期服务用 systemctl --user，不用 pkill -f；next start 本地预览完按 PID kill，不用 pkill
+- 目录站提交台账：~/data/backlinks/directory-log.csv，只通过 $AGENTKIT_ROOT/skills/directory-submission 的 dirsub.py check/add
+- Windows Chrome 内存紧：每站做完关标签页；同一平台被风控一次即停（老板 #25）
 - 非交互 shell 无 bun：用 ~/.bun/bin/bun（ops 脚本已 export PATH）；scripts/indexnow.ts 等含 top-level await 的脚本只能用 bun 跑，npx tsx 报 cjs 错

@@ -169,3 +169,7 @@
 | 冷邮件域名认证 / DKIM CNAME proxied=false / SPF 改原记录回滚值 / DMARC p=none / 自测收件箱 | GOTCHAS.md#cold-email-domain-auth-selftest |
 | 外联名单排名过时 / 发送时实时重算 / hermes-agent #1→#2 | GOTCHAS.md#outreach-live-recompute-rank |
 | T17 外联发送就绪 / Brevo 验证 / send-outreach.ts / T20 解除阻塞 | LOG.md#2026-10-02 T17 外联通道打通 + T20 解除阻塞 |
+| 目录站表单坑 / 订阅浮层点击超时 / React radio JS 无效按文字点 / Typeform localStorage 500 字 / Tally Typeform 原始 URL / Clerk Continue with Google exact | GOTCHAS.md#directory-form-pitfalls |
+| 标签页过多 / Windows 内存 1.2GB / 每站做完关标签 / task_tabs | GOTCHAS.md#browser-tab-memory-discipline |
+| 品牌号风控一次即停 / 老板 #25 / GitHub 注册受限 / Ethan Tan 真名已批 / gh tensam 不能建外部 issue | GOTCHAS.md#brand-account-risk-control-stop-once |
+| T25 目录站加量 / dirsub.py / directory-log.csv / 累计 12 / Google 品牌号扫码 | LOG.md#2026-10-02 04:45–05:50 T25 目录站加量 + Google/GitHub 品牌号 |

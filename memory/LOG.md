@@ -599,3 +599,15 @@
 - 坑：找凭据先查 ~/.config/<provider>/；名单里存的排名会过时；密钥页面捕获不打印；冷邮件先做 DKIM/SPF/DMARC 再自测收件箱（GOTCHAS#find-local-credentials-first、#outreach-live-recompute-rank、#secret-capture-no-print、#cold-email-domain-auth-selftest）
 - 遗留：scripts/winbrowser/task_dialog.py、task_capture_key.py 尚未 commit
 - human-intervention=0 / auto-resolved=1（bin/write 占位符由 agentkit 修复）/ 熔断=0
+
+## 2026-10-02 04:45–05:50 T25 目录站加量 + Google/GitHub 品牌号
+- 台账：历史提交补进 ~/data/backlinks/directory-log.csv，改用 agentkit skills/directory-submission 的 dirsub.py check/add（scripts/dirlog.sh 作废）
+- 新提交 7：futuretools、websitelaunches（已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally 原始 URL）、startupstash（Typeform）→ 累计 submitted 12 / retry 1（purshology）/ todo 4（mcp.so、smithery、producthunt、betterlaunch）
+- 文案：bin/write landing-copy → drafts/directory-listing.md + -fr.md；工具 commit 5ffca5e，看板 16aa1a9
+- Google 品牌号 hello@（Ethan Tan，老板已批真名，agentkit 误判已更正）卡扫码（老板误扫 new_ladar 的码），session 过期，等老板醒后重注册；二维码 ~/data/handoff/
+- GitHub 品牌号注册被风控 → 老板 #25：同平台风控一次就停；mcp.so issue 路线卡 gh tensam token 权限 → 老板待办 #26（建议不做）
+- 老板问 Google Ads $9.9 扣款：非本项目，已回复
+- 标签页开到 24 个、Windows 内存剩 1.2GB → 每站做完关标签页
+- 坑：订阅浮层挡点击表现为超时；React radio/分类按钮 JS 设置无效要按可见文字点；Typeform localStorage 残留 + 键盘逐题 + 500 字上限；嵌入表单开原始 URL；Clerk nth=0 Continue 是 Continue with Google（GOTCHAS#directory-form-pitfalls、#browser-tab-memory-discipline）
+- 冲突：skill 5–8 站/天 vs agentkit 10-03 前累计 25，已报 agentkit
+- human-intervention=1（Google 扫码需老板）/ auto-resolved=0 / 熔断=1（GitHub 风控即停）

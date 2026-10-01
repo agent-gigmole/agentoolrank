@@ -530,3 +530,17 @@
 ## outreach-live-recompute-rank
 - 外联名单里存的排名/星数是生成名单时的快照，会过时（hermes-agent 名单写 #1，发信时已掉到 #2）→ 邮件里出现的任何数字必须在**发送时从 DB 实时重算**，名单只存身份与联系方式
 - 错误数字发给作者本人 = 立刻失信，比不写数字更糟
+
+## directory-form-pitfalls
+目录站提交表单的通用坑（2026-10-02，T25）：
+- **订阅/弹窗浮层**：几乎每个站都会弹（futuretools 点 "No thanks"、ainewshub 按 Escape、aitoolscapital 点 ×、purshology 点 "Later"）。被挡住的点击不会报"被遮挡"，而是表现为**超时** → 点击超时先截图找浮层，别重试同一个点击。
+- **React 表单**：radio / 分类按钮用 JS 设 checked/value 不触发 React 状态，提交时仍是空 → 按可见文字真实点击。
+- **Typeform**：答案存 localStorage，重填前先清（否则带着旧答案跳题）；用键盘 type + Enter 逐题推进；长文本 500 字上限。
+- **嵌入的 Tally / Typeform**：直接打开表单原始 URL（如 tally.so/r/wAAg6W），不要在宿主页 iframe 里操作。
+- **Clerk 登录页**：nth=0 的 "Continue" 实际是 "Continue with Google" → 按完全一致的文字匹配（exact），不要用包含匹配或序号。
+
+## browser-tab-memory-discipline
+Windows 专用 Chrome（CDP 9223）在批量提交时开到 24 个标签，Windows 可用内存只剩 1.2GB。规矩：每个站做完立刻用 scripts/winbrowser/task_tabs.py 关掉它的标签页；开新站前先列标签确认数量。
+
+## brand-account-risk-control-stop-once
+品牌号注册遇平台风控（GitHub 注册页"访问暂时受限"、IP 被判机器人）→ 老板决定 #25：同一平台被风控一次就停，不换 IP/不重试。品牌身份姓名 Ethan Tan 是老板已批准的真名，不是编造（agentkit 一度误判）。gh 本机账号 tensam 的 token 不能在外部仓库建 issue（mcp.so 路线卡住）。
