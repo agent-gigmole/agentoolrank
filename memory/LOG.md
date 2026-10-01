@@ -523,3 +523,12 @@
 - 坑：标题原写 "5 directories in one day"，实际只提交 MCP Registry / mcpservers.org / PeerPush 三家，其余仅核对提交页 → 标题与引言改为如实描述（GOTCHAS#offsite-firsthand-claims）
 - 排期：10-02 X 帖（T19）+ Brevo SIM 验证 → 外联（T17）；10-03 发 dev.to 第二篇
 - human-intervention=0 / auto-resolved=1（标题夸大→改如实）/ 熔断=0
+
+## 2026-10-02 T24 多语言计划（BOSS_DECISIONS #23）
+- agentkit 转达 #23「每个站都要做多个语言版本」→ 查 GSC 近 90 天国家维度：总展示 1,934，美 24%、印 11%、英/菲/加/尼日利亚各约 4%、中国 3% 但点击最多（3 次，均排 8），港/台/日/韩有点击
+- 已回复 agentkit：中文先做（现有 /zh 首页/search/blueprint 三对 hreflang），10-05 第一批（工具页 score 前 200、替代品、对比、/where-to-list、/submit 价格页）；日语 10-09；西语 10-30 看 GSC；印地语/他加禄语不做
+- 架构：第二门语言时抽 i18n 字典 + 登记表 + /[lang] 薄路由；hreflang 全互指（自引用 + x-default）；sitemap 从登记表派生；回跳白名单
+- 译文：模板逐条人工核；标语 LLM + 术语表，前 50 页逐页核，其余抽查 10% + 脚本检查
+- TASK.md 新增 T24；看板已记录（c802631）
+- 技巧：gsc_report.py 的 query() 可复用查 country 维度（需按 impressions 重排，国家码三位小写）→ GOTCHAS#gsc-country-dimension
+- human-intervention=0 / auto-resolved=0 / 熔断=0

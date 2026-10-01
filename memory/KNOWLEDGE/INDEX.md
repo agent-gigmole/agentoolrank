@@ -146,3 +146,5 @@
 | 站外文章第一手声明核对 / 标题夸大 "5 directories" / dev.to 第二篇 / canonical + ?ref=devto2 | GOTCHAS.md#offsite-firsthand-claims |
 | MCP Registry server.json name 须与 DNS 命名空间一致 | GOTCHAS.md#mcp-registry-dns-publish |
 | dev.to 第二篇草稿排期 10-03 / T23 第四步 | LOG.md#2026-10-01 T23 第四步：dev.to 第二篇草稿（定 10-03 发） |
+| GSC 国家维度 / query(["country"]) / 按 impressions 重排 / 三位小写国家码 / 多语言选语言 / 开发者受众英语为主 | GOTCHAS.md#gsc-country-dimension |
+| T24 多语言计划 / BOSS_DECISIONS #23 / 中文 10-05 / 日语 10-09 / hreflang 全互指 | LOG.md#2026-10-02 T24 多语言计划（BOSS_DECISIONS #23） |

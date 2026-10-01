@@ -229,10 +229,22 @@
 - 第一手经历如实：实际提交过的只有 MCP Registry、mcpservers.org、PeerPush 三家，其余只核对了提交页 → 标题由 "5 directories in one day" 改为如实描述（见 GOTCHAS#offsite-firsthand-claims）
 - 发布：**2026-10-03** 用 dev.to 品牌号（hello@agentoolrank.com，https://dev.to/agentoolrank），与 10-01 数据长文错开；看板已记录（commits 262b94f、d3477ec）
 
+## 2026-10-02 T24 多语言计划（BOSS_DECISIONS #23，已回复 agentkit）
+
+- **依据 GSC 近 90 天按国家**：总展示 1,934；美 24%、印 11%、英/菲/加/尼日利亚各约 4%、中国 3% 但点击最多（3 次、均排 8）；港/台/日/韩也有点击
+- **计划**：中文先做（现有 /zh 首页、search、blueprint 三对 hreflang）→ **10-05 中文第一批**：工具页按 score 前 200、替代品页、对比页、/where-to-list、/submit 价格页；**日语 10-09**；西语 10-30 看 GSC 再定；印地语/他加禄语不做
+- **架构**（加第二门语言时抽象）：i18n 字典 + 语言页登记表 + /[lang] 薄路由；hreflang 全互指（含自引用 + x-default）；sitemap 从登记表派生；付款回跳同语言页（白名单）
+- **译文质量**：模板/界面文案逐条人工核；标语/简介 LLM + 术语表，前 50 页逐页核，其余抽查 10% + 脚本检查（术语、长度、残留英文）；专有名词/数字/日期不译；不整站机翻
+- TASK.md 已有 T24；看板已记录（c802631）
+- 查国家分布方法见 GOTCHAS#gsc-country-dimension
+
 ## 近期排期
 
 - **10-02**：09:30 老板汇总 → 发 X 帖（T19，/report 数据，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2
+- **10-05**：T24 中文第一批上线（工具页前 200 / 替代品 / 对比 / /where-to-list / /submit 价格页）
+- **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
+- **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
 ## 待办 / 下一步
 
@@ -242,6 +254,7 @@
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
+- [ ] T24 中文第一批 10-05 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道

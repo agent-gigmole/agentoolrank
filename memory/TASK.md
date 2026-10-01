@@ -180,6 +180,17 @@
 - 禁止：用 AI 冒充真实用户在 Reddit/Quora 埋品牌词（BOSS_DECISIONS #16）
 - 闸: auto
 
+### T24 多语言（BOSS_DECISIONS #23）：中文 → 日语 → 西语（看数据）
+- 状态: todo（计划已于 2026-10-02 00:10 回复 agentkit）
+- 依据: GSC 90 天 1,934 次展示，美 24%、印 11%；中国 3%，但点击最多（3 次，排名 8）；港/台/日/韩有点击。现有 /zh 首页、search、blueprint 三对 hreflang
+- [ ] 中文第一批 10-05：工具页（前 200，按 score）、替代品页、对比页（GSC 有展示的）、/where-to-list、/submit 价格页
+- [ ] 抽象：i18n 字典 + 语言页登记表 + /[lang]/ 薄路由；hreflang 全互指（含自引用 + x-default）；sitemap 从登记表派生；付款回跳同语言页（白名单）
+- [ ] 译文：模板/界面文案逐条人工核；标语/简介用 LLM + 术语表，前 50 页逐页核，其余抽查 10% 并跑脚本检查（术语、长度、残留英文）；专有名词/数字/日期不译
+- [ ] 日语 10-09
+- [ ] 西语 10-30 看 GSC（墨西哥/阿根廷）后再定
+- 闸: auto（不整站机翻；不新增事实）
+- 失败: 0
+
 ### T23 对比内容：上架渠道对比 + X vs Y / alternatives 长文
 - 状态: in_progress（/where-to-list 191406f；对比页 Short answer de79e4c..d3ed359；替代品页 Short answer c46db50/4e3f35c，2026-10-01）
 - [x] /where-to-list AI agent 工具上架渠道对比（免费 vs 付费，事实逐条核对注明日期，自家短板 + FAQPage，sitemap + /submit 入口，IndexNow 已推）

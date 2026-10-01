@@ -443,3 +443,9 @@
 - 站外文章（dev.to 等）里"我做过 X"的第一手声明必须与实际操作逐条对照：devto-where-to-list 草稿标题原写 "5 directories in one day"，实际只提交了 MCP Registry、mcpservers.org、PeerPush 三家，其余只核对过提交页 → 标题与引言改为如实描述（"提交了 3 家、核对了其余提交页"）
 - 发前自检：列出文中每条第一手经历 → 对照 LOG/看板记录 → 没做过的改成"核对了提交页/据其官网"；数字类标题（N 个、一天内）最容易夸大
 - 同时遵守：开头披露自家产品、canonical 回站内对应页、站内链接带 ?ref= 区分来源（devto2）
+
+## gsc-country-dimension
+- 查 GSC 按国家分布：复用 apps/agent-tools/scripts/gsc_report.py 的 `query()`——exec 脚本前半段（到 `def query` 结束、`pages = query(...)` 之前），设好 `days`，再调 `query(["country"], 250)`
+- 坑 1：API 默认按 clicks 排序，选语言要按 impressions 重新排序，否则小样本点击会误导排序
+- 坑 2：国家代码是 ISO 三位**小写**（usa、ind、chn、gbr、phl），不是 US/CN
+- 判断：开发者类目录站的 GSC 展示以英语国家为主（美/印/英/菲/加/尼日利亚，英语即可服务）→ 多语言只给"非英语且有点击/排名信号"的市场（本站：中文 → 日语），并**按页型逐个加**（前 200 工具/替代品/对比/价格页），不整站机翻
