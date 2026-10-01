@@ -18,7 +18,7 @@ Makers can submit their agent tools for free and get a badge with live star coun
 ## Accounts (credentials in ~/.config/secrets/accounts/agentoolrank-*.json, 600)
 | Platform | Status |
 |---|---|
-| dev.to | ✅ https://dev.to/agentoolrank — brand account hello@agentoolrank.com (creds agentoolrank-devto.json), reCAPTCHA checkbox passed without image challenge (2026-10-01). Publishing the data article needs owner approval (queued via agentkit) |
+| dev.to | ✅ https://dev.to/agentoolrank — brand account hello@agentoolrank.com (creds agentoolrank-devto.json), reCAPTCHA checkbox passed without image challenge (2026-10-01). Data article published 2026-10-01 14:40 (owner #22 independent authority): https://dev.to/agentoolrank/stars-lie-669-open-source-ai-agent-repos-ranked-by-what-they-actually-do-1fdb — canonical → /report, AI disclosure 'Fully Autonomous', links ?ref=devto |
 | PeerPush | ✅ hello@agentoolrank.com (email code login), user @hello2502 (rename pending), product https://peerpush.com/p/agentoolrank — free queue #4190, ~70 days (joined 2026-10-01; declined 40% off upsell) |
 | Peerlist | ✅ https://peerlist.io/agentoolrank — personal profile "Ethan Tan" (owner-approved real name), project AgentoolRank (AI, DevTool) added 2026-10-01; Launchpad weekly launch not yet used |
 | X | ✅ signed in on the dedicated Chrome (password login; email-code route goes to tensam.th@gmail.com which Claude can't read). It is the owner's personal build-in-public account **Zephyr @hwak8666621** (verified, ~23 followers) → profile NOT rebranded; use for build-in-public posts about AgentoolRank; every public post needs owner OK (external identity gate) |
