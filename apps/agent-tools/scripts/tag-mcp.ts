@@ -5,6 +5,7 @@
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
+import { llm } from "./llm";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 const apply = process.argv.includes("--apply");
@@ -22,12 +23,7 @@ const prompt = `For each project, answer whether MCP (Model Context Protocol) is
 ${list}
 
 Reply with JSON only: {"primary": ["id", ...]}`;
-const res = await fetch(`${process.env.LLM_BASE_URL}/chat/completions`, {
-  method: "POST",
-  headers: { Authorization: `Bearer ${process.env.LLM_API_KEY}`, "Content-Type": "application/json" },
-  body: JSON.stringify({ model: "deepseek/deepseek-v3.2", messages: [{ role: "user", content: prompt }], temperature: 0, max_tokens: 800 }),
-});
-const text = (await res.json()).choices?.[0]?.message?.content ?? "";
+const text = await llm(prompt, { maxTokens: 800, temperature: 0 });
 const known = new Set(rows.map((r) => r.id));
 const primary: string[] = (JSON.parse(text.match(/\{[\s\S]*\}/)?.[0] ?? "{}").primary ?? []).filter((id: string) => known.has(id));
 console.log(`candidates=${rows.length} primary=${primary.length}\n  yes: ${primary.join(", ")}\n  no: ${rows.filter((r) => !primary.includes(r.id)).map((r) => r.id).join(", ")}`);

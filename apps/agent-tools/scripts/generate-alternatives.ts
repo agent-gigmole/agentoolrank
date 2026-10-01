@@ -6,6 +6,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { rankCandidates, parseAlternativesResponse } from "../src/lib/alternatives";
+import { llm, llmStats } from "./llm";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 
@@ -52,15 +53,9 @@ Pick the candidates a developer would realistically evaluate INSTEAD of the targ
 
 Reply with JSON only: {"alternatives": ["candidate-id", ...]}`;
 
-  const res = await fetch(`${process.env.LLM_BASE_URL}/chat/completions`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.LLM_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: MODEL, messages: [{ role: "user", content: prompt }], temperature: 0.2, max_tokens: 300 }),
-  });
-  if (!res.ok) throw new Error(`LLM ${res.status}: ${(await res.text()).slice(0, 200)}`);
-  const data = await res.json();
-  spent += (data.usage?.prompt_tokens ?? 0) * PRICE_IN + (data.usage?.completion_tokens ?? 0) * PRICE_OUT;
-  return parseAlternativesResponse(data.choices?.[0]?.message?.content ?? "", new Set(candidates.map((c) => c.id)), target.id);
+  const text = await llm(prompt, { maxTokens: 300, temperature: 0.2 });
+  spent = llmStats.openrouterUsd;
+  return parseAlternativesResponse(text, new Set(candidates.map((c) => c.id)), target.id);
 }
 
 async function main() {

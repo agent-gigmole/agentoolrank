@@ -7,6 +7,7 @@ import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { needsDisplayName, parseDisplayNames } from "../src/lib/display-names";
+import { llm } from "./llm";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 
@@ -40,14 +41,8 @@ async function ask(rows: Row[]): Promise<Record<string, string>> {
 ${list}
 
 Reply with JSON only, mapping each id (the text before the first "|") to its name: {"id": "Name", ...}`;
-  const res = await fetch(`${process.env.LLM_BASE_URL}/chat/completions`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.LLM_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: MODEL, messages: [{ role: "user", content: prompt }], temperature: 0, max_tokens: 1500 }),
-  });
-  if (!res.ok) throw new Error(`LLM ${res.status}`);
-  const data = await res.json();
-  return parseDisplayNames(data.choices?.[0]?.message?.content ?? "", new Set(rows.map((r) => r.id)));
+  const text = await llm(prompt, { maxTokens: 1500, temperature: 0 });
+  return parseDisplayNames(text, new Set(rows.map((r) => r.id)));
 }
 
 async function main() {

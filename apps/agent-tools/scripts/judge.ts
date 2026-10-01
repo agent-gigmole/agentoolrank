@@ -1,5 +1,6 @@
 // Shared by review-submissions.ts and expand-tools.ts: fetch evidence and ask the LLM for a verdict.
 import { parseReview, type Review } from "../src/lib/review";
+import { llm, llmStats } from "./llm";
 
 export const MODEL = "deepseek/deepseek-v3.2";
 export let spentUsd = 0;
@@ -36,14 +37,8 @@ Categories (use the slug): ${categories.map((c) => `${c.slug} (${c.name})`).join
 Reply with JSON only:
 {"decision":"approve"|"reject","reason":"one sentence","category":"<slug>","tagline":"<=120 chars","description":"2-3 factual sentences","pricing":"free"|"freemium"|"paid"|"open-source",
  "intelligence":{"capabilities":["..."],"integrations":["..."],"best_for":["..."],"not_for":["..."],"limitations":["..."],"key_differentiator":"one sentence"}}`;
-  const res = await fetch(`${process.env.LLM_BASE_URL}/chat/completions`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.LLM_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: MODEL, messages: [{ role: "user", content: prompt }], temperature: 0.1, max_tokens: 1200 }),
-  });
-  if (!res.ok) throw new Error(`LLM ${res.status}`);
-  const data = await res.json();
-  spentUsd += (data.usage?.prompt_tokens ?? 0) * PRICE_IN + (data.usage?.completion_tokens ?? 0) * PRICE_OUT;
-  return parseReview(data.choices?.[0]?.message?.content ?? "", categories.map((c) => c.slug));
+  const text = await llm(prompt, { maxTokens: 1200, temperature: 0.1 });
+  spentUsd = llmStats.openrouterUsd;
+  return parseReview(text, categories.map((c) => c.slug));
 }
 
