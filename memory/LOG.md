@@ -515,3 +515,11 @@
 - vitest 117/117；c46db50（坏：verdict 被 str.replace 插进 generateMetadata，类型错误）→ 4e3f35c 修复 → 8def881 看板；线上 firecrawl/langchain/llama-cpp 核验通过
 - 坑：`turbo build | grep -E "Tasks:" && git commit && deploy` 掩盖构建失败（失败时也输出 "Tasks: 0 successful"，grep 成功）→ 坏提交被 push；Vercel 构建失败、生产未受影响
 - human-intervention=0 / auto-resolved=2（坏提交→下一 commit 修复、+-0→signed()）/ 熔断=0
+
+## 2026-10-01 T23 第四步：dev.to 第二篇草稿（定 10-03 发）
+- 草稿 docs/ops/launch-kit/devto-where-to-list.md：「Where to list an MCP server or AI agent tool: free vs paid (checked Oct 2026)」，canonical→/where-to-list，链接 ?ref=devto2
+- 结构：自家产品披露 → 结论清单 → 对比表 → MCP Registry DNS 发布步骤（坑：JWT 过期需重新 login dns；server.json name 须与 DNS 命名空间一致）→ 建议顺序
+- 定 2026-10-03 用 dev.to 品牌号（hello@agentoolrank.com）发，与 10-01 数据长文错开；看板已记录（262b94f、d3477ec）；TASK.md T23 子项已更新
+- 坑：标题原写 "5 directories in one day"，实际只提交 MCP Registry / mcpservers.org / PeerPush 三家，其余仅核对提交页 → 标题与引言改为如实描述（GOTCHAS#offsite-firsthand-claims）
+- 排期：10-02 X 帖（T19）+ Brevo SIM 验证 → 外联（T17）；10-03 发 dev.to 第二篇
+- human-intervention=0 / auto-resolved=1（标题夸大→改如实）/ 熔断=0

@@ -365,6 +365,7 @@
   3. `mcp-publisher login dns --domain agentoolrank.com --private-key <hex>`（v1.8.1）
   4. apps/agent-tools/mcp/server.json（name 用反向域名 com.agentoolrank/…，remotes type streamable-http + url）→ `mcp-publisher publish`
 - DNS 认证无需 GitHub OAuth，适合品牌域名命名空间
+- server.json 的 name 必须落在已认证的 DNS 命名空间内（agentoolrank.com → com.agentoolrank/*），否则 publish 被拒；JWT 短时效见 #mcp-registry-jwt-short-lived
 
 ## mcp-directories-status
 - PulseMCP：全站暂停收录；mcp.so：仅 $39 付费或工单；AI Agents List：资格审核过但仅 $29/$49 档 → 零收入期按 spend-control 都不付
@@ -438,3 +439,7 @@
 ## alternatives-verdict-overlap
 - 替代品页 Short answer：「最接近」与「已停更」可能是同一工具（firecrawl → Scrapegraph-ai），如实反映数据，不去重；星增速展示用 signed()（正数 +N、0 显示 0、负数 -N），不要 `+${n}` 拼接（出现 "+-0"）
 
+## offsite-firsthand-claims
+- 站外文章（dev.to 等）里"我做过 X"的第一手声明必须与实际操作逐条对照：devto-where-to-list 草稿标题原写 "5 directories in one day"，实际只提交了 MCP Registry、mcpservers.org、PeerPush 三家，其余只核对过提交页 → 标题与引言改为如实描述（"提交了 3 家、核对了其余提交页"）
+- 发前自检：列出文中每条第一手经历 → 对照 LOG/看板记录 → 没做过的改成"核对了提交页/据其官网"；数字类标题（N 个、一天内）最容易夸大
+- 同时遵守：开头披露自家产品、canonical 回站内对应页、站内链接带 ?ref= 区分来源（devto2）

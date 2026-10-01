@@ -222,12 +222,25 @@
 - "最接近"与"已停更"可能是同一工具（firecrawl → Scrapegraph-ai），如实反映数据，接受
 - **部署链纪律**：build 输出重定向到日志、用 build 自身退出码 && 门控 commit/push/deploy，禁止 `build | grep` 作闸（见 GOTCHAS#pipe-grep-masks-build-failure）
 
+## 2026-10-01 T23 第四步：dev.to 第二篇草稿（定 10-03 发）
+
+- 草稿 docs/ops/launch-kit/devto-where-to-list.md：标题「Where to list an MCP server or AI agent tool: free vs paid (checked Oct 2026)」，canonical → https://agentoolrank.com/where-to-list，站内链接带 ?ref=devto2
+- 结构：开头披露自家产品 → 结论清单 → 对比表 → 官方 MCP Registry DNS 发布步骤（坑：registry JWT 短时效需发布前重新 login dns；server.json name 必须与 DNS 命名空间 com.agentoolrank/* 一致）→ 建议顺序
+- 第一手经历如实：实际提交过的只有 MCP Registry、mcpservers.org、PeerPush 三家，其余只核对了提交页 → 标题由 "5 directories in one day" 改为如实描述（见 GOTCHAS#offsite-firsthand-claims）
+- 发布：**2026-10-03** 用 dev.to 品牌号（hello@agentoolrank.com，https://dev.to/agentoolrank），与 10-01 数据长文错开；看板已记录（commits 262b94f、d3477ec）
+
+## 近期排期
+
+- **10-02**：09:30 老板汇总 → 发 X 帖（T19，/report 数据，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
+- **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2
+
 ## 待办 / 下一步
 
 - [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to 已发；HN/Reddit 与 imagehub 错开 ≥1 周，Show HN 最早 10-07）
 - [ ] T19 10-02 X 帖（/report 数据，x-post）
 - [ ] T17 外联：10-02 实体 SIM 到 → Brevo 手机验证 → 发信（≤10 封/天）；同时解锁 T20 周报
-- [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）；可选站外文章 canonical 回链 /where-to-list
+- [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
+- [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速

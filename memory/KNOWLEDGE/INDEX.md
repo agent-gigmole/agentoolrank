@@ -143,4 +143,6 @@
 | str.replace 插错函数 / generateMetadata 同名行 / 插入后 tsc | GOTCHAS.md#str-replace-insert-wrong-function |
 | 替代品页 Short answer / alternativesVerdict / 最接近=已停更 / signed() +-0 | GOTCHAS.md#alternatives-verdict-overlap |
 | 线上内部字样自查 / favicon.ico rewrites / T23 第三步 | LOG.md#2026-10-01 T23 第三步：替代品页 Short answer + 线上内部字样自查 |
-
+| 站外文章第一手声明核对 / 标题夸大 "5 directories" / dev.to 第二篇 / canonical + ?ref=devto2 | GOTCHAS.md#offsite-firsthand-claims |
+| MCP Registry server.json name 须与 DNS 命名空间一致 | GOTCHAS.md#mcp-registry-dns-publish |
+| dev.to 第二篇草稿排期 10-03 / T23 第四步 | LOG.md#2026-10-01 T23 第四步：dev.to 第二篇草稿（定 10-03 发） |
