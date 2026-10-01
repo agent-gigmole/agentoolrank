@@ -27,7 +27,7 @@ export default async function SubmitPage() {
       </ul>
       <SubmitForm paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} />
       <p className="text-xs text-gray-500 mt-6">
-        We review every submission. We list tools for building, running or evaluating AI agents; unrelated products are declined.
+        Comparing options? See <a href="/where-to-list" className="underline">where to list an AI agent tool</a> (free vs paid directories). We review every submission. We list tools for building, running or evaluating AI agents; unrelated products are declined.
       </p>
     </main>
   );
