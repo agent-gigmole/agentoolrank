@@ -173,6 +173,13 @@
 - 范围: scripts/judge.ts、generate-alternatives、generate-display-names、tag-mcp 等批处理用 OpenRouter → Sub2API；线上 /api/chat 的 LLM 评估迁到本机批处理或保留
 - 闸: auto（凭据已在 ~/.config/secrets/sub2api-openai-key；改线上 env 属改凭证闸）
 
+### T22 GEO：引用源挖掘 + 答案块格式（agentkit 10-01 补充 seo-geo）
+- 状态: todo
+- ① 定期问 ChatGPT/Perplexity/Claude「best open-source AI agent framework / MCP servers / X alternatives」，记录被引用的第三方页面域名 Top N，作为外联/收录/写更具体同主题页的目标
+- ② 关键页前 50 字给结论、H2 分段、每段 ≤3 句带具体数字；Rich Results Test 验证 FAQ/ItemList/Dataset
+- 禁止：用 AI 冒充真实用户在 Reddit/Quora 埋品牌词（BOSS_DECISIONS #16）
+- 闸: auto
+
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked
 - 依赖: -
