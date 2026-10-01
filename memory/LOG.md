@@ -560,3 +560,13 @@
 - commits d9b44c7 / d8b8f09 / 9bc019e；部署链 build > log && commit && deploy && push
 - 坑：DeepSeek 审校 ok=true 也附措辞意见 → issues 与 ok 分开看；源 tagline 截断自动检查查不出、靠人读；copilotkit/cognee 英文 description 字段存的是中文；next start 预览后按 PID kill（GOTCHAS#translation-pipeline-review-gate）
 - human-intervention=0 / auto-resolved=1（dbx 源截断→人工退回）/ 熔断=0
+
+## 2026-10-02 T24 中文工具页 177/200 上线 + 英文源数据修复
+- 中文工具页线上 177 个（原定 10-05 上 200）：human_reviewed=1 共 49 个（前 50 名逐篇读）；=2 共 128 个（随机抽 14 个约 10% 全合格后整批标记）；review_failed 23 个暂缓、之后重试
+- 上线前退回 dbx（源 tagline 截断）、editor（源 intelligence 混审核备注）→ 修源后重译，dbx 已过审
+- 英文站修复：① 114 个截断 tagline（早期抓取 160/200 字截断 + expand-tools 用截断 GitHub 描述覆盖审校 tagline）→ review.ts isTruncatedTagline / submissionTagline（TDD），expand-tools 改用；scripts/fix-truncated-taglines.ts LLM 依据 description+README 重写，回滚 data/tagline-backup-*.json ② 13 个工具 intelligence 混入审核备注（"Website content could not be fetched for full verification"）→ isMetaNote / stripMetaNotes，parseReview 自动过滤；scripts/clean-meta-notes.ts 清存量，回滚 data/intelligence-backup-*.json
+- translate-tools.ts 加 --retry-failed；源文本变 → hash 变 → 自动重译 + human_reviewed 归 0（先撤下再审）
+- vitest 138 全绿；commits f50bd74 / 2f68e4e / d86b75e，已 push，看板已记
+- 待：sitemap 缓存仍 11 个 zh 页；21:30 daily-ops 跑 IndexNow
+- 坑：人工审译文 = 顺带审英文源，要原文对照看；bun -e 里 SQL 双引号被当列名；pgrep -f 匹配到自己的 bash -c 命令行误报 RUNNING → 看日志汇总行（GOTCHAS#translation-review-audits-source、#bun-e-sql-double-quotes、#pgrep-self-match-running）
+- human-intervention=0 / auto-resolved=2（dbx、editor 源数据退回修复）/ 熔断=0

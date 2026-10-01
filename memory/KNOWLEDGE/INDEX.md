@@ -155,3 +155,7 @@
 | #24 写作流程落地 / T19 定稿 / 10-02 10:00 发 | LOG.md#2026-10-02 #24 写作流程落地（content-writing） |
 | 翻译流水线 / 译者审校不同模型族 / noFallback / 发布门 approved+human_reviewed / DeepSeek ok 与 issues 分开 / 源 tagline 截断 / description 存中文 / next start 按 PID kill | GOTCHAS.md#translation-pipeline-review-gate |
 | T24 中文第一批 11 页 / /zh/tool / review-translations / 189 页抽查发布 | LOG.md#2026-10-02 T24 中文第一批上线（/zh/tool） |
+| 审译文=审源数据 / 截断 tagline 覆盖 / isTruncatedTagline submissionTagline / 审核过程备注进产品字段 isMetaNote stripMetaNotes / source_hash 变重译 human_reviewed 归 0 / 10% 抽样 | GOTCHAS.md#translation-review-audits-source |
+| bun -e SQL 双引号被当列名 / 参数绑定 | GOTCHAS.md#bun-e-sql-double-quotes |
+| pgrep -f 匹配自己 bash -c 误报 RUNNING / 看日志汇总行 | GOTCHAS.md#pgrep-self-match-running |
+| T24 中文工具页 177/200 上线 / 114 截断 tagline / 13 审核备注 / --retry-failed | LOG.md#2026-10-02 T24 中文工具页 177/200 上线 + 英文源数据修复 |

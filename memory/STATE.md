@@ -275,11 +275,25 @@
 - zh UI 文案已过 ai-flavor（干净）；看板已记录（9bc019e）
 - 部署链：build > log && commit && deploy && push
 
+## 2026-10-02 T24 中文工具页 177/200 上线 + 英文源数据修复（commits f50bd74 / 2f68e4e / d86b75e）
+
+- **中文工具页线上 177 个**（原定 10-05 上线 200）：
+  - human_reviewed=1：49 个（前 50 名，逐篇全文读）
+  - human_reviewed=2：128 个（随机抽 14 个约 10% 全合格 → 整批标记）
+  - review_failed：23 个，暂不处理，之后用 `translate-tools.ts --retry-failed` 重试
+  - 上线前退回 2 个：dbx（源 tagline 截断）、editor（源 intelligence 混有审核备注）→ 源数据修好后已重译，dbx 已通过审核
+- **英文站源数据修复**（人工审译文时顺带发现，英文页一直在显示）：
+  1. **114 个 tagline 被截断**：早期抓取按 160/200 字截断，且 expand-tools 用截断的 GitHub 描述覆盖了审校写好的 tagline → review.ts 新增 isTruncatedTagline / submissionTagline（TDD），expand-tools 改用 submissionTagline；scripts/fix-truncated-taglines.ts 用 LLM 依据 description + README 重写；回滚 apps/agent-tools/data/tagline-backup-*.json
+  2. **13 个工具 intelligence 混入审核过程备注**（如 "Website content could not be fetched for full verification"）→ review.ts 新增 isMetaNote / stripMetaNotes，parseReview 自动过滤；scripts/clean-meta-notes.ts 清存量；回滚 data/intelligence-backup-*.json
+- **translate-tools.ts --retry-failed**；源文本变 → source_hash 变 → 自动重译并把 human_reviewed 重置 0（先撤下，等再审）
+- vitest 138 全绿；已 commit + push；看板已记录（d86b75e）
+- **待刷新**：sitemap 缓存仍是 11 个 zh 页；21:30 daily-ops 跑 IndexNow
+
 ## 近期排期
 
 - **10-02**：09:30 老板汇总 → 10:00 左右发 X 帖（T19 定稿 drafts/x-t19.md，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2
-- **10-05**：T24 中文第一批上线（工具页前 200 / 替代品 / 对比 / /where-to-list / /submit 价格页）
+- **10-05**：T24 中文剩余页型（工具页已 177/200 提前上线；23 个失败待重试；替代品 / 对比 / /where-to-list / /submit 价格页待做）
 - **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
@@ -291,7 +305,7 @@
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T24 中文：第一批 11 页已上线（10-02）；其余 189 页翻译中 → 前 50 全读 + 其余 10% 抽查 --mark 2 发布；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
+- [ ] T24 中文：工具页 177/200 已上线（10-02）；23 个 review_failed 待 --retry-failed 重试；确认 sitemap 刷新出 177 个 zh 页 + IndexNow 推送；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道

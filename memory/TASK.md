@@ -183,12 +183,15 @@
 - 闸: auto
 
 ### T24 多语言（BOSS_DECISIONS #23）：中文 → 日语 → 西语（看数据）
-- 状态: in_progress（中文第一批 11 页 2026-10-02 上线：d9b44c7 / d8b8f09 / 9bc019e）
+- 状态: in_progress（中文工具页 177/200 已上线 2026-10-02：d9b44c7 / d8b8f09 / 9bc019e / f50bd74 / 2f68e4e / d86b75e）
 - 依据: GSC 90 天 1,934 次展示，美 24%、印 11%；中国 3%，但点击最多（3 次，排名 8）；港/台/日/韩有点击。现有 /zh 首页、search、blueprint 三对 hreflang
 - [x] 中文工具页第一批上线（10-02）：/zh/tool/[slug] 11 篇（人工全文读 12，dbx 因英文源 tagline 截断 "Built-" 退回）；hreflang 双向 + sitemap；只发布 approved 且 human_reviewed>=1
 - [x] 翻译流水线：scripts/translate-tools.ts（gpt-6-astra 译、noFallback；OpenRouter DeepSeek 回译 + 情态逐句审校；列表长度/数字/残留英文确定性检查；Turso tool_i18n）+ scripts/review-translations.ts（--list/--sample/--mark/--reject）
-- [ ] 其余 189 页：每批 --list 全读前 50，其余按 10% --sample 抽查后用 --mark level 2 发布（前 200 正在后台翻译，约 3 个/分钟）
-- [ ] 中文第一批其余页型：替代品页、对比页（GSC 有展示的）、/where-to-list、/submit 价格页
+- [x] 中文工具页 177/200 上线（10-02）：human_reviewed=1 共 49（前 50 逐篇读）+ =2 共 128（随机抽 14 个约 10% 全合格整批标记）；上线前退回 dbx、editor（源数据问题），修源后重译，dbx 已过审
+- [x] 英文源数据修复（截断 tagline、审核备注）：114 个截断 tagline 由 LLM 依据 description/README 重写（isTruncatedTagline / submissionTagline，expand-tools 不再用截断 GitHub 描述覆盖；回滚 data/tagline-backup-*.json）；13 个 intelligence 审核过程备注清除（isMetaNote / stripMetaNotes，parseReview 自动过滤；回滚 data/intelligence-backup-*.json）；translate-tools --retry-failed，源 hash 变自动重译并 human_reviewed 归 0
+- [ ] 23 个 review_failed 用 --retry-failed 重试 → 审后发布（补满 200）
+- [ ] 确认 sitemap 刷新出全部 zh 工具页（当前缓存 11 个）+ IndexNow 推送（21:30 daily-ops）
+- [ ] 中文其余页型：替代品页、对比页（GSC 有展示的）、/where-to-list、/submit 价格页
 - [ ] 抽象：i18n 字典 + 语言页登记表 + /[lang]/ 薄路由；hreflang 全互指（含自引用 + x-default）；sitemap 从登记表派生；付款回跳同语言页（白名单）
 - [ ] 译文：模板/界面文案逐条人工核；标语/简介用 LLM + 术语表，前 50 页逐页核，其余抽查 10% 并跑脚本检查（术语、长度、残留英文）；专有名词/数字/日期不译；按 owner-goal #23 加第二模型回译比对（回译与英文原文语义偏差大的条目进人工复核）；审校 prompt 单列「情态方向核对」：逐句列原文/译文的 must / must not / need not / may / should 对照（中文：必须/不得/不必/可以/应当；日语：なければならない/てはいけない/なくてもよい/てもよい/べき），方向不一致即退回（agentkit 10-02，imagehub 意大利语 non devono 事故）
 - [ ] 中文读者付款能力：核实 Stripe（TENSO LLC 美国账户）能否为大陆用户开通支付宝/微信支付/银联卡，结论写进看板单独跟踪（agentkit 10-02 要求）
