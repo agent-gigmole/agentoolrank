@@ -47,7 +47,6 @@ async function load(slug: string): Promise<{ tool: Tool; alts: Tool[] } | null> 
   const tool = await getToolBySlug(slug);
   if (!tool || tool.alternatives.length === 0) return null;
   const alts = (await Promise.all(tool.alternatives.map((id) => getToolBySlug(id)))).filter((t): t is Tool => t !== null);
-  const verdict = alternativesVerdict(tool, alts, new Date());
   return alts.length > 0 ? { tool, alts } : null;
 }
 
@@ -86,6 +85,7 @@ export default async function AlternativesPage({ params }: Props) {
   const data = await load(slug);
   if (!data) notFound();
   const { tool, alts } = data;
+  const verdict = alternativesVerdict(tool, alts, new Date());
   const intel = parseIntel(tool.intelligence);
   const year = new Date().getFullYear();
   const crumbs = [
