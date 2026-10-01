@@ -260,6 +260,21 @@
 - /report 显示 "last refreshed 2026-09-30" 不是断更：DB data_refreshed_at 最大 2026-10-01T12:48、668 条均刷新、Action 10-01 成功；原因是 report 页 revalidate=86400 的 ISR 缓存（GOTCHAS#isr-stale-refresh-date）
 - commit 830a717
 
+## 2026-10-02 T24 中文第一批上线（/zh/tool/[slug]，commits d9b44c7 / d8b8f09 / 9bc019e）
+
+- **线上**：11 篇中文工具页已发布（人工全文读 12 篇，dbx 退回：英文源 tagline 被截断成 "Built-"）；/zh/tool/hermes-agent 200，英文 /tool 页已带 hrefLang zh
+- **代码**（apps/agent-tools）：
+  - src/lib/i18n.ts：localizedAlternates（hreflang 全互指，含自引用 + x-default）/ parseToolTranslation / numbersPreserved / residualEnglish（7 测）
+  - src/lib/zh-tool.ts：wan（万为单位）/ zhToolTitle / zhStatus / zhToolFaq，全部数据生成（5 测）
+  - src/lib/i18n-data.ts：只发布 status='approved' AND human_reviewed>=1（1 = 全文读过，2 = 整批 10% 抽查通过）；表不存在返回空
+  - src/app/zh/tool/[slug]/page.tsx：统计、状态句、简介、区别、能力/适合/不太适合/局限、替代品（有中文页的链中文页）、FAQPage、页尾"AI 翻译 + 第二模型回译校对"声明、提交 CTA
+  - 英文 /tool alternates 改用 localizedAlternates；sitemap 加 zh 工具页；FaqSection 加 title 参数
+- **翻译流水线**：scripts/translate-tools.ts —— 译者 gpt-6-astra（llm 加 model + noFallback，**禁止回退 OpenRouter**，避免译者与审校同模型）；审校 OpenRouter DeepSeek（llm.ts 新增 openrouter()）回译 + 情态逐句核对；确定性检查：列表长度、数字、残留英文；写入 Turso tool_i18n（tool_id, lang, content, status, issues, source_hash, human_reviewed）
+- **人工审**：scripts/review-translations.ts --list / --sample / --mark / --reject
+- **进行中**：前 200 工具后台翻译（gpt-6-astra 约 3 个/分钟）；其余 189 页：每批 --list 全读前 50，其余 --sample 10% 抽查后 --mark level 2 发布
+- zh UI 文案已过 ai-flavor（干净）；看板已记录（9bc019e）
+- 部署链：build > log && commit && deploy && push
+
 ## 近期排期
 
 - **10-02**：09:30 老板汇总 → 10:00 左右发 X 帖（T19 定稿 drafts/x-t19.md，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
@@ -276,7 +291,7 @@
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T24 中文第一批 10-05 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
+- [ ] T24 中文：第一批 11 页已上线（10-02）；其余 189 页翻译中 → 前 50 全读 + 其余 10% 抽查 --mark 2 发布；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道
@@ -289,5 +304,5 @@
 
 - 会话环境可能仍带失效 GITHUB_TOKEN → git/gh 前 `env -u GITHUB_TOKEN`
 - 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知，未改动）
-- 长期服务用 systemctl --user，不用 pkill -f
+- 长期服务用 systemctl --user，不用 pkill -f；next start 本地预览完按 PID kill，不用 pkill
 - 非交互 shell 无 bun：用 ~/.bun/bin/bun（ops 脚本已 export PATH）；scripts/indexnow.ts 等含 top-level await 的脚本只能用 bun 跑，npx tsx 报 cjs 错

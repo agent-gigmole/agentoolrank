@@ -153,3 +153,5 @@
 | content-writing / bin/write / brief / ai-flavor / --out FileNotFoundError mkdir -p / x-post 偏抽象手补 / CJK 2 权重 / 非 Premium 拆 thread / 中文帖时段 | GOTCHAS.md#content-writing-bin-write |
 | ISR 缓存 / last refreshed 日期滞后 / revalidate=86400 / 查 DB 判断断更 | GOTCHAS.md#isr-stale-refresh-date |
 | #24 写作流程落地 / T19 定稿 / 10-02 10:00 发 | LOG.md#2026-10-02 #24 写作流程落地（content-writing） |
+| 翻译流水线 / 译者审校不同模型族 / noFallback / 发布门 approved+human_reviewed / DeepSeek ok 与 issues 分开 / 源 tagline 截断 / description 存中文 / next start 按 PID kill | GOTCHAS.md#translation-pipeline-review-gate |
+| T24 中文第一批 11 页 / /zh/tool / review-translations / 189 页抽查发布 | LOG.md#2026-10-02 T24 中文第一批上线（/zh/tool） |

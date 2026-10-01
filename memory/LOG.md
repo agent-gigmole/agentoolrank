@@ -551,3 +551,12 @@
 - commit 830a717
 - 坑：bin/write 前先 mkdir -p；x-post 初稿偏抽象需手补具体数字/名字并复查；X CJK 按 2 权重、非 Premium 自动拆 thread；ISR 页面日期最多滞后 24h → 查 DB（GOTCHAS#content-writing-bin-write、#isr-stale-refresh-date）
 - human-intervention=0 / auto-resolved=1（writer.py --out 目录缺失→mkdir 重跑）/ 熔断=0
+
+## 2026-10-02 T24 中文第一批上线（/zh/tool）
+- 代码：i18n.ts（localizedAlternates hreflang 全互指含自引用+x-default / parseToolTranslation / numbersPreserved / residualEnglish，7 测）；zh-tool.ts（wan / zhToolTitle / zhStatus / zhToolFaq，5 测）；i18n-data.ts（approved 且 human_reviewed>=1 才发布，表缺失回空）；/zh/tool/[slug] 页（统计/状态/简介/区别/能力/适合/局限/替代品/FAQPage/AI 翻译声明/CTA）；英文 /tool alternates 改 localizedAlternates；sitemap 加 zh；FaqSection title 参数
+- 流水线：translate-tools.ts（gpt-6-astra，noFallback 禁回退 OpenRouter；审校 OpenRouter DeepSeek 回译 + 情态逐句；列表长度/数字/残留英文检查；Turso tool_i18n）；review-translations.ts（--list/--sample/--mark/--reject）
+- 结果：人工全文读 12 篇，发布 11；dbx 退回（英文源 tagline 截断 "Built-"）；/zh/tool/hermes-agent 200、英文页带 hrefLang zh；zh UI 文案 ai-flavor 干净；看板已记
+- 前 200 后台翻译中（约 3 个/分钟）；其余 189 页：前 50 全读、其余 10% 抽查后 --mark 2
+- commits d9b44c7 / d8b8f09 / 9bc019e；部署链 build > log && commit && deploy && push
+- 坑：DeepSeek 审校 ok=true 也附措辞意见 → issues 与 ok 分开看；源 tagline 截断自动检查查不出、靠人读；copilotkit/cognee 英文 description 字段存的是中文；next start 预览后按 PID kill（GOTCHAS#translation-pipeline-review-gate）
+- human-intervention=0 / auto-resolved=1（dbx 源截断→人工退回）/ 熔断=0

@@ -467,3 +467,11 @@
 ## isr-stale-refresh-date
 - 页面显示的"last refreshed"日期来自 ISR 缓存：/report revalidate=86400 → 最多滞后 24h（10-02 看到 09-30，实际 DB 10-01T12:48 已全量刷新）
 - 判断数据是否断更：直接查 DB `SELECT MAX(data_refreshed_at), COUNT(*) ... WHERE data_refreshed_at >= <日期>` + 看 GitHub Action 运行状态，不要看页面
+
+## translation-pipeline-review-gate
+- 译者与审校必须不同模型族：译者 gpt-6-astra（llm model 参数 + noFallback，禁止回退 OpenRouter），审校 OpenRouter DeepSeek 回译 + 情态逐句核对；否则回退时译者=审校，审校失效
+- 发布门 = 自动审校通过 AND 人工标记：tool_i18n.status='approved' 且 human_reviewed>=1（1 全文读过，2 整批 10% 抽查通过）；页面只读这两项，表不存在返回空
+- 坑 1：DeepSeek 审校很挑剔，ok=true 时也附一堆措辞意见 → issues 与 ok 分开看，ok 决定是否可发、issues 仅供人工参考
+- 坑 2：源数据截断（dbx tagline "Built-"）翻译会忠实保留，数字/长度/残留英文检查都查不出，只能人读 → 待加确定性检查：源文本以连字符或半截词结尾时标记
+- 坑 3：copilotkit、cognee 的英文 description 字段存的是中文（历史数据），翻译原样保留；英文页同样受影响，需回源修数据
+- next start 本地预览完按 PID kill，不要 pkill（会误杀其他 next/服务）
