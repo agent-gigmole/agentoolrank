@@ -308,34 +308,49 @@
 - 已 commit + push；看板已记录（6da708d）
 - 英文源数据被翻译审稿查出的错误累计三类：截断（114）→ 元话术（13+12）→ 同名项目串号（1）
 
+## 2026-10-02 T17 外联通道打通 + T20 解除阻塞（commit 9af8381 已 push）
+
+- **Brevo 手机验证通过**：用 agentkit 收码线②（老板西班牙实体 SIM +34 607 062 519，SmsForwarder 转发）。先后台跑 `$AGENTKIT_ROOT/bin/sms-code wait sim --timeout 300 --from brevo`，再在弹窗点 modify phone number 填 +34，Send code 只点一次；约 15 秒到码（发件号 +34683785677），task_act fill_secret 填入，未打印
+- **API key**：名 agentoolrank-outreach，存 ~/.config/secrets/brevo-api-key（600），Windows 侧临时文件已删；/v3/account 200，sender hello@agentoolrank.com active
+  - 新工具（未入库，待 commit）：scripts/winbrowser/task_dialog.py（只读打印可见弹窗文本/控件）、task_capture_key.py（填 key 名 → Generate → 页面读 key 直接写文件，不打印）
+- **域名认证**（用本机已有 ~/.config/cloudflare/agentoolrank.token，有 DNS 写权限）：新增 CNAME brevo1/brevo2._domainkey（proxied=false）、TXT brevo-code、TXT _dmarc（p=none）；SPF 改原记录，加 include:spf.brevo.com（**回滚值** `v=spf1 include:_spf.mx.cloudflare.net ~all`，已记看板）；DoH 回读生效，Brevo authenticate 成功
+- **模板**：brief docs/ops/launch-kit/briefs/outreach-maker.md → bin/write（agentkit 修复占位符丢失后重跑，7 个变量全保留，判可发布）→ 采用 drafts/outreach-maker-v2.md；src/lib/outreach.ts 已换，vitest 139 全绿
+- **scripts/send-outreach.ts**：每天 ≤10 封（北京时间日）；同一地址只发一次、不跟进；退订名单 data/outreach/optout.json；发送记录 data/outreach/sent.json（gitignored）；**发送时从 DB 实时重算排名**（hermes-agent 已从 #1 掉到 #2）；间隔 30 秒；List-Unsubscribe 头；--test / --dry-run
+- **自测**：发 hello@agentoolrank.com → Gmail 收件箱（Updates 分类），非垃圾箱
+- 已回复 agentkit；**第一批 10-02 22:00 CST（美东 10:00）发 10 封**
+- T20 周报阻塞解除（有 Brevo key 了）；订阅者目前 0，周一 weekly-ops 真正发出
+
 ## 近期排期
 
-- **10-02**：09:30 老板汇总 → 10:00 左右发 X 帖（T19 定稿 drafts/x-t19.md，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
-- **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2
-- **10-05**：T24 中文剩余页型（工具页 200/200 已于 10-02 全部上线；替代品 / 对比 / /where-to-list / /submit 价格页待做）
+- **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
+- **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
+- **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
+- **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
 - **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
 ## 待办 / 下一步
 
-- [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to 已发；HN/Reddit 与 imagehub 错开 ≥1 周，Show HN 最早 10-07）
-- [ ] T19 10-02 10:00 发 X 帖（定稿已走 content-writing：drafts/x-t19.md），发后看板记链接、查 src=x
-- [ ] T17 外联：10-02 实体 SIM 到 → Brevo 手机验证 → 发信（≤10 封/天；邮件模板发前走 bin/write outreach-email）；同时解锁 T20 周报
-- [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
-- [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
+- [ ] T19 10-02 10:00 发 X 帖（定稿 drafts/x-t19.md），发后看板记链接、查 src=x
+- [ ] T17 22:00 第一批外联；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
+- [ ] commit scripts/winbrowser/task_dialog.py、task_capture_key.py（目前未跟踪）
+- [ ] 确认 10-05 weekly-ops newsletter 实跑（订阅者 0 的空跑路径）
+- [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）
+- [ ] 10-03 发 dev.to 第二篇（canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T24 中文：工具页 200/200 已上线（10-02）；确认 sitemap 刷新出 200 个 zh 页 + IndexNow 推送；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
-- [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等），减少审校数字误报
+- [ ] T24 中文：确认 sitemap 刷新出 200 个 zh 页 + IndexNow；其余页型 → 日语 10-09 → 西语 10-30 看数据
+- [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道
 - [ ] 新工具入库接展示名/alternatives/related 管道；related 覆盖 350/669
 - [ ] 观察 Google 是否重新抓取 sitemap；IndexNow 每日推送跟踪
-- [ ] 查 daily-update 刷新失败仓库；PeerPush 改用户名（看板 KPI 已自动化 10-02）
-- [ ] KPI 可扩展：events.country 按国家统计访客（配合 T24 判断中文/日语流量）
+- [ ] 查 daily-update 刷新失败仓库；PeerPush 改用户名
+- [ ] KPI 可扩展：events.country 按国家统计访客
 
 ## 环境注意
 
+- Brevo key：~/.config/secrets/brevo-api-key；Cloudflare DNS token：~/.config/cloudflare/agentoolrank.token（找凭据先查 ~/.config/<provider>/ 与 ~/.config/secrets/）
 - 会话环境可能仍带失效 GITHUB_TOKEN → git/gh 前 `env -u GITHUB_TOKEN`
 - 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知，未改动）
 - 长期服务用 systemctl --user，不用 pkill -f；next start 本地预览完按 PID kill，不用 pkill

@@ -164,3 +164,8 @@
 | 审校误报 / numbersPreserved E2E A2A / residualEnglish 项目全称 / 两轮不过≠译文错 / --override 人读后放行 / 译文·源数据·检查器三分类 | GOTCHAS.md#review-false-positives-override |
 | 同名项目串号 / omniroute Uniswap / LLM 名字联想 / rejudge-tools judge.ts 按 README 重生成 / rejudge-backup | GOTCHAS.md#same-name-project-mixup |
 | T24 中文工具页 200/200 上线 / 第三轮重译 24 / --override 12 条 | LOG.md#2026-10-02 T24 中文工具页 200/200 全部上线 |
+| 找凭据先查本机 / ~/.config/cloudflare / ~/.config/secrets / 别先找老板要 | GOTCHAS.md#find-local-credentials-first |
+| 密钥页面捕获不打印 / task_capture_key / install -m 600 / 删 Windows 临时文件 / sms-code 先等后发只点一次 | GOTCHAS.md#secret-capture-no-print |
+| 冷邮件域名认证 / DKIM CNAME proxied=false / SPF 改原记录回滚值 / DMARC p=none / 自测收件箱 | GOTCHAS.md#cold-email-domain-auth-selftest |
+| 外联名单排名过时 / 发送时实时重算 / hermes-agent #1→#2 | GOTCHAS.md#outreach-live-recompute-rank |
+| T17 外联发送就绪 / Brevo 验证 / send-outreach.ts / T20 解除阻塞 | LOG.md#2026-10-02 T17 外联通道打通 + T20 解除阻塞 |

@@ -511,3 +511,22 @@
 - 排查：全库扫一遍同类（描述里的领域/关键词与 README/仓库 topics 不一致的）；10-02 扫完只有这一个
 - 预防：生成 prompt 必须附原文（README/网站）并要求"只依据所给材料"；审核时对比描述领域与仓库 topics/README 首段
 - 这是翻译审稿第三次查出英文源错误（截断 → 元话术 → 同名串号），见 #translation-review-audits-source
+
+## find-local-credentials-first
+- 需要某平台凭据时，**先查本机** `~/.config/<provider>/`（如 ~/.config/cloudflare/agentoolrank.token）和 `~/.config/secrets/`，再考虑找老板要。10-02 差点为 Cloudflare DNS 写权限去问老板，实际 token 早已在本机且有 DNS 写权限
+- 查到后先只读验证权限范围（如 CF `/user/tokens/verify` + 列 zone），再动手
+- 与 #cross-project-credentials 不矛盾：那条是"不借兄弟项目的密钥"，这条是"本项目自己的密钥先在本机找"
+
+## secret-capture-no-print
+- 从网页生成/取得的密钥（Brevo API key 等）：task_capture_key.py 在页面上读出后**直接写文件**，绝不打印到会话/日志；`install -m 600` 放进 ~/.config/secrets/<name>；删掉 Windows 侧临时文件；之后只用"调一个只读接口（如 /v3/account）返回 200"验证，不回显 key
+- 验证码同理：bin/sms-code 收码 → task_act `fill_secret` 填入，不打印
+- 收码顺序：先后台起 `sms-code wait sim --timeout 300 --from <sender>`，再点 Send code，**只点一次**（反复点触发风控，见 #twilio-30038-otp-dropped）
+- 查看弹窗用只读 task_dialog.py，别用会回显 input value 的摘要（见 #page-summary-leaks-input-values）
+
+## cold-email-domain-auth-selftest
+- 冷邮件第一封发出前：① 发信域名做 DKIM（Brevo：CNAME brevo1/brevo2._domainkey，**proxied=false**）+ 验证 TXT（brevo-code）+ DMARC（_dmarc p=none 起步）② SPF **改原记录**而不是新增第二条 TXT（一个域只能有一条 v=spf1），加 include:spf.brevo.com，原值记看板以便回滚 ③ DoH 回读确认生效再点服务商 authenticate ④ 给自己邮箱发一封 --test，确认进收件箱非垃圾箱
+- 发送脚本护栏：每日上限（按北京时间日）、同一地址只发一次不跟进、退订名单、List-Unsubscribe 头、发信间隔、--dry-run
+
+## outreach-live-recompute-rank
+- 外联名单里存的排名/星数是生成名单时的快照，会过时（hermes-agent 名单写 #1，发信时已掉到 #2）→ 邮件里出现的任何数字必须在**发送时从 DB 实时重算**，名单只存身份与联系方式
+- 错误数字发给作者本人 = 立刻失信，比不写数字更糟

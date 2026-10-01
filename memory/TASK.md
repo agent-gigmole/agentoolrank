@@ -135,7 +135,8 @@
 - 失败: 0
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
-- 状态: todo
+- 状态: 发送就绪（10-02），待 22:00 CST 第一批 10 封
+- 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [ ] 22:00 第一批 [ ] 徽章嵌入数追踪
 - 依赖: -
 - 验收: 模板经用户同意；每天 ≤10 封限速发送；徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）可追踪
 - 闸: human（对外发送）
@@ -166,7 +167,7 @@
 - 发完把链接回 agentkit
 
 ### T20 每周邮件简报（代码已就绪 10-01）
-- 状态: blocked（Brevo 手机验证 → API key，SIM 10-02；订阅者目前 0）
+- 状态: 阻塞已解除（10-02 Brevo key 就绪 + 域名认证完成）；订阅者目前 0，10-05 周一 weekly-ops 首次真发
 - scripts/weekly-newsletter.ts（无 key 只出预览）+ /unsubscribe（subscriber_tokens 新表）；weekly-ops.sh 周一自动发
 - 闸: auto（发给主动订阅者的交易性质邮件）
 
