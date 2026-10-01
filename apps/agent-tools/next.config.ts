@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   async redirects() {
     return mergedRedirects();
   },
+  async rewrites() {
+    // Crawlers and some browsers request /favicon.ico directly; serve the generated app icon.
+    return [{ source: "/favicon.ico", destination: "/icon" }];
+  },
 };
 
 export default nextConfig;
