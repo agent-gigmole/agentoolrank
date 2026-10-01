@@ -4,28 +4,30 @@ export function badgeMarkdown(baseUrl: string, slug: string, name: string): stri
   return `[![${name} on AgentoolRank](${baseUrl}/api/badge/${slug})](${baseUrl}/tool/${slug})`;
 }
 
+// Wording from the content-writing skill (docs/ops/launch-kit/drafts/outreach-maker-v2.md, brief in briefs/outreach-maker.md).
 export function outreachEmail(
   t: { owner: string; name: string; slug: string; rank: number; total: number; category: string },
   baseUrl: string,
 ): { subject: string; text: string } {
   return {
-    subject: `${t.name} is #${t.rank} of ${t.total} in ${t.category} on AgentoolRank`,
+    subject: `${t.name}'s current rank on AgentoolRank`,
     text: [
       `Hi ${t.owner},`,
       "",
-      `I run AgentoolRank, an index that ranks open-source AI agent tools by live GitHub activity (stars, 30-day growth, commits, releases). ${t.name} is currently #${t.rank} of ${t.total} in ${t.category}:`,
-      `${baseUrl}/tool/${t.slug}?ref=outreach`,
+      `${t.name} is currently #${t.rank} of ${t.total} in ${t.category} on AgentoolRank, ranked by live GitHub activity. I built AgentoolRank.`,
       "",
-      "If it's useful, this README badge shows your live star count and links to that page:",
+      `Could you check ${baseUrl}/tool/${t.slug}?ref=outreach ? It shows your project's stats, alternatives and side-by-side comparisons, with data refreshed daily.`,
       "",
+      "If you'd like a README badge, this shows the live star count and links to your page:",
       badgeMarkdown(baseUrl, t.slug, t.name),
       "",
-      `The page also lists alternatives and side-by-side comparisons. If anything about ${t.name} is wrong or outdated, just reply and I'll fix it.`,
+      `If anything about ${t.name} is wrong or outdated, you can reply with corrections and I'll fix it. Both are optional.`,
       "",
       "Ethan Tan",
-      "AgentoolRank · https://agentoolrank.com",
+      "AgentoolRank",
+      "https://agentoolrank.com",
       "",
-      'If you\'d rather not get email from me, reply "no" and I won\'t write again.',
+      'If you reply "no", we\'ll never email you again.',
     ].join("\n"),
   };
 }
