@@ -542,6 +542,9 @@
 - **Mantine 下拉/多选**：选项用 mousedown 事件选（click 不生效）；输入框为空时按 Backspace 会删掉已选标签。
 - **自定义下拉**：JS 点不开 → 截图后按坐标真实点击。
 - **上传 logo 弹裁剪框**：必须点 "Use this logo" 才会继续，否则表单卡住。
+- **`[name=xxx]` 选择器命中 meta**（10-02 第四批，agentlocker）：`[name=description]` 会先命中 `<head>` 里的 `<meta name="description">` → 表单字段一律加 tag 前缀，如 `textarea[name=description]`、`input[name=email]`。
+- **同名 Submit**：页面标题、导航链接和提交按钮都叫 "Submit" / "Submit Agent"（thedailyworkflow、ainewshub、aiagentsdirectory）→ 一律用 `form button[type=submit]` 定位，不要按文字匹配。
+- **蜜罐字段**：thedailyworkflow 有隐藏字段 `website`，必须留空，填了会被判 bot；按字段名批量填表前先排除隐藏输入。
 - **层层付费引导**：很多站依次弹 付费档 → Priority Pass → 徽章 三层，要逐层选免费那一项；免费档要求挂徽章的（如 aiagentsdirectory）不当场决定，留周决策。
 
 ## directory-candidates-rejudge-relevance
@@ -562,3 +565,9 @@ Windows 专用 Chrome（CDP 9223）在批量提交时开到 24 个标签，Windo
 
 ## mcp-directory-repo-vs-remote
 MCP 目录常见两条路线：GitHub repo 走免费队列（mcpmarket Free Queue $0、4–6 周；mcprepository 只填 GitHub URL），remote MCP server 走付费（mcpmarket $69）。我们的公开 monorepo 也能走 repo 路线。glama.ai 在官方 MCP Registry 发布后会自动同步，不用单独提交。
+
+## directory-email-only-submission
+只给邮箱（mailto）入口的目录站（10-02，magicnetworld.com）：用 Brevo 从品牌邮箱 hello@agentoolrank.com 发一封推荐邮件，标题按对方页面给的模板写，算正常提交（对方页面明确邀请投稿，不是冷邮件，不占外联配额）。台账照常 dirsub.py add 为 submitted，备注"via email"。
+
+## mcp-directory-live-handshake
+MCP 证据/索引站（如 agenstry.com）提交时粘贴 MCP endpoint，对方会实时握手并列出 tools（我们 5 个），通过即时收录。我们的 MCP 无认证，一次过；若以后给 MCP 加认证，这类站会握手失败，需要给出公开只读 endpoint。

@@ -632,3 +632,12 @@
 - 结果：累计 submitted 20，差 5；看板已记录并推送（a526159）
 - 坑：按项目关键词筛 columbus 原表（GOTCHAS#directory-candidates-rejudge-relevance）；徽章换 dofollow 先读免费档条款（GOTCHAS#badge-for-dofollow-read-free-tier）；MCP 目录 repo 免费 / remote 付费两条路线（GOTCHAS#mcp-directory-repo-vs-remote）
 - human-intervention=0 / auto-resolved=1（aiagentsdirectory 不挂不付，agentkit 同意）/ 熔断=0
+
+## 2026-10-02 07:06–07:40 T25 目录站第四批（累计 25 达标）
+- 新提交 5：agentlocker.ai（注册+邮件验证，/agent/submit 选 manual，审核 1 月+，徽章可缩到 24h 但没挂；凭据 agentoolrank-agentlocker.json）、linkstartai.com、agenstry.com（MCP endpoint 实时握手，5 tools，即时收录）、magicnetworld.com（仅 mailto → Brevo 从 hello@ 发中文推荐邮件）、thedailyworkflow.com（蜜罐 website 留空）
+- skip：opentools.ai（仅付费）、xpay.sh（不相关）；todo：conduid.com（需登录）
+- 结果：submitted 25 / badge 1 / retry 2 / skip 7 / todo 5；目标 25 提前达成（原定 10-03 24:00）；全程无验证码
+- 后续：每天 5–8 个；需 Google 登录的站等品牌号
+- 已回报 agentkit，看板已记，代码已推送
+- 坑：[name=] 选择器先命中 <meta name=description>；同名 Submit 用 form 内 button[type=submit]；仅邮箱入口用发信服务发推荐；蜜罐字段留空；MCP 索引站实时握手（GOTCHAS#directory-form-pitfalls、#directory-email-only-submission、#mcp-directory-live-handshake）
+- human-intervention=0 / auto-resolved=0 / 熔断=0

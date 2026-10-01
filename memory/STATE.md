@@ -356,11 +356,19 @@
 - **todo +1**：cursor.directory（需 GitHub 或 Google 登录 → 等 Google 品牌号）
 - **累计 submitted 20，目标 25，还差 5**；看板已记录并推送（a526159）
 
+## 2026-10-02 07:06–07:40 目录站第四批 → 累计 25 达标（T25 目标完成）
+
+- **累计 submitted 25 / badge 1 / retry 2 / skip 7 / todo 5**；原定 10-03 24:00，提前到 10-02 07:40 达成；全程没遇到验证码
+- **新提交 5**：agentlocker.ai（注册 username+email，邮件验证链接在本浏览器打开；/agent/submit 选 manual；凭据 ~/.config/secrets/accounts/agentoolrank-agentlocker.json；标准审核 1 个月以上，挂徽章可缩到 24h，没挂）、linkstartai.com（4 字段表单）、agenstry.com（粘贴 MCP endpoint，对方实时握手，5 个 tools，即时收录）、magicnetworld.com（只有 mailto 入口 → 用 Brevo 从 hello@ 发中文推荐邮件，标题按页面模板写）、thedailyworkflow.com（蜜罐字段 website 留空；Submit 按钮与导航链接同名）
+- **skip**：opentools.ai（仅付费）、xpay.sh（不相关）；**todo**：conduid.com（需登录）
+- **后续节奏**：每天 5–8 个；剩下的主要是需要 Google 登录的站（cursor.directory、conduid 等），等品牌 Google 号建好（老板扫码）再做
+- 已回报 agentkit，看板已记录，代码已推送
+
 ## 近期排期
 
 - **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
-- **10-02 白天 / 10-03**：目录站各一批，10-03 24:00 前累计 25（现 20，差 5）；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
+- **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；需 Google 登录的站等品牌号；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
@@ -371,7 +379,8 @@
 
 - [ ] T19 10-02 10:00 发 X 帖（定稿 drafts/x-t19.md），发后看板记链接、查 src=x
 - [ ] T17 22:00 第一批外联；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
-- [ ] T25 目录站：累计 20 → 10-03 24:00 前 25（差 5；继续按 mcp/agent/智能体 筛 columbus；smithery、cursor.directory 需登录、producthunt 10/10 后）；purshology、ai-tab.cn 重试；ainewshub 补回执；aiagentsdirectory 已定不挂不付
+- [x] T25 目录站累计 25（10-02 07:40 达成，提前）
+- [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com、smithery 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执
 - [ ] Google 品牌号：老板醒后重新注册扫码
 - [ ] 确认 10-05 weekly-ops newsletter 实跑（订阅者 0 的空跑路径）
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）

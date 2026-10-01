@@ -181,3 +181,7 @@
 | MCP 目录两条路线 / GitHub repo 免费队列 / remote server 付费 $69 / mcpmarket mcprepository / glama 官方 Registry 自动同步 | GOTCHAS.md#mcp-directory-repo-vs-remote |
 | 按项目关键词 mcp/agent/智能体 筛 columbus 原表 / 比 candidates 默认队列准 | GOTCHAS.md#directory-candidates-rejudge-relevance |
 | T25 第三批 累计 20 / glama mcpmarket mcprepository ai123 / aiagentsdirectory 不挂不付 / cursor.directory todo | LOG.md#2026-10-02 06:00–06:55 T25 目录站第三批（累计 20） |
+| [name=] 选择器命中 meta name=description / 加 tag 前缀 textarea[name=] / 同名 Submit 用 form button[type=submit] / 蜜罐字段 website 留空 | GOTCHAS.md#directory-form-pitfalls |
+| 仅 mailto 入口的目录站 / Brevo 从 hello@ 发推荐邮件 / 按页面模板写标题 / 不算冷邮件 | GOTCHAS.md#directory-email-only-submission |
+| MCP 索引站 endpoint 实时握手 / agenstry 即时收录 / MCP 加认证会失败 | GOTCHAS.md#mcp-directory-live-handshake |
+| T25 第四批 累计 25 达标 / agentlocker linkstartai agenstry magicnetworld thedailyworkflow / 之后每天 5–8 / 等 Google 号 | LOG.md#2026-10-02 07:06–07:40 T25 目录站第四批（累计 25 达标） |
