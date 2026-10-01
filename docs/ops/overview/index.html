@@ -159,6 +159,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-02 06:35 目录站第二批又提交了 4 个：两个中文 AI 站（不死鸟、AI分享圈；我们已经有中文页，正好对口）、ProductWatch（DR72 dofollow，11-01 上线）、BetterLaunch（11-02 上线）。AI Agents Directory 是和我们最对口的目录（DR74），但免费档要求挂它的徽章，先记下，每周汇总时统一决定。累计已提交 16 个，目标是 10-03 前达到 25 个。另外让写作 skill 出了一套中文文案。</li>
     <li>2026-10-02 05:50 目录站提交按老板"互相抄作业、加量"的要求加速，改用 agentkit 新出的 directory-submission skill 记录每个站的结果：提交前先查重，交完当场回写共享日志，然后关掉标签页。今天新提交 7 个：FutureTools、WebsiteLaunches（之前已被自动收录）、Visalytica、AI News Hub、AI Tools Capital、Outils.ai（法语站，用的是写作 skill 生成的法语文案）、StartupStash。累计已提交 12 个。另外 purshology 卡在提交处理中，待重试；betterlaunch 注册流程没走通，留到明天。上架文案由写作 skill 生成（英文、法语各一套）。品牌 Google 账号注册停在扫码这一步，要等老板醒来；GitHub 注册被风控拦截，老板决定（#25）不再尝试。</li>
     <li>2026-10-02 04:35 发信通道已就绪。Brevo 用老板的西班牙实体 SIM 完成了手机验证，验证码约 15 秒收到，只点了一次发送。API key 已建好，存在本机密钥目录，权限 600。为了不进垃圾箱，给域名做了发信认证：用 Cloudflare 的 agentoolrank.com DNS token 新增了 DKIM 两条 CNAME（不走代理）、brevo-code 验证 TXT 和 DMARC（p=none）；SPF 原来是 <code>v=spf1 include:_spf.mx.cloudflare.net ~all</code>（回滚就改回这条），现在改成 <code>v=spf1 include:_spf.mx.cloudflare.net include:spf.brevo.com ~all</code>。记录已回读核对过，Brevo 显示 "Domain has been authenticated successfully"。下一步是外联：邮件稿走写作 skill，每天最多 10 封，退订和回复都记在这里。</li>
     <li>2026-10-02 04:45 T24 中文工具页 200/200 全部上线（原定 10-05）。自动审校两次都没过的 13 篇我逐篇看了审校意见，其中 12 篇只是措辞上的挑剔或误报，比如把 "E2E" 里的 2 当成数字被改，我手动放行。剩下的 omniroute 是真问题：英文站上的介绍写的是另一个同名项目（Uniswap 的跨链路由），已根据它自己的 README 重新生成介绍，再重译上线，旧内容留了回滚文件。</li>

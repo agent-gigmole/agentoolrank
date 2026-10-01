@@ -1,0 +1,25 @@
+{
+ "format": "landing-copy",
+ "lang": "zh",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "practical-guide",
+  "angle": "面向中国开发者，先讲清 AgentoolRank 如何用每日更新的 GitHub 活跃度数据，而不是累计星标数，帮助筛选 669 个开源 AI agent 工具，再交代对比、MCP 查询和免费收录入口。",
+  "why_share": "选框架或 MCP 工具前先看近期提交、发布和 issue 响应，比只看星标更有参考价值；免费、无需注册的查询入口也方便转给正在选型的同事。",
+  "length": "medium"
+ },
+ "outline": "- **开头与短文案（TAGLINE_SHORT、TAGLINE、DESC_SHORT）**：先说明「AgentoolRank 是 Ethan Tan 做的自家产品」，再聚焦核心用途：用每日更新的 GitHub 活跃度，筛选 669 个开源 AI agent 工具。三个块分别控制在 60、100、160 字符以内。\n- **筛选依据（DESC_MEDIUM）**：用 2–3 句说明排名看近 30 天星标增长、近 90 天提交、近 6 个月发布及 issue 响应时间，不按累计星标数排序；数据每天从 GitHub API 更新，总计少于 300 字符。\n- **选型流程（DESC_LONG）**：从开发者选框架或 MCP 工具切入，串起活跃度筛选、工具详情、替代方案和并排对比；补充前 200 个工具有中文页面、免费使用且无需注册。写成纯段落。\n- **报告视角（DESC_LONG_ALT）**：换用「追踪工具中，32% 已超过 6 个月没有提交」开头，介绍月度报告及 CC BY 4.0 复用许可，再衔接选型用途。来源：https://agentoolrank.com/report。\n- **功能摘要（FEATURES）**：安排 5 行，分别写每日活跃度排名、详情与替代方案及对比、前 200 个工具的中文页面、MCP 与 JSON API、免费收录及付费加速审核／推荐展示。付费档位为 $9／$19／$49，不细分各档权益。\n- **使用场景（USE_CASES）**：安排 3 行：开发者筛选 agent 框架或 MCP 工具；在 Claude、Cursor 或其他 MCP 客户端查询工具、统计和替代方案；作者免费提交工具并排队审核。MCP 地址：https://agentoolrank.com/api/mcp，已列入官方 MCP Registry。\n- **表述边界与官网入口**：不把活跃度写成质量保证，不把「6 个多月无提交」写成项目已废弃，不把免费收录写成即时上线。官网：https://agentoolrank.com。",
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [
+  "AgentoolRank 是 Ethan Tan 的“自家产品”（BRIEF 仅说明由 Ethan Tan 构建，未说明所有权）。",
+  "活跃度只能提供维护线索，不能保证工具质量或证明工具适合具体项目。",
+  "32% 的工具超过 6 个月没有提交，不能据此认定项目已经废弃或停止维护。",
+  "付费审核或推荐展示选项没有承诺具体上线时间（BRIEF 未提供时间承诺信息，不能据此断言不存在承诺）。",
+  "可以从官网的“收录入口”提交工具（BRIEF 支持可以提交工具，但未说明具体入口或操作路径）。"
+ ],
+ "unsupported_final": [],
+ "template_vars": [],
+ "missing_vars": [],
+ "publishable": true
+}
