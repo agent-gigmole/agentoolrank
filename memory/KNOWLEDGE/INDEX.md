@@ -159,3 +159,5 @@
 | bun -e SQL 双引号被当列名 / 参数绑定 | GOTCHAS.md#bun-e-sql-double-quotes |
 | pgrep -f 匹配自己 bash -c 误报 RUNNING / 看日志汇总行 | GOTCHAS.md#pgrep-self-match-running |
 | T24 中文工具页 177/200 上线 / 114 截断 tagline / 13 审核备注 / --retry-failed | LOG.md#2026-10-02 T24 中文工具页 177/200 上线 + 英文源数据修复 |
+| 元话术语义扫描 / pros cons 审稿自述 / stripMetaSentences / README excerpt / no direct evidence / 审稿人看不到 vs 项目文档少 | GOTCHAS.md#meta-notes-semantic-scan |
+| T24 元话术第二轮清理 12 个 / meta-notes-backup | LOG.md#2026-10-02 T24 元话术第二轮清理（12 个工具） |

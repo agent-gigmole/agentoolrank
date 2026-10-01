@@ -489,3 +489,10 @@
 ## pgrep-self-match-running
 - `pgrep -f translate-tools` 判断后台任务是否还在跑会误报 RUNNING：匹配到自己所在的 `bash -c "...translate-tools..."` 命令行
 - 做法：判断完成看日志是否已写出最后一行汇总（如 `done: N ok / M failed`）；非要用 pgrep 则方括号技巧 `pgrep -f "translate-tool[s]"`（同 #pkill-f-kills-own-shell）
+
+## meta-notes-semantic-scan
+- 10-01 按内部词表扫线上页面查不出**自然英语**写的审稿元话术；10-02 改扫 DB 全部文本字段，在旧 pros/cons（对比页 Pros/Cons 直接展示）又抓到 12 个工具
+- 扫描范围：description、pros、cons、use_cases、intelligence（数组按项删，散文按句删 stripMetaSentences：`split(/(?<=[.!?])\s+/)`）
+- 语义模式（review.ts META）：内容取不到/未核实（could not be fetched/accessed/verified）、证据自述（evidence limited to / no direct evidence / provided README|documentation|evidence）、README 截断/摘录（README content cuts off / README excerpt / unclear from ... README）、信息量自述（limited information available / limits the ability to provide / based on visible content）、核实目的（for full verification）
+- 判别规则：主语是**审稿人/能看到的材料**（"we/the provided README doesn't show"）= 元话术，删；主语是**项目本身**（"Minimal README — documentation is external"）= 真实产品缺点，留
+- 清理前备份 data/meta-notes-backup-*.json；源改动 → source_hash 变 → 译文自动下架等重审

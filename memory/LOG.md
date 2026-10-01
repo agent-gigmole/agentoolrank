@@ -570,3 +570,12 @@
 - 待：sitemap 缓存仍 11 个 zh 页；21:30 daily-ops 跑 IndexNow
 - 坑：人工审译文 = 顺带审英文源，要原文对照看；bun -e 里 SQL 双引号被当列名；pgrep -f 匹配到自己的 bash -c 命令行误报 RUNNING → 看日志汇总行（GOTCHAS#translation-review-audits-source、#bun-e-sql-double-quotes、#pgrep-self-match-running）
 - human-intervention=0 / auto-resolved=2（dbx、editor 源数据退回修复）/ 熔断=0
+
+## 2026-10-02 T24 元话术第二轮清理（12 个工具）
+- 思路：内部词表扫页面抓不到自然英语元话术 → 扫 DB 全部文本字段（description/pros/cons/use_cases/intelligence），按语义类模式匹配
+- 发现：旧 pros/cons（对比页 Pros/Cons 展示）有 "Limited information available about"、"the provided README excerpt"、"README content cuts off"、"No direct evidence of"；databerry description "which limits the ability to provide detailed insights"
+- 改动：review.ts META 正则扩展 + stripMetaSentences（按句删）；clean-meta-notes.ts 覆盖 5 类字段，再清 12 个，回滚 data/meta-notes-backup-*.json；保留真实缺点 "Minimal README — documentation is external"
+- 结果：vitest 139 全绿；commit a66f08e 已 push
+- 待：top 200 受影响工具（eigent、camofox-browser 等）下次 translate-tools 重译 → 先下架 → 重审再上线
+- 坑：元话术要按语义类（evidence / README / 可见内容的自述）扫，不能只靠内部关键词；区分"审稿人看不到"（删）与"项目文档少"（留）（GOTCHAS#meta-notes-semantic-scan）
+- human-intervention=0 / auto-resolved=1 / 熔断=0

@@ -289,6 +289,15 @@
 - vitest 138 全绿；已 commit + push；看板已记录（d86b75e）
 - **待刷新**：sitemap 缓存仍是 11 个 zh 页；21:30 daily-ops 跑 IndexNow
 
+## 2026-10-02 T24 元话术第二轮清理（commit a66f08e）
+
+- 起因：10-01 按内部词表扫线上页面，抓不到用自然英语写的审稿元话术 → 改为扫 DB 全部文本字段 + 语义模式
+- 新发现：旧 pros/cons 字段（对比页 Pros/Cons 直接展示）里有 "Limited information available about ..."、"the provided README excerpt ..."、"README content cuts off ..."、"No direct evidence of ..."；databerry description 含 "which limits the ability to provide detailed insights"
+- 代码：review.ts META 正则扩展（limited information available / provided readme|documentation|evidence / readme cuts off|excerpt / unclear from ... readme / no direct evidence / limits the ability to provide / based on visible content）；新增 stripMetaSentences（按句删描述里的元话术）；scripts/clean-meta-notes.ts 覆盖 description / pros / cons / use_cases / intelligence → 再清 12 个工具，回滚 apps/agent-tools/data/meta-notes-backup-*.json
+- 刻意保留真实产品缺点（如 "Minimal README — documentation is external"：说项目文档少，不是审稿人看不到）
+- vitest 139 全绿；已 commit + push
+- **待**：top 200 中 intelligence/description 变动的工具（eigent、camofox-browser 等）下次 translate-tools 自动重译（source_hash 变 → human_reviewed 归 0 先下架）→ 重审后再上线
+
 ## 近期排期
 
 - **10-02**：09:30 老板汇总 → 10:00 左右发 X 帖（T19 定稿 drafts/x-t19.md，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
@@ -305,7 +314,7 @@
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T24 中文：工具页 177/200 已上线（10-02）；23 个 review_failed 待 --retry-failed 重试；确认 sitemap 刷新出 177 个 zh 页 + IndexNow 推送；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
+- [ ] T24 中文：工具页 177/200 已上线（10-02）；元话术第二轮清 12 个后需重跑 translate-tools 刷新受影响译文并重审；23 个 review_failed 待 --retry-failed 重试；确认 sitemap 刷新出 177 个 zh 页 + IndexNow 推送；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道
