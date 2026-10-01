@@ -17,6 +17,16 @@ describe("compareVerdict", () => {
     const close = compareVerdict(t({ name: "A", star_velocity_30d: 1000 }), t({ name: "B", star_velocity_30d: 900 }), now);
     expect(close.join(" ")).not.toContain("growing faster");
   });
+  it("rounds fractional star velocity", () => {
+    expect(compareVerdict(t({ name: "A", star_velocity_30d: 4013.9 }), t({ name: "B", star_velocity_30d: 317.8 }), now)[0]).toBe("A is growing faster: +4,014 GitHub stars in the last 30 days vs +318 for B.");
+  });
+  it("treats free and open-source as the same pricing", () => {
+    expect(compareVerdict(t({ name: "A", pricing: "free" }), t({ name: "B", pricing: "open-source" }), now)).toEqual([]);
+  });
+  it("keeps only the first sentence of a long tagline", () => {
+    const v = compareVerdict(t({ name: "A", tagline: "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, 400+ integrations." }), t({ name: "B", tagline: "Run LLMs locally" }), now);
+    expect(v[0]).toBe("Pick A for: fair-code workflow automation platform with native AI capabilities. Pick B for: run LLMs locally.");
+  });
   it("mentions pricing only when it differs", () => {
     expect(compareVerdict(t({ name: "A", pricing: "open-source" }), t({ name: "B", pricing: "paid" }), now)).toContain("A is open-source; B is paid.");
     expect(compareVerdict(t({ name: "A" }), t({ name: "B" }), now).join(" ")).not.toContain("is paid");

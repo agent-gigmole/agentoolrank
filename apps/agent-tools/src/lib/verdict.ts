@@ -1,10 +1,12 @@
 // "Short answer" bullets at the top of /compare pages — every sentence derived from tracked data.
 import type { Tool } from "@repo/db/schema";
 import { staleness } from "./staleness";
+import { shortTagline } from "./titles";
 
-const n = (x: number) => x.toLocaleString("en-US");
+const n = (x: number) => Math.round(x).toLocaleString("en-US");
+const FREE = new Set(["free", "open-source"]);
 const forWhat = (tagline: string) => {
-  const s = tagline.trim().replace(/\.$/, "");
+  const s = shortTagline(tagline.split(/(?<=[.!?])\s/)[0], 110);
   return s ? s.charAt(0).toLowerCase() + s.slice(1) + "." : "";
 };
 
@@ -21,7 +23,7 @@ export function compareVerdict(a: Tool, b: Tool, now: Date): string[] {
     const [hi, lo, vh, vl] = va > vb ? [a, b, va, vb] : [b, a, vb, va];
     out.push(`${hi.name} is growing faster: +${n(vh)} GitHub stars in the last 30 days vs +${n(vl)} for ${lo.name}.`);
   }
-  if (a.pricing !== b.pricing) out.push(`${a.name} is ${a.pricing}; ${b.name} is ${b.pricing}.`);
+  if (a.pricing !== b.pricing && !(FREE.has(a.pricing) && FREE.has(b.pricing))) out.push(`${a.name} is ${a.pricing}; ${b.name} is ${b.pricing}.`);
   const [fa, fb] = [forWhat(a.tagline), forWhat(b.tagline)];
   if (fa && fb) out.push(`Pick ${a.name} for: ${fa} Pick ${b.name} for: ${fb}`);
   return out;
