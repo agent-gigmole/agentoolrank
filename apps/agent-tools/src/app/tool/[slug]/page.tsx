@@ -8,6 +8,8 @@ import type { Tool } from "@repo/db/schema";
 import { MaintainerBox } from "@/components/MaintainerBox";
 import { toolTitle, toolDescription } from "@/lib/titles";
 import { staleness } from "@/lib/staleness";
+import { localizedAlternates } from "@/lib/i18n";
+import { translatedLangs } from "@/lib/i18n-data";
 
 export const revalidate = 86400; // 24 hours
 
@@ -25,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: toolTitle(tool.name, tool.tagline, tool.github_stars),
     description: desc,
-    alternates: { canonical: `/tool/${tool.id}` },
+    alternates: localizedAlternates(`/tool/${tool.id}`, await translatedLangs(tool.id), "en"),
     openGraph: {
       title: tool.name,
       description: desc,

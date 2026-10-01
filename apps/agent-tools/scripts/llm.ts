@@ -24,11 +24,11 @@ async function call(base: string, key: string, model: string, prompt: string, ma
   return { text: String(data.choices?.[0]?.message?.content ?? ""), usage: data.usage ?? {} };
 }
 
-export async function llm(prompt: string, opts: { maxTokens?: number; temperature?: number } = {}): Promise<string> {
+export async function llm(prompt: string, opts: { maxTokens?: number; temperature?: number; model?: string; noFallback?: boolean } = {}): Promise<string> {
   const maxTokens = opts.maxTokens ?? 1200, temperature = opts.temperature ?? 0.1;
   if (existsSync(SUB2API_KEY_FILE)) {
     try {
-      const r = await call(SUB2API_URL, readFileSync(SUB2API_KEY_FILE, "utf8").trim(), SUB2API_MODEL, prompt, maxTokens, temperature);
+      const r = await call(SUB2API_URL, readFileSync(SUB2API_KEY_FILE, "utf8").trim(), opts.model ?? SUB2API_MODEL, prompt, maxTokens, temperature);
       if (r.text.trim()) {
         llmStats.sub2api++;
         return r.text;
@@ -37,7 +37,13 @@ export async function llm(prompt: string, opts: { maxTokens?: number; temperatur
       console.error(`sub2api failed, falling back to OpenRouter: ${(e as Error).message}`);
     }
   }
-  const r = await call(process.env.LLM_BASE_URL!, process.env.LLM_API_KEY!, OPENROUTER_MODEL, prompt, maxTokens, temperature);
+  if (opts.noFallback) throw new Error("sub2api unavailable and fallback disabled");
+  return openrouter(prompt, { maxTokens, temperature });
+}
+
+/** A different model family (for cross-model review of translations), always via OpenRouter. */
+export async function openrouter(prompt: string, opts: { maxTokens?: number; temperature?: number } = {}): Promise<string> {
+  const r = await call(process.env.LLM_BASE_URL!, process.env.LLM_API_KEY!, OPENROUTER_MODEL, prompt, opts.maxTokens ?? 1200, opts.temperature ?? 0.1);
   llmStats.openrouter++;
   llmStats.openrouterUsd += (r.usage.prompt_tokens ?? 0) * 0.28e-6 + (r.usage.completion_tokens ?? 0) * 0.42e-6;
   return r.text;
