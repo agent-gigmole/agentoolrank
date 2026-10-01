@@ -148,3 +148,5 @@
 | dev.to 第二篇草稿排期 10-03 / T23 第四步 | LOG.md#2026-10-01 T23 第四步：dev.to 第二篇草稿（定 10-03 发） |
 | GSC 国家维度 / query(["country"]) / 按 impressions 重排 / 三位小写国家码 / 多语言选语言 / 开发者受众英语为主 | GOTCHAS.md#gsc-country-dimension |
 | T24 多语言计划 / BOSS_DECISIONS #23 / 中文 10-05 / 日语 10-09 / hreflang 全互指 | LOG.md#2026-10-02 T24 多语言计划（BOSS_DECISIONS #23） |
+| 看板每日 KPI / KPI:START KPI:END 标记替换 / payments 懒建表 try/catch / CST→UTC 日期边界 / 看板 dirty 随改动提交 | GOTCHAS.md#kpi-dashboard-block |
+| 每日 KPI 上线 / 集团运营监管 / agentkit 09:30 汇总 | LOG.md#2026-10-02 看板每日 KPI（集团运营监管） |

@@ -238,6 +238,17 @@
 - TASK.md 已有 T24；看板已记录（c802631）
 - 查国家分布方法见 GOTCHAS#gsc-country-dimension
 
+## 2026-10-02 看板每日 KPI（集团运营监管，agentkit 每天 09:30 汇总对照 G 目标）
+
+- 依据：agentkit「集团运营监管：每日 KPI」（老板 10-02：agentkit 只监管，各项目自负责）
+- **代码**：apps/agent-tools/src/lib/kpi.ts（cstDayRange 北京日期→UTC SQLite 边界 / renderKpi / replaceBlock 只替换 `<!-- KPI:START -->`…`<!-- KPI:END -->`，缺标记抛错）；5 单测，全量 122 绿
+- **脚本**：scripts/kpi.ts 读 events / submissions / payments（剔除 selftest）+ data/ops-logs 最新 GSC 行取 28 天点击 → 写回 docs/ops/overview/index.html 顶部
+- **调度**：接入 hourly-ops.sh（cron 每小时 :17），日志 data/ops-logs/kpi-YYYY-MM-DD.log
+- **首跑数**：昨日访客 23 / 提交 0 / 付费 0 / $0；G2 0/20、G3 0/1、G4 $0/$300、GSC 点击 3/1000；中文页 7 天访客 1
+- commit 13d1315「ops: 看板顶部每日 KPI」；已回复 agentkit
+- T24 已按 owner-goal #23 补第二模型回译比对 + 子项「中文读者付款能力（Stripe 大陆支付宝/微信/银联）」看板单独跟踪（0c3dc27）
+- 注意：看板 html 每小时被改写 → 工作区常 dirty，随其他看板改动一起提交，不单独清理（GOTCHAS#kpi-dashboard-block）
+
 ## 近期排期
 
 - **10-02**：09:30 老板汇总 → 发 X 帖（T19，/report 数据，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
@@ -260,7 +271,8 @@
 - [ ] MCP 目录：Smithery 等免费渠道
 - [ ] 新工具入库接展示名/alternatives/related 管道；related 覆盖 350/669
 - [ ] 观察 Google 是否重新抓取 sitemap；IndexNow 每日推送跟踪
-- [ ] 查 daily-update 刷新失败仓库；看板接入漏斗数据；PeerPush 改用户名
+- [ ] 查 daily-update 刷新失败仓库；PeerPush 改用户名（看板 KPI 已自动化 10-02）
+- [ ] KPI 可扩展：events.country 按国家统计访客（配合 T24 判断中文/日语流量）
 
 ## 环境注意
 

@@ -532,3 +532,12 @@
 - TASK.md 新增 T24；看板已记录（c802631）
 - 技巧：gsc_report.py 的 query() 可复用查 country 维度（需按 impressions 重排，国家码三位小写）→ GOTCHAS#gsc-country-dimension
 - human-intervention=0 / auto-resolved=0 / 熔断=0
+
+## 2026-10-02 看板每日 KPI（集团运营监管）
+- 按 agentkit「集团运营监管：每日 KPI」（老板 10-02：agentkit 只监管，每天 09:30 汇总对照 G 目标）在看板顶部加自动 KPI 块
+- src/lib/kpi.ts：cstDayRange / renderKpi / replaceBlock（KPI:START/END 标记，缺失抛错）；5 单测，全量 122 绿；scripts/kpi.ts 读 events/submissions/payments（剔 selftest）+ 最新 GSC 日志 28 天点击 → 写回 docs/ops/overview/index.html
+- 接入 hourly-ops.sh（cron :17），日志 data/ops-logs/kpi-日期.log
+- 首跑：昨日访客 23、提交 0、付费 0、$0；G2 0/20、G3 0/1、G4 $0/$300、GSC 3/1000；中文页 7 天访客 1
+- 已回复 agentkit；T24 补回译比对 + 大陆付款能力子项（0c3dc27）；代码 commit 13d1315
+- 坑：payments 表首笔付款才建 → 查询 try/catch 回 0；events 有 country 列可按国家统计；看板文件每小时改写 → 随看板改动一起提交（GOTCHAS#kpi-dashboard-block）
+- human-intervention=0 / auto-resolved=1（payments 表不存在→容错回 0）/ 熔断=0

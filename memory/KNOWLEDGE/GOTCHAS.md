@@ -449,3 +449,10 @@
 - 坑 1：API 默认按 clicks 排序，选语言要按 impressions 重新排序，否则小样本点击会误导排序
 - 坑 2：国家代码是 ISO 三位**小写**（usa、ind、chn、gbr、phl），不是 US/CN
 - 判断：开发者类目录站的 GSC 展示以英语国家为主（美/印/英/菲/加/尼日利亚，英语即可服务）→ 多语言只给"非英语且有点击/排名信号"的市场（本站：中文 → 日语），并**按页型逐个加**（前 200 工具/替代品/对比/价格页），不整站机翻
+
+## kpi-dashboard-block
+- 看板自动 KPI：静态 html 里放 `<!-- KPI:START -->`…`<!-- KPI:END -->`，脚本只替换标记之间（replaceBlock，缺标记直接抛错，不要静默追加）；hourly-ops.sh cron 每小时跑
+- 坑 1：payments 表由 paid.ts 在首笔付款时 CREATE IF NOT EXISTS → 之前查询会报 no such table，KPI 查询须 try/catch 返回 0（同理任何"懒建表"）
+- 坑 2：日期按北京时间算"昨日"，SQLite 存 UTC → 用 cstDayRange 把 CST 日期换成 UTC 起止边界再查，不要直接 date('now')
+- 坑 3：看板 html 在 git 里，每小时改写 → 工作区常驻 dirty；随其他看板改动一起 commit，不要单独 checkout/清理（会丢最新 KPI）
+- 统计剔除 selftest 事件；events 表有 country 列，可扩展按国家统计访客
