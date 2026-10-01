@@ -167,6 +167,11 @@
 - scripts/weekly-newsletter.ts（无 key 只出预览）+ /unsubscribe（subscriber_tokens 新表）；weekly-ops.sh 周一自动发
 - 闸: auto（发给主动订阅者的交易性质邮件）
 
+### T21 LLM 迁到本机 Sub2API key（老板决定 #9，BOSS_DECISIONS.md）
+- 状态: todo（不急；下次改批处理脚本时做）
+- 范围: scripts/judge.ts、generate-alternatives、generate-display-names、tag-mcp 等批处理用 OpenRouter → Sub2API；线上 /api/chat 的 LLM 评估迁到本机批处理或保留
+- 闸: auto（凭据已在 ~/.config/secrets/sub2api-openai-key；改线上 env 属改凭证闸）
+
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked
 - 依赖: -
