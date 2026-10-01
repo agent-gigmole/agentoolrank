@@ -177,3 +177,7 @@
 | dirsub candidates other_projects 不相关要按本项目重判 / pixtidy 跳过的 AI agent 目录·中文导航站 | GOTCHAS.md#directory-candidates-rejudge-relevance |
 | brief 写 Write in plain English 压过 --lang zh / 多语言单独 brief / directory-listing-zh | GOTCHAS.md#multilang-brief-no-language-directive |
 | T25 第二批 累计 16 / iui.su aisharenet productwatch betterlaunch / aiagentsdirectory 徽章周决策 / agentkit 裁定 5–8 是单站节奏 | LOG.md#2026-10-02 05:30–06:35 T25 目录站第二批（累计 16） |
+| 徽章换 dofollow 先读免费档条款 / aiagentsdirectory 免费档仍 nofollow / dofollow 仅付费 $49/$99/$499 / listing 页 dofollow 可能来自付费条目 | GOTCHAS.md#badge-for-dofollow-read-free-tier |
+| MCP 目录两条路线 / GitHub repo 免费队列 / remote server 付费 $69 / mcpmarket mcprepository / glama 官方 Registry 自动同步 | GOTCHAS.md#mcp-directory-repo-vs-remote |
+| 按项目关键词 mcp/agent/智能体 筛 columbus 原表 / 比 candidates 默认队列准 | GOTCHAS.md#directory-candidates-rejudge-relevance |
+| T25 第三批 累计 20 / glama mcpmarket mcprepository ai123 / aiagentsdirectory 不挂不付 / cursor.directory todo | LOG.md#2026-10-02 06:00–06:55 T25 目录站第三批（累计 20） |

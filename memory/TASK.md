@@ -221,16 +221,19 @@
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
 - 状态: in_progress（2026-10-02 起）
 - 台账: ~/data/backlinks/directory-log.csv，只用 dirsub.py check/add 读写（scripts/dirlog.sh 已废弃）
-- 进度: 累计 submitted 16 / retry 2 / badge 1（10-02 06:35）
+- 进度: 累计 submitted 20 / retry 2 / badge 1 / todo +cursor.directory（10-02 06:55）
+  - 10-02 第三批新提交 4：glama.ai（官方 Registry 自动同步）、mcpmarket.com（GitHub repo Free Queue $0，4–6 周）、mcprepository.com、ai123.com（中文 DR51）；skip 3：catalog.thesys.dev、context-awesome.com、mcpmarkets.com
+  - aiagentsdirectory 结论：免费档挂徽章仍是 nofollow 且须验证后上线，dofollow 仅付费 $49/$99/$499 → 不挂不付（agentkit 同意），保持 badge，不进周汇总
   - 10-02 第二批新提交 4：iui.su（腾讯问卷）、aisharenet.com（WP 投稿 post_id=35370）、productwatch.io（11-01 上线，DR72 dofollow）、betterlaunch.co（Clerk，11-02 上线，nofollow）
   - badge：aiagentsdirectory.com（DR74，免费档须挂徽章 → 周决策，建议挂；验证邮件未点）
   - 10-02 新提交 7：futuretools、websitelaunches（之前已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally）、startupstash（Typeform）
   - retry：purshology、ai-tab.cn（本机访问超时）
-  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、smithery、producthunt（10/10 后老板本人号）
+  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、smithery、producthunt（10/10 后老板本人号）、cursor.directory（需 GitHub/Google 登录）
+  - 选站：按 mcp / agent / 智能体 关键词筛 columbus 原表
 - 目标: 10-03 24:00 前累计 25（agentkit 已裁定：5–8/天是单站/单账号防风控节奏，非总数上限；10-02 白天、10-03 各一批；连续两个验证码即停）
 - 文案: brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）/ directory-listing-fr.md（fr）；中文单独 brief directory-listing-zh.md → drafts/directory-listing-zh.md；bin/write landing-copy
 - [x] 历史提交补录台账 [x] 换用 dirsub.py [x] 浏览器工具补齐（task_tab/frames/tabs/fields/find/screenshot/options，task_act js/key，5ffca5e）
-- [x] 第二批（累计 16）[x] 中文上架文案 [ ] 累计 25（10-03 24:00，差 9）[ ] aiagentsdirectory 徽章周决策 [ ] purshology / ai-tab.cn 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
+- [x] 第二批（累计 16）[x] 中文上架文案 [x] 第三批（累计 20）[ ] 累计 25（10-03 24:00，差 5）[x] aiagentsdirectory 徽章决策（不挂不付） [ ] purshology / ai-tab.cn 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
 - 规矩: 每站做完立刻关标签页；同一平台被风控一次即停（老板 #25）；表单坑见 GOTCHAS#directory-form-pitfalls
 - 相关账号: Google 品牌号 hello@agentoolrank.com（Ethan Tan，老板已批真名）卡扫码，等老板醒后重注册；GitHub 品牌号被风控 → 按 #25 停
 - 闸: auto（用老板已批准的品牌身份；花钱的付费上架逐次问）

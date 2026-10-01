@@ -623,3 +623,12 @@
 - 已回复 agentkit，看板已记，代码 1c745a9 已 push
 - 坑：brief 语言限定语压过 --lang；别项目判"不相关"的候选要重判；Mantine mousedown/Backspace；Clerk OTP 先 focus；logo 裁剪框；自定义下拉按坐标；付费/Priority/徽章三层选免费（GOTCHAS#directory-form-pitfalls、#directory-candidates-rejudge-relevance、#multilang-brief-no-language-directive）
 - human-intervention=0 / auto-resolved=1（目标冲突由 agentkit 裁定）/ 熔断=0
+
+## 2026-10-02 06:00–06:55 T25 目录站第三批（累计 20）
+- aiagentsdirectory：免费档挂 AAD 徽章换的仍是 "No-follow SEO backlink"，且徽章验证通过才上线；dofollow 只给付费档 $49/$99/$499 → 不挂、不付；agentkit 同意（零收入、单推荐位无法归因、不符合 spend-control），保持 badge，不进周汇总
+- 选站：按 mcp / agent / 智能体 关键词筛 columbus 原表（临时脚本），比 dirsub candidates 默认队列更准
+- 新提交 4：glama.ai（官方 Registry 发布后自动同步）、mcpmarket.com（GitHub repo Free Queue $0，4–6 周；Remote MCP 仅 $69）、mcprepository.com（只填 GitHub URL）、ai123.com（中文 DR51，分类搜索下拉「AI开发者工具」，回执"提交成功！"）
+- skip 3：catalog.thesys.dev（下线）、context-awesome.com（只收 awesome list）、mcpmarkets.com（提交暂停）；todo +1：cursor.directory（需 GitHub/Google 登录）
+- 结果：累计 submitted 20，差 5；看板已记录并推送（a526159）
+- 坑：按项目关键词筛 columbus 原表（GOTCHAS#directory-candidates-rejudge-relevance）；徽章换 dofollow 先读免费档条款（GOTCHAS#badge-for-dofollow-read-free-tier）；MCP 目录 repo 免费 / remote 付费两条路线（GOTCHAS#mcp-directory-repo-vs-remote）
+- human-intervention=0 / auto-resolved=1（aiagentsdirectory 不挂不付，agentkit 同意）/ 熔断=0

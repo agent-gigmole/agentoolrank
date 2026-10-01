@@ -546,6 +546,7 @@
 
 ## directory-candidates-rejudge-relevance
 用 dirsub.py candidates 从别的项目（如 pixtidy）的台账挑站时，other_projects 里标的"不相关"是**按那个项目**判的：AI agent 目录、中文 AI 导航站对 pixtidy 不相关，对 agentoolrank 却最对口（aiagentsdirectory DR74、iui.su、aisharenet、ai-tab.cn）。候选要按本项目重新判断相关性，不要沿用别人的跳过结论。
+更好的做法（10-02 第三批验证）：直接按本项目关键词（mcp / agent / 智能体）筛 columbus 原表，比看 candidates 默认队列更准，一次多出 glama、mcpmarket、mcprepository、ai123 等专门站。
 
 ## multilang-brief-no-language-directive
 bin/write 的 brief 里写 "Write in plain English" 会压过 --lang zh，产出仍是英文。多语言文案要单独写 brief（如 briefs/directory-listing-zh.md），去掉一切语言限定语。
@@ -555,3 +556,9 @@ Windows 专用 Chrome（CDP 9223）在批量提交时开到 24 个标签，Windo
 
 ## brand-account-risk-control-stop-once
 品牌号注册遇平台风控（GitHub 注册页"访问暂时受限"、IP 被判机器人）→ 老板决定 #25：同一平台被风控一次就停，不换 IP/不重试。品牌身份姓名 Ethan Tan 是老板已批准的真名，不是编造（agentkit 一度误判）。gh 本机账号 tensam 的 token 不能在外部仓库建 issue（mcp.so 路线卡住）。
+
+## badge-for-dofollow-read-free-tier
+"挂徽章换 dofollow"要先在提交流程里读清楚**免费档**写的是什么。aiagentsdirectory（DR74）免费档挂 AAD 徽章换来的仍是 "No-follow SEO backlink"，且要等徽章验证通过才上线；dofollow 只给付费档（$49/$99/$499）。listing 页上看到的 dofollow 链接可能来自付费条目，不能据此推断免费档。
+
+## mcp-directory-repo-vs-remote
+MCP 目录常见两条路线：GitHub repo 走免费队列（mcpmarket Free Queue $0、4–6 周；mcprepository 只填 GitHub URL），remote MCP server 走付费（mcpmarket $69）。我们的公开 monorepo 也能走 repo 路线。glama.ai 在官方 MCP Registry 发布后会自动同步，不用单独提交。
