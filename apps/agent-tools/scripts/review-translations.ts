@@ -2,6 +2,7 @@
  * Owner review of translations before they go live.
  *   --list [--limit=10]            print approved-but-unreviewed rows (source vs translation), highest score first
  *   --mark=id1,id2 [--level=1|2]   publish: 1 = read in full, 2 = batch passed a sample read
+ *   --override=id1,id2             owner approves rows the auto-reviewer failed (after reading its notes): publish at level 1
  *   --reject=id1 [--note=...]      send back (status review_failed) so translate-tools.ts redoes it
  *   --sample=N                     print N random unreviewed rows outside the top-scored ones (for the 10% sample)
  * Usage: bun run scripts/review-translations.ts --lang=zh --list
@@ -40,6 +41,10 @@ if (process.argv.includes("--list")) {
   const level = Number(arg("level") ?? 1);
   const r = await db.execute({ sql: `UPDATE tool_i18n SET human_reviewed = ? WHERE lang = ? AND status = 'approved' AND tool_id IN (${ids.map(() => "?").join(",")})`, args: [level, lang, ...ids] });
   console.log(`published ${r.rowsAffected} (level ${level})`);
+} else if (arg("override")) {
+  const ids = arg("override")!.split(",");
+  const r = await db.execute({ sql: `UPDATE tool_i18n SET status = 'approved', human_reviewed = 1, issues = 'owner override: ' || issues WHERE lang = ? AND status = 'review_failed' AND tool_id IN (${ids.map(() => "?").join(",")})`, args: [lang, ...ids] });
+  console.log(`overridden ${r.rowsAffected}`);
 } else if (arg("reject")) {
   const ids = arg("reject")!.split(",");
   const r = await db.execute({ sql: `UPDATE tool_i18n SET status = 'review_failed', source_hash = '', issues = ? WHERE lang = ? AND tool_id IN (${ids.map(() => "?").join(",")})`, args: [`owner: ${arg("note") ?? "rejected"}`, lang, ...ids] });
