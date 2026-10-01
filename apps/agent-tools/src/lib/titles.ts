@@ -12,7 +12,9 @@ export function shortTagline(tagline: string, max: number): string {
     .replace(/[.!?:;,\s]+$/, "");
   if (clean.length <= max) return clean;
   const cut = clean.slice(0, max);
-  return cut.slice(0, Math.max(cut.lastIndexOf(" "), 0) || max).replace(/[.,;:\s-]+$/, "");
+  let out = cut.slice(0, Math.max(cut.lastIndexOf(" "), 0) || max).replace(/[.,;:\s-]+$/, "");
+  while (DANGLING.test(out)) out = out.replace(DANGLING, "").replace(/[.,;:\s-]+$/, "");
+  return out;
 }
 
 const DANGLING = /\s+(and|or|the|for|with|to|of|a|an|in|on|that|which|by|your)$/i;

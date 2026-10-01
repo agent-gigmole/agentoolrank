@@ -44,3 +44,9 @@ describe("descriptions", () => {
     expect(d.length).toBeLessThanOrEqual(160);
   });
 });
+
+describe("shortTagline truncation", () => {
+  it("does not end on a dangling word", () => {
+    expect(shortTagline("an extensible agent that can install, execute, edit, and test with any LLM", 66)).toBe("an extensible agent that can install, execute, edit, and test");
+  });
+});
