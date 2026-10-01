@@ -8,6 +8,7 @@ import { compareSlug } from "@/lib/alternatives";
 import { canonicalToolId } from "@/lib/merged";
 import { compareTitle } from "@/lib/titles";
 import { compareFaq } from "@/lib/faq";
+import { compareVerdict } from "@/lib/verdict";
 import { FaqSection } from "@/components/FaqSection";
 
 export const revalidate = 86400; // 24h
@@ -99,6 +100,7 @@ export default async function ComparePage({ params }: Props) {
   ]);
 
   if (!toolA || !toolB) notFound();
+  const verdict = compareVerdict(toolA, toolB, new Date());
 
   return (
     <>
@@ -114,9 +116,19 @@ export default async function ComparePage({ params }: Props) {
         <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">
           {toolA.name} vs {toolB.name}
         </h1>
-      <p className="text-gray-500 text-center mb-8">
+      <p className="text-gray-500 text-center mb-6">
         Side-by-side comparison of two AI agent tools
       </p>
+
+      {verdict.length > 0 && (
+        <section className="mb-8 border border-blue-100 bg-blue-50/50 rounded-lg p-4">
+          <h2 className="text-base font-semibold text-gray-900 mb-2">Short answer</h2>
+          <ul className="space-y-1.5 text-sm text-gray-700 list-disc pl-5">
+            {verdict.map((v) => <li key={v}>{v}</li>)}
+          </ul>
+          <p className="text-xs text-gray-400 mt-2">From GitHub data refreshed daily.</p>
+        </section>
+      )}
 
       {/* Header cards */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">

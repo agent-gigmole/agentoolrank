@@ -34,7 +34,7 @@ export function compareFaq(a: Tool, b: Tool): Faq[] {
     const [hi, lo] = a.commit_count_90d >= b.commit_count_90d ? [a, b] : [b, a];
     out.push({ q: `Which is more actively developed, ${a.name} or ${b.name}?`, a: `${hi.name} had more commits in the last 90 days (${n(hi.commit_count_90d!)} vs ${n(lo.commit_count_90d!)}).` });
   }
-  out.push({ q: `Should I use ${a.name} or ${b.name}?`, a: `Compare their capabilities, limitations and "best for" notes above. Both are open source, so trying each on a small task is the fastest way to decide.` });
+  out.push({ q: `Should I use ${a.name} or ${b.name}?`, a: `Compare their capabilities, limitations and "best for" notes above.${a.pricing === "open-source" && b.pricing === "open-source" ? " Both are open source, so trying each on a small task is the fastest way to decide." : " Trying each on a small task is the fastest way to decide."}` });
   return out;
 }
 
