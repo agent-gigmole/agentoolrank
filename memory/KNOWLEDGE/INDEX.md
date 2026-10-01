@@ -139,3 +139,8 @@
 | T23 /where-to-list 上线 | LOG.md#2026-10-01 T23 对比内容第一篇 /where-to-list 上线 |
 | 对比页 Short answer / compareVerdict / pricing free≈open-source / star_velocity 取整 / 悬空虚词 / Ecmascript file had an error | GOTCHAS.md#compare-verdict-data-quirks |
 | GSC 对比页曝光主力 / answer-first 优先对比页 / T23 第二步 | LOG.md#2026-10-01 T23 第二步：对比页 Short answer（answer-first，数据驱动） |
+| build \| grep 掩盖失败 / 管道退出码 / pipefail / 坏提交被 push | GOTCHAS.md#pipe-grep-masks-build-failure |
+| str.replace 插错函数 / generateMetadata 同名行 / 插入后 tsc | GOTCHAS.md#str-replace-insert-wrong-function |
+| 替代品页 Short answer / alternativesVerdict / 最接近=已停更 / signed() +-0 | GOTCHAS.md#alternatives-verdict-overlap |
+| 线上内部字样自查 / favicon.ico rewrites / T23 第三步 | LOG.md#2026-10-01 T23 第三步：替代品页 Short answer + 线上内部字样自查 |
+

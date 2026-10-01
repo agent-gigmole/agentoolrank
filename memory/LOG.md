@@ -508,3 +508,10 @@
 - vitest 115 全绿；commits de79e4c / 73f89f8 / d3ed359 部署+push+线上核验；看板 947cc7f
 - 坑：pricing 有 free 与 open-source 两值语义重叠需归类；star_velocity_30d 是小数，展示前取整；build 里 "Ecmascript file had an error"（save-stack import packages/db）为历史遗留不阻断
 - human-intervention=0 / auto-resolved=2（星增速小数→取整、free/open-source 误判定价不同→归同类）/ 熔断=0
+
+## 2026-10-01 T23 第三步：替代品页 Short answer + 线上内部字样自查
+- 自查：106 页（sitemap 前 40 + 随机 60 + llms.txt / api/v1/tools / mcp/server.json / submit/thanks / unsubscribe）HTML + 内嵌 JSON 无泄露，误报为页脚 agent-gigmole、todoist→TODO、OpenRouter/reviewer 正文；submissionStatus 只 rejected 回 LLM 理由并剥 paid:；/favicon.ico 404 → rewrites /icon（e698675），已回 agentkit
+- verdict.ts alternativesVerdict：最接近 / 最活跃（commits 90d）/ 增长最快（星增速 30d）/ 停更 ≥6 月（≤4 个 + "N more"）；替代品页顶部 Short answer；表格星增速 signed() 修 "+-0"
+- vitest 117/117；c46db50（坏：verdict 被 str.replace 插进 generateMetadata，类型错误）→ 4e3f35c 修复 → 8def881 看板；线上 firecrawl/langchain/llama-cpp 核验通过
+- 坑：`turbo build | grep -E "Tasks:" && git commit && deploy` 掩盖构建失败（失败时也输出 "Tasks: 0 successful"，grep 成功）→ 坏提交被 push；Vercel 构建失败、生产未受影响
+- human-intervention=0 / auto-resolved=2（坏提交→下一 commit 修复、+-0→signed()）/ 熔断=0

@@ -428,3 +428,13 @@
 - FAQ 里"Both are open source"之类断言必须以数据为条件（双方 pricing 都是 open-source 才写），不要无条件声称
 - build 日志 "Ecmascript file had an error"（save-stack 路由 import packages/db）是历史遗留，构建仍成功，不要误判为本次改动导致
 
+## pipe-grep-masks-build-failure
+- `npx turbo run build ... | grep -E "Tasks:" && git commit && deploy`：管道退出码取 grep 的；构建失败时输出也含 "Tasks: 0 successful"，grep 匹配成功 → commit/push/deploy 照常执行（c46db50 坏提交被推上 GitHub，Vercel 构建失败，生产未受影响）
+- 正确：`npx turbo run build ... > /tmp/build.log 2>&1 && git commit ... && git push ... && deploy`，失败再 `tail -50 /tmp/build.log`；或 `set -o pipefail`；push 也必须在 && 链内
+
+## str-replace-insert-wrong-function
+- 用 python str.replace(old, new, 1) 往页面插代码时，generateMetadata 与页面函数常有同名语句（如 `const tool = await getToolBySlug(slug)`），count=1 命中第一处（generateMetadata）→ 变量在页面函数里未定义。插入后立刻 tsc/vitest 确认落在哪个函数，或用含函数签名的更长锚点
+
+## alternatives-verdict-overlap
+- 替代品页 Short answer：「最接近」与「已停更」可能是同一工具（firecrawl → Scrapegraph-ai），如实反映数据，不去重；星增速展示用 signed()（正数 +N、0 显示 0、负数 -N），不要 `+${n}` 拼接（出现 "+-0"）
+

@@ -213,6 +213,15 @@
 - vitest 115 测试全绿；commits de79e4c、73f89f8、d3ed359 均已部署、push、线上核验；看板记录 947cc7f
 - 已知历史遗留：build 日志 "Ecmascript file had an error"（save-stack 路由 import packages/db），不影响构建成功
 
+## 2026-10-01 T23 第三步：替代品页 Short answer + 线上内部字样自查
+
+- **线上自查（agentkit 要求）**：抽 106 页（sitemap 前 40 + 随机 60 + llms.txt、/api/v1/tools、mcp/server.json、submit/thanks、unsubscribe），查 HTML 与内嵌 JSON → **无泄露**，仅误报（页脚公开 GitHub 组织 agent-gigmole、todoist 命中 TODO、正文 OpenRouter/reviewer）；submissionStatus 仅 rejected 返回 LLM 理由且已剥离 paid: 字样
+- favicon：自定义 icon.tsx；/favicon.ico 原 404 → next.config rewrites 指向 /icon（commit e698675）；已回复 agentkit
+- **替代品页 Short answer**：verdict.ts 新增 alternativesVerdict(tool, alts, now) → 最接近 / 最活跃（commits 90d）/ 增长最快（星增速 30d）/ 停更 ≥6 个月（最多 4 个，其余 "N more"）；/alternatives 页顶部 Short answer 区块；表格星增速改 signed()（修 "+-0"）
+- vitest 117/117；commits c46db50（坏提交，Vercel 构建失败、生产未受影响）→ 4e3f35c 修复（verdict 移入页面函数）→ 8def881 看板；firecrawl / langchain / llama-cpp 三页线上核验通过
+- "最接近"与"已停更"可能是同一工具（firecrawl → Scrapegraph-ai），如实反映数据，接受
+- **部署链纪律**：build 输出重定向到日志、用 build 自身退出码 && 门控 commit/push/deploy，禁止 `build | grep` 作闸（见 GOTCHAS#pipe-grep-masks-build-failure）
+
 ## 待办 / 下一步
 
 - [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to 已发；HN/Reddit 与 imagehub 错开 ≥1 周，Show HN 最早 10-07）
