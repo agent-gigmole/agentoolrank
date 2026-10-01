@@ -173,3 +173,7 @@
 | 标签页过多 / Windows 内存 1.2GB / 每站做完关标签 / task_tabs | GOTCHAS.md#browser-tab-memory-discipline |
 | 品牌号风控一次即停 / 老板 #25 / GitHub 注册受限 / Ethan Tan 真名已批 / gh tensam 不能建外部 issue | GOTCHAS.md#brand-account-risk-control-stop-once |
 | T25 目录站加量 / dirsub.py / directory-log.csv / 累计 12 / Google 品牌号扫码 | LOG.md#2026-10-02 04:45–05:50 T25 目录站加量 + Google/GitHub 品牌号 |
+| Clerk one-time-code 先 focus / Mantine 下拉 mousedown / Backspace 删已选标签 / 自定义下拉按坐标点 / logo 裁剪 Use this logo / 付费·Priority Pass·徽章三层选免费 | GOTCHAS.md#directory-form-pitfalls |
+| dirsub candidates other_projects 不相关要按本项目重判 / pixtidy 跳过的 AI agent 目录·中文导航站 | GOTCHAS.md#directory-candidates-rejudge-relevance |
+| brief 写 Write in plain English 压过 --lang zh / 多语言单独 brief / directory-listing-zh | GOTCHAS.md#multilang-brief-no-language-directive |
+| T25 第二批 累计 16 / iui.su aisharenet productwatch betterlaunch / aiagentsdirectory 徽章周决策 / agentkit 裁定 5–8 是单站节奏 | LOG.md#2026-10-02 05:30–06:35 T25 目录站第二批（累计 16） |

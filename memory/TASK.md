@@ -221,14 +221,16 @@
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
 - 状态: in_progress（2026-10-02 起）
 - 台账: ~/data/backlinks/directory-log.csv，只用 dirsub.py check/add 读写（scripts/dirlog.sh 已废弃）
-- 进度: 累计 submitted 12 / retry 1 / todo 4（10-02 05:50）
+- 进度: 累计 submitted 16 / retry 2 / badge 1（10-02 06:35）
+  - 10-02 第二批新提交 4：iui.su（腾讯问卷）、aisharenet.com（WP 投稿 post_id=35370）、productwatch.io（11-01 上线，DR72 dofollow）、betterlaunch.co（Clerk，11-02 上线，nofollow）
+  - badge：aiagentsdirectory.com（DR74，免费档须挂徽章 → 周决策，建议挂；验证邮件未点）
   - 10-02 新提交 7：futuretools、websitelaunches（之前已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally）、startupstash（Typeform）
-  - retry：purshology
-  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、smithery、producthunt（10/10 后老板本人号）、betterlaunch
-- 目标: agentkit 要求 10-03 前累计 25；skill 规定每天 5–8 站 → 冲突已报 agentkit，待裁定
-- 文案: brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）/ directory-listing-fr.md（fr），bin/write landing-copy
+  - retry：purshology、ai-tab.cn（本机访问超时）
+  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、smithery、producthunt（10/10 后老板本人号）
+- 目标: 10-03 24:00 前累计 25（agentkit 已裁定：5–8/天是单站/单账号防风控节奏，非总数上限；10-02 白天、10-03 各一批；连续两个验证码即停）
+- 文案: brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）/ directory-listing-fr.md（fr）；中文单独 brief directory-listing-zh.md → drafts/directory-listing-zh.md；bin/write landing-copy
 - [x] 历史提交补录台账 [x] 换用 dirsub.py [x] 浏览器工具补齐（task_tab/frames/tabs/fields/find/screenshot/options，task_act js/key，5ffca5e）
-- [ ] 累计 25（或 agentkit 裁定后的目标）[ ] purshology 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
+- [x] 第二批（累计 16）[x] 中文上架文案 [ ] 累计 25（10-03 24:00，差 9）[ ] aiagentsdirectory 徽章周决策 [ ] purshology / ai-tab.cn 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
 - 规矩: 每站做完立刻关标签页；同一平台被风控一次即停（老板 #25）；表单坑见 GOTCHAS#directory-form-pitfalls
 - 相关账号: Google 品牌号 hello@agentoolrank.com（Ethan Tan，老板已批真名）卡扫码，等老板醒后重注册；GitHub 品牌号被风控 → 按 #25 停
 - 闸: auto（用老板已批准的品牌身份；花钱的付费上架逐次问）

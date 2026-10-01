@@ -538,6 +538,17 @@
 - **Typeform**：答案存 localStorage，重填前先清（否则带着旧答案跳题）；用键盘 type + Enter 逐题推进；长文本 500 字上限。
 - **嵌入的 Tally / Typeform**：直接打开表单原始 URL（如 tally.so/r/wAAg6W），不要在宿主页 iframe 里操作。
 - **Clerk 登录页**：nth=0 的 "Continue" 实际是 "Continue with Google" → 按完全一致的文字匹配（exact），不要用包含匹配或序号。
+- **Clerk 邮箱验证码**（2026-10-02 第二批，betterlaunch）：路线 sign-in → #/create → verify-email-address；one-time-code 输入框要**先 focus 再输入**，否则字符丢失。
+- **Mantine 下拉/多选**：选项用 mousedown 事件选（click 不生效）；输入框为空时按 Backspace 会删掉已选标签。
+- **自定义下拉**：JS 点不开 → 截图后按坐标真实点击。
+- **上传 logo 弹裁剪框**：必须点 "Use this logo" 才会继续，否则表单卡住。
+- **层层付费引导**：很多站依次弹 付费档 → Priority Pass → 徽章 三层，要逐层选免费那一项；免费档要求挂徽章的（如 aiagentsdirectory）不当场决定，留周决策。
+
+## directory-candidates-rejudge-relevance
+用 dirsub.py candidates 从别的项目（如 pixtidy）的台账挑站时，other_projects 里标的"不相关"是**按那个项目**判的：AI agent 目录、中文 AI 导航站对 pixtidy 不相关，对 agentoolrank 却最对口（aiagentsdirectory DR74、iui.su、aisharenet、ai-tab.cn）。候选要按本项目重新判断相关性，不要沿用别人的跳过结论。
+
+## multilang-brief-no-language-directive
+bin/write 的 brief 里写 "Write in plain English" 会压过 --lang zh，产出仍是英文。多语言文案要单独写 brief（如 briefs/directory-listing-zh.md），去掉一切语言限定语。
 
 ## browser-tab-memory-discipline
 Windows 专用 Chrome（CDP 9223）在批量提交时开到 24 个标签，Windows 可用内存只剩 1.2GB。规矩：每个站做完立刻用 scripts/winbrowser/task_tabs.py 关掉它的标签页；开新站前先列标签确认数量。

@@ -611,3 +611,15 @@
 - 坑：订阅浮层挡点击表现为超时；React radio/分类按钮 JS 设置无效要按可见文字点；Typeform localStorage 残留 + 键盘逐题 + 500 字上限；嵌入表单开原始 URL；Clerk nth=0 Continue 是 Continue with Google（GOTCHAS#directory-form-pitfalls、#browser-tab-memory-discipline）
 - 冲突：skill 5–8 站/天 vs agentkit 10-03 前累计 25，已报 agentkit
 - human-intervention=1（Google 扫码需老板）/ auto-resolved=0 / 熔断=1（GitHub 风控即停）
+
+## 2026-10-02 05:30–06:35 T25 目录站第二批（累计 16）
+- agentkit 裁定：skill 的每天 5–8 个是单站/单账号防风控节奏，不是总数上限 → 10-02 白天、10-03 各一批，10-03 24:00 前累计 25；连续两个验证码即停（#25）
+- 新提交 4：iui.su（腾讯问卷投稿）、aisharenet.com（WP 投稿，success=1 post_id=35370）、productwatch.io（邮箱验证码登录 @hello_nu-t，11-01 上线，DR72 dofollow）、betterlaunch.co（照 new_ladar Clerk 路线 sign-in → #/create → verify-email-address，11-02 上线，nofollow）
+- badge 1：aiagentsdirectory.com（DR74，最对口，表单已填，免费档须挂徽章 → 周决策，建议挂）；Auth0 凭据 ~/.config/secrets/accounts/agentoolrank-aiagentsdirectory.json；验证邮件未点
+- retry 1：ai-tab.cn（本机访问超时）
+- 结果：累计 submitted 16，差 9
+- 中文上架文案：briefs/directory-listing-zh.md（去掉 "Write in plain English"）→ drafts/directory-listing-zh.md
+- 新凭据：agentoolrank-betterlaunch.json、agentoolrank-aiagentsdirectory.json（600）
+- 已回复 agentkit，看板已记，代码 1c745a9 已 push
+- 坑：brief 语言限定语压过 --lang；别项目判"不相关"的候选要重判；Mantine mousedown/Backspace；Clerk OTP 先 focus；logo 裁剪框；自定义下拉按坐标；付费/Priority/徽章三层选免费（GOTCHAS#directory-form-pitfalls、#directory-candidates-rejudge-relevance、#multilang-brief-no-language-directive）
+- human-intervention=0 / auto-resolved=1（目标冲突由 agentkit 裁定）/ 熔断=0

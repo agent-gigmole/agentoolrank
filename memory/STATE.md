@@ -335,11 +335,23 @@
 - **浏览器工具**（commit 5ffca5e）：scripts/winbrowser/ task_tab.py（从 skill 复制）、task_frames、task_tabs（列/关标签）、task_fields、task_find、task_screenshot、task_options；task_act 新增 js / key 步骤；task_dialog、task_capture_key 已于 2e2b702 入库
 - 外联：发送脚本就绪，第一批 22:00 CST
 
+## 2026-10-02 05:30–06:35 目录站第二批（累计 16）
+
+- **目标已裁定**（agentkit）：5–8/天是单站/单账号防风控节奏，不是总数上限 → 10-02 白天、10-03 各一批，**10-03 24:00 前累计 25**；连续两个验证码即停（#25）
+- **新提交 4**：iui.su、aisharenet.com（post_id=35370）、productwatch.io（11-01 上线，DR72 dofollow）、betterlaunch.co（11-02 上线，nofollow）
+- **badge 1**：aiagentsdirectory.com（DR74，最对口；免费档须挂徽章 → 周决策，建议挂；验证邮件未点）
+- **retry 2**：purshology、ai-tab.cn（本机访问超时）
+- **累计 submitted 16，还差 9**
+- 中文上架文案：briefs/directory-listing-zh.md → drafts/directory-listing-zh.md（brief 不能写 "Write in plain English"）
+- 新凭据（600）：~/.config/secrets/accounts/agentoolrank-betterlaunch.json、agentoolrank-aiagentsdirectory.json
+- 候选站：dirsub candidates 里 pixtidy 判"不相关"的 AI agent 目录 / 中文 AI 导航站，对本项目可能最对口，要重判
+- 已回复 agentkit，看板已记，代码 1c745a9 已 push
+
 ## 近期排期
 
 - **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
-- **今天起**：目录站继续加量（dirsub.py check/add；每站做完关标签页）；等 agentkit 裁定 5–8/天 vs 10-03 前累计 25
+- **10-02 白天 / 10-03**：目录站各一批，10-03 24:00 前累计 25（现 16，差 9）；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
@@ -350,7 +362,7 @@
 
 - [ ] T19 10-02 10:00 发 X 帖（定稿 drafts/x-t19.md），发后看板记链接、查 src=x
 - [ ] T17 22:00 第一批外联；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
-- [ ] T25 目录站：累计 12 → 推 todo 4（mcp.so、smithery、producthunt、betterlaunch）+ 新站；purshology 重试；ainewshub 补回执
+- [ ] T25 目录站：累计 16 → 10-03 24:00 前 25（smithery、producthunt 10/10 后、新站；重判 pixtidy 跳过的 AI agent/中文导航站）；purshology、ai-tab.cn 重试；ainewshub 补回执；aiagentsdirectory 徽章周决策
 - [ ] Google 品牌号：老板醒后重新注册扫码
 - [ ] 确认 10-05 weekly-ops newsletter 实跑（订阅者 0 的空跑路径）
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）
