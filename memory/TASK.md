@@ -141,6 +141,7 @@
 - 闸: human（对外发送）
 - 失败: 0
 - 10-01 14:26 老板 #22：外联由我自定自发（≤10 封/天、不跟进、可退订、署名 Ethan Tan、只用公开邮箱）；仅等 Brevo 手机验证（SIM 10-02）
+- 10-02 #24：邮件模板发之前要走 bin/write outreach-email（content-writing skill），自审后发
 - 进展 10-01：模板 + 候选名单（41 位公开邮箱）就绪，已经 agentkit 请老板批；发信依赖 Brevo 手机验证（实体 SIM 10-02）
 
 ### T18 回访环：每周增长榜 /weekly 用真实 30 天增速重做 + 每周 X 帖草稿自动生成
@@ -151,7 +152,8 @@
 - 失败: 0
 
 ### T19 10-02 X 帖：/report 数据发现（每天 ≤1 条，已用完 10-01 的额度）
-- 状态: todo（10-02 北京时间白天发）
+- 状态: todo（定稿已走 content-writing，10-02 10:00 发）
+- 定稿 docs/ops/launch-kit/drafts/x-t19.md；brief docs/ops/launch-kit/briefs/x-t19-report.md；ph-and-x.md 旧稿作废
 - 依赖: -
 - 内容要点：669 个开源 agent 工具里 32% 半年无提交（含 68 个 5k+ 星项目），星数≠还在维护；最快增长 Skills / LangChain；链接 agentoolrank.com/report?ref=x，写明作者本人
 - 验收: x-post 发布成功，看板记链接；events 表出现 src=x 的访问

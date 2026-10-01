@@ -541,3 +541,13 @@
 - 已回复 agentkit；T24 补回译比对 + 大陆付款能力子项（0c3dc27）；代码 commit 13d1315
 - 坑：payments 表首笔付款才建 → 查询 try/catch 回 0；events 有 country 列可按国家统计；看板文件每小时改写 → 随看板改动一起提交（GOTCHAS#kpi-dashboard-block）
 - human-intervention=0 / auto-resolved=1（payments 表不存在→容错回 0）/ 熔断=0
+
+## 2026-10-02 #24 写作流程落地（content-writing）
+- BOSS_DECISIONS #24：对外文字一律走 agentkit content-writing skill，老板不审稿，负责人自审直接发
+- T19：brief（docs/ops/launch-kit/briefs/x-t19-report.md，只放 /report 10-01 刷新后事实，禁推测）→ bin/write zh/x-post/auto → hook-first，AI 味 0、无依据 0 → 手补 MetaGPT、gpt-engineer → ai-flavor 复查干净；定稿 drafts/x-t19.md，10-02 10:00 老板主号 x-post 发；ph-and-x.md 旧稿作废
+- dev.to 第二篇：ai-flavor 查出 4 处 em dash 已改，复查干净
+- 回复 agentkit + 反馈 writer.py：--out 父目录不存在 → FileNotFoundError（模型调用已完成，浪费一次）
+- 排查 /report "last refreshed 2026-09-30"：DB max data_refreshed_at 2026-10-01T12:48、668 条均刷新、Action 成功 → ISR revalidate=86400 缓存，非断更
+- commit 830a717
+- 坑：bin/write 前先 mkdir -p；x-post 初稿偏抽象需手补具体数字/名字并复查；X CJK 按 2 权重、非 Premium 自动拆 thread；ISR 页面日期最多滞后 24h → 查 DB（GOTCHAS#content-writing-bin-write、#isr-stale-refresh-date）
+- human-intervention=0 / auto-resolved=1（writer.py --out 目录缺失→mkdir 重跑）/ 熔断=0

@@ -249,9 +249,20 @@
 - T24 已按 owner-goal #23 补第二模型回译比对 + 子项「中文读者付款能力（Stripe 大陆支付宝/微信/银联）」看板单独跟踪（0c3dc27）
 - 注意：看板 html 每小时被改写 → 工作区常 dirty，随其他看板改动一起提交，不单独清理（GOTCHAS#kpi-dashboard-block）
 
+## 2026-10-02 对外文字统一走 content-writing（BOSS_DECISIONS #24）
+
+- **规则**：所有对外文字（X 帖、dev.to、外联邮件、Show HN、PH、多语言页文案）一律走 agentkit content-writing skill：brief → `bin/write` → ai-flavor 复查；**老板不审稿，负责人自审后直接发**
+- 流程：brief 只放可核对事实（禁止推测，如"agent 自己提交"）→ `mkdir -p` 输出目录 → `bin/write`（例：zh / x-post / auto）→ 初稿偏抽象时从 brief 手补具体数字和名字 → **补完再跑一次 ai-flavor**
+- **T19 X 帖定稿**：brief docs/ops/launch-kit/briefs/x-t19-report.md（只用 /report 10-01 刷新后事实）；定稿 docs/ops/launch-kit/drafts/x-t19.md（风格 hook-first，初稿 AI 味 0 / 无依据 0，手补 MetaGPT、gpt-engineer 后 ai-flavor 复查干净）；ph-and-x.md 旧稿已标作废
+  - **发布：10-02 10:00 左右（北京）**，老板主号 Zephyr 经 x-post skill；中文帖选中文读者活跃时段，不半夜发；X 的 CJK 字符按 2 权重，非 Premium 会自动拆 thread
+- dev.to 第二篇：ai-flavor 查出 4 处 em dash 已改，复查干净（仍 10-03 发）
+- 已回复 agentkit，并反馈 writer.py 问题：`--out` 父目录不存在 → FileNotFoundError，且发生在模型调用之后（白花一次）
+- /report 显示 "last refreshed 2026-09-30" 不是断更：DB data_refreshed_at 最大 2026-10-01T12:48、668 条均刷新、Action 10-01 成功；原因是 report 页 revalidate=86400 的 ISR 缓存（GOTCHAS#isr-stale-refresh-date）
+- commit 830a717
+
 ## 近期排期
 
-- **10-02**：09:30 老板汇总 → 发 X 帖（T19，/report 数据，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
+- **10-02**：09:30 老板汇总 → 10:00 左右发 X 帖（T19 定稿 drafts/x-t19.md，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2
 - **10-05**：T24 中文第一批上线（工具页前 200 / 替代品 / 对比 / /where-to-list / /submit 价格页）
 - **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
@@ -260,8 +271,8 @@
 ## 待办 / 下一步
 
 - [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to 已发；HN/Reddit 与 imagehub 错开 ≥1 周，Show HN 最早 10-07）
-- [ ] T19 10-02 X 帖（/report 数据，x-post）
-- [ ] T17 外联：10-02 实体 SIM 到 → Brevo 手机验证 → 发信（≤10 封/天）；同时解锁 T20 周报
+- [ ] T19 10-02 10:00 发 X 帖（定稿已走 content-writing：drafts/x-t19.md），发后看板记链接、查 src=x
+- [ ] T17 外联：10-02 实体 SIM 到 → Brevo 手机验证 → 发信（≤10 封/天；邮件模板发前走 bin/write outreach-email）；同时解锁 T20 周报
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录

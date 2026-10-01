@@ -456,3 +456,14 @@
 - 坑 2：日期按北京时间算"昨日"，SQLite 存 UTC → 用 cstDayRange 把 CST 日期换成 UTC 起止边界再查，不要直接 date('now')
 - 坑 3：看板 html 在 git 里，每小时改写 → 工作区常驻 dirty；随其他看板改动一起 commit，不要单独 checkout/清理（会丢最新 KPI）
 - 统计剔除 selftest 事件；events 表有 country 列，可扩展按国家统计访客
+
+## content-writing-bin-write
+- 对外文字（X/dev.to/外联邮件/Show HN/PH/多语言页文案）一律：brief → agentkit `bin/write` → ai-flavor（BOSS_DECISIONS #24，老板不审稿，自审后发）
+- 坑 1：`bin/write --out` 的父目录不存在 → writer.py 在模型调用**之后**才报 FileNotFoundError，白花一次 → 先 `mkdir -p` 输出目录（已反馈 agentkit）
+- 坑 2：x-post 初稿偏抽象 → 从 brief 挑具体数字/名字手补（T19 补 MetaGPT 71k、gpt-engineer 55k），**手改后必须再跑一次 ai-flavor**
+- 坑 3：brief 只放可核对事实，禁止推测性说法（如"agent 自己提交"）；ai-flavor 会抓 em dash（dev.to 第二篇 4 处）
+- X：CJK 字符按 2 权重计数；x-post skill 在非 Premium 账号自动拆 thread；中文帖放中文读者活跃时段（如北京 10:00），不半夜发
+
+## isr-stale-refresh-date
+- 页面显示的"last refreshed"日期来自 ISR 缓存：/report revalidate=86400 → 最多滞后 24h（10-02 看到 09-30，实际 DB 10-01T12:48 已全量刷新）
+- 判断数据是否断更：直接查 DB `SELECT MAX(data_refreshed_at), COUNT(*) ... WHERE data_refreshed_at >= <日期>` + 看 GitHub Action 运行状态，不要看页面
