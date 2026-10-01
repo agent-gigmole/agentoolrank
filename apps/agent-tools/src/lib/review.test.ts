@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
+import { isMetaNote, stripMetaNotes, isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
 
 const cats = ["coding-agents", "agent-frameworks", "memory-knowledge"];
 
@@ -60,5 +60,19 @@ describe("tagline truncation", () => {
   it("only keeps a GitHub description as tagline when it was not cut", () => {
     expect(submissionTagline("Short description")).toBe("Short description");
     expect(submissionTagline("z".repeat(161))).toBe("");
+  });
+});
+
+describe("reviewer meta-notes", () => {
+  it("recognises notes about the review process rather than the product", () => {
+    expect(isMetaNote("Website content could not be fetched for full verification")).toBe(true);
+    expect(isMetaNote("Evidence limited to README description")).toBe(true);
+    expect(isMetaNote("No website content available for verification")).toBe(true);
+    expect(isMetaNote("Requires Python development knowledge")).toBe(false);
+    expect(isMetaNote("Cannot fetch pages behind a login")).toBe(false);
+  });
+  it("strips them from every intelligence list", () => {
+    expect(stripMetaNotes({ limitations: ["Needs Docker", "Website details unavailable"], best_for: ["RAG"], key_differentiator: "x" }))
+      .toEqual({ limitations: ["Needs Docker"], best_for: ["RAG"], key_differentiator: "x" });
   });
 });

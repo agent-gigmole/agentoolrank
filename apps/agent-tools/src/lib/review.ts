@@ -34,7 +34,7 @@ export function parseReview(raw: string, categories: string[]): Review | null {
     tagline: s(v.tagline, 160),
     description: s(v.description, 1500),
     pricing,
-    intelligence: typeof v.intelligence === "object" && v.intelligence !== null ? (v.intelligence as Record<string, unknown>) : {},
+    intelligence: typeof v.intelligence === "object" && v.intelligence !== null ? stripMetaNotes(v.intelligence as Record<string, unknown>) : {},
   };
 }
 
@@ -84,4 +84,17 @@ export function isTruncatedTagline(t: string): boolean {
 export function submissionTagline(desc: string): string {
   const s = desc.trim();
   return s.length <= 160 ? s : "";
+}
+
+// Older reviews sometimes wrote notes about their own evidence into product fields ("Website could not be fetched").
+const META = /(website|site|readme)?\s*(content|details|text)?\s*(could not|couldn't|was not|were not) (be )?(fetched|accessed|accessible|verified)|website (details|content|text) (unavailable|not available)|no website (content|text|information)|evidence (is )?limited to|for (full|additional) (feature )?(verification|details|context|review)/i;
+
+export function isMetaNote(s: string): boolean {
+  return META.test(s);
+}
+
+export function stripMetaNotes(intel: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(intel)) out[k] = Array.isArray(v) ? v.filter((x) => typeof x !== "string" || !isMetaNote(x)) : v;
+  return out;
 }
