@@ -28,3 +28,18 @@ export function compareVerdict(a: Tool, b: Tool, now: Date): string[] {
   if (fa && fb) out.push(`Pick ${a.name} for: ${fa} Pick ${b.name} for: ${fb}`);
   return out;
 }
+
+const list = (names: string[]) => (names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`);
+
+/** Short answer for /alternatives pages; `alts` are ordered by closeness of match. */
+export function alternativesVerdict(tool: Tool, alts: Tool[], now: Date): string[] {
+  if (alts.length === 0) return [];
+  const out = [`Closest match to ${tool.name}: ${alts[0].name}.`];
+  const active = [...alts].sort((x, y) => (y.commit_count_90d ?? 0) - (x.commit_count_90d ?? 0))[0];
+  if (active.commit_count_90d) out.push(`Most actively developed: ${active.name} (${n(active.commit_count_90d)} commits in the last 90 days).`);
+  const growing = [...alts].sort((x, y) => (y.star_velocity_30d ?? 0) - (x.star_velocity_30d ?? 0))[0];
+  if ((growing.star_velocity_30d ?? 0) >= 1) out.push(`Fastest growing: ${growing.name} (+${n(growing.star_velocity_30d!)} GitHub stars in the last 30 days).`);
+  const stale = alts.filter((a) => staleness(a.last_commit_date, now).stale).map((a) => a.name);
+  if (stale.length) out.push(`No commit in 6+ months: ${list(stale.slice(0, 4))}${stale.length > 4 ? ` and ${stale.length - 4} more` : ""}.`);
+  return out;
+}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { compareVerdict } from "./verdict";
+import { compareVerdict, alternativesVerdict } from "./verdict";
 
 const now = new Date("2026-10-01T00:00:00Z");
 const t = (o: Record<string, unknown>) =>
@@ -34,5 +34,26 @@ describe("compareVerdict", () => {
   it("ends with what each tool is for, from its tagline", () => {
     const v = compareVerdict(t({ name: "A", tagline: "Run LLMs locally." }), t({ name: "B", tagline: "Hosted agent platform" }), now);
     expect(v[v.length - 1]).toBe("Pick A for: run LLMs locally. Pick B for: hosted agent platform.");
+  });
+});
+
+describe("alternativesVerdict", () => {
+  const alts = [
+    t({ name: "Scrapegraph-ai", commit_count_90d: 50, star_velocity_30d: 1928, last_commit_date: "2026-09-24" }),
+    t({ name: "Crawl4AI", commit_count_90d: 300, star_velocity_30d: 3506, last_commit_date: "2026-09-25" }),
+    t({ name: "GPT Crawler", commit_count_90d: 0, star_velocity_30d: 30, last_commit_date: "2025-07-07" }),
+    t({ name: "LaVague", commit_count_90d: 0, star_velocity_30d: 12, last_commit_date: "2025-01-21" }),
+  ];
+  it("summarises closest, most active, fastest growing and inactive alternatives", () => {
+    const v = alternativesVerdict(t({ name: "Firecrawl" }), alts, now);
+    expect(v).toEqual([
+      "Closest match to Firecrawl: Scrapegraph-ai.",
+      "Most actively developed: Crawl4AI (300 commits in the last 90 days).",
+      "Fastest growing: Crawl4AI (+3,506 GitHub stars in the last 30 days).",
+      "No commit in 6+ months: GPT Crawler and LaVague.",
+    ]);
+  });
+  it("returns nothing without alternatives", () => {
+    expect(alternativesVerdict(t({ name: "X" }), [], now)).toEqual([]);
   });
 });

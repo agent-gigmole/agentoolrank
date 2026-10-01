@@ -4,8 +4,14 @@ import { getToolBySlug } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
+
+const signed = (v: number) => {
+  const r = Math.round(v);
+  return r > 0 ? `+${r.toLocaleString("en-US")}` : r < 0 ? r.toLocaleString("en-US") : "0";
+};
 import { alternativesTitle, compareSlug, taglineMentionsName } from "@/lib/alternatives";
 import { alternativesFaq } from "@/lib/faq";
+import { alternativesVerdict } from "@/lib/verdict";
 import { FaqSection } from "@/components/FaqSection";
 
 export const revalidate = 86400; // 24h
@@ -41,6 +47,7 @@ async function load(slug: string): Promise<{ tool: Tool; alts: Tool[] } | null> 
   const tool = await getToolBySlug(slug);
   if (!tool || tool.alternatives.length === 0) return null;
   const alts = (await Promise.all(tool.alternatives.map((id) => getToolBySlug(id)))).filter((t): t is Tool => t !== null);
+  const verdict = alternativesVerdict(tool, alts, new Date());
   return alts.length > 0 ? { tool, alts } : null;
 }
 
@@ -104,6 +111,14 @@ export default async function AlternativesPage({ params }: Props) {
           )}
           {intel.key_differentiator ? ` ${intel.key_differentiator}` : ""}
         </p>
+        {verdict.length > 0 && (
+          <section className="mb-6 border border-blue-100 bg-blue-50/50 rounded-lg p-4">
+            <h2 className="text-base font-semibold text-gray-900 mb-2">Short answer</h2>
+            <ul className="space-y-1.5 text-sm text-gray-700 list-disc pl-5">
+              {verdict.map((v) => <li key={v}>{v}</li>)}
+            </ul>
+          </section>
+        )}
         <p className="text-gray-600 mb-8">
           These {alts.length} open-source tools do the same job. They are ordered by how closely they match {tool.name},
           with live GitHub data so you can see which projects are actively maintained.
@@ -127,7 +142,7 @@ export default async function AlternativesPage({ params }: Props) {
                     {t.id === tool.id && <span className="ml-2 text-xs text-gray-500">(original)</span>}
                   </td>
                   <td className="py-2 px-3 text-right">{formatStars(t.github_stars)}</td>
-                  <td className="py-2 px-3 text-right">{t.star_velocity_30d != null ? `+${Math.round(t.star_velocity_30d).toLocaleString("en-US")}` : "—"}</td>
+                  <td className="py-2 px-3 text-right">{t.star_velocity_30d != null ? signed(t.star_velocity_30d) : "—"}</td>
                   <td className="py-2 px-3 text-right">{formatDate(t.last_commit_date)}</td>
                 </tr>
               ))}
