@@ -500,3 +500,11 @@
 - commit 191406f 部署 200、已 push；IndexNow 2253 URL HTTP 200；看板记录 d2d8fed
 - 坑：非交互 shell 无 bun → ~/.bun/bin/bun；indexnow.ts 有 top-level await，npx tsx 报 cjs 错，只能 bun 跑
 - human-intervention=0 / auto-resolved=2（bun 不在 PATH→绝对路径、tsx cjs 错→改用 bun）/ 熔断=0
+
+## 2026-10-01 T23 第二步：对比页 Short answer（answer-first，数据驱动）
+- GSC 28 天：397 曝光 / 3 点击；/compare 175 曝光为最大页型（goose-vs-open-webui 32 曝光 2 点击、均排 7.5）→ answer-first 优先做对比页
+- 新增 src/lib/verdict.ts compareVerdict(a,b,now)：停更（>180 天 vs 活跃）、星增速差 ≥1.5 倍（取整）、定价仅付费 vs 免费不同才写（free≈open-source）、标语首句 ≤110 字符 → "Pick X for:"；对比页顶部「Short answer」区块
+- compareFaq "Both are open source" 仅双方 pricing=open-source 才写；titles.ts shortTagline 截断后去悬空虚词
+- vitest 115 全绿；commits de79e4c / 73f89f8 / d3ed359 部署+push+线上核验；看板 947cc7f
+- 坑：pricing 有 free 与 open-source 两值语义重叠需归类；star_velocity_30d 是小数，展示前取整；build 里 "Ecmascript file had an error"（save-stack import packages/db）为历史遗留不阻断
+- human-intervention=0 / auto-resolved=2（星增速小数→取整、free/open-source 误判定价不同→归同类）/ 熔断=0

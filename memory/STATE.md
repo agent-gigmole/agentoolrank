@@ -204,12 +204,21 @@
   - commit 191406f，已部署（200）、已 push；IndexNow 推 2253 URL HTTP 200；看板更新日志已记（commit d2d8fed）
   - CHECKED 日期过期后需重新核对竞品价格/政策（价格会变）
 
+## 2026-10-01 T23 第二步：对比页「Short answer」（answer-first，数据驱动）
+
+- **依据 GSC 28 天**：曝光 397 / 点击 3；**/compare 页 175 曝光，占比最大**（goose-vs-open-webui 32 曝光 2 点击、均排 7.5）→ GEO/answer-first 优先做对比页
+- apps/agent-tools/src/lib/verdict.ts `compareVerdict(a,b,now)`：一方 >180 天无提交且另一方活跃 → 提示停更；30 天星增速差 ≥1.5 倍 → 说明谁增长更快（取整）；定价只在付费 vs 免费不同才写（free 与 open-source 视为同类）；标语只取首句、≤110 字符，输出 "Pick X for:"
+- 对比页顶部新增「Short answer」区块；compareFaq "Both are open source" 改为仅双方 pricing 都是 open-source 才写
+- titles.ts shortTagline 截断后去掉结尾悬空虚词（and/with/to 等）
+- vitest 115 测试全绿；commits de79e4c、73f89f8、d3ed359 均已部署、push、线上核验；看板记录 947cc7f
+- 已知历史遗留：build 日志 "Ecmascript file had an error"（save-stack 路由 import packages/db），不影响构建成功
+
 ## 待办 / 下一步
 
 - [ ] 10-02 09:30 老板汇总：社区帖（优先 dev.to 已发；HN/Reddit 与 imagehub 错开 ≥1 周，Show HN 最早 10-07）
 - [ ] T19 10-02 X 帖（/report 数据，x-post）
 - [ ] T17 外联：10-02 实体 SIM 到 → Brevo 手机验证 → 发信（≤10 封/天）；同时解锁 T20 周报
-- [ ] T23 后续：可选站外文章 canonical 回链 /where-to-list；更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）
+- [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）；可选站外文章 canonical 回链 /where-to-list
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速

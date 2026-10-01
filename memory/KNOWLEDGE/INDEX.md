@@ -137,3 +137,5 @@
 | bun 不在 PATH / 非交互 shell / ~/.bun/bin/bun / tsx top-level await cjs 错 | GOTCHAS.md#bun-path-noninteractive-tla |
 | 对比页 / 上架渠道对比 / where-to-list / 竞品事实核对日期 / 自家披露 | GOTCHAS.md#comparison-page-facts-dated |
 | T23 /where-to-list 上线 | LOG.md#2026-10-01 T23 对比内容第一篇 /where-to-list 上线 |
+| 对比页 Short answer / compareVerdict / pricing free≈open-source / star_velocity 取整 / 悬空虚词 / Ecmascript file had an error | GOTCHAS.md#compare-verdict-data-quirks |
+| GSC 对比页曝光主力 / answer-first 优先对比页 / T23 第二步 | LOG.md#2026-10-01 T23 第二步：对比页 Short answer（answer-first，数据驱动） |

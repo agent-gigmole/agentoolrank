@@ -419,3 +419,12 @@
 
 ## comparison-page-facts-dated
 - 竞品对比页（/where-to-list）：竞品价格/政策写进 src/lib/directories.ts 并带 CHECKED 日期 + 每行提交页 URL；页面显式披露"这是自家产品"、如实写自家短板（流量小）；竞品外链 rel=nofollow；价格会变，过期要重新核对
+
+## compare-verdict-data-quirks
+- GSC：/compare 页是曝光主力（28 天 175/397）→ GEO / answer-first 改动优先落在对比页，而非首页/类目页
+- tools.pricing 同时存在 `free` 与 `open-source` 两值，语义重叠；做"定价是否不同"判断时归为同一类（免费类 vs 付费类），否则会对两个开源工具写出"定价不同"
+- star_velocity_30d 是小数（如 12.37），展示前必须取整（Math.round），否则文案出现长小数
+- 标语进句式时只取首句并限长（≤110），截断后去掉尾部悬空虚词（and/with/to/for/of…），否则出现 "Pick X for: build agents with"
+- FAQ 里"Both are open source"之类断言必须以数据为条件（双方 pricing 都是 open-source 才写），不要无条件声称
+- build 日志 "Ecmascript file had an error"（save-stack 路由 import packages/db）是历史遗留，构建仍成功，不要误判为本次改动导致
+
