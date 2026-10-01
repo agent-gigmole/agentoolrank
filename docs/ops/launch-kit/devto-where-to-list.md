@@ -9,7 +9,7 @@ canonical_url: https://agentoolrank.com/where-to-list
 
 *Disclosure: I build [AgentoolRank](https://agentoolrank.com/?ref=devto2), one of the directories in the table below. Prices and review times were checked on each site's submit page on 2026-10-01; they change, so check the links before you decide. The up-to-date version of this table lives at [agentoolrank.com/where-to-list](https://agentoolrank.com/where-to-list?ref=devto2).*
 
-This week I shipped a public MCP server (`https://agentoolrank.com/api/mcp` — search 669 open-source agent tools, pull GitHub stats and alternatives) and went through the places an MCP or agent-tool builder would reasonably list it. I published to the MCP Registry, submitted to mcpservers.org and PeerPush's free queue, and checked the submit pages of the rest. Here's what each asks for and what's free.
+This week I shipped a public MCP server (`https://agentoolrank.com/api/mcp`, which can search 669 open-source agent tools, pull GitHub stats and alternatives) and went through the places an MCP or agent-tool builder would reasonably list it. I published to the MCP Registry, submitted to mcpservers.org and PeerPush's free queue, and checked the submit pages of the rest. Here's what each asks for and what's free.
 
 ## The short version
 
@@ -21,7 +21,7 @@ This week I shipped a public MCP server (`https://agentoolrank.com/api/mcp` — 
 
 | Directory | Free option | Paid options | Review time |
 |---|---|---|---|
-| [Official MCP Registry](https://registry.modelcontextprotocol.io) | Yes, via `mcp-publisher` CLI | — | Immediate after domain/GitHub verification |
+| [Official MCP Registry](https://registry.modelcontextprotocol.io) | Yes, via `mcp-publisher` CLI | None | Immediate after domain/GitHub verification |
 | [mcpservers.org](https://mcpservers.org/submit) | Yes | $39 (≤24h, badge, dofollow) | Free: up to 2 weeks |
 | [mcp.so](https://mcp.so/submit) | Not on the web form (GitHub issue route) | $39 one-time | Paid: instant |
 | [PeerPush](https://peerpush.com/submit) | Yes, free queue (we were quoted ~70 days) | $39 · $89 · $229 | Paid: instant |
@@ -37,7 +37,7 @@ This took about 10 minutes. If you own a domain, DNS verification lets you use a
 3. `mcp-publisher login dns --domain yourdomain.com --private-key <hex>` then `mcp-publisher publish`.
 
 Two things that tripped me up:
-- The login token expires quickly — if `publish` fails with an auth error a while after logging in, just run `login` again.
+- The login token expires quickly. If `publish` fails with an auth error a while after logging in, just run `login` again.
 - The `name` in `server.json` must match the namespace you verified (`com.agentoolrank/...` for `agentoolrank.com`).
 
 ## What I'd do again
@@ -46,4 +46,4 @@ Two things that tripped me up:
 
 Paying to jump queues only made sense to me if launch timing mattered. For a side project, the free queues were fine.
 
-If you've found another MCP or agent-tool directory that's worth the time, I'd like to hear about it — I'll add it to the [live table](https://agentoolrank.com/where-to-list?ref=devto2) after checking its submit page.
+If you've found another MCP or agent-tool directory that's worth the time, I'd like to hear about it. I'll add it to the [live table](https://agentoolrank.com/where-to-list?ref=devto2) after checking its submit page.

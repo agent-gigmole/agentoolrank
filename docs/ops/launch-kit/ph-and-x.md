@@ -16,6 +16,8 @@
 - **Launch rules:** 12:01 AM PT Tue–Thu; reply to every comment within 30 min; ask for feedback, never for upvotes; register the date with agentkit (SOCIAL_CALENDAR).
 
 ## X post T19 (10-02, owner's main account via x-post; ≤1/day)
+
+> 2026-10-02：按 BOSS_DECISIONS #24 改走 content-writing skill，定稿见 drafts/x-t19.md（brief: briefs/x-t19-report.md，style hook-first，ai-flavor clean）。下面旧稿作废。
 ```
 我追踪了 669 个开源 AI Agent 工具，按 GitHub 活跃度而不是星数来排：
 
