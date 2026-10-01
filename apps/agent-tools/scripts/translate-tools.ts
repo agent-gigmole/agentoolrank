@@ -4,7 +4,8 @@
  * back-translates and checks modal direction (must / must not / need not / may / should).
  * Deterministic checks: numbers preserved, no untranslated English runs.
  * Only rows with status='approved' are published (src/app/zh/tool/[slug]).
- * Usage: bun run scripts/translate-tools.ts --lang=zh [--top=200] [--only=dify,ragflow] [--dry-run]
+ * Usage: bun run scripts/translate-tools.ts --lang=zh [--top=200] [--only=dify,ragflow] [--retry-failed] [--dry-run]
+ *   Rows whose source text is unchanged are skipped; --retry-failed also redoes unchanged rows that failed review.
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
@@ -18,6 +19,7 @@ const lang = arg("lang") ?? "zh";
 const top = Number(arg("top") ?? 200);
 const only = arg("only")?.split(",");
 const dryRun = process.argv.includes("--dry-run");
+const retryFailed = process.argv.includes("--retry-failed");
 const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN });
 
 const LANG_NAME: Record<string, string> = { zh: "Simplified Chinese (zh-CN)", ja: "Japanese" };
@@ -100,7 +102,9 @@ Reply with JSON only: {"modals":[{"source":"...","translation":"...","match":tru
 const rows = (await db.execute(only
   ? { sql: `SELECT id, name, tagline, description, intelligence FROM tools WHERE id IN (${only.map(() => "?").join(",")})`, args: only }
   : { sql: "SELECT id, name, tagline, description, intelligence FROM tools ORDER BY score DESC LIMIT ?", args: [top] })).rows as unknown as Row[];
-const existing = new Map((await db.execute({ sql: "SELECT tool_id, source_hash FROM tool_i18n WHERE lang = ?", args: [lang] })).rows.map((x) => [String(x.tool_id), String(x.source_hash)]));
+const existing = new Map((await db.execute({ sql: "SELECT tool_id, source_hash, status FROM tool_i18n WHERE lang = ?", args: [lang] })).rows
+  .filter((x) => !(retryFailed && x.status === "review_failed"))
+  .map((x) => [String(x.tool_id), String(x.source_hash)]));
 
 let done = 0, approved = 0, failed = 0;
 async function one(r: Row) {

@@ -73,3 +73,15 @@ export function reviewOrder(a: { id: number; plan: string; backlink_verified: nu
   const paid = (x: typeof a) => (x.plan === "free" ? 0 : 1);
   return paid(b) - paid(a) || b.backlink_verified - a.backlink_verified || a.id - b.id;
 }
+
+/** Taglines stored by older crawls were cut at 160/200 chars, often mid-word. */
+export function isTruncatedTagline(t: string): boolean {
+  const s = t.trim();
+  return s.length >= 150 && !/[.!?。！？)\]"'”…]$/.test(s);
+}
+
+/** A raw GitHub description is only usable as a tagline if it fits; otherwise let the reviewer's tagline win. */
+export function submissionTagline(desc: string): string {
+  const s = desc.trim();
+  return s.length <= 160 ? s : "";
+}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
+import { isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
 
 const cats = ["coding-agents", "agent-frameworks", "memory-knowledge"];
 
@@ -48,5 +48,17 @@ describe("reviewOrder", () => {
       { id: 3, plan: "fast", backlink_verified: 0 },
     ];
     expect([...subs].sort(reviewOrder).map((s) => s.id)).toEqual([3, 2, 1]);
+  });
+});
+
+describe("tagline truncation", () => {
+  it("detects taglines cut off by a length limit", () => {
+    expect(isTruncatedTagline("x".repeat(150) + " tolerance and scalability of a c")).toBe(true);
+    expect(isTruncatedTagline("A programming framework for agentic AI")).toBe(false);
+    expect(isTruncatedTagline("y".repeat(170) + " fully finished sentence.")).toBe(false);
+  });
+  it("only keeps a GitHub description as tagline when it was not cut", () => {
+    expect(submissionTagline("Short description")).toBe("Short description");
+    expect(submissionTagline("z".repeat(161))).toBe("");
   });
 });

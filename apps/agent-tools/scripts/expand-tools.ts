@@ -6,7 +6,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { pickCandidates, type GhRepo } from "../src/lib/discover";
-import { toolRowFromReview } from "../src/lib/review";
+import { toolRowFromReview, submissionTagline } from "../src/lib/review";
 import { judge, readme, spentUsd } from "./judge";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -82,7 +82,7 @@ async function main() {
         continue;
       }
       if (apply) {
-        const row = { ...toolRowFromReview({ slug, name: repoName, url: siteUrl(r), github_url: r.html_url, tagline: (r.description ?? "").slice(0, 160) }, verdict), source: "github" as const, github_stars: r.stargazers_count };
+        const row = { ...toolRowFromReview({ slug, name: repoName, url: siteUrl(r), github_url: r.html_url, tagline: submissionTagline(r.description ?? "") }, verdict), source: "github" as const, github_stars: r.stargazers_count };
         const cols = Object.keys(row);
         await db.execute({ sql: `INSERT OR IGNORE INTO tools (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never });
       }
