@@ -478,8 +478,8 @@
 
 ## translation-review-audits-source
 - 人工审译文时其实也在审英文源数据：T24 审 200 篇中文顺带发现英文站长期显示的两类 bug → 审稿必须**原文 + 译文对照**看，发现源问题先退回修源，不在译文里掩盖
-- 源 bug 1「截断字段污染」：早期抓取按 160/200 字截断 tagline；expand-tools 又用截断的 GitHub 描述**覆盖**审校写好的 tagline（114 个）→ 修复：review.ts isTruncatedTagline 识别（连字符/半截词/省略号结尾、恰好等于截断长度等），submissionTagline 只在非截断时用 GitHub 描述；存量用 LLM 依据 description + README 重写，先备份 data/tagline-backup-*.json
-- 源 bug 2「LLM 审核过程备注写进产品字段」：intelligence 里出现 "Website content could not be fetched for full verification" 之类审核员自述（13 个）→ isMetaNote / stripMetaNotes 在 parseReview 出口过滤，存量 clean-meta-notes.ts 清理，备份 data/intelligence-backup-*.json；prompt 层也应要求过程说明进单独字段，不进展示字段
+- 源 bug 1「截断字段污染」：早期抓取按 160/200 字截断 tagline；expand-tools 又用截断的 GitHub 描述**覆盖**审校写好的 tagline（114 个）→ 修复：review.ts isTruncatedTagline 识别（长度 ≥150 且不以句末标点 .!?。！？)]"'”… 结尾），submissionTagline 只在 GitHub 描述 ≤160 字时采用、否则返回空让审校 tagline 生效；存量用 LLM 依据 description + README 重写，先备份 data/tagline-backup-*.json
+- 源 bug 2「LLM 审核过程备注写进产品字段」：intelligence 里出现 "Website content could not be fetched for full verification" 之类审核员自述（13 个）→ isMetaNote（正则：could not be fetched/verified、evidence limited to、for full verification 等）/ stripMetaNotes（只滤数组字段里的字符串项）在 parseReview 出口过滤，存量 clean-meta-notes.ts 清理，备份 data/intelligence-backup-*.json；prompt 层也应要求过程说明进单独字段，不进展示字段
 - 翻译联动：源文本一改 source_hash 就变 → translate-tools 自动重译并把 human_reviewed 置 0（先下线再审），避免旧译文挂着新源
 - 抽样比例：前 50 逐篇读，其余抽 ~10%（128 抽 14）全合格才整批 level 2；任一不合格就扩大抽样
 
