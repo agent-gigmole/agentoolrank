@@ -298,11 +298,21 @@
 - vitest 139 全绿；已 commit + push
 - **待**：top 200 中 intelligence/description 变动的工具（eigent、camofox-browser 等）下次 translate-tools 自动重译（source_hash 变 → human_reviewed 归 0 先下架）→ 重审后再上线
 
+## 2026-10-02 T24 中文工具页 200/200 全部上线（commits e33c5e1 / 6da708d，比计划 10-05 提前）
+
+- **tool_i18n 200 条全部 status='approved' 且已发布**
+- 第三轮重译 24 条（--retry-failed + 元话术清理后 source_hash 变动的）→ 11 条过审，全文读完后发布
+- 两轮都没过审的 13 条：逐条读审校意见 → 12 条是挑剔/误报，用 review-translations.ts 新增的 **--override**（人读过审校意见后放行）发布
+  - 误报例：E2E 里的 "2" 被 numbersPreserved 当成数字改动；"Deep Exploration and Efficient Research Flow"（项目全称）被 residualEnglish 判为残留英文
+- **omniroute 是真问题（同名项目串号）**：英文 intelligence 写的是另一个同名项目（Uniswap 跨链路由），英文站一直这样显示 → 新增 scripts/rejudge-tools.ts，调 judge.ts 依据项目自己的网站 + README 重生成 description 与 intelligence，回滚 apps/agent-tools/data/rejudge-backup-*.json；全库扫过，同类只有这一个；重生成后重译、人工读过、已发布
+- 已 commit + push；看板已记录（6da708d）
+- 英文源数据被翻译审稿查出的错误累计三类：截断（114）→ 元话术（13+12）→ 同名项目串号（1）
+
 ## 近期排期
 
 - **10-02**：09:30 老板汇总 → 10:00 左右发 X 帖（T19 定稿 drafts/x-t19.md，x-post）→ 实体 SIM 到后 Brevo 手机验证 → 开始外联（T17，≤10 封/天）并解锁 T20 周报
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2
-- **10-05**：T24 中文剩余页型（工具页已 177/200 提前上线；23 个失败待重试；替代品 / 对比 / /where-to-list / /submit 价格页待做）
+- **10-05**：T24 中文剩余页型（工具页 200/200 已于 10-02 全部上线；替代品 / 对比 / /where-to-list / /submit 价格页待做）
 - **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
@@ -314,7 +324,8 @@
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（优先 /compare 有曝光的对：goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（草稿已写，canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T24 中文：工具页 177/200 已上线（10-02）；元话术第二轮清 12 个后需重跑 translate-tools 刷新受影响译文并重审；23 个 review_failed 待 --retry-failed 重试；确认 sitemap 刷新出 177 个 zh 页 + IndexNow 推送；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
+- [ ] T24 中文：工具页 200/200 已上线（10-02）；确认 sitemap 刷新出 200 个 zh 页 + IndexNow 推送；替代品/对比/where-to-list/submit 中文页待做 → 日语 10-09 → 西语 10-30 看数据（i18n 字典 + 登记表 + /[lang] 薄路由，hreflang 全互指）
+- [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等），减少审校数字误报
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
 - [ ] MCP 目录：Smithery 等免费渠道

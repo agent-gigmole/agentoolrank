@@ -579,3 +579,11 @@
 - 待：top 200 受影响工具（eigent、camofox-browser 等）下次 translate-tools 重译 → 先下架 → 重审再上线
 - 坑：元话术要按语义类（evidence / README / 可见内容的自述）扫，不能只靠内部关键词；区分"审稿人看不到"（删）与"项目文档少"（留）（GOTCHAS#meta-notes-semantic-scan）
 - human-intervention=0 / auto-resolved=1 / 熔断=0
+
+## 2026-10-02 T24 中文工具页 200/200 全部上线
+- 结果：tool_i18n 200 条全部 approved 且已发布，比计划 10-05 提前；commits e33c5e1 / 6da708d 已 push，看板已记
+- 第三轮重译 24 条 → 11 条过审，全文读后发布；两轮都没过的 13 条逐条读审校意见：12 条挑剔/误报 → review-translations.ts 新增 --override 放行（误报：E2E 的 "2" 算数字改动；项目全称 "Deep Exploration and Efficient Research Flow" 判残留英文）
+- omniroute 真问题：英文 intelligence 写成另一个同名项目（Uniswap 跨链路由），英文站一直错 → 新增 scripts/rejudge-tools.ts（judge.ts 依据项目自身网站 + README 重生成 description/intelligence，回滚 data/rejudge-backup-*.json）；全库扫描同类仅此一个；重生成 → 重译 → 人读 → 发布
+- 坑：审校模型系统性误报（字母数字混合缩写、项目全称）→ 两轮不过 ≠ 译文有问题，人读意见再定；翻译审稿第三次查出英文源错误（截断 → 元话术 → 同名串号）（GOTCHAS#review-false-positives-override、#same-name-project-mixup）
+- 待：numbersPreserved 忽略字母数字混合 token；中文其余页型；日语 10-09
+- human-intervention=0 / auto-resolved=1（omniroute 源数据重生成）/ 熔断=0

@@ -496,3 +496,18 @@
 - 语义模式（review.ts META）：内容取不到/未核实（could not be fetched/accessed/verified）、证据自述（evidence limited to / no direct evidence / provided README|documentation|evidence）、README 截断/摘录（README content cuts off / README excerpt / unclear from ... README）、信息量自述（limited information available / limits the ability to provide / based on visible content）、核实目的（for full verification）
 - 判别规则：主语是**审稿人/能看到的材料**（"we/the provided README doesn't show"）= 元话术，删；主语是**项目本身**（"Minimal README — documentation is external"）= 真实产品缺点，留
 - 清理前备份 data/meta-notes-backup-*.json；源改动 → source_hash 变 → 译文自动下架等重审
+
+## review-false-positives-override
+- LLM 审校 + 确定性检查有**系统性误报**：两轮都不过 ≠ 译文有问题。T24 第三轮后 13 条两轮不过，人读审校意见后 12 条是挑剔/误报，只有 1 条（omniroute）是真问题，且问题在英文源不在译文
+- 误报类 1：numbersPreserved 把字母数字混合缩写（E2E、A2A、GPT-4o）里的数字当成数字改动 → 待改：只比对纯数字 token（`\b\d[\d.,]*\b` 且前后非字母）
+- 误报类 2：residualEnglish 把项目全称/专有名词（"Deep Exploration and Efficient Research Flow"）判为残留英文 → 可加白名单：工具 name、README 标题里出现的短语
+- 处理：review-translations.ts --override = 人读过审校意见后放行（不是跳过审校）；放行理由留在 issues 里可追溯。不要为了让检查通过去改译文
+- 顺序：先区分「译文问题 / 源数据问题 / 检查器误报」三类，再分别退回重译 / 回源修 / --override
+
+## same-name-project-mixup
+- LLM 生成目录数据时会把**同名不同项目**的知识写进来：omniroute 的英文 intelligence 写的是 Uniswap 的跨链路由（同名项目），英文站长期如此显示，翻译审稿时才发现
+- 根因：生成时 LLM 靠名字联想参数记忆，没有被锚定在本项目的网站/README 上
+- 修复：scripts/rejudge-tools.ts 调 judge.ts，以项目自身网站 + README 为唯一依据重生成 description 与 intelligence，先写回滚 data/rejudge-backup-*.json；重生成后 source_hash 变 → 自动重译 → 人读 → 发布
+- 排查：全库扫一遍同类（描述里的领域/关键词与 README/仓库 topics 不一致的）；10-02 扫完只有这一个
+- 预防：生成 prompt 必须附原文（README/网站）并要求"只依据所给材料"；审核时对比描述领域与仓库 topics/README 首段
+- 这是翻译审稿第三次查出英文源错误（截断 → 元话术 → 同名串号），见 #translation-review-audits-source

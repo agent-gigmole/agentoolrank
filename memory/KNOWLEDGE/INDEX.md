@@ -161,3 +161,6 @@
 | T24 中文工具页 177/200 上线 / 114 截断 tagline / 13 审核备注 / --retry-failed | LOG.md#2026-10-02 T24 中文工具页 177/200 上线 + 英文源数据修复 |
 | 元话术语义扫描 / pros cons 审稿自述 / stripMetaSentences / README excerpt / no direct evidence / 审稿人看不到 vs 项目文档少 | GOTCHAS.md#meta-notes-semantic-scan |
 | T24 元话术第二轮清理 12 个 / meta-notes-backup | LOG.md#2026-10-02 T24 元话术第二轮清理（12 个工具） |
+| 审校误报 / numbersPreserved E2E A2A / residualEnglish 项目全称 / 两轮不过≠译文错 / --override 人读后放行 / 译文·源数据·检查器三分类 | GOTCHAS.md#review-false-positives-override |
+| 同名项目串号 / omniroute Uniswap / LLM 名字联想 / rejudge-tools judge.ts 按 README 重生成 / rejudge-backup | GOTCHAS.md#same-name-project-mixup |
+| T24 中文工具页 200/200 上线 / 第三轮重译 24 / --override 12 条 | LOG.md#2026-10-02 T24 中文工具页 200/200 全部上线 |
