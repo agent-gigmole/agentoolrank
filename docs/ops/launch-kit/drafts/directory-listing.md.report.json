@@ -1,0 +1,19 @@
+{
+ "format": "landing-copy",
+ "lang": "en",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "practical-guide",
+  "angle": "Position AgentoolRank as a free directory of 669 open-source AI agent tools ranked by recent GitHub activity rather than total stars, helping developers assess maintenance and makers find a place to list.",
+  "why_share": "Developers have a concrete reason to pass it along: daily activity signals and side-by-side comparisons help evaluate tools beyond star counts, while the reusable report adds evidence that 32% of tracked tools have had no commit in six or more months.",
+  "length": "medium"
+ },
+ "outline": "- **TAGLINE_SHORT:** Lead with open-source AI agent tool discovery, under 60 characters.\n- **TAGLINE:** Highlight ranking by recent GitHub activity rather than total stars, under 100 characters.\n- **DESC_SHORT:** State that AgentoolRank is a free directory of 669 open-source AI agent tools, in one sentence under 160 characters.\n- **DESC_MEDIUM:** Connect activity-based rankings with tool stats and alternatives, in 2-3 sentences under 300 characters.\n- **DESC_LONG:** Use 120-150 words covering the directory, daily GitHub API refreshes, four ranking signals, comparisons, free access without signup, and maker listing options.\n- **DESC_LONG_ALT:** Open with the finding that 32% of tracked tools have no commits in 6+ months. Emphasize the monthly report at [agentoolrank.com/report](https://agentoolrank.com/report), CC BY 4.0 reuse, and maintenance assessment, in 120-150 words.\n- **FEATURES:** Plan five short lines: 669 tools; activity rankings refreshed daily; individual stats, alternatives and comparisons; public MCP server and JSON API; Chinese pages for the top 200 tools.\n- **USE_CASES:** Plan three short lines: assess framework maintenance; search tools through Claude, Cursor or another MCP client; submit a maker's tool for free queued review or choose $9/$19/$49 faster-review or featured-placement options.",
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [],
+ "unsupported_final": [],
+ "template_vars": [],
+ "missing_vars": [],
+ "publishable": true
+}

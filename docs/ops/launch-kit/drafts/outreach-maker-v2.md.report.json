@@ -1,0 +1,26 @@
+{
+ "format": "outreach-email",
+ "lang": "en",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "helpful-answer",
+  "angle": "Lead with {name}'s current #{rank} of {total} position in {category}, disclose that Ethan built AgentoolRank, and make checking {page_url} the sole primary ask, with the badge and corrections clearly optional.",
+  "why_share": "A factual, project-specific snapshot gives the maintainer something useful to verify and potentially share through a live-star-count README badge without implying traffic or endorsement.",
+  "length": "short"
+ },
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [],
+ "unsupported_final": [],
+ "template_vars": [
+  "{badge_markdown}",
+  "{category}",
+  "{name}",
+  "{owner}",
+  "{page_url}",
+  "{rank}",
+  "{total}"
+ ],
+ "missing_vars": [],
+ "publishable": true
+}

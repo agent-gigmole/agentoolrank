@@ -1,0 +1,22 @@
+{
+ "format": "landing-copy",
+ "lang": "fr",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "practical-guide",
+  "angle": "Position AgentoolRank as a free directory for finding open-source AI agent tools by recent GitHub activity rather than total stars, with clear descriptions tailored to directory listings.",
+  "why_share": "Developers can share a concrete way to check maintenance signals before choosing a tool, while makers get a straightforward place to submit their projects.",
+  "length": "medium"
+ },
+ "outline": "- **TAGLINE_SHORT** : moins de 60 caractères, centré sur l'annuaire gratuit d'outils d'agents IA open source.\n- **TAGLINE** : moins de 100 caractères, avec l'activité GitHub récente comme critère de classement plutôt que le total d'étoiles.\n- **DESC_SHORT** : une phrase de moins de 160 caractères présentant les 669 outils et l'accès gratuit sans inscription.\n- **DESC_MEDIUM** : 2 à 3 phrases, moins de 300 caractères, sur le classement actualisé chaque jour, les statistiques et les comparaisons.\n- **DESC_LONG** : 120 à 150 mots en paragraphes, sans liste. Présenter [AgentoolRank](https://agentoolrank.com), créé par Ethan Tan, ses catégories d'outils, ses critères GitHub et ses pages d'alternatives. Distinguer l'accès gratuit des options de soumission payantes.\n- **DESC_LONG_ALT** : 120 à 150 mots, avec une ouverture sur le [rapport mensuel](https://agentoolrank.com/report), réutilisable sous CC BY 4.0. Mettre en avant les 32 % d'outils suivis sans commit depuis au moins six mois et les périodes de mesure du classement.\n- **FEATURES** : 5 lignes couvrant les 669 outils, les quatre critères GitHub, les fiches avec alternatives et comparaisons, le [serveur MCP public](https://agentoolrank.com/api/mcp) et l'API JSON, puis les pages chinoises des 200 premiers outils.\n- **USE_CASES** : 3 lignes pour choisir un framework d'agents, rechercher des outils depuis Claude, Cursor ou un autre client MCP, et soumettre son outil gratuitement avec examen en file d'attente ou choisir une option à 9, 19 ou 49 dollars pour un examen accéléré ou une mise en avant.",
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [
+  "L’API JSON permet de rechercher des outils et de consulter leurs statistiques et alternatives : le BRIEF confirme l’existence d’une API JSON, mais attribue explicitement ces fonctionnalités uniquement au serveur MCP.",
+  "L’absence de commits depuis au moins six mois ne suffit pas, à elle seule, à qualifier les outils d’abandonnés : cette interprétation n’est pas énoncée dans le BRIEF."
+ ],
+ "unsupported_final": [],
+ "template_vars": [],
+ "missing_vars": [],
+ "publishable": true
+}

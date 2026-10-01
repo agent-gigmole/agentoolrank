@@ -4,7 +4,7 @@ Usage: task_act.py <steps.json>
 steps.json: {"match": "alternativeto.net", "open": "https://...", "steps": [
    {"click_text": "Consent"}, {"click": "css=button#x"}, {"fill": ["css=input[name=q]", "text"]},
    {"goto": "https://..."}, {"wait": 2000}, {"upload": ["css=input[type=file]", "C:\\\\path.png"]},
-   {"select": ["css=select", "value"]}, {"press": ["css=input", "Enter"]}]}
+   {"select": ["css=select", "value"]}, {"press": ["css=input", "Enter"]}, {"js": "() => document.title"}]}
 Reuses an existing tab whose URL contains "match" (else opens "open"); leaves the tab open.
 Handles popups (e.g. "Sign in with Google") by switching to the newest page.
 Prints a compact state summary after the steps.
@@ -52,6 +52,7 @@ async def main(path):
                     await page.frame_locator(v[0].removeprefix("css=")).locator(v[1].removeprefix("css=")).first.click(timeout=15000)
                 elif k == "click_xy": await page.mouse.click(v[0], v[1])  # viewport coords, e.g. read off a screenshot
                 elif k == "type": await page.keyboard.type(v, delay=30)
+                elif k == "key": await page.keyboard.press(v)  # press a key on whatever has focus (e.g. Enter in Typeform)
                 elif k == "insert_text":  # [selector, text]: focus then insert like a paste (keeps newlines in rich editors)
                     await page.locator(v[0].removeprefix("css=")).first.click(timeout=15000)
                     await page.keyboard.insert_text(v[1])
@@ -60,6 +61,8 @@ async def main(path):
                     await page.locator(v[0].removeprefix("css=")).first.fill(secret, timeout=15000)
                     v = [v[0], "<secret>"]
                 elif k == "check": await page.locator(v.removeprefix("css=")).first.check(timeout=15000)
+                elif k == "js":  # run a JS expression in the page (e.g. tick custom-styled checkboxes); result printed
+                    print("   js ->", str(await page.evaluate(v))[:200])
                 print(f"ok  {k}: {str(v)[:60]}")
             except Exception as e:
                 print(f"ERR {k}: {str(v)[:60]} -> {str(e).splitlines()[0][:160]}")
