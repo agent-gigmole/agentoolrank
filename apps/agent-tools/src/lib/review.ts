@@ -87,10 +87,15 @@ export function submissionTagline(desc: string): string {
 }
 
 // Older reviews sometimes wrote notes about their own evidence into product fields ("Website could not be fetched").
-const META = /(website|site|readme)?\s*(content|details|text)?\s*(could not|couldn't|was not|were not) (be )?(fetched|accessed|accessible|verified)|website (details|content|text) (unavailable|not available)|no website (content|text|information)|evidence (is )?limited to|for (full|additional) (feature )?(verification|details|context|review)/i;
+const META = /(website|site|readme)?\s*(content|details|text)?\s*(could not|couldn't|was not|were not) (be )?(fetched|accessed|accessible|verified)|website (details|content|text) (unavailable|not available)|no website (content|text|information)|evidence (is )?limited to|for (full|additional) (feature )?(verification|details|context|review)|limited information (is )?available|provided (readme|documentation|evidence)|readme (content )?(cuts off|excerpt)|unclear from .*readme|no direct evidence|limits? the ability to provide|based on (the )?visible content/i;
 
 export function isMetaNote(s: string): boolean {
   return META.test(s);
+}
+
+/** Prose version: drop whole sentences that talk about the reviewer's evidence. */
+export function stripMetaSentences(text: string): string {
+  return text.split(/(?<=[.!?])\s+/).filter((sentence) => !isMetaNote(sentence)).join(" ");
 }
 
 export function stripMetaNotes(intel: Record<string, unknown>): Record<string, unknown> {

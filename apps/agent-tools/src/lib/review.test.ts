@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isMetaNote, stripMetaNotes, isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
+import { isMetaNote, stripMetaNotes, stripMetaSentences, isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
 
 const cats = ["coding-agents", "agent-frameworks", "memory-knowledge"];
 
@@ -63,6 +63,13 @@ describe("tagline truncation", () => {
   });
 });
 
+describe("stripMetaSentences", () => {
+  it("drops sentences about the reviewer's evidence from prose", () => {
+    expect(stripMetaSentences("Databerry builds chatbots. The provided documentation is minimal, which limits the ability to provide detailed insights. It is open source."))
+      .toBe("Databerry builds chatbots. It is open source.");
+  });
+});
+
 describe("reviewer meta-notes", () => {
   it("recognises notes about the review process rather than the product", () => {
     expect(isMetaNote("Website content could not be fetched for full verification")).toBe(true);
@@ -70,6 +77,12 @@ describe("reviewer meta-notes", () => {
     expect(isMetaNote("No website content available for verification")).toBe(true);
     expect(isMetaNote("Requires Python development knowledge")).toBe(false);
     expect(isMetaNote("Cannot fetch pages behind a login")).toBe(false);
+    expect(isMetaNote("Limited information available about enterprise support")).toBe(true);
+    expect(isMetaNote("Limited documentation available in the provided README excerpt to fully evaluate feature completeness")).toBe(true);
+    expect(isMetaNote("Documentation appears incomplete as the README content cuts off mid-example")).toBe(true);
+    expect(isMetaNote("Feature set unclear from open-source README alone")).toBe(true);
+    expect(isMetaNote("No direct evidence of voice agent capabilities")).toBe(true);
+    expect(isMetaNote("Minimal README — documentation is external (docs.dust.tt)")).toBe(false);
   });
   it("strips them from every intelligence list", () => {
     expect(stripMetaNotes({ limitations: ["Needs Docker", "Website details unavailable"], best_for: ["RAG"], key_differentiator: "x" }))
