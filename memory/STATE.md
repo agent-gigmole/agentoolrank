@@ -551,3 +551,11 @@
 - alternatives/[slug]/page.tsx 已接入；158 测试绿、build 过；Vercel prod 已部署并推送；线上 langchain/n8n/ollama/firecrawl 4 页摘要 116–147 字符；看板已记
 - **newsiteradar 待办已确认**：agentkit 18:44:55 答复——自有账户里为另一项目建有限范围 key 属日常运营，不算改凭证，记一笔即可；new_ladar 是对 newsletter 作者的一对一冷外联，护栏同我方（每人一封、带退订、每周 ≤10 封），出现退信/投诉即停它的 key → **22:00 外联发完后做**（上段"等 agentkit 回复"作废）
 - 下一步：10-16 复看 GSC 时对比页与替代品页 CTR 一起看
+
+## 2026-10-02 19:17– 安全过滤：换脸 / deepfake / 脱衣 / 成人类不收录（38e0c03）
+- 起因：agentkit 19:17 转达 new_ladar 的坑（9ad81b0）——安全筛只拦分写 "face swap"，域名里的 "swapface"、描述里的 "replaces faces" 漏掉，aiswapface.org 进了它的 X 帖 Top 10；要求我们自查
+- 自查结论：agentoolrank 原先**没有任何安全筛**；全库 670 工具 + 5 条提交扫描，换脸/脱衣/成人类 = 0。命中的只有护栏/红队类（jailbreak 是防御对象）和反爬隐身浏览器（cloakbrowser、camofox-browser、invisible-playwright-mcp），agentkit 认同保留
+- 新增 apps/agent-tools/src/lib/safety.ts `unsafeMatch(text)`：覆盖 faceswap/swapface/aifaceswap/replace(s) faces/deepfake/DeepFaceLab/nudify/undress/clothes remover/nsfw/porn/nude/naked/erotic/sex chat/AI girlfriend/onlyfans；face swap 加负向后顾 `(?<!sur|inter|type)` 排除 surface/interface/typeface；有测试
+- 接入 4 个入口：① submissions.ts validateSubmission（/submit 表单、JSON API、MCP 共用，**付款前**拒绝，文案 "AgentoolRank doesn't list face swap, deepfake or adult tools."，线上 /api/submit 实测）② review-submissions.ts（LLM 前查一次省调用，LLM 后再查 reviewer 写出的 tagline/description，命中标 rejected、note=unsafe category）③ expand-tools.ts（LLM 前后各一次）④ scripts/crawl-github.ts（只对新工具入库，--existing 刷新不受影响）
+- 183 测试 + build 通过；38e0c03 已部署 Vercel prod 并推送；看板已记（aa6d85a）；已回 agentkit
+- 坑：GOTCHAS#unsafe-keyword-joined-forms

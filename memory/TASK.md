@@ -342,6 +342,8 @@
 - [ ] 外联：向工具作者发邀请提交
 - [ ] 已确认，22:00 外联发完后做：Brevo 加 newsiteradar.com 发件域 + 给 new_ladar 建专用 API key（~/.config/secrets/brevo-api-key-newsiteradar，600，不走总线）。agentkit 18:44:55 答复：自有账户里给另一项目新建有限范围 key 属日常运营、不算改凭证，记一笔即可；new_ladar 是对 newsletter 作者的一对一冷外联，护栏同我方（每人一封、带退订、每周 ≤10 封），出现退信/投诉即停它的 key
 
+- [x] 安全过滤：换脸/deepfake/脱衣/成人类工具一律不收录（src/lib/safety.ts unsafeMatch；提交付款前、review-submissions、expand-tools、crawl-github 新工具 4 处接入；38e0c03，10-02）
+
 ## 等待用户
 
 - [x] Stripe 受限 key（checkout + ops 均已存并验证，10-01）

@@ -764,3 +764,11 @@
 - newsiteradar：agentkit 18:44:55 确认建有限范围 key 不算改凭证，记一笔；new_ladar 冷外联护栏同我方（每人一封、带退订、每周 ≤10、退信/投诉即停 key）→ 22:00 外联发完后做
 - 待办：10-16 复看 GSC，对比页 + 替代品页 CTR 一起看
 - 结果：成功
+
+## 2026-10-02 19:17– 安全过滤（换脸/成人类）38e0c03
+- 起因：agentkit 转达 new_ladar 9ad81b0——安全筛只拦分写 "face swap"，漏连写 "swapface"（域名）和 "replaces faces"（描述），aiswapface.org 进了其 X 帖 Top 10
+- 自查：本项目原无安全筛；670 工具 + 5 提交扫描，换脸/脱衣/成人 0 条；命中的护栏/红队类、反爬隐身浏览器（cloakbrowser、camofox-browser、invisible-playwright-mcp）经 agentkit 认同保留
+- 做法：src/lib/safety.ts unsafeMatch（连写 + 动词变形 + face swap 负向后顾排除 surface/interface/typeface）；接入 validateSubmission（付款前拒绝，表单/API/MCP 共用）、review-submissions（LLM 前后各查，后查 reviewer 写出的文案）、expand-tools（LLM 前后）、scripts/crawl-github.ts（仅新工具）
+- 验证：183 测试 + build 过；Vercel prod 部署并推送；线上 /api/submit 实测拒绝；看板已记；已回 agentkit
+- 坑：GOTCHAS#unsafe-keyword-joined-forms
+- 结果：成功

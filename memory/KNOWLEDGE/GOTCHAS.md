@@ -641,3 +641,10 @@ Brevo **一个组织只能开一个账户**：10-02 new_ladar 用同一家公司
 
 ## copied-template-drift
 项目里从 agentkit 复制的模板脚本（scripts/winbrowser/task_act.py 等）**不会随模板更新**，会落后。10-02 agentkit 模板 17c55ce 修了 task_act 脱敏，我们的副本比模板还旧，连 redact 都没有（摘要里非密码框的值打出前 30 字）。凡 agentkit 发安全修复，要逐份打开本项目的副本核对，不能假设已经有；同步时 diff 模板与副本，补齐后跑单测。
+
+## unsafe-keyword-joined-forms
+安全词筛（换脸/deepfake/成人类）**只写分开的 "face swap" 不够**：域名、仓库名会把词粘在一起（aiswapface、swapface、faceswap），描述里还有动词变形（"replaces faces"）。10-02 new_ladar（9ad81b0）因此让 aiswapface.org 进了 X 帖 Top 10；本项目自查发现原先根本没有安全筛。做法（src/lib/safety.ts `unsafeMatch`）：
+- 正则同时覆盖连写、连字符、分写和动词变形，名字/域名/描述一起扫
+- **不能简单去掉词边界**，否则 surface swap、interface swap、typeface 误报 → face swap 用负向后顾 `(?<!sur|inter|type)`；新增词先写误报用例
+- 拦截放在**付款之前**（validateSubmission，表单/API/MCP 共用），LLM 审核前查一次（省调用）、后再查一次 LLM 写出的 tagline/description；爬虫只拦新入库，不影响 --existing 刷新
+- 护栏/红队类（jailbreak 是防御对象）和反爬隐身浏览器不算违规，扫库时别误删

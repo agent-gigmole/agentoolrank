@@ -219,3 +219,5 @@
 | Brevo 一个组织只能一个账户 / 同公司同 IP 第二账户被暂停 / 共用账户加发件域 每项目一把 key / 信誉连带 投诉即停 / 自查 GET /v3/account --test delivered 7 天统计 | GOTCHAS.md#brevo-one-account-per-org |
 | 项目里复制的模板脚本落后 agentkit / task_act 副本无 redact / 安全修复逐份核对 diff | GOTCHAS.md#copied-template-drift |
 | Brevo 核查未被牵连 / task_act redact 386fa69 / newsiteradar.com 发件域 + new_ladar key 待办 / f08f0ea 子 key 不算改凭证 | LOG.md#2026-10-02 18:43– Brevo 账户核查 + task_act redact + newsiteradar 待办 |
+| 安全筛 换脸 swapface faceswap 连写 / replaces faces 动词变形 / 负向后顾 surface interface typeface 误报 / 付款前拦截 / LLM 前后各查 / jailbreak 护栏类 隐身浏览器保留 | GOTCHAS.md#unsafe-keyword-joined-forms |
+| 安全过滤 38e0c03 / safety.ts unsafeMatch / validateSubmission review-submissions expand-tools crawl-github 4 入口 / 670 工具扫描 0 命中 | LOG.md#2026-10-02 19:17– 安全过滤（换脸/成人类）38e0c03 |
