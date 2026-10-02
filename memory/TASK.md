@@ -342,7 +342,7 @@
 - [ ] 对比页扩充
 - [x] MCP 服务器 / API（让 AI 可查询）（T15；10-02 首个真实 API 提交 Orkas 验证通道有效）
 - [ ] 外联：向工具作者发邀请提交
-- [ ] newsiteradar.com 接入 Brevo：**域名和 key 已完成，等 DNS 后认证 + 监控**（10-02 22:xx：发件域 id 6abfb9f2daf63ed95f090051 已加，DNS 记录已发 new_ladar 在 Cloudflare 添加；key "newsiteradar-outreach" 存 ~/.config/secrets/brevo-api-key-newsiteradar，600）。剩：DNS 生效（DoH 回读）后 PUT /v3/senders/domains/newsiteradar.com/authenticate；之后监控 tag=newsiteradar 退信/投诉，出问题即停它的 key。注：Brevo key 不能限权，"有限范围"只能靠约定 + tag 监控。护栏同我方（每人一封、带退订、每周 ≤10 封）
+- [x] newsiteradar.com 接入 Brevo：**完成（10-02 22:07）**——DNS 由 new_ladar 加好，PUT .../newsiteradar.com/authenticate 返回 authenticated=true、verified=true；scripts/brevo-tag-health.ts 按 tag 每日监控已挂 daily-ops.sh 21:30（5dfc46d）。发件域 id 6abfb9f2daf63ed95f090051；key "newsiteradar-outreach" 在 ~/.config/secrets/brevo-api-key-newsiteradar。规则：tag=newsiteradar 出 ALERT → Brevo 后台停用该 key + 通知 new_ladar。new_ladar 自建发件人 jason@newsiteradar.com，护栏：每人一封、带退订、每周 ≤10 封、先 --test
 
 - [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
   - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301

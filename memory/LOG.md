@@ -807,3 +807,9 @@
 - 坑：Brevo API key 无权限范围（拿到即全账户权限），"有限范围 key"做不到 → 靠约定 + tag 隔离监控 + 出事停 key；Brevo 无创建 key 的 API；brevo-code 是账户级、两域名同值；WSL 无 dig → DoH
 - 下一步：DNS 加完后 PUT .../newsiteradar.com/authenticate，监控 tag=newsiteradar 退信/投诉
 - 结果：成功（等对方 DNS）
+
+## 2026-10-02 22:07– newsiteradar.com 认证 + 按 tag 监控（5dfc46d）
+- 做法：new_ladar 加完 DNS（2 DKIM CNAME + brevo-code TXT + SPF 加 include:spf.brevo.com）后 PUT /v3/senders/domains/newsiteradar.com/authenticate；新增 scripts/brevo-tag-health.ts（按 tag 拉 7 天 aggregatedReport，硬/软退信、拦截、投诉、无效地址 >0 即 ALERT），挂 daily-ops.sh 21:30
+- 结果：authenticated=true、verified=true；outreach 7 天 12/12 送达 0 问题，newsiteradar 0；已通知 new_ladar、agentkit；代码已推送
+- 规则：tag=newsiteradar ALERT → Brevo 后台停用 key newsiteradar-outreach + 通知 new_ladar
+- 结果：成功

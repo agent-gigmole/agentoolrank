@@ -608,3 +608,12 @@
 - 已告知 new_ladar：key 位置；只调发信接口；DNS 认证后再 POST /v3/senders 建发件人；发信带 tags:["newsiteradar"]；两项目共用免费档 300 封/天。已回报 agentkit
 - **待办**：new_ladar 加完 DNS 后，PUT /v3/senders/domains/newsiteradar.com/authenticate；之后监控 tag=newsiteradar 的退信/投诉，出问题即停这把 key
 - 坑：GOTCHAS#brevo-key-no-scope
+
+## 2026-10-02 22:07– newsiteradar.com 认证通过 + 按 tag 每日监控（5dfc46d）
+- new_ladar 22:07 告知 DNS 已加：两条 DKIM CNAME、brevo-code TXT；SPF 在原记录里加了 include:spf.brevo.com（回滚只删这一段）
+- PUT /v3/senders/domains/newsiteradar.com/authenticate → authenticated=true、verified=true；已通知 new_ladar 和 agentkit
+- new_ladar 接下来建发件人 jason@newsiteradar.com；它承诺：发信带 tags:["newsiteradar"]、每人一封、带退订、每周 ≤10 封、正式发前先 --test
+- 新增 apps/agent-tools/scripts/brevo-tag-health.ts：按 tag（outreach / newsiteradar）分别拉 7 天 aggregatedReport，硬退信/软退信/拦截/垃圾投诉/无效地址任一 >0 打印 ALERT；已挂 daily-ops.sh（每晚 21:30）
+- 当前：outreach 7 天请求 12 / 送达 12 / 问题 0；newsiteradar 全 0
+- **处理规则**：tag=newsiteradar 出 ALERT → 去 Brevo 后台停用 key "newsiteradar-outreach" + 通知 new_ladar
+- **下一步**：10-03 09:30 后统计外联回复率；10-03 开始全库类目审计
