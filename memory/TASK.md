@@ -340,6 +340,7 @@
 - [ ] 对比页扩充
 - [x] MCP 服务器 / API（让 AI 可查询）（T15；10-02 首个真实 API 提交 Orkas 验证通道有效）
 - [ ] 外联：向工具作者发邀请提交
+- [ ] 外联后（10-02 22:00 首批发完再做）：Brevo 加 newsiteradar.com 发件域 + 给 new_ladar 建专用 API key（~/.config/secrets/brevo-api-key-newsiteradar，600，不走总线）——等 agentkit 确认是否算"改凭证"（f08f0ea 已定自有账户新建有限子 key 不算）；未批则只加域名、把 DNS 记录发给 new_ladar；共用账户有投诉即停它的 key
 
 ## 等待用户
 

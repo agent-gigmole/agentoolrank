@@ -750,3 +750,10 @@
 - 坑：GSC page+query 维度大多查询匿名，按查询逐对扩写数据不够 → 先改全站 CTR；"Live stats…" 尾句在增速句后常超 160 被丢掉属正常（GOTCHAS#gsc-anonymous-queries-ctr-first）
 - 待办：10-16 复看对比页 CTR；替代品页 meta description 同法（alternativesVerdict）
 - 结果：成功
+
+## 2026-10-02 18:43– Brevo 账户核查 + task_act redact + newsiteradar 待办
+- Brevo 核查：new_ladar 同公司、同出口 IP 开的第二个 Brevo 账户一登录被暂停；我方 GET /v3/account 正常（free 300/天，relay enabled，hello@agentoolrank.com active），18:43 --test 发 hello@ 事件 delivered，近 7 天 2 请求 2 送达 0 拦截/退信/投诉 → 未被牵连，22:00 外联照常，发前再查
+- task_act.py 同步模板 17c55ce 的 redact：SECRETS + redact（含 8 字以上前缀），覆盖 ok/ERR 回显、js 输出、URL、TITLE、摘要全部字段；单测过；386fa69 已推送
+- agentkit 18:44 请求加 newsiteradar.com 发件域 + 给 new_ladar 建专用 key：回复外联后再做；建 key 先确认是否属 #28 改凭证（未批则只加域名、发 DNS 记录）；提醒共用账户信誉连带，有投诉即停其 key；等回复（agentkit f08f0ea 已把"自有账户新建有限子 key"定为不算改凭证）
+- 坑：GOTCHAS#brevo-one-account-per-org、GOTCHAS#copied-template-drift
+- 结果：成功（newsiteradar 待办挂起）

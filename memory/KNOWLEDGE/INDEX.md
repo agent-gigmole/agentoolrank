@@ -216,3 +216,6 @@
 | 品牌 Google 号放弃 / +34 号码用过太多次 / cursor.directory ramen crunchbase makerlist 标 skip / 10-03 邮箱注册 4 站 | LOG.md#2026-10-02 17:11– 品牌 Google 号放弃 + 只能 Google 登录的站标 skip |
 | GSC 查询多匿名 / 排名 3–7 CTR≈0 先改摘要 / meta description 全站同模板 / compareDescription 星数+首条结论 ≤160 / Live stats 尾句被丢正常 | GOTCHAS.md#gsc-anonymous-queries-ctr-first |
 | 对比页 meta description 数据驱动 8dcf578 / 175 曝光 3 点击 / 10-16 复看 CTR / 替代品页同法待办 | LOG.md#2026-10-02 晚 T23 对比页 meta description 数据驱动 |
+| Brevo 一个组织只能一个账户 / 同公司同 IP 第二账户被暂停 / 共用账户加发件域 每项目一把 key / 信誉连带 投诉即停 / 自查 GET /v3/account --test delivered 7 天统计 | GOTCHAS.md#brevo-one-account-per-org |
+| 项目里复制的模板脚本落后 agentkit / task_act 副本无 redact / 安全修复逐份核对 diff | GOTCHAS.md#copied-template-drift |
+| Brevo 核查未被牵连 / task_act redact 386fa69 / newsiteradar.com 发件域 + new_ladar key 待办 / f08f0ea 子 key 不算改凭证 | LOG.md#2026-10-02 18:43– Brevo 账户核查 + task_act redact + newsiteradar 待办 |

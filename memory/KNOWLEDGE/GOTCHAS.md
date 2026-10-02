@@ -635,3 +635,9 @@ Stripe 受限 key（rk_live_，本项目的 checkout key 与只读 ops key 都�
 
 ## gsc-anonymous-queries-ctr-first
 GSC 按 page+query 维度查，对比页的大部分查询是**匿名的**（低量查询被隐去），能看到的查询不足以支撑"按查询逐对扩写内容"。排名已在 3–7 位但 CTR 近 0（10-02：175 曝光 / 3 点击）时，先改**全站该页型的标题/摘要**——原因多半是 meta description 全站同一句模板。做法：verdict.ts `compareDescription` 用每页数据生成（星数 + 首条数据结论 + 放得下才加尾句，≤160 字符，词边界截断）。注意 "Live stats and which to pick." 尾句接在增速句后通常超 160 被丢掉，属正常，不是 bug。效果 10-16 复看。
+
+## brevo-one-account-per-org
+Brevo **一个组织只能开一个账户**：10-02 new_ladar 用同一家公司、同一出口 IP 注册第二个账户，一登录就被暂停。所以**不要为新项目另开 Brevo 账户**，在现有账户里加发件域名、每个项目单独建一把 API key。代价是信誉连带：同账户任何一个品牌被投诉，整个账户（含我们的外联）都受影响 → 给别的项目的 key 要能单独停，出现投诉即停。兄弟项目账户出事后，先核查自己：`GET /v3/account`（plan、relay enabled、发件人 active）+ `send-outreach --test=hello@agentoolrank.com` 实发看事件 delivered + 近 7 天统计（拦截/退信/投诉）；外联前再查一次。
+
+## copied-template-drift
+项目里从 agentkit 复制的模板脚本（scripts/winbrowser/task_act.py 等）**不会随模板更新**，会落后。10-02 agentkit 模板 17c55ce 修了 task_act 脱敏，我们的副本比模板还旧，连 redact 都没有（摘要里非密码框的值打出前 30 字）。凡 agentkit 发安全修复，要逐份打开本项目的副本核对，不能假设已经有；同步时 diff 模板与副本，补齐后跑单测。

@@ -538,3 +538,10 @@
 - compare/[slugs]/page.tsx generateMetadata 改用它；154 测试绿、build 过；Vercel prod 已部署并推送，线上 4 页核对 119–154 字符；看板已记（另补 17:15 品牌 Google 号放弃一条）
 - 下一步：10-16 复看 GSC 对比页 CTR；替代品页 meta description 用 alternativesVerdict 同法改
 - 坑：GSC 查询多为匿名，先改全站 CTR 再逐对扩写（GOTCHAS#gsc-anonymous-queries-ctr-first）
+
+## 2026-10-02 18:43– Brevo 账户核查 + task_act redact + newsiteradar 待办
+- **Brevo 核查（agentkit 18:43 急查）**：new_ladar 用同一家公司、同一出口 IP 注册了第二个 Brevo 账户，一登录就被暂停（多半判为一个组织开多个账户）。查了我们的账户：GET /v3/account 正常，free 300/天，relay enabled，发件人 hello@agentoolrank.com active；18:43 `send-outreach --test=hello@agentoolrank.com` 实发，事件 delivered；近 7 天请求 2、送达 2、拦截/退信/投诉都是 0 → **账户没被牵连，22:00 外联照常，发之前再查一次**
+- **task_act redact（同步 agentkit 模板 17c55ce）**：本项目 scripts/winbrowser/task_act.py 是旧副本，原来没有 redact（fill_secret 只把步骤回显写成 <secret>，摘要里非密码框的值会打出前 30 字）→ 加 SECRETS + redact（8 字以上前缀一起替换），覆盖 ok/ERR 回显、js 输出、URL、TITLE、摘要所有字段；本地单测过，386fa69 已推送
+- **agentkit 18:44 请求**：在我们的 Brevo 账户加 newsiteradar.com 发件域，并给 new_ladar 建专用 API key（写 ~/.config/secrets/brevo-api-key-newsiteradar，600，不走总线）。已回复：外联发完后再做；建 key 先确认是否算 #28 的"改凭证"，没批就只加域名、把 DNS 记录发给 new_ladar；提醒两个品牌共用一个 Brevo 账户有信誉连带风险，出现投诉就停它的 key。**等 agentkit 回复**
+  - 参考：agentkit f08f0ea（18:44）已在 harness owner-goal 写明"在项目自己运营的账户里新建有限范围的子 key 不算改凭证，记一笔即可"——回复到了大概率按此执行
+- 坑：GOTCHAS#brevo-one-account-per-org、GOTCHAS#copied-template-drift
