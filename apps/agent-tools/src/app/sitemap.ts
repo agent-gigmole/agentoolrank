@@ -97,12 +97,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: s.slug.startsWith("custom-") ? 0.6 : 0.7,
   }));
 
-  const zhToolPages: MetadataRoute.Sitemap = (await translatedTools("zh")).map((t) => ({
-    url: `${baseUrl}/zh/tool/${t.id}`,
+  const localizedToolPages: MetadataRoute.Sitemap = (await Promise.all(["zh", "ja"].map(async (lang) => (await translatedTools(lang)).map((t) => ({ ...t, lang }))))).flat().map((t) => ({
+    url: `${baseUrl}/${t.lang}/tool/${t.id}`,
     lastModified: new Date(t.updated_at.replace(" ", "T") + "Z"),
     changeFrequency: "weekly",
     priority: 0.6,
   }));
 
-  return [...staticPages, ...categoryPages, ...toolPages, ...alternativesPages, ...comparePages, ...stackPages, ...blueprintPages, ...zhToolPages];
+  return [...staticPages, ...categoryPages, ...toolPages, ...alternativesPages, ...comparePages, ...stackPages, ...blueprintPages, ...localizedToolPages];
 }

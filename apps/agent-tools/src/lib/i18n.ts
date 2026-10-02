@@ -2,7 +2,7 @@
 // Pages are added per language only where a reviewed translation exists (see scripts/translate-tools.ts).
 const BASE = "https://agentoolrank.com";
 
-export const LANGS = ["zh"] as const;
+export const LANGS = ["zh", "ja"] as const;
 export type Lang = (typeof LANGS)[number];
 
 /** Canonical + hreflang for a page whose English path is `path`; every version lists all versions (self included) + x-default. */

@@ -6,9 +6,9 @@ export const revalidate = 86400;
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  return localizedToolMetadata("zh", (await params).slug);
+  return localizedToolMetadata("ja", (await params).slug);
 }
 
 export default async function Page({ params }: Props) {
-  return <LocalizedToolPage lang="zh" slug={(await params).slug} />;
+  return <LocalizedToolPage lang="ja" slug={(await params).slug} />;
 }

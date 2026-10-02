@@ -25,9 +25,11 @@ const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: proce
 const LANG_NAME: Record<string, string> = { zh: "Simplified Chinese (zh-CN)", ja: "Japanese" };
 const GLOSSARY: Record<string, string> = {
   zh: `Keep in English: product and project names, Agent, MCP, RAG, LLM, SDK, API, CLI, GPU, Python/TypeScript and other language names, model names. Use: open-source → 开源; framework → 框架; workflow → 工作流; self-hosted → 自托管; orchestration → 编排; observability → 可观测性; evaluation → 评估; fine-tuning → 微调; inference → 推理; vector database → 向量数据库; knowledge base → 知识库; plugin → 插件; low-code → 低代码; no-code → 无代码.`,
+  ja: `Keep in English: product and project names, Agent, MCP, RAG, LLM, SDK, API, CLI, GPU, programming language names, model names. Use: open-source → オープンソース; framework → フレームワーク; workflow → ワークフロー; self-hosted → セルフホスト; orchestration → オーケストレーション; observability → オブザーバビリティ; evaluation → 評価; fine-tuning → ファインチューニング; inference → 推論; vector database → ベクトルデータベース; knowledge base → ナレッジベース; plugin → プラグイン; low-code → ローコード; no-code → ノーコード. Use plain desu/masu style in descriptions and noun phrases in lists.`,
 };
 const MODALS: Record<string, string> = {
   zh: "must=必须/需要, must not=不得/不能/禁止, need not=不必/无需, may=可以, should=应当/建议",
+  ja: "must=〜なければならない/必要, must not=〜てはいけない/禁止/不可, need not=〜なくてもよい/不要, may=〜てもよい/可能, should=〜べき/推奨",
 };
 
 await db.execute(`CREATE TABLE IF NOT EXISTS tool_i18n (
