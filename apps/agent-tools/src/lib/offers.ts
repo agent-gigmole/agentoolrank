@@ -47,7 +47,7 @@ export function recommendPlan(offers: Offer[], c: { maxBudgetUsd?: number; deadl
 export function messageForHuman(name: string, offers: Offer[]): string {
   const free = offers.find((o) => o.plan === "free");
   const paid = offers.filter((o) => o.price_usd > 0);
-  const lines = [`${name} was submitted to AgentoolRank for free. It will go live after review in about ${free?.live_within_days ?? 14} days, with a permanent page showing live GitHub stats, alternatives and comparisons.`];
+  const lines = [`${name} was submitted to AgentoolRank for free. It will go live after review in about ${free?.live_within_days ?? 14} day${(free?.live_within_days ?? 14) === 1 ? "" : "s"}, with a permanent page showing live GitHub stats, alternatives and comparisons.`];
   if (paid.length) {
     lines.push("Optional one-time upgrades (full refund if not approved):");
     for (const o of paid) {

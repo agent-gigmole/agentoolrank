@@ -56,6 +56,10 @@ describe("messageForHuman", () => {
     expect(m).toContain("/api/v1/submissions/7/checkout?plan=featured&token=t");
     expect(m).toContain("full refund if not approved");
   });
+  it("uses the singular for one day", () => {
+    const one = buildOffers({ baseUrl: "https://agentoolrank.com", submissionId: 7, token: "t", waitDays: 1, paymentsEnabled: false });
+    expect(messageForHuman("X", one)).toContain("in about 1 day,");
+  });
   it("only mentions the free queue when payments are off", () => {
     const free = buildOffers({ baseUrl: "https://agentoolrank.com", submissionId: 7, token: "t", waitDays: 14, paymentsEnabled: false });
     expect(messageForHuman("Orkas", free)).not.toContain("$");
