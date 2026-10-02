@@ -29,3 +29,20 @@ export async function translatedTools(lang: string): Promise<Array<{ id: string;
     return [];
   }
 }
+
+/** Published translated tools for a language, highest score first (for the localized index pages). */
+export async function translatedToolList(lang: string): Promise<Array<{ id: string; name: string; tagline: string; stars: number | null }>> {
+  try {
+    const r = await db.execute({
+      sql: `SELECT t.id, t.name, t.github_stars, i.content FROM tool_i18n i JOIN tools t ON t.id = i.tool_id
+            WHERE i.lang = ? AND i.status = 'approved' AND i.human_reviewed >= 1 ORDER BY t.score DESC`,
+      args: [lang],
+    });
+    return r.rows.flatMap((x) => {
+      const tr = parseToolTranslation(String(x.content));
+      return tr ? [{ id: String(x.id), name: String(x.name), tagline: tr.tagline, stars: x.github_stars == null ? null : Number(x.github_stars) }] : [];
+    });
+  } catch {
+    return [];
+  }
+}

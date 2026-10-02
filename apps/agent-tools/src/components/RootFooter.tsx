@@ -24,6 +24,8 @@ export function RootFooter() {
           <a href="/submit" className="hover:text-gray-600 transition-colors">
             {isZh ? "提交工具" : "Submit a tool"}
           </a>
+          <a href="/zh/tools" hrefLang="zh" className="hover:text-gray-600 transition-colors">中文</a>
+          <a href="/ja" hrefLang="ja" className="hover:text-gray-600 transition-colors">日本語</a>
           <a
             href="https://github.com/agent-gigmole/awesome-ai-agent-tools"
             target="_blank"

@@ -17,6 +17,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/submit`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/agents`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/where-to-list`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/zh/tools`, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${baseUrl}/ja`, changeFrequency: "weekly", priority: 0.6 },
     { url: `${baseUrl}/report`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
     // Chinese locale pages
     { url: `${baseUrl}/zh`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },

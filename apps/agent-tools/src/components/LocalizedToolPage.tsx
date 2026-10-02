@@ -53,7 +53,7 @@ export async function LocalizedToolPage({ lang, slug }: { lang: PageLang; slug: 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8" lang={lang === "zh" ? "zh-CN" : "ja"}>
       <nav className="text-sm text-gray-500 mb-4">
-        <Link href={lang === "zh" ? "/zh" : "/"} className="hover:underline">{c.home}</Link> / {tool.name}
+        <Link href={lang === "zh" ? "/zh/tools" : "/ja"} className="hover:underline">{c.home}</Link> / {tool.name}
         <span className="float-right"><Link href={`/tool/${tool.id}`} hrefLang="en" className="hover:underline">{c.english}</Link></span>
       </nav>
       <h1 className="text-3xl font-bold text-gray-900">{tool.name}</h1>

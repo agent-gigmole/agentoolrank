@@ -15,6 +15,8 @@ export const COPY = {
     footer: "星数、提交和发版数据来自 GitHub API，每天自动刷新。介绍文字由 AI 从英文翻译，并经过第二个模型的回译校对。", repo: "项目地址：",
     ctaTitle: "你也在做 AI Agent 工具？", ctaBody: "可以免费提交收录，也可以付费加急审核。", ctaLink: "提交你的工具 →",
     starsUnit: "星", colon: "：", paren: (s: string) => `（${s}）`,
+    indexTitle: "开源 AI Agent 工具中文目录：按 GitHub 活跃度排名", indexH1: "开源 AI Agent 工具（中文）",
+    indexIntro: (n: number) => `${n} 个开源 AI Agent 工具的中文介绍，按 GitHub 活跃度排序。星数、提交和发版数据每天从 GitHub API 自动刷新。`,
   },
   ja: {
     home: "ホーム", english: "English", stars: "GitHub スター", growth30: "直近 30 日のスター増加", commits90: "直近 90 日のコミット", releases6m: "直近 6 か月のリリース",
@@ -23,6 +25,8 @@ export const COPY = {
     footer: "スター数・コミット・リリースのデータは GitHub API から毎日自動更新しています。紹介文は AI が英語から翻訳し、別のモデルで逆翻訳チェックを行っています。", repo: "リポジトリ：",
     ctaTitle: "AI エージェントツールを開発していますか？", ctaBody: "無料で掲載を申請できます。有料で審査を早めることもできます。", ctaLink: "ツールを登録する →",
     starsUnit: "スター", colon: "：", paren: (s: string) => `（${s}）`,
+    indexTitle: "オープンソース AI エージェントツール一覧：GitHub の活動量でランキング", indexH1: "オープンソース AI エージェントツール",
+    indexIntro: (n: number) => `${n} 件のオープンソース AI エージェントツールを、GitHub の活動量順に日本語で紹介しています。スター数・コミット・リリースのデータは GitHub API から毎日自動更新しています。`,
   },
 } as const;
 
