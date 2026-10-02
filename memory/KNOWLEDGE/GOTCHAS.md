@@ -697,3 +697,7 @@ Brevo 的 API key **不能限定权限范围**：任何一把 key 都能操作�
 - **项目相关，必须按本项目重判**：「不相关」「受众不同」。例：alternative.me、comparateur-ia、aitoolsrecap 被 pixtidy 判不相关，对 AgentoolRank（AI agent 工具目录）却是对口的
 - 做法：先桌面分诊（不开浏览器，读档案 + other_projects + 首页说明），把能判 skip 的一次清掉，只把对口的留给浏览器；10-02 晚 101 个候选桌面分诊处理掉 86 个
 - **每批 skip 写完要复跑 `dirsub candidates` 对账剩余清单**：10-02 漏写了 dodopayments、blogarama、getlatka 三个，靠复跑才发现
+- 10-02 晚初判「处理 86」被 agentkit 23:43 抽查后修正为 skip 77 + captcha 3 + 待提交 21，又踩三条：
+  - **判「只收开源」前先确认自己的仓库是否公开**：AgentoolRank 仓库公开（github.com/agent-gigmole/agentoolrank）就是开源项目，libhunt、openalternative、sourceforge 不该 skip
+  - **邮件投稿是正常提交方式**；有 /zh 页面时中文导航站对我们对口（imyshare 邮件投稿、51tool、ai-kit.cn）
+  - **「链接农场」「被劫持」这类定论会被别的项目当结论直接沿用**：没打开过站点就写「未核实」，或至少先用 columbus 月访问量核对（weboworld、bizlinkbuilder 月访问 2–3.7 万，不是农场）；引用别人的证据要注明来源（openfuture：new_ladar 实际打开所见）

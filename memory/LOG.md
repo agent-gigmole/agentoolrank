@@ -820,3 +820,7 @@
 - 并行：scripts/audit-categories.ts 已提交，全库类目审计 dry-run 后台跑 → data/category-audit-2026-10-02.csv；judge 花费 $0（订阅通道），--max-usd 不生效
 - 已回报 agentkit，看板已记
 - 结果：成功
+
+## 2026-10-02 23:43– 目录分诊修正（agentkit 抽查）
+- 做法：仓库公开 → 只收开源的 libhunt/openalternative/sourceforge 改 todo；中文站 imyshare（邮件投稿）、51tool、ai-kit.cn 改 todo 用 /zh 页；未打开核实的「链接农场/低质量」改「未核实」或撤回（weboworld、bizlinkbuilder、websurl、hotfrog、faitesvousconnaitre），openfuture 注明证据来源 new_ladar
+- 结果：101 = skip 77 + captcha 3 + 待提交 21

@@ -627,3 +627,9 @@
 - 并行：全库类目审计 dry-run（scripts/audit-categories.ts，已提交）后台跑，只读，输出 data/category-audit-2026-10-02.csv；judge 花费显示 $0（走订阅通道），--max-usd 上限实际不起作用
 - **下一步**：10-03 提交上面 15 个 + 21:30 报数；类目审计跑完看 CSV 再决定 rejudge；09:30 后统计外联回复率
 - 坑：GOTCHAS#dirsub-cross-project-skip-reasons
+
+## 2026-10-02 23:43– 分诊修正（agentkit 抽查后，以此为准）
+- AgentoolRank 仓库公开（github.com/agent-gigmole/agentoolrank）= 开源项目 → libhunt、openalternative、sourceforge 由 skip 改 todo；中文站 imyshare（邮件 niceso@163.com 投稿）、51tool、ai-kit.cn 改 todo，用 /zh 页面提交
+- 撤回证据不足的定论：weboworld、bizlinkbuilder（columbus 月访问 2–3.7 万）「链接农场」→「未核实」；websurl、hotfrog、faitesvousconnaitre 的「链接农场/低质量」撤回；openfuture 注明证据来自 new_ladar 实际打开所见
+- **修正后 101 个：skip 77 + captcha 3 + 待提交 21**（原 15 + libhunt、openalternative、sourceforge、imyshare、51tool、ai-kit.cn）
+- 坑：GOTCHAS#dirsub-cross-project-skip-reasons（已补三条）

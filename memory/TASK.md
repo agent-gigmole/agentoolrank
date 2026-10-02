@@ -238,8 +238,10 @@
 
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
 - 状态: in_progress（2026-10-02 起）— **10-03 起每天至少处理 20 个（提交或判 skip 都算），每天 21:30 报数**（agentkit 10-02 23:40 转达老板，取代原 5–8 个/天）
-- 10-02 晚桌面分诊：候选 101 个已处理 86（skip 83 + captcha 3：alternativeto、promoteproject、startups.gallery）；**剩 15 个待 10-03 浏览器提交**：
+- 10-02 晚桌面分诊（23:43 agentkit 抽查后修正）：候选 101 = skip 77 + captcha 3（alternativeto、promoteproject、startups.gallery）+ **待 10-03 浏览器/邮件提交 21 个**：
   - [ ] saashub [ ] viesearch [ ] linkcentre [ ] whatlaunched [ ] store.app [ ] askmatchbox [ ] best-ai [ ] comparateur-ia [ ] servicelist [ ] launchboosts [ ] aitoolsrecap
+  - 开源类（仓库公开）：[ ] libhunt [ ] openalternative [ ] sourceforge
+  - 中文站用 /zh 页：[ ] imyshare（邮件 niceso@163.com 投稿）[ ] 51tool [ ] ai-kit.cn
   - 最后做 nofollow 4 个：[ ] alternative.me [ ] webcatalog [ ] foundr [ ] 10words
   - 规则：他项目 skip 只沿用全局原因（只收费/关站/表单坏/链接农场/只收徽章/刷票门槛/人机验证/要交凭证），「不相关」按本项目重判；每批 skip 后复跑 candidates 对账
 - 台账: ~/data/backlinks/directory-log.csv，只用 dirsub.py check/add 读写（scripts/dirlog.sh 已废弃）
