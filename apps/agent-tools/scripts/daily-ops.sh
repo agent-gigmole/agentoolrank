@@ -14,6 +14,8 @@ log="data/ops-logs/$(date +%F).log"
   bun run scripts/indexnow.ts
   echo "== stripe alipay/wechat status (#29)"
   bun run scripts/stripe-pm-status.ts
+  echo "== brevo health by tag (shared account)"
+  bun run scripts/brevo-tag-health.ts
   echo "== search console (28d)"
   python3 scripts/gsc_report.py 28
 } >> "$log" 2>&1
