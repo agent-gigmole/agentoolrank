@@ -60,13 +60,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Comparison pages (long-tail SEO: "X vs Y")
   const comparePairs = await getComparisonPairs(8);
   // Plus each top tool vs its closest alternatives (higher-intent pairs than same-category combos)
+  const listed = new Set(tools.rows.map((r) => String(r.id)));
   const topWithAlts = await db.execute("SELECT id, alternatives FROM tools WHERE alternatives != '[]' ORDER BY score DESC LIMIT 150");
   const altPairs = pairsFromAlternatives(
     topWithAlts.rows.map((r) => {
       const row = r as unknown as { id: string; alternatives: string };
       let alts: string[] = [];
       try { alts = JSON.parse(row.alternatives); } catch {}
-      return { id: row.id, alternatives: alts };
+      return { id: row.id, alternatives: alts.filter((a) => listed.has(a)) }; // skip delisted tools (would 404)
     }),
     3,
   );

@@ -1,5 +1,6 @@
 /**
- * Soft-delist: move a tool's row from `tools` to `tools_archive` (full row as JSON + reason + time), so it disappears
+ * Soft-delist: move a tool's row from `tools` to `tools_archive` (full row + its metric_snapshots as JSON, reason, time;
+ * metric_snapshots has a foreign key to tools, so those rows move with it), so it disappears
  * from every page, list and sitemap at once while staying recoverable. Discovery, expansion, review and /submit
  * all check tools_archive, so a delisted tool is not re-added automatically.
  * Usage: bun run scripts/delist-tool.ts <id> --reason="..." [--dry-run]
@@ -15,16 +16,22 @@ const reason = process.argv.find((a) => a.startsWith("--reason="))?.slice(9) ?? 
 const dryRun = process.argv.includes("--dry-run");
 if (!id || id.startsWith("--")) throw new Error("usage: delist-tool.ts <id> --reason=... | --restore");
 
+const plain = (r: Record<string, unknown>) => Object.fromEntries(Object.entries(r).filter(([k]) => !/^\d+$/.test(k)));
+const insert = (table: string, row: Record<string, unknown>) => {
+  const cols = Object.keys(row);
+  return { sql: `INSERT INTO ${table} (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never };
+};
+
 await db.execute(`CREATE TABLE IF NOT EXISTS tools_archive (
   id TEXT PRIMARY KEY, row_json TEXT NOT NULL, reason TEXT NOT NULL, archived_at TEXT NOT NULL DEFAULT (datetime('now')))`);
 
 if (process.argv.includes("--restore")) {
   const a = (await db.execute({ sql: "SELECT row_json FROM tools_archive WHERE id = ?", args: [id] })).rows[0];
   if (!a) throw new Error(`${id} is not archived`);
-  const row = JSON.parse(String(a.row_json)) as Record<string, unknown>;
-  const cols = Object.keys(row);
+  const { tool, snapshots = [] } = JSON.parse(String(a.row_json)) as { tool: Record<string, unknown>; snapshots?: Record<string, unknown>[] };
   await db.batch([
-    { sql: `INSERT INTO tools (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never },
+    insert("tools", tool),
+    ...snapshots.map((r) => insert("metric_snapshots", r)),
     { sql: "DELETE FROM tools_archive WHERE id = ?", args: [id] },
   ], "write");
   console.log(`restored ${id}`);
@@ -32,12 +39,14 @@ if (process.argv.includes("--restore")) {
   if (!reason) throw new Error("--reason is required");
   const t = (await db.execute({ sql: "SELECT * FROM tools WHERE id = ?", args: [id] })).rows[0];
   if (!t) throw new Error(`${id} not in tools`);
-  const row = Object.fromEntries(Object.entries(t).filter(([k]) => !/^\d+$/.test(k)));
-  console.log(`${id}: ${String(row.name)} — ${String(row.tagline).slice(0, 100)}\n  reason: ${reason}`);
+  const tool = plain(t);
+  const snapshots = (await db.execute({ sql: "SELECT * FROM metric_snapshots WHERE tool_id = ?", args: [id] })).rows.map(plain);
+  console.log(`${id}: ${String(tool.name)} — ${String(tool.tagline).slice(0, 100)}\n  snapshots: ${snapshots.length}\n  reason: ${reason}`);
   if (dryRun) process.exit(0);
-  // One transaction: the archive copy exists before the row leaves `tools`.
+  // One transaction: the archive copy exists before the rows leave `metric_snapshots` and `tools`.
   await db.batch([
-    { sql: "INSERT INTO tools_archive (id, row_json, reason) VALUES (?, ?, ?)", args: [id, JSON.stringify(row), reason] },
+    { sql: "INSERT INTO tools_archive (id, row_json, reason) VALUES (?, ?, ?)", args: [id, JSON.stringify({ tool, snapshots }), reason] },
+    { sql: "DELETE FROM metric_snapshots WHERE tool_id = ?", args: [id] },
     { sql: "DELETE FROM tools WHERE id = ?", args: [id] },
   ], "write");
   console.log(`archived ${id} (restore: bun run scripts/delist-tool.ts ${id} --restore)`);
