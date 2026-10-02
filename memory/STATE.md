@@ -559,3 +559,14 @@
 - 接入 4 个入口：① submissions.ts validateSubmission（/submit 表单、JSON API、MCP 共用，**付款前**拒绝，文案 "AgentoolRank doesn't list face swap, deepfake or adult tools."，线上 /api/submit 实测）② review-submissions.ts（LLM 前查一次省调用，LLM 后再查 reviewer 写出的 tagline/description，命中标 rejected、note=unsafe category）③ expand-tools.ts（LLM 前后各一次）④ scripts/crawl-github.ts（只对新工具入库，--existing 刷新不受影响）
 - 183 测试 + build 通过；38e0c03 已部署 Vercel prod 并推送；看板已记（aa6d85a）；已回 agentkit
 - 坑：GOTCHAS#unsafe-keyword-joined-forms
+
+## 2026-10-02 22:00 前 T17 外联发前复核 + 邮件组拦截（e131eb8）
+- 类目复核：rejudge-tools.ts 新增 --category（连类目重判，回滚文件带 category_tags），dry-run 复核 33 个候选，15 个不一致
+  - 在已存类目内 → data/outreach/category.json 改报：dify→no-code、composio→tool-integration、fastmcp→tool-integration、langwatch→observability、mineru→memory
+  - 不在已存类目内 → data/outreach/hold.json 挂起 10 个：career-ops、omniroute、localai、headroom、herdr、librechat、lobehub、worldmonitor、vllm、steel-browser
+  - fastgpt LLM 判 enterprise，人工判 no-code 正确，照发
+- 邮件组拦截：MLflow 联系地址是 mlflow-users@googlegroups.com；src/lib/outreach.ts isGroupAddress（googlegroups / lists. / groups.io 域名 + users/dev/discuss/announce/list/noreply local part），send-outreach 永久跳过；192 测试通过；已推送
+- 今晚 10 封：hermes-agent、LangChain、Dify(no-code #2/28)、NocoBase、FastGPT、langwatch、Codewhale、LiteLLM、MinerU(memory #8/127)、cognee
+- 注意：hold.json / category.json 在 data/ 下被 gitignore，是本地运营状态，别误删
+- 已报 agentkit：career-ops 建议下架（删数据，等老板批）；排"全库类目审计"ticket（agent-frameworks 329 个成杂物类）；看板已记
+- 坑：GOTCHAS#outreach-rank-fact-recheck、GOTCHAS#outreach-group-address

@@ -772,3 +772,10 @@
 - 验证：183 测试 + build 过；Vercel prod 部署并推送；线上 /api/submit 实测拒绝；看板已记；已回 agentkit
 - 坑：GOTCHAS#unsafe-keyword-joined-forms
 - 结果：成功
+
+## 2026-10-02 22:00 前 T17 外联发前复核 + 邮件组拦截（e131eb8）
+- 做法：rejudge-tools.ts 加 --category，dry-run 让 LLM 复核 33 个候选类目，15 个不一致；已存类目内的 5 个用 data/outreach/category.json 改报，其余 10 个写 data/outreach/hold.json 挂起；fastgpt 人工判保留 no-code
+- 邮件组：mlflow-users@googlegroups.com 差点群发 → outreach.ts isGroupAddress + send-outreach 永久跳过；192 测试通过，已推送
+- 今晚 10 封：hermes-agent、LangChain、Dify、NocoBase、FastGPT、langwatch、Codewhale、LiteLLM、MinerU、cognee
+- 已报 agentkit：career-ops 下架待老板批；全库类目审计 ticket；看板已记
+- 结果：成功

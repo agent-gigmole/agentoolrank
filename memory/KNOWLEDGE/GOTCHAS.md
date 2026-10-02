@@ -648,3 +648,13 @@ Brevo **一个组织只能开一个账户**：10-02 new_ladar 用同一家公司
 - **不能简单去掉词边界**，否则 surface swap、interface swap、typeface 误报 → face swap 用负向后顾 `(?<!sur|inter|type)`；新增词先写误报用例
 - 拦截放在**付款之前**（validateSubmission，表单/API/MCP 共用），LLM 审核前查一次（省调用）、后再查一次 LLM 写出的 tagline/description；爬虫只拦新入库，不影响 --existing 刷新
 - 护栏/红队类（jailbreak 是防御对象）和反爬隐身浏览器不算违规，扫库时别误删
+
+## outreach-rank-fact-recheck
+外联邮件把"X is #N of M in <类目>"这类**排名事实发给作者本人**，类目错一次就毁第一印象。10-02 发前复核 33 个候选，LLM 判出 15 个类目不一致（vllm 存成 memory、omniroute 存成 observability、career-ops 根本不该收录）。根因：类目取"已存类目里排名百分位最好的"，而库内类目本身就偏（agent-frameworks 329 个成杂物类）。做法：
+- 发前必跑 `rejudge-tools.ts --dry-run --category` 复核类目
+- LLM 判类目有波动，不要求严格一致：**LLM 判的类目在工具已存类目内 → 改报这一类**（data/outreach/category.json）；不在 → 挂起（data/outreach/hold.json，{slug: reason}），等全库类目审计后再解除
+- 两个 json 在 data/ 下被 gitignore，是本地运营状态
+- 人工可推翻明显误判（fastgpt：LLM 判 enterprise，实为 no-code）
+
+## outreach-group-address
+爬虫抓来的"联系邮箱"可能是**公开邮件组**（MLflow 是 mlflow-users@googlegroups.com），发一封等于群发给整个社区。"每个地址只发一封"防不住。按地址模式拦：域名 googlegroups.com / lists.* / groups.io，local part users / dev / discuss / announce / list / noreply（src/lib/outreach.ts `isGroupAddress`），send-outreach 命中即永久跳过；有测试。

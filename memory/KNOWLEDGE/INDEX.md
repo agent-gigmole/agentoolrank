@@ -221,3 +221,5 @@
 | Brevo 核查未被牵连 / task_act redact 386fa69 / newsiteradar.com 发件域 + new_ladar key 待办 / f08f0ea 子 key 不算改凭证 | LOG.md#2026-10-02 18:43– Brevo 账户核查 + task_act redact + newsiteradar 待办 |
 | 安全筛 换脸 swapface faceswap 连写 / replaces faces 动词变形 / 负向后顾 surface interface typeface 误报 / 付款前拦截 / LLM 前后各查 / jailbreak 护栏类 隐身浏览器保留 | GOTCHAS.md#unsafe-keyword-joined-forms |
 | 安全过滤 38e0c03 / safety.ts unsafeMatch / validateSubmission review-submissions expand-tools crawl-github 4 入口 / 670 工具扫描 0 命中 | LOG.md#2026-10-02 19:17– 安全过滤（换脸/成人类）38e0c03 |
+| 外联排名事实 类目错 / 发前 rejudge --category 复核 / category.json 改报 hold.json 挂起 / LLM 类目波动 在已存类目内即改报 / agent-frameworks 杂物类 | GOTCHAS.md#outreach-rank-fact-recheck |
+| 外联邮箱是公开邮件组 googlegroups / lists. groups.io / users dev discuss announce noreply / isGroupAddress 永久跳过 | GOTCHAS.md#outreach-group-address |

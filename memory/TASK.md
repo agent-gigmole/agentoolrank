@@ -139,6 +139,8 @@
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
 - 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封；dry-run 已过（排名改取百分位最好的类目，6f36d98）
+- **10-02 发前复核（e131eb8）**：rejudge-tools.ts --dry-run --category 让 LLM 复核全部 33 个候选类目，15 个不一致 → LLM 类目在已存类目内的用 data/outreach/category.json 改报（dify→no-code、composio/fastmcp→tool-integration、langwatch→observability、mineru→memory）；不在已存类目内的 10 个写 data/outreach/hold.json 挂起（career-ops、omniroute、localai、headroom、herdr、librechat、lobehub、worldmonitor、vllm、steel-browser）；fastgpt 保留 no-code。新增 isGroupAddress 拦邮件组（mlflow-users@googlegroups.com），send-outreach 永久跳过。192 测试通过。两个 json 在 data/ 下被 gitignore，属本地运营状态
+- 今晚 10 封：hermes-agent、LangChain、Dify(no-code #2/28)、NocoBase、FastGPT、langwatch、Codewhale、LiteLLM、MinerU(memory #8/127)、cognee
 - **署名已定 Jason T.**（10-02 据 BOSS #28 自决；outreach.ts / outreach.test.ts / send-outreach.ts sender+replyTo / drafts/outreach-maker-v2.md，be87fb0）；22:00 首批照常发，原「21:30 无答复则推迟」规则取消
 - role 信箱：只排除 security/legal/privacy/careers 等专用信箱；support@/hello@ 通用信箱照发
 - 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [x] 外联落地页维护者横幅（?ref=outreach → #maintainers，埋点 maintainer_banner_click，10-02 13:10 上线 8dff4bf）[ ] 22:00 发第一批，之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化 [ ] 徽章嵌入数追踪
@@ -342,6 +344,8 @@
 - [ ] 外联：向工具作者发邀请提交
 - [ ] 已确认，22:00 外联发完后做：Brevo 加 newsiteradar.com 发件域 + 给 new_ladar 建专用 API key（~/.config/secrets/brevo-api-key-newsiteradar，600，不走总线）。agentkit 18:44:55 答复：自有账户里给另一项目新建有限范围 key 属日常运营、不算改凭证，记一笔即可；new_ladar 是对 newsletter 作者的一对一冷外联，护栏同我方（每人一封、带退订、每周 ≤10 封），出现退信/投诉即停它的 key
 
+- [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
+- [ ] career-ops 下架（LLM 判为求职助手、不在收录范围）：删数据，**等老板批**（已报 agentkit）
 - [x] 安全过滤：换脸/deepfake/脱衣/成人类工具一律不收录（src/lib/safety.ts unsafeMatch；提交付款前、review-submissions、expand-tools、crawl-github 新工具 4 处接入；38e0c03，10-02）
 
 ## 等待用户
