@@ -786,3 +786,9 @@
 - 验证：往返测试过；线上 3 类 URL 404、sitemap 0 条；192 测试 + build；已部署推送，看板已记
 - 记录 agentkit 对全库类目审计的 4 条要求（明天开始）
 - 结果：成功
+
+## 2026-10-02 20:26– 已下架页面 410 + proxy 迁移
+- 做法：核对替代品内链（仅 ai-job-search 引用 career-ops，渲染时已过滤，无 404 链接；ai-job-search 列入类目审计待判）；新增 delisted.ts isGonePath + 自动生成的 delisted-ids.ts；middleware.ts 迁移为 proxy.ts（Next 16）；/tool、/alternatives、/compare、/zh/tool、/ja/tool 命中返回 410 + X-Robots-Tag: noindex；不做 301（原类目错）
+- 坑：Next 16 middleware 约定弃用 → proxy.ts 导出 proxy；410 名单与 sitemap 一样是静态生成，下架/恢复后必须部署
+- 验证：204 测试 + build；线上 career-ops 4 类页 410、其他 200；已部署推送，看板已记，已回 agentkit
+- 结果：成功

@@ -667,3 +667,12 @@ Brevo **一个组织只能开一个账户**：10-02 new_ladar 用同一家公司
 - sitemap 是部署时静态生成的，下架后要**重新部署**才会更新
 - 其他工具的 `alternatives` 数组里仍引用已下架 slug → 对比页 URL 会生成出来但 404；sitemap 生成对比对时要过滤掉已不在 tools 里的一方；i18n 列表也要 JOIN tools
 - 入口（爬虫/扩充/审核/提交）都要查归档表，否则每日爬虫会把下架工具重新收录
+
+## next16-proxy-convention
+Next.js 16 起 `middleware.ts` 约定已弃用（构建会提示），改为 `src/proxy.ts`，导出函数名为 `proxy`（不是 `middleware`），`config.matcher` 写法不变。迁移时把旧 middleware.ts 删掉，别两个文件并存。
+
+## delisted-410-static-list
+已下架工具页返回 410 的做法：proxy 按静态名单 src/lib/delisted-ids.ts 匹配 /tool、/alternatives、/compare、/zh/tool、/ja/tool，命中返回 410 + `X-Robots-Tag: noindex`（410 比 404 更快让搜索引擎移除）。
+- 名单是**代码文件**，由 scripts/delist-tool.ts 在归档/`--restore` 后自动重生成——**改完必须提交并部署**才生效（与 sitemap 同理）；proxy 不查数据库，避免每个请求打 DB
+- 不要无脑 301 到原类目页：被下架的往往正是类目判错的工具，跳过去是误导
+- 下架前先查有没有别的工具 alternatives 引用它：渲染时 getToolBySlug 为 null 会被过滤，但同类工具（如 ai-job-search 之于 career-ops）通常也该一起审

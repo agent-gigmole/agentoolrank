@@ -346,7 +346,9 @@
 
 - [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
   - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301
+  - 待判清单：ai-job-search（也是求职工具，替代品里引用 career-ops；线上渲染时 getToolBySlug 返回 null 已过滤，无 404 链接）——审计时与 career-ops 同口径判是否软下架
 - [x] career-ops 软下架（LLM 判为求职助手、不在收录范围）：agentkit 20:20 口径——"删数据"仅指不可恢复删除，软下架（归档表、可恢复）属日常整理，自己定、记一笔。delist-tool.ts → tools_archive（含 metric_snapshots），4 个入口拦重新收录，sitemap 过滤；线上 404 已验证（10-02）
+- [x] 已下架页面 410 / 301（原计划 10-03，10-02 晚提前完成，005953b）：src/proxy.ts（原 middleware.ts 迁移）对 /tool、/alternatives、/compare、/zh/tool、/ja/tool 命中已下架 slug 返回 410 + X-Robots-Tag: noindex；名单 src/lib/delisted-ids.ts 由 delist-tool.ts 归档/恢复后自动重生成（需提交+部署）；**不做 301**（career-ops 原类目本身错，跳过去误导）；线上 4 类页 410、其他 200
 - [x] 安全过滤：换脸/deepfake/脱衣/成人类工具一律不收录（src/lib/safety.ts unsafeMatch；提交付款前、review-submissions、expand-tools、crawl-github 新工具 4 处接入；38e0c03，10-02）
 
 ## 等待用户

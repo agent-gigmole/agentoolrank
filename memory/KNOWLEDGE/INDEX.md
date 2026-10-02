@@ -225,3 +225,6 @@
 | 外联邮箱是公开邮件组 googlegroups / lists. groups.io / users dev discuss announce noreply / isGroupAddress 永久跳过 | GOTCHAS.md#outreach-group-address |
 | 软下架 FOREIGN KEY constraint failed / metric_snapshots 无 ON DELETE / db.batch 事务回滚无损 / 快照一并归档 tools_archive / PRAGMA foreign_key_list | GOTCHAS.md#delist-fk-snapshots |
 | 下架后 sitemap 需重新部署 / alternatives 悬空引用生成 404 对比页 / i18n JOIN tools / 4 入口查归档表防重新收录 | GOTCHAS.md#delist-dangling-refs |
+| Next 16 middleware 弃用 / proxy.ts 导出 proxy / matcher 不变 / 删旧 middleware.ts | GOTCHAS.md#next16-proxy-convention |
+| 已下架页 410 + X-Robots-Tag noindex / delisted-ids.ts 静态名单 delist-tool 自动重生成 / 改完提交部署 / 不 301 到错类目 / ai-job-search 同类待审 | GOTCHAS.md#delisted-410-static-list |
+| 已下架页面 410 005953b / middleware→proxy / isGonePath / 替代品内链核对 ai-job-search | LOG.md#2026-10-02 20:26– 已下架页面 410 + proxy 迁移 |

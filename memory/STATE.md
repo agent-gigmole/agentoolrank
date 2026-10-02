@@ -579,3 +579,15 @@
 - 已下架：career-ops（求职助手，不在收录范围）。恢复→再归档往返测试通过；线上 /tool/career-ops、/zh/tool/career-ops、对比页均 404，sitemap 计数 0；192 测试 + build 过；已部署推送、看板已记
 - **下一步：10-03 开始全库类目审计**（要求见 TASK.md：dry-run 对照、抽 30 条人工看、旧值留列、类目 slug 不改不删，合并/删除走 301）
 - 坑：GOTCHAS#delist-fk-snapshots、GOTCHAS#delist-dangling-refs
+
+## 2026-10-02 20:26– 已下架页面改 410 + middleware→proxy 迁移（005953b / 08655fd）
+- agentkit 20:26 两个后续问题：
+  ① 替代品内链会不会指向 404：核对过，只有 ai-job-search 引用 career-ops；线上渲染时 getToolBySlug 返回 null 被过滤，页面无此链接。ai-job-search 本身也是求职工具 → 加进全库类目审计待判清单
+  ② 已下架页面改 410：原计划 10-03，今晚提前完成
+- 新增 src/lib/delisted.ts `isGonePath`（有测试）+ src/lib/delisted-ids.ts（静态名单，scripts/delist-tool.ts 归档/恢复后自动重生成，**改完要提交并部署**）
+- src/middleware.ts → src/proxy.ts，导出 proxy()（原 middleware 是空操作，Next 16 对 middleware 约定报弃用）
+- 匹配 /tool、/alternatives、/compare、/zh/tool、/ja/tool，命中返回 410 + X-Robots-Tag: noindex
+- 不做 301 到类目页：career-ops 原类目就是错的，跳过去误导
+- 204 测试 + build 过；已部署推送；线上 career-ops 4 类页 410、其他 200；看板已记；已回 agentkit
+- **下一步：22:00 发首批 10 封外联**——发前先查 Brevo 账户状态，再跑一次 dry-run；之后做 newsiteradar 发件域 + key；10-03 开始全库类目审计
+- 坑：GOTCHAS#next16-proxy-convention、GOTCHAS#delisted-410-static-list
