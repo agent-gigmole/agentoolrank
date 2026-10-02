@@ -849,3 +849,8 @@
 - 结果：部署推送，线上 colossalai 410、langchaingo/gpteam/llama-agents 200；已回报 agentkit
 - 待办：GSC 有展示的 4 个另议；官网健康定期扫描
 - 结果：成功
+
+## 2026-10-03 01:45– 每周经营要求 + W41 押注草案
+- 做法：读 agentkit 转达的老板 4c/4d 要求并回复；拉 7 天漏斗（会话 51、/submit 1、提交 2、付费 0；direct 43 / outreach 4 / devto 2）；写 docs/ops/weekly/2026-W41-draft.md（记分牌 + 3 押注：外联 10→15→20、数据文章分发、Submit Kit 预售 ≥3 单）；TASK 新增 T28，T17 加放量计划
+- 结果：草案已提交推送（c1dcfc2）；10-05 起每周一交
+- 结果：成功
