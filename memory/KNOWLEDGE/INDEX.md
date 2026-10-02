@@ -192,4 +192,6 @@
 | cut -c 截断中日文 / 多字节 UTF-8 切半 / grep Binary file matches / python 按字符切 errors=ignore / grep -a | GOTCHAS.md#cut-c-multibyte-utf8 |
 | 翻译与审核竞态 / --retry-failed ON CONFLICT 重置 human_reviewed=0 / 先等重试跑完再审 | GOTCHAS.md#translate-review-race |
 | residualEnglish 漏单个英文词 / seven / ekko-studio / 源 tagline 中英混合 siyuan 译文重复 | GOTCHAS.md#residual-english-single-word |
+| review-translations --reject 清空 source_hash / --override 后 --retry-failed 重译下架 / promptfoo | GOTCHAS.md#override-after-reject-source-hash |
+| python str.replace 改含 \u 正则 TS 源码失败 / 用 Edit 工具 | GOTCHAS.md#str-replace-insert-wrong-function |
 | T24 日语 198/200 上线 / 168+15 过审 / override 15 退回 2 / level 1 前 50 + level 2 抽 14 | LOG.md#2026-10-02 08:50–09:20 T24 日语工具页 198/200 上线 |

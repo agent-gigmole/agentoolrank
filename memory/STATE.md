@@ -393,6 +393,16 @@
 - SOCIAL_CALENDAR 已登记并推送 agentkit；看板已记录（1315543）；已回报 agentkit
 - 10-09 复盘：漏斗里 ref=x 的访问与后续转化
 
+## 2026-10-02 10:39–10:50 T24 中文、日语工具页各 200/200 完成
+
+- tool_i18n zh/ja 各 200 approved 且 human_reviewed>0，全部上线（84b4918，看板 7cbcdd7）
+- residualEnglish（src/lib/i18n.ts）加单词级 LEFTOVER_WORDS（the/and/for/with/one…ten/than…）；扫已发布 398 条命中 11，全是正当专有名词（React Three Fiber、Chrome for Testing、Human-in-the-loop）→ 只送人工复核，不拦截
+- englishOnlyTagline（review.ts，TDD）：按 ` - ` / ` · ` / ` | ` / 2+ 空格 / 句末标点 / 空格+CJK 切段，含 ≥2 连续 CJK 的段丢弃，段须含 ≥3 连续字母；submissionTagline 先过它
+- scripts/clean-bilingual-taglines.ts 清 7 个（chatgpt-shortcut、openai-translator、mirofish、siyuan、xiaozhi-esp32、maxkb、edict），回滚 data/bilingual-tagline-backup-*.json
+- 重译重审：siyuan（zh、ja）、ekko-studio（ja，override）、promptfoo（ja，曾被 --retry-failed 误下架）
+- 147 测试全绿，已推送
+- 坑：GOTCHAS#override-after-reject-source-hash；python str.replace 改含 \u 正则的 TS 源码失败 → 并入 GOTCHAS#str-replace-insert-wrong-function
+
 ## 近期排期
 
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
@@ -401,7 +411,7 @@
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-09**：T19 X 帖复盘（漏斗查 ref=x 访问与后续转化）
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
-- **日语**：198/200 已上线（10-02 09:20）；剩 siyuan（先清源 tagline 中文副本）、ekko-studio 重译；residualEnglish 加单个常见英文词检测；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
+- **T24**：中文、日语工具页各 200/200 已上线（10-02 10:50）；剩余：替代品页、对比页、/where-to-list、/submit 的本地化；review-translations --override 补回 source_hash；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - **Alipay/WeChat Pay**：等老板（agentkit 09:30 汇总）批准后在 Stripe 后台开启，无需改代码
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
@@ -419,7 +429,9 @@
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] T24 中文：确认 sitemap 刷新出 200 个 zh 页 + IndexNow；其余页型 → 西语 10-30 看数据
 - [x] T24 日语 198/200 上线（10-02 09:20，提前约一周）
-- [ ] T24 日语收尾：siyuan 清理中英混合 tagline 后重译；ekko-studio 重译；residualEnglish 加单个常见英文词检测；确认 sitemap/IndexNow 收录 ja 页
+- [x] T24 中/日工具页各 200/200（10-02 10:50）：residualEnglish 单词检测、siyuan、ekko-studio、promptfoo 均完成
+- [ ] T24 剩余页型本地化：替代品页、对比页、/where-to-list、/submit；确认 sitemap/IndexNow 收录 ja 页
+- [ ] review-translations --override 时补回 source_hash（否则后续 --retry-failed 会把放行条目下架）
 - [ ] Stripe 开 Alipay/WeChat Pay：等老板批准（收款配置变更）
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能

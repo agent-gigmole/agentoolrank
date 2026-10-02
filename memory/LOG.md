@@ -668,3 +668,12 @@
 - 发现：老板主号是 X Premium，中文长帖不会被自动拆 thread（GOTCHAS#content-writing-bin-write）
 - 下一步：22:00 外联第一批；10-03 dev.to 第二篇；10-09 复盘 ref=x
 - human-intervention=0 / auto-resolved=0 / 熔断=0
+
+## 2026-10-02 10:39–10:50 T24 中日工具页各 200/200
+- tool_i18n zh/ja 各 200 approved 且 human_reviewed>0，全部上线；代码 84b4918，看板 7cbcdd7
+- residualEnglish 加单词级 LEFTOVER_WORDS；扫已发布 398 条命中 11，全为正当专有名词 → 只作复核门槛
+- englishOnlyTagline（TDD）+ scripts/clean-bilingual-taglines.ts 清 7 个中英混合 tagline（回滚 data/bilingual-tagline-backup-*.json）
+- 重译重审：siyuan（zh/ja）、ekko-studio（ja，override）、promptfoo（ja）
+- 147 测试全绿，已推送
+- 坑：reject 清空 source_hash → override 后 --retry-failed 当作源已变重译并下架（promptfoo ja 中招，GOTCHAS#override-after-reject-source-hash）；python str.replace 改含 \u 正则的 TS 源码匹配失败 → 用 Edit（GOTCHAS#str-replace-insert-wrong-function）
+- human-intervention=0 / auto-resolved=1（promptfoo 被下架后重审恢复）/ 熔断=0

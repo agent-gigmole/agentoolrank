@@ -435,6 +435,7 @@
 
 ## str-replace-insert-wrong-function
 - 用 python str.replace(old, new, 1) 往页面插代码时，generateMetadata 与页面函数常有同名语句（如 `const tool = await getToolBySlug(slug)`），count=1 命中第一处（generateMetadata）→ 变量在页面函数里未定义。插入后立刻 tsc/vitest 确认落在哪个函数，或用含函数签名的更长锚点
+- 同类（10-02）：用 python str.replace 改含 `\u` 转义正则的 TS 源码（如 CJK 范围 `[\u4e00-\u9fff]`）匹配失败——python 字符串里的 `\u` 被解成实际字符，或文件里写的是实际字符/另一种转义，old 对不上，replace 静默不变。改源码一律用 Edit 工具（精确匹配，不匹配会报错）；非用脚本不可就用 raw string 并 assert old in s
 
 ## alternatives-verdict-overlap
 - 替代品页 Short answer：「最接近」与「已停更」可能是同一工具（firecrawl → Scrapegraph-ai），如实反映数据，不去重；星增速展示用 signed()（正数 +N、0 显示 0、负数 -N），不要 `+${n}` 拼接（出现 "+-0"）
@@ -592,3 +593,6 @@ MCP 证据/索引站（如 agenstry.com）提交时粘贴 MCP endpoint，对方�
 ## residual-english-single-word
 residualEnglish 只查连续 ≥4 个英文词，抓不到单个残留词（10-02 ekko-studio 日译残留 "seven"）。日文/中文译文里出现单个常见英文词（数字词 one…ten/seven、冠词 the/a/an、and/with 等）也应标记；专有名词/工具名/术语表词白名单除外。待办已进 TASK T24。
 同批另一类源数据问题：英文 tagline 里同时含英文和中文副本（siyuan）→ 译文重复。修法是清理源 tagline（只留英文）后重译；可扫一遍英文源字段里含 CJK 字符的条目。
+
+## override-after-reject-source-hash
+review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该行 source_hash 清空；之后人读过再用 `--override` 放行，source_hash 仍是空。下一次跑 `translate-tools --retry-failed` 时，空 hash ≠ 当前源 hash → 当作「源已变」重译，ON CONFLICT 覆盖并把 human_reviewed 重置为 0 → 已放行的条目被下架。修法：`--override` 时写回当前 source_hash（待办在 TASK T24）；修好前，override 之后别再跑会覆盖它的批量任务，跑了就重数 human_reviewed。
