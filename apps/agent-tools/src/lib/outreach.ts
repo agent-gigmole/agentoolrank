@@ -31,3 +31,10 @@ export function outreachEmail(
     ].join("\n"),
   };
 }
+
+/** Mailing lists and broadcast/no-reply inboxes: one "personal" email there reaches many people, so never send. */
+export function isGroupAddress(email: string): boolean {
+  const [local = "", domain = ""] = email.toLowerCase().split("@");
+  if (/(^|\.)googlegroups\.com$|^lists?\.|^groups\.|\.groups\.io$|^groups\.io$/.test(domain)) return true;
+  return /(^|[-_.])(users|dev|devel|discuss|announce|list|no-?reply)($|[-_.])/.test(local);
+}

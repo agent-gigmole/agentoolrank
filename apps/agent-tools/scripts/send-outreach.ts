@@ -1,7 +1,10 @@
 /**
  * Maker outreach (T17): send the outreach email to candidates from data/outreach/candidates.json via Brevo.
  * - Max 10 per China-time day (counted from data/outreach/sent.json), one email per address ever, no follow-ups.
- * - Skips addresses in data/outreach/optout.json (people who replied "no").
+ * - Skips addresses in data/outreach/optout.json (people who replied "no") and mailing-list / no-reply addresses.
+ * - Skips slugs in data/outreach/hold.json ({ slug: reason }), e.g. tools whose listing/category is under review.
+ * - data/outreach/category.json ({ slug: category-slug }) pins the category to report when the tool's best-ranking
+ *   category isn't its real home (must be one of its stored categories).
  * - Rank / total / name are recomputed from the live DB so the email never states stale numbers.
  * Usage: bun run scripts/send-outreach.ts [--dry-run] [--limit=N] [--test=you@example.com]
  *   --test sends one sample (first candidate's content) to the given address only and records nothing.
@@ -9,7 +12,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { outreachEmail } from "../src/lib/outreach";
+import { outreachEmail, isGroupAddress } from "../src/lib/outreach";
 import { cstDayRange } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
@@ -27,11 +30,14 @@ const load = <T>(f: string, d: T): T => (existsSync(dir + f) ? JSON.parse(readFi
 const candidates = load<Candidate[]>("candidates.json", []);
 const sent = load<Sent[]>("sent.json", []);
 const optout = new Set(load<string[]>("optout.json", []).map((e) => e.toLowerCase()));
+const hold = load<Record<string, string>>("hold.json", {});
+const pinned = load<Record<string, string>>("category.json", {});
 
 async function live(slug: string) {
   const t = (await db.execute({ sql: "SELECT id, name, category_tags FROM tools WHERE id = ?", args: [slug] })).rows[0];
   if (!t) return null;
-  const cats: string[] = JSON.parse(String(t.category_tags) || "[]");
+  const stored: string[] = JSON.parse(String(t.category_tags) || "[]");
+  const cats = pinned[slug] && stored.includes(pinned[slug]) ? [pinned[slug]] : stored;
   // Use the category where the tool ranks best (a true statement either way, and it reads as the tool's home category).
   let best: { cat: string; rank: number; total: number } | null = null;
   for (const cat of cats) {
@@ -67,7 +73,7 @@ async function send(to: string, subject: string, text: string): Promise<string> 
 const today = cstDayRange(new Date(), 0);
 const sentToday = sent.filter((s) => s.at >= today.from && s.at < today.to).length;
 const already = new Set(sent.map((s) => s.email.toLowerCase()));
-const queue = candidates.filter((c) => !already.has(c.email.toLowerCase()) && !optout.has(c.email.toLowerCase()));
+const queue = candidates.filter((c) => !already.has(c.email.toLowerCase()) && !optout.has(c.email.toLowerCase()) && !hold[c.slug] && !isGroupAddress(c.email));
 const room = test ? 1 : Math.min(DAILY_CAP - sentToday, Number(arg("limit") ?? DAILY_CAP));
 console.log(`candidates=${candidates.length} sent_total=${sent.length} sent_today=${sentToday} queue=${queue.length} room=${room}`);
 

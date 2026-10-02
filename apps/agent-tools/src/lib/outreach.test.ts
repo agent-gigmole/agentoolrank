@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { outreachEmail, badgeMarkdown } from "./outreach";
+import { outreachEmail, badgeMarkdown, isGroupAddress } from "./outreach";
 
 describe("outreach", () => {
   const e = outreachEmail({ owner: "Jane", name: "FastMCP", slug: "fastmcp", rank: 2, total: 29, category: "MCP Servers" }, "https://agentoolrank.com");
@@ -15,5 +15,14 @@ describe("outreach", () => {
   });
   it("makes no paid pitch", () => {
     expect(e.text).not.toMatch(/\$\d|pay|price|featured/i);
+  });
+});
+
+describe("isGroupAddress", () => {
+  it.each(["mlflow-users@googlegroups.com", "dev@lists.example.org", "announce@project.io", "project-discuss@x.org", "noreply@x.com"])("flags %s", (e) => {
+    expect(isGroupAddress(e)).toBe(true);
+  });
+  it.each(["hello@dify.ai", "ishaan@berri.ai", "support@langchain.dev", "opendatalab@pjlab.org.cn"])("allows %s", (e) => {
+    expect(isGroupAddress(e)).toBe(false);
   });
 });
