@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildOffers, recommendPlan } from "./offers";
+import { buildOffers, recommendPlan, messageForHuman } from "./offers";
 
 const base = { baseUrl: "https://agentoolrank.com", submissionId: 12, token: "tok", waitDays: 20, paymentsEnabled: true };
 
@@ -41,5 +41,23 @@ describe("recommendPlan", () => {
   });
   it("defaults to free with no constraints", () => {
     expect(recommendPlan(offers, {})?.plan).toBe("free");
+  });
+});
+
+describe("messageForHuman", () => {
+  const offers = buildOffers({ baseUrl: "https://agentoolrank.com", submissionId: 7, token: "t", waitDays: 14, paymentsEnabled: true });
+  it("summarises the free result and every paid option with price, speed and link", () => {
+    const m = messageForHuman("Orkas", offers);
+    expect(m).toContain("Orkas was submitted to AgentoolRank for free");
+    expect(m).toContain("about 14 days");
+    expect(m).toContain("$9");
+    expect(m).toContain("$49");
+    expect(m).toContain("7 days on the homepage");
+    expect(m).toContain("/api/v1/submissions/7/checkout?plan=featured&token=t");
+    expect(m).toContain("full refund if not approved");
+  });
+  it("only mentions the free queue when payments are off", () => {
+    const free = buildOffers({ baseUrl: "https://agentoolrank.com", submissionId: 7, token: "t", waitDays: 14, paymentsEnabled: false });
+    expect(messageForHuman("Orkas", free)).not.toContain("$");
   });
 });

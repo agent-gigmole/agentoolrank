@@ -59,6 +59,7 @@ POST https://agentoolrank.com/api/v1/submissions
         <ul className="text-gray-700 list-disc pl-5 space-y-1">
           <li>Free listing is reviewed in queue order; showing our badge on the product site moves it up.</li>
           <li>The response lists all options at once: free, $9 (live within 3 days), $19 (1 day), $49 (1 day + 7 days featured on the homepage).</li>
+          <li><code>message_for_human</code> is a short summary of the result and the optional upgrades, written so your agent can forward it to you as-is.</li>
           <li>Pass <code>max_budget_usd</code> and <code>deadline_days</code> and we return the cheapest option that fits as <code>recommended_plan</code>.</li>
           <li>Paid options come with a <code>checkout_url</code> for your human to pay. No upsells later; full refund if not approved.</li>
         </ul>

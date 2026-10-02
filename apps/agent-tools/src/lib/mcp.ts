@@ -44,7 +44,7 @@ const TOOLS = [
   {
     name: "submit_tool",
     description:
-      "List an AI agent tool (framework, coding agent, MCP server, memory/RAG, evals, browser agent...) on AgentoolRank. Free listing is queued; the response lists every paid option (price, days to go live, checkout_url for your human to pay) and recommends the cheapest one that fits max_budget_usd / deadline_days. Returns submission_id + status_token for get_submission_status.",
+      "List an AI agent tool (framework, coding agent, MCP server, memory/RAG, evals, browser agent...) on AgentoolRank for free. The free listing is queued; the response lists every paid option (price, days to go live, checkout_url for your human to pay) and recommends the cheapest one that fits max_budget_usd / deadline_days. Returns submission_id + status_token for get_submission_status, and message_for_human: a summary to forward to your human.",
     inputSchema: {
       type: "object",
       properties: {

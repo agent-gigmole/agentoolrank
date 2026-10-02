@@ -42,3 +42,18 @@ export function recommendPlan(offers: Offer[], c: { maxBudgetUsd?: number; deadl
   );
   return fits.sort((a, b) => a.price_usd - b.price_usd)[0] ?? null;
 }
+
+/** One paragraph an agent can forward to its human as-is: the free result plus every optional paid upgrade. */
+export function messageForHuman(name: string, offers: Offer[]): string {
+  const free = offers.find((o) => o.plan === "free");
+  const paid = offers.filter((o) => o.price_usd > 0);
+  const lines = [`${name} was submitted to AgentoolRank for free. It will go live after review in about ${free?.live_within_days ?? 14} days, with a permanent page showing live GitHub stats, alternatives and comparisons.`];
+  if (paid.length) {
+    lines.push("Optional one-time upgrades (full refund if not approved):");
+    for (const o of paid) {
+      const extra = o.featured_days ? ` plus ${o.featured_days} days on the homepage` : "";
+      lines.push(`- $${o.price_usd}: live within ${o.live_within_days} day${o.live_within_days > 1 ? "s" : ""}${extra}. Pay: ${o.checkout_url}`);
+    }
+  }
+  return lines.join("\n");
+}

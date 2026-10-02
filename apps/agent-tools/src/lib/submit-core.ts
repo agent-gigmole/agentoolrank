@@ -2,7 +2,7 @@
 import { db } from "@repo/db";
 import { randomBytes } from "node:crypto";
 import { validateSubmission, slugFromSubmission, estimatedWaitDays, badgeHtml, type SubmissionInput } from "./submissions";
-import { buildOffers, recommendPlan, type Offer } from "./offers";
+import { buildOffers, recommendPlan, messageForHuman, type Offer } from "./offers";
 
 // Additive only: created on first use, never altered here.
 const CREATE_SUBMISSIONS = `CREATE TABLE IF NOT EXISTS submissions (
@@ -64,6 +64,7 @@ export type SubmitResult =
       eta_days: number;
       offers: Offer[];
       recommended_plan: Offer | null;
+      message_for_human: string;
       badge_html: string;
       status_url: string;
     };
@@ -102,6 +103,7 @@ export async function createSubmission(
     eta_days: eta,
     offers,
     recommended_plan: recommendPlan(offers, { maxBudgetUsd: opts.maxBudgetUsd, deadlineDays: opts.deadlineDays, wantFeatured: opts.wantFeatured }),
+    message_for_human: messageForHuman(s.name, offers),
     badge_html: badgeHtml(BASE_URL(), slug, s.name),
     status_url: `${BASE_URL()}/api/v1/submissions/${id}?token=${token}`,
   };
