@@ -50,7 +50,7 @@ async def main(path):
             page = await ctx.new_page()
             await page.goto(spec["open"], timeout=60000)
         for st in spec.get("steps", []):
-            (k, v), = st.items()
+            k, v = next((kk, vv) for kk, vv in st.items() if kk != "exact")  # "exact" is an option of click_text, not a step
             before = len(ctx.pages)
             try:
                 if k == "goto": await page.goto(v, timeout=60000)
