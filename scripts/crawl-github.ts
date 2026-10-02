@@ -251,6 +251,13 @@ async function fetchAndUpsertRepo(owner: string, name: string, existingId?: stri
       return true;
     }
 
+    // New tools only: a delisted tool (tools_archive) is never re-added by discovery.
+    const archived = await db.execute({ sql: "SELECT 1 FROM tools_archive WHERE id = ?", args: [slug] }).catch(() => ({ rows: [] }));
+    if (archived.rows.length > 0) {
+      console.log(`  ✗ ${owner}/${name}: delisted (tools_archive), not inserted`);
+      return false;
+    }
+
     // New tools only: never list face swap / nudify / adult repos (glued spellings like "swapface" included).
     const unsafe = unsafeMatch(`${owner}/${name} ${repo.description ?? ""} ${repo.homepageUrl ?? ""}`);
     if (unsafe) {

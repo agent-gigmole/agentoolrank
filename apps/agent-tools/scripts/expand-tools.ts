@@ -47,7 +47,8 @@ const slugOf = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").
 async function main() {
   const tools = (await db.execute("SELECT id, github_owner, github_repo FROM tools")).rows as unknown as Array<{ id: string; github_owner: string | null; github_repo: string | null }>;
   const listed = new Set(tools.filter((t) => t.github_owner).map((t) => `${t.github_owner}/${t.github_repo}`.toLowerCase()));
-  const ids = new Set(tools.map((t) => t.id));
+  const archived = (await db.execute("SELECT id FROM tools_archive").catch(() => ({ rows: [] }))).rows.map((r) => String(r.id));
+  const ids = new Set([...tools.map((t) => t.id), ...archived]); // delisted tools are never re-added
   // Repos move between orgs (block/goose → aaif-goose/goose); a repo-name match means "already listed".
   const repoNames = new Set(tools.filter((t) => t.github_repo).map((t) => String(t.github_repo).toLowerCase()));
   const categories = (await db.execute("SELECT slug, name FROM categories")).rows as unknown as Array<{ slug: string; name: string }>;

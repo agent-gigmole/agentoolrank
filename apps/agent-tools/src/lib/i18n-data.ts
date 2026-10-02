@@ -23,7 +23,7 @@ export async function translatedLangs(toolId: string): Promise<string[]> {
 
 export async function translatedTools(lang: string): Promise<Array<{ id: string; updated_at: string }>> {
   try {
-    const r = await db.execute({ sql: "SELECT tool_id, updated_at FROM tool_i18n WHERE lang = ? AND status = 'approved' AND human_reviewed >= 1", args: [lang] });
+    const r = await db.execute({ sql: "SELECT i.tool_id, i.updated_at FROM tool_i18n i JOIN tools t ON t.id = i.tool_id WHERE i.lang = ? AND i.status = 'approved' AND i.human_reviewed >= 1", args: [lang] });
     return r.rows.map((x) => ({ id: String(x.tool_id), updated_at: String(x.updated_at) }));
   } catch {
     return [];

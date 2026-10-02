@@ -81,6 +81,10 @@ async function main() {
         await db.execute({ sql: "UPDATE submissions SET status='rejected', note='slug already listed', reviewed_at=datetime('now') WHERE id=?", args: [s.id] });
         continue;
       }
+      if ((await db.execute({ sql: "SELECT 1 FROM tools_archive WHERE id = ?", args: [s.slug] }).catch(() => ({ rows: [] }))).rows.length > 0) {
+        await db.execute({ sql: "UPDATE submissions SET status='rejected', note='tool was delisted (tools_archive)', reviewed_at=datetime('now') WHERE id=?", args: [s.id] });
+        continue;
+      }
       const row = toolRowFromReview(s, r);
       const cols = Object.keys(row);
       await db.execute({ sql: `INSERT INTO tools (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`, args: Object.values(row) as never });

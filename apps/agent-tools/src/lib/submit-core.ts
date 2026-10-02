@@ -81,6 +81,7 @@ export async function createSubmission(
 
   const listed = await db.execute({ sql: "SELECT id FROM tools WHERE id = ?", args: [slug] });
   if (listed.rows.length > 0) return { kind: "listed", slug, url: `${BASE_URL()}/tool/${slug}` };
+  if ((await db.execute({ sql: "SELECT 1 FROM tools_archive WHERE id = ?", args: [slug] }).catch(() => ({ rows: [] }))).rows.length > 0) return { kind: "invalid", errors: ["This tool is outside what AgentoolRank lists."] };
 
   const existing = await db.execute({ sql: "SELECT id FROM submissions WHERE url = ?", args: [s.url] });
   const id = existing.rows.length > 0
