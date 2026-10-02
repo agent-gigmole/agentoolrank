@@ -792,3 +792,11 @@
 - 坑：Next 16 middleware 约定弃用 → proxy.ts 导出 proxy；410 名单与 sitemap 一样是静态生成，下架/恢复后必须部署
 - 验证：204 测试 + build；线上 career-ops 4 类页 410、其他 200；已部署推送，看板已记，已回 agentkit
 - 结果：成功
+
+## 2026-10-02 21:59– T17 首批外联 10 封
+- 做法：发前查 Brevo 账户（free，余 299，relay 开）+ 最后一次 dry-run（与复核一致；Coding Agents 42→41，排名实时重算）；send-outreach 发 10 封，间隔 30 秒，署名 Jason T.，记入 data/outreach/sent.json
+- 结果：Brevo 请求 10 / 送达 10 / 退信 0 / 拦截 0；5 分钟内打开 3（Apple 隐私代理会虚报打开，仅参考）；已回 agentkit，看板已记
+- 坑：30 秒间隔 × 10 封 > 5 分钟，前台跑撞 Bash 300 秒超时 → 以后 run_in_background
+- 下一步：10-03 09:30 后统计回复率，退订加 optout.json；hold.json 10 个等类目审计
+- 结果：成功
+

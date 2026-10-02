@@ -591,3 +591,12 @@
 - 204 测试 + build 过；已部署推送；线上 career-ops 4 类页 410、其他 200；看板已记；已回 agentkit
 - **下一步：22:00 发首批 10 封外联**——发前先查 Brevo 账户状态，再跑一次 dry-run；之后做 newsiteradar 发件域 + key；10-03 开始全库类目审计
 - 坑：GOTCHAS#next16-proxy-convention、GOTCHAS#delisted-410-static-list
+
+## 2026-10-02 21:59– T17 首批外联 10 封已发
+- 发前检查：Brevo 账户正常（free，剩余 299 封额度，relay 开）；最后一次 dry-run 名单与复核一致；career-ops 下架后 Coding Agents 类总数 42→41，邮件排名实时重算
+- 21:59–22:04 发 10 封，间隔 30 秒，署名 Jason T.，记录在 data/outreach/sent.json：hermes-agent、langchain、dify、nocobase、fastgpt、langwatch、codewhale、litellm、mineru、cognee
+- Brevo 事件：请求 10 / 送达 10 / 退信 0 / 拦截 0；5 分钟内打开 3（nocobase、nousresearch、langchain）。Apple 隐私代理会伪造"已打开"，打开率仅作参考，以回复和 maintainer_banner_click / ref=outreach 为准
+- 已回报 agentkit，看板已记
+- **下一步**：10-03 09:30 后统计回复率（回信进 hello@），回"不要再发"的地址加 optout.json；队列剩 23 个候选，其中 10 个在 hold.json，等全库类目审计后再处理；10-03 开始全库类目审计
+- 坑：GOTCHAS#outreach-send-bash-timeout
+

@@ -676,3 +676,8 @@ Next.js 16 起 `middleware.ts` 约定已弃用（构建会提示），改为 `sr
 - 名单是**代码文件**，由 scripts/delist-tool.ts 在归档/`--restore` 后自动重生成——**改完必须提交并部署**才生效（与 sitemap 同理）；proxy 不查数据库，避免每个请求打 DB
 - 不要无脑 301 到原类目页：被下架的往往正是类目判错的工具，跳过去是误导
 - 下架前先查有没有别的工具 alternatives 引用它：渲染时 getToolBySlug 为 null 会被过滤，但同类工具（如 ai-job-search 之于 career-ops）通常也该一起审
+
+## outreach-send-bash-timeout
+send-outreach 每封之间 sleep 30 秒限速，10 封要 5 分钟以上；在 Bash 工具前台跑会撞上 300 秒超时（命令被杀或结果拿不全，已发几封要回 sent.json 对账）。**凡是"N 条 × 固定间隔"的限速批处理，先算总时长：超过约 4 分钟就用 `run_in_background: true` 跑**，日志落文件，结束后看 sent.json + Brevo 事件核对。
+- 附：Brevo 打开事件含 Apple Mail 隐私代理的预取，会伪造"已打开"；外联效果看回复、maintainer_banner_click、ref=outreach，不看打开率
+
