@@ -250,3 +250,5 @@
 | bin/write 可发布：否 / 推断规则 是 brief 允许的建议 / 通读确认后手改 + ai-flavor 复查放行 | GOTCHAS.md#bin-write-inferred-rules-brief-allowed |
 | nofollow 统计样本偏差 / link 只 30 站实测 / 发现异常才记 rel / 对外写明样本量 | GOTCHAS.md#nofollow-sample-bias |
 | 自有数据集 101 站统计 / 数据文章 devto-101-directories | LOG.md#2026-10-03 – 自有数据集全量完成 + 数据文章稿 |
+| .gitignore data/ 匹配任意层级 src/data 也被忽略 / .vercelignore data / git add 失败 && 后续 deploy 跳过 / git check-ignore -v / 改放 src/lib 或 /data/ | GOTCHAS.md#gitignore-data-any-depth |
+| /where-to-list 实测目录表 / export-tested-directories.ts / 公开字段 vs 付费层 gotchas success_signal | LOG.md#2026-10-03 03:30– /where-to-list 实测目录表上线 |

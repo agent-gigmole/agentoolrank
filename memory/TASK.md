@@ -232,6 +232,7 @@
 - [x] 替代品页 meta description 同法数据驱动（alternativesDescription，10-02 晚已部署）
 - [ ] 根据 GSC 有曝光的查询扩写对比/替代品内容（GSC 28 天 /compare 175/397 曝光；先做 goose-vs-open-webui、claude-code-vs-openhands 等有曝光的对）
 - [ ] 站外文章：草稿 docs/ops/launch-kit/devto-where-to-list.md 已写好（canonical→/where-to-list），定于 2026-10-03 用 dev.to 品牌号发布，与 10-01 长文错开
+- [x] /where-to-list 实测表上线（2026-10-03）：h2「101 directories we actually submitted to」+ 汇总数字（nofollow 注明样本偏差）+ TestedDirectoryTable 4 个筛选开关；线上核对 101 行、gotchas 未泄露
 - [ ] 数据文章「实测 101 个目录站」10-07 用 dev.to 品牌号发（brief docs/ops/launch-kit/briefs/devto-101-directories.md → drafts/devto-101-directories.md，bin/write longform + 手改 2 处，ai-flavor clean，CTA → /where-to-list；与 10-03 devto-where-to-list 错开）
 - [ ] 更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）
 - [ ] directories.ts CHECKED 过期后重新核对竞品价格/政策
@@ -285,6 +286,7 @@
 - [ ] **10-03 12:00 前交定稿**：吸收三方建议 + agentkit 建议（先做 1 个 MCP 工具：按产品类型返回 30 站 + 提交要点，免费 10 个、完整版收费；暂不做全自动提交），写明采纳/未采纳及原因
 - [ ] 定稿后才开工 MVP（初稿方案：2 天最小可收钱版本 + 预售；14 天内 ≥3 单才继续投入，否则冻结付费层）
 - [x] 自有数据集已完成（2026-10-03 02:50）：scripts/build-directory-dataset.ts（a3d192d）→ data/directories-verified.json（101 站，data/ 在 gitignore；只用自家 directory-log detail，不含 columbus 字段）；供 /where-to-list 免费表、「实测目录站」文章、Submit Kit 共用
+- [x] 免费层表格已上线（2026-10-03）：scripts/export-tested-directories.ts → src/lib/directories-tested.json（只导出 free/conditions/queue/paidFrom/link(仅实测)/login/captcha/human/verified；gotchas、success_signal 留付费层，内部 outcome/项目名不公开）；/where-to-list 101 行可筛选表
 - 约束: columbus 的 DR/访问量不进产品；家底照实说（共享日志 296 域名，实走提交流程约 101）；不冷外联；不挤占 T25 每天 ≥20 个目录处理
 - 闸: auto（方向由负责人定，定稿 12:00 前交 agentkit/老板知悉；收费复用现有 Stripe 一次性付款，新增价格不花钱、不改提现，按 #28 属日常运营，不必逐次问）
 

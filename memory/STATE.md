@@ -721,3 +721,13 @@
 - 看板已记 02:50 条（数据集、文章、Jev、SMTP）
 - **下一步**：数据集接 /where-to-list 免费表 + Submit Kit；10-07 发文；T27 12:00 前交定稿
 - 坑：GOTCHAS#bin-write-inferred-rules-brief-allowed、GOTCHAS#nofollow-sample-bias
+
+## 2026-10-03 03:30– Submit Kit 免费层第一块：/where-to-list 实测目录表上线（1fb0a58、a046745）
+- scripts/export-tested-directories.ts：data/directories-verified.json → src/lib/directories-tested.json（已提交）
+  - 公开字段：free、conditions、queue、paidFrom、link（仅实测过的）、login、captcha、human、verified
+  - **不公开**：gotchas、success_signal（留 Submit Kit 付费层）；内部 outcome、项目名
+- src/lib/tested-directories.ts（filterDirectories、summarize，TDD 7 测试）+ src/components/TestedDirectoryTable.tsx（use client，4 开关：Free option / No badge·backlink / No account needed / No captcha or manual step）
+- 页面 h2「101 directories we actually submitted to」+ 汇总数字，nofollow 注明样本偏差
+- 211 测试 + build 通过，已部署推送；线上核对 h2 在、101 行、"No thanks"/"Tool Submitted" 未出现（gotchas 未泄露）；看板已记
+- **下一步**：12:00 前交 Submit Kit 定稿（吸收 imagehub、domain-invest、agentkit 意见；new_ladar 待收）；白天提交 21 个目录站；dev.to 发 devto-where-to-list（可加一句指向实测表）
+- 坑：GOTCHAS#gitignore-data-any-depth

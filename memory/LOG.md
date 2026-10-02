@@ -869,3 +869,9 @@
 - 做法：build-directory-dataset.ts 全量跑完 101 站并出统计；写 brief devto-101-directories.md，bin/write longform 生成 drafts/devto-101-directories.md；报告「可发布：否」（7 句推断规则，均为 brief 允许的建议），通读后手改 2 处，ai-flavor 复查 clean；看板记 02:50 条
 - 结果：submitted 61 / listed 5 / skipped 19 / retry 9 / captcha 5 / badge 2；免费档 81；link 实测 30（nofollow 23，样本有偏）；39 站有价格中位 $12。稿件已提交（78b2890），定 10-07 dev.to 品牌号发
 - 结果：成功
+
+## 2026-10-03 03:30– /where-to-list 实测目录表上线（Submit Kit 免费层）
+- 做法：export-tested-directories.ts 从 directories-verified.json 导出公开字段到 src/lib/directories-tested.json；tested-directories.ts 先写测试（7 个）再实现 filterDirectories/summarize；TestedDirectoryTable 客户端组件 4 个筛选开关；页面加 h2 + 汇总数字（nofollow 注明样本偏差）
+- 坑：JSON 先放 src/data，被 .gitignore 的 `data/`（匹配任意层级）忽略，git add 失败，&& 串联的 commit/deploy 全被跳过（deploy=1）；改放 src/lib 解决。构建日志 "Ecmascript file had an error" 是 packages/db process.cwd() 的 Edge Runtime 旧警告，退出码 0 不影响
+- 结果：211 测试 + build 通过，已部署推送；线上 101 行，gotchas/success_signal 未泄露；看板已记
+- 结果：成功

@@ -756,3 +756,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 
 ## nofollow-sample-bias
 自有目录数据集里 link（rel）只有 30/101 站实测：nofollow 23 / dofollow 6 / ugc 1。我们通常是发现异常（如 nofollow）时才在台账里记 rel，所以 nofollow 占比被高估。对外引用这组数字必须同时写明样本量和偏差，不能说成「77% 目录站是 nofollow」。
+
+## gitignore-data-any-depth
+.gitignore 里写 `data/`（无前导斜杠）会忽略**任意层级**名为 data 的目录，包括 src/data；.vercelignore 也有 `data` 条目，同样会把它排除出部署。10-03 把要公开的 directories-tested.json 放 src/data，git add 报被忽略而失败，后面 `&&` 串联的 commit 和 vercel deploy 全被跳过（显示 deploy=1）。
+- 处理：要进仓库/部署的数据文件别放任何名为 data 的目录（这次改放 src/lib/）；或把忽略规则改成 `/data/` 只匹配根目录
+- 排查：`git check-ignore -v <path>` 看是哪条规则命中
+- 另：构建日志 "Ecmascript file had an error" 来自 packages/db 的 process.cwd()（Edge Runtime 旧警告），build 退出码 0 时可忽略
