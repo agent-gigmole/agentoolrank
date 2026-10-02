@@ -12,6 +12,8 @@ log="data/ops-logs/$(date +%F).log"
   bun run scripts/funnel-report.ts 7
   echo "== indexnow"
   bun run scripts/indexnow.ts
+  echo "== stripe alipay/wechat status (#29)"
+  bun run scripts/stripe-pm-status.ts
   echo "== search console (28d)"
   python3 scripts/gsc_report.py 28
 } >> "$log" 2>&1
