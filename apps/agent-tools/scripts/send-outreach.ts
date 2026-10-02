@@ -31,11 +31,17 @@ const optout = new Set(load<string[]>("optout.json", []).map((e) => e.toLowerCas
 async function live(slug: string) {
   const t = (await db.execute({ sql: "SELECT id, name, category_tags FROM tools WHERE id = ?", args: [slug] })).rows[0];
   if (!t) return null;
-  const cat = JSON.parse(String(t.category_tags) || "[]")[0];
-  if (!cat) return null;
-  const catName = String((await db.execute({ sql: "SELECT name FROM categories WHERE slug = ?", args: [cat] })).rows[0]?.name ?? cat);
-  const ranked = (await db.execute({ sql: "SELECT id FROM tools WHERE category_tags LIKE ? ORDER BY score DESC", args: [`%"${cat}"%`] })).rows.map((r) => String(r.id));
-  return { name: String(t.name), rank: ranked.indexOf(slug) + 1, total: ranked.length, category: catName };
+  const cats: string[] = JSON.parse(String(t.category_tags) || "[]");
+  // Use the category where the tool ranks best (a true statement either way, and it reads as the tool's home category).
+  let best: { cat: string; rank: number; total: number } | null = null;
+  for (const cat of cats) {
+    const ranked = (await db.execute({ sql: "SELECT id FROM tools WHERE category_tags LIKE ? ORDER BY score DESC", args: [`%"${cat}"%`] })).rows.map((r) => String(r.id));
+    const rank = ranked.indexOf(slug) + 1;
+    if (rank > 0 && (!best || rank / ranked.length < best.rank / best.total)) best = { cat, rank, total: ranked.length };
+  }
+  if (!best) return null;
+  const catName = String((await db.execute({ sql: "SELECT name FROM categories WHERE slug = ?", args: [best.cat] })).rows[0]?.name ?? best.cat);
+  return { name: String(t.name), rank: best.rank, total: best.total, category: catName };
 }
 
 async function send(to: string, subject: string, text: string): Promise<string> {
