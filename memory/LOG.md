@@ -813,3 +813,10 @@
 - 结果：authenticated=true、verified=true；outreach 7 天 12/12 送达 0 问题，newsiteradar 0；已通知 new_ladar、agentkit；代码已推送
 - 规则：tag=newsiteradar ALERT → Brevo 后台停用 key newsiteradar-outreach + 通知 new_ladar
 - 结果：成功
+
+## 2026-10-02 23:40– T25 目录桌面分诊 86/101 + 提速要求
+- 做法：按 agentkit 新要求（每天 ≥20 个，提交或 skip 都算，4–5 天清完 101 个候选，21:30 报数）做桌面分诊，不开浏览器；以 AgentoolRank 定位自判，他项目 skip 只沿用全局原因（只收费/关站/表单坏/链接农场/只收徽章，另加刷票门槛、人机验证、要交凭证）；每站 check 后 dirsub add 写理由
+- 结果：86 个已处理 = skip 83 + captcha 3（alternativeto、promoteproject、startups.gallery）；剩 15 个对口待 10-03 浏览器提交（含 4 个 nofollow 放最后）；漏写 3 个（dodopayments、blogarama、getlatka）靠复跑 candidates 发现后补上
+- 并行：scripts/audit-categories.ts 已提交，全库类目审计 dry-run 后台跑 → data/category-audit-2026-10-02.csv；judge 花费 $0（订阅通道），--max-usd 不生效
+- 已回报 agentkit，看板已记
+- 结果：成功

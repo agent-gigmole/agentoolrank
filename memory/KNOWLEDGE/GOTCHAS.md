@@ -690,3 +690,10 @@ Brevo 的 API key **不能限定权限范围**：任何一把 key 都能操作�
 - 加发件域：`POST /v3/senders/domains` 返回所需 DNS；认证 `PUT /v3/senders/domains/<domain>/authenticate`；DNS 生效后才能 `POST /v3/senders` 建发件人。brevo-code TXT 是**账户级**，同账户各域名同值
 - 多项目共用免费档每天 300 封额度，要互相知会
 - WSL 上没有 dig：`curl 'https://cloudflare-dns.com/dns-query?name=X&type=TXT' -H 'accept: application/dns-json'`
+
+## dirsub-cross-project-skip-reasons
+沿用别的项目在 directory-log.csv 里的 skip 判断时，先把理由分两类（agentkit 10-02 23:41 规则）：
+- **全局成立，可直接沿用**：只收费、关站、表单坏/被劫持、链接农场、只收徽章换链接；本项目另加刷票/互评门槛、人机验证、要求交凭证
+- **项目相关，必须按本项目重判**：「不相关」「受众不同」。例：alternative.me、comparateur-ia、aitoolsrecap 被 pixtidy 判不相关，对 AgentoolRank（AI agent 工具目录）却是对口的
+- 做法：先桌面分诊（不开浏览器，读档案 + other_projects + 首页说明），把能判 skip 的一次清掉，只把对口的留给浏览器；10-02 晚 101 个候选桌面分诊处理掉 86 个
+- **每批 skip 写完要复跑 `dirsub candidates` 对账剩余清单**：10-02 漏写了 dodopayments、blogarama、getlatka 三个，靠复跑才发现

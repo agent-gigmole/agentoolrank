@@ -230,4 +230,5 @@
 | 外联限速 30 秒间隔 10 封超 5 分钟 / Bash 300 秒超时 / 限速批处理先算总时长 run_in_background / sent.json 对账 / Apple 隐私代理虚假打开 打开率仅参考 | GOTCHAS.md#outreach-send-bash-timeout |
 | 已下架页面 410 005953b / middleware→proxy / isGonePath / 替代品内链核对 ai-job-search | LOG.md#2026-10-02 20:26– 已下架页面 410 + proxy 迁移 |
 | Brevo API key 不能限权 全账户权限 / 有限范围 key 做不到 / tag 隔离监控 停 key / 无创建 key 的 API 只能网页 / senders/domains authenticate / brevo-code 账户级 / 共用 300 封/天 / WSL 无 dig 用 DoH | GOTCHAS.md#brevo-key-no-scope |
+| 他项目 skip 理由分全局/项目相关 / 不相关按本项目重判 / 只收费 关站 表单坏 链接农场 徽章 刷票 人机验证 交凭证可沿用 / 先桌面分诊再开浏览器 / 每批 skip 后复跑 candidates 对账漏写 | GOTCHAS.md#dirsub-cross-project-skip-reasons |
 | newsiteradar.com 接入 Brevo / domain id 6abfb9f2 / new_ladar key / 等 DNS 认证 + tag 监控 | LOG.md#2026-10-02 22:xx– newsiteradar.com 接入 Brevo（发件域 + new_ladar 专用 key） |

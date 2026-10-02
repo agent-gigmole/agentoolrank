@@ -237,7 +237,11 @@
 - 失败: 0
 
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
-- 状态: in_progress（2026-10-02 起）— **目标 25 已达成（10-02 07:40）**，转入每天 5–8 个的常规节奏
+- 状态: in_progress（2026-10-02 起）— **10-03 起每天至少处理 20 个（提交或判 skip 都算），每天 21:30 报数**（agentkit 10-02 23:40 转达老板，取代原 5–8 个/天）
+- 10-02 晚桌面分诊：候选 101 个已处理 86（skip 83 + captcha 3：alternativeto、promoteproject、startups.gallery）；**剩 15 个待 10-03 浏览器提交**：
+  - [ ] saashub [ ] viesearch [ ] linkcentre [ ] whatlaunched [ ] store.app [ ] askmatchbox [ ] best-ai [ ] comparateur-ia [ ] servicelist [ ] launchboosts [ ] aitoolsrecap
+  - 最后做 nofollow 4 个：[ ] alternative.me [ ] webcatalog [ ] foundr [ ] 10words
+  - 规则：他项目 skip 只沿用全局原因（只收费/关站/表单坏/链接农场/只收徽章/刷票门槛/人机验证/要交凭证），「不相关」按本项目重判；每批 skip 后复跑 candidates 对账
 - 台账: ~/data/backlinks/directory-log.csv，只用 dirsub.py check/add 读写（scripts/dirlog.sh 已废弃）
 - 进度: 累计 submitted 25 / badge 1 / retry 2 / skip 7 / todo 5（10-02 07:40，全程无验证码）
   - 10-02 第四批新提交 5：agentlocker.ai（审核 1 月+，徽章可缩 24h，没挂）、linkstartai.com、agenstry.com（MCP endpoint 握手即时收录）、magicnetworld.com（仅 mailto → Brevo 推荐邮件）、thedailyworkflow.com；skip：opentools.ai（仅付费）、xpay.sh（不相关）；todo：conduid.com（需登录）
@@ -344,6 +348,7 @@
 - [ ] 外联：向工具作者发邀请提交
 - [x] newsiteradar.com 接入 Brevo：**完成（10-02 22:07）**——DNS 由 new_ladar 加好，PUT .../newsiteradar.com/authenticate 返回 authenticated=true、verified=true；scripts/brevo-tag-health.ts 按 tag 每日监控已挂 daily-ops.sh 21:30（5dfc46d）。发件域 id 6abfb9f2daf63ed95f090051；key "newsiteradar-outreach" 在 ~/.config/secrets/brevo-api-key-newsiteradar。规则：tag=newsiteradar 出 ALERT → Brevo 后台停用该 key + 通知 new_ladar。new_ladar 自建发件人 jason@newsiteradar.com，护栏：每人一封、带退订、每周 ≤10 封、先 --test
 
+- [ ] 类目审计 dry-run 进行中（10-02 23:xx 起后台跑 scripts/audit-categories.ts，只读，输出 data/category-audit-2026-10-02.csv；judge 走订阅通道显示 $0，--max-usd 不生效）
 - [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
   - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301
   - 待判清单：ai-job-search（也是求职工具，替代品里引用 career-ops；线上渲染时 getToolBySlug 返回 null 已过滤，无 404 链接）——审计时与 career-ops 同口径判是否软下架

@@ -617,3 +617,13 @@
 - 当前：outreach 7 天请求 12 / 送达 12 / 问题 0；newsiteradar 全 0
 - **处理规则**：tag=newsiteradar 出 ALERT → 去 Brevo 后台停用 key "newsiteradar-outreach" + 通知 new_ladar
 - **下一步**：10-03 09:30 后统计外联回复率；10-03 开始全库类目审计
+
+## 2026-10-02 23:40– T25 提速：目录桌面分诊 86/101
+- 起因：老板问为什么 ai-directory 只看过 43 个目录站（new_ladar 268、imagehub 150）。agentkit 承认之前把我们压到 5–8 个/天，现改为 **10-03 起每天至少处理 20 个（提交或判 skip 都算），4–5 天清完剩下 101 个候选，每天 21:30 报数**
+- agentkit 23:41 规则：他项目的「不相关」只对那个项目成立；能沿用的只有对谁都成立的原因：只收费、关站、表单坏、链接农场、只收徽章换链接（我们另加：刷票/互评门槛、人机验证、要求交凭证）
+- 今晚桌面分诊（不开浏览器），按 AgentoolRank 定位（AI agent 工具目录，本身是网站）逐个判，每个先 check 再 dirsub add 写自判理由：101 处理 86 = skip 83（商业黄页/链接农场、只收徽章或回链、刷票门槛、只收费、只收开源或 GPTs、只能 Google 登录、表单坏/被劫持、不对口）+ captcha 3（alternativeto 对口但注册 hCaptcha、promoteproject、startups.gallery）
+- **剩 15 个对口、需开浏览器提交（10-03 一天清完）**：saashub、viesearch、linkcentre、whatlaunched、store.app、askmatchbox、best-ai、comparateur-ia、servicelist、launchboosts、aitoolsrecap；最后做 4 个 nofollow：alternative.me、webcatalog、foundr、10words
+- 已回报 agentkit，看板已记
+- 并行：全库类目审计 dry-run（scripts/audit-categories.ts，已提交）后台跑，只读，输出 data/category-audit-2026-10-02.csv；judge 花费显示 $0（走订阅通道），--max-usd 上限实际不起作用
+- **下一步**：10-03 提交上面 15 个 + 21:30 报数；类目审计跑完看 CSV 再决定 rejudge；09:30 后统计外联回复率
+- 坑：GOTCHAS#dirsub-cross-project-skip-reasons
