@@ -880,3 +880,9 @@
 - 做法：浏览器逐站提交 saashub、viesearch、servicelist、best-ai、linkcentre，dirsub 回写步骤；linkcentre 新建账号（凭据 600 存 secrets/accounts）；修 task_act.py click_text exact 解包报错（3ef45a7）；按 agentkit 要求参照 newsiteradar 写 privacy/terms 草稿（3976655，未上线）
 - 发现：仓库公开但无 LICENSE ≠ 开源，昨晚以「开源」改回 todo 的 libhunt/openalternative/sourceforge 改为等许可证决定（BOSS #36）；/privacy /terms 404（BOSS #35）；llms.txt 类目计数过期（Agent Frameworks 329）；素材包数字/署名过时
 - 结果：今日已提交 5 / 目标 20；成功
+
+## 2026-10-03 04:58–05:28 T25 目录提交第二批（今日 20 个达标）
+- 做法：浏览器逐站提交 + 两站邮件投稿（bin/write 文案、Brevo hello@ 发、tag directory-submit）；MCP 类目录按 agentkit 05:23 规则用 agent-gigmole GitHub OAuth（conduid read:user/read:org，cursor.directory 邮箱只读）；dirsub 逐条回写
+- 结果：今日处理 20 = 提交 15 + retry 2（whatlaunched、store.app）+ skip 3（51tool、ai-kit.cn、10words）；launchboosts、conduid 已上线；101 候选全部处理完，剩 3 个等 #36；明天放宽候选条件
+- 坑：aitoolsrecap ASP.NET [id$=]、姓名无句点；alternative.me 无 name 按序定位、上传 logo 后序号前移、/account/submissions 不带斜杠；Radix tab 要真实点击；foundr 魔法链接读 gmail full 格式；comparateur-ia verif_level 改 standard
+- 结果：成功

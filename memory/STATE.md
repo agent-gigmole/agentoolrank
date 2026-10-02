@@ -741,3 +741,16 @@
 - 待查：llms.txt 类目计数仍是审计前旧值（Agent Frameworks 329），疑似缓存
 - 待办：素材包 directory-listing.md 仍写 669 工具 / Ethan Tan → 应为 593 工具 / Jason T.
 - 坑：GOTCHAS#public-repo-not-open-source、GOTCHAS#directory-submission-batch-1003、GOTCHAS#directory-copy-live-numbers
+
+## 2026-10-03 04:58–05:28 T25 目录提交第二批：今日 20 个达标
+- **今日合计处理 20**（目标 ≥20 达成）：提交 15 / retry 2 / skip 3，dirsub 已逐条回写
+  - 提交：saashub、viesearch、servicelist、best-ai、linkcentre、launchboosts、aitoolsrecap、comparateur-ia、askmatchbox、imyshare、alternative.me、webcatalog、foundr、conduid、cursor.directory
+  - 已上线：launchboosts（实测 nofollow）；conduid https://conduid.com/servers/agentoolrank （信任分 54，被误归 Files 类）；cursor.directory 插件安全扫描中，扫完前不公开
+  - 邮件投稿：askmatchbox、imyshare（文案 bin/write，Brevo 从 hello@ 发，tag directory-submit，草稿 docs/ops/launch-kit/drafts/submit-email-*.md）
+  - retry：whatlaunched（站方 Supabase 发信故障）、store.app（/list 502）
+  - skip：51tool（强制 ICP 备案）、ai-kit.cn（只能加微信）、10words（排队 2602 天）
+- 新账号凭据 ~/.config/secrets/accounts/agentoolrank-*.json（600）
+- **新规则（agentkit 05:23，已入 owner-goal「老板不用管」）**：MCP 类目录可用专用 Chrome 里 agent-gigmole 的 GitHub 做 OAuth，只许身份+邮箱权限；不绑仓库/不 fork/不建仓；授权页出现仓库读写即停下跳过。conduid scope=read:user、read:org；cursor.directory 仅邮箱只读
+- **候选 101 全部处理完**，剩 3 个等 BOSS #36（许可证）；默认条件（DR≥30、导航目录、表单或邮件）下已无新候选
+- **下一步**：10-04 放宽候选（先博客/客座投稿，再 DR 20–30）；10-09 前复查已上线站点链接；whatlaunched/store.app 重试；21:30 报数
+- 坑：GOTCHAS#directory-submission-batch-1003b

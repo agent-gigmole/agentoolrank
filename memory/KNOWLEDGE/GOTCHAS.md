@@ -775,3 +775,14 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 
 ## directory-copy-live-numbers
 目录站文案里的数字/署名要实时取，不要照抄素材包：drafts/directory-listing*.md 写的是 669 工具 + Ethan Tan，10-03 实际为 593 工具 + 署名 Jason T.。素材包本身待更新（TASK T25）。
+
+## directory-submission-batch-1003b
+10-03 第二批（T25）各站坑：
+- **aitoolsrecap**：ASP.NET WebForms，name 属性是 `ctl00$...` 长串 → 用 `[id$=xxx]` 后缀选择器；姓名字段不允许出现句点（"Jason T." 要写成 "Jason T"）。
+- **alternative.me**：`/account/submissions` 不能带末尾斜杠（带了 404）；表单字段没有 name，只能按可见顺序定位，且**上传 logo 后字段序号整体前移**，要上传后重新数。
+- **Radix Tabs**：JS `el.click()` 不切换，要真实点击；按 `button[id*=trigger-xxx]` 定位 trigger。
+- **foundr**：Gmail API metadata/snippet 格式里魔法链接被截断，要用 `format=full` 读正文。
+- **comparateur-ia**：`verif_level` 默认 `verifie`（要求挂徽章），手动改成 `standard`。
+- **邮件投稿是正常渠道**：只给 mailto 的站，文案走 bin/write，Brevo 从 hello@ 发，tag `directory-submit`，草稿存 docs/ops/launch-kit/drafts/submit-email-*.md。
+- **MCP 目录 GitHub OAuth**：授权页先看 scope，只接受身份/邮箱（read:user、read:org、user:email）；出现 repo / public_repo / 写权限即停下跳过。
+- 跳过原因参考：51tool 强制 ICP 备案；ai-kit.cn 只能加微信；10words 排队 2602 天。
