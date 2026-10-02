@@ -650,3 +650,12 @@
 - Stripe（只读 ops key）：TENSO LLC 美国账户 card_payments/link active，银联卡走卡通道；Default payment_method_configuration 中 alipay/wechat_pay off；checkout 未写 payment_method_types（动态支付方式）→ 后台开启即可，不改代码；收款配置变更已报 agentkit 进 09:30 汇总，建议开通；看板已记（6ff0f69）
 - 坑：Stripe 查本地支付方式方法（GOTCHAS#stripe-local-payment-methods-check）；改截断规则时测试期望按新规则重写，有两处期望写错已更正为规则输出，不迁就实现（GOTCHAS#test-expectation-follow-rule）
 - human-intervention=0 / auto-resolved=0 / 熔断=0（Alipay/WeChat 开通待老板批准）
+
+## 2026-10-02 08:50–09:20 T24 日语工具页 198/200 上线
+- 翻译：首轮 approved 168 / failed 32；--retry-failed 再过 15，剩 17
+- 人工审核：前 50 逐篇读（level 1）；其余 133 随机抽 14 读过，level 2 整批发布
+- 17 失败：读审校意见后 --override 放行 15（promptfoo 源文确为 "now backed by OpenAI"，译文正确）；退回 2：siyuan（英文源 tagline 混入中文副本 → 译文重复）、ekko-studio（残留英文单词 "seven"）
+- 线上：/ja/tool/langchain、/ja/tool/dify 200；hreflang en/ja/zh/x-default 全互指；原定 10-09，提前约一周
+- 看板已记录并推送（37cec14）
+- 坑：cut -c 切断多字节字符 → grep 当二进制（GOTCHAS#cut-c-multibyte-utf8）；审核与 --retry-failed 竞态（GOTCHAS#translate-review-race）；residualEnglish 漏单个残留词 + 源 tagline 中英混合（GOTCHAS#residual-english-single-word）
+- human-intervention=0 / auto-resolved=0 / 熔断=0

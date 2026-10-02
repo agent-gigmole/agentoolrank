@@ -189,3 +189,7 @@
 | 改规则时测试期望按规则手算 / 截断切标点 / 不迁就实现 / 迁移旧用例做回归基线 | GOTCHAS.md#test-expectation-follow-rule |
 | 第二门语言抽象 / tool-i18n.ts COPY zh/ja / LocalizedToolPage / /ja/tool/[slug] 薄路由 / translatedLangs hreflang | LOG.md#2026-10-02 08:15–08:45 T24 日语版开工 + 中文读者付款能力核实 |
 | ja 术语表 / です/ます体 / ja 情态映射 / translate-ja 日志 | LOG.md#2026-10-02 08:15–08:45 T24 日语版开工 + 中文读者付款能力核实 |
+| cut -c 截断中日文 / 多字节 UTF-8 切半 / grep Binary file matches / python 按字符切 errors=ignore / grep -a | GOTCHAS.md#cut-c-multibyte-utf8 |
+| 翻译与审核竞态 / --retry-failed ON CONFLICT 重置 human_reviewed=0 / 先等重试跑完再审 | GOTCHAS.md#translate-review-race |
+| residualEnglish 漏单个英文词 / seven / ekko-studio / 源 tagline 中英混合 siyuan 译文重复 | GOTCHAS.md#residual-english-single-word |
+| T24 日语 198/200 上线 / 168+15 过审 / override 15 退回 2 / level 1 前 50 + level 2 抽 14 | LOG.md#2026-10-02 08:50–09:20 T24 日语工具页 198/200 上线 |

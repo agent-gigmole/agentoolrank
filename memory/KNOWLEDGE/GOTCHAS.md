@@ -581,3 +581,13 @@ MCP 证据/索引站（如 agenstry.com）提交时粘贴 MCP endpoint，对方�
 
 ## test-expectation-follow-rule
 改规则（如标题截断从"硬切 32 字"改为"切在 32 字内最后一个标点/空格，<12 字硬切"）时，测试期望值要**按新规则手算重写**，不能先跑实现再把输出抄进断言。10-02 有两处期望写错（例句里的标点位置其实在 12 字阈值之前，按规则应硬切），已更正为规则下的正确输出。重构迁移旧用例（zh-tool.test → tool-i18n.test）时原用例应原样保留、输出不变，作为回归基线。
+
+## cut-c-multibyte-utf8
+用 `cut -c N` 截断中日文输出（10-02 看日语译文时）：GNU cut 的 -c 实际按字节切，会把多字节 UTF-8 字符切成半个 → 文件里出现非法 UTF-8 → 之后 `grep` 把它当二进制文件（只输出 "Binary file matches" 或干脆匹配不到）。做法：截断放在 python 里按字符切（`s[:80]`），读这类文件用 `open(..., errors='ignore')`；非要用 grep 就加 `-a`。
+
+## translate-review-race
+翻译与人工审核同时跑有竞态（10-02 日语）：`translate-tools --retry-failed` 写库用 ON CONFLICT 覆盖，会把 human_reviewed 重置为 0。先审后被重译的条目会自动下架（发布条件是 human_reviewed>=1），方向安全，不会把没审的译文发出去；但审核工作会白做。规矩：**等 --retry-failed 跑完再开始审核**；审完再跑重试的话，发布前重新数一遍 human_reviewed。
+
+## residual-english-single-word
+residualEnglish 只查连续 ≥4 个英文词，抓不到单个残留词（10-02 ekko-studio 日译残留 "seven"）。日文/中文译文里出现单个常见英文词（数字词 one…ten/seven、冠词 the/a/an、and/with 等）也应标记；专有名词/工具名/术语表词白名单除外。待办已进 TASK T24。
+同批另一类源数据问题：英文 tagline 里同时含英文和中文副本（siyuan）→ 译文重复。修法是清理源 tagline（只留英文）后重译；可扫一遍英文源字段里含 CJK 字符的条目。

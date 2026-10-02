@@ -376,6 +376,15 @@
 - **中文读者付款能力（只读 ops key 查 Stripe）**：TENSO LLC 美国账户，capabilities card_payments / link 均 active，银联卡走卡通道可用；Default payment_method_configuration 中 alipay、wechat_pay 均 off；我们 checkout 未写 payment_method_types（动态支付方式）→ **后台开启即生效，无需改代码**。属收款配置变更 → 已报 agentkit 进 09:30 汇总，建议开通；看板已记（6ff0f69）
 - 方法见 GOTCHAS#stripe-local-payment-methods-check、GOTCHAS#test-expectation-follow-rule
 
+## 2026-10-02 08:50–09:20 T24 日语工具页 198/200 上线（原定 10-09，提前约一周）
+
+- **翻译**：首轮 approved 168 / failed 32；`--retry-failed` 再过 15 → 剩 17 失败
+- **人工审核**：前 50 逐篇读（level 1）；其余 133 随机抽 14 读过 → level 2 整批发布
+- **17 个失败项**：逐条读审校意见，`--override` 放行 15（promptfoo 核对源文确为 "now backed by OpenAI"，译文正确）；**退回 2**：siyuan（英文源 tagline 混入一段中文副本 → 译文重复）、ekko-studio（译文残留英文单词 "seven"）
+- **线上**：/ja/tool/langchain、/ja/tool/dify 均 200；hreflang en/ja/zh/x-default 全互指
+- 看板已记录并推送（37cec14）
+- 坑：GOTCHAS#cut-c-multibyte-utf8、#translate-review-race、#residual-english-single-word；源数据中英混合 tagline 见 #residual-english-single-word
+
 ## 近期排期
 
 - **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
@@ -384,7 +393,7 @@
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
-- **日语**：前 200 个译完 → 审稿发布（前 50 逐篇读，其余抽 10%），争取早于原定 10-09；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
+- **日语**：198/200 已上线（10-02 09:20）；剩 siyuan（先清源 tagline 中文副本）、ekko-studio 重译；residualEnglish 加单个常见英文词检测；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - **Alipay/WeChat Pay**：等老板（agentkit 09:30 汇总）批准后在 Stripe 后台开启，无需改代码
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
@@ -400,7 +409,8 @@
 - [ ] 10-03 发 dev.to 第二篇（canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - [ ] T24 中文：确认 sitemap 刷新出 200 个 zh 页 + IndexNow；其余页型 → 西语 10-30 看数据
-- [ ] T24 日语：200 个翻译跑完（data/ops-logs/translate-ja-2026-10-02.log）→ 审稿 → 发布 → sitemap/IndexNow；ollama 误报复核
+- [x] T24 日语 198/200 上线（10-02 09:20，提前约一周）
+- [ ] T24 日语收尾：siyuan 清理中英混合 tagline 后重译；ekko-studio 重译；residualEnglish 加单个常见英文词检测；确认 sitemap/IndexNow 收录 ja 页
 - [ ] Stripe 开 Alipay/WeChat Pay：等老板批准（收款配置变更）
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
