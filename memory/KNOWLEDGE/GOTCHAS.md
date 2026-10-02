@@ -750,3 +750,9 @@ Brevo 的 SMTP key 和 API key 是两种东西，不通用（10-03 给老板 Gma
 - 验证只用 smtplib 登录（starttls + login），不发信
 - 域名已认证后，该域名下新发件人 `POST /v3/senders` 一加即 active，不用邮件验证
 - Gmail「以其他地址发送」走 SMTP 时不带 tag，按 tag 的监控看不到，只能看账户总量；它同样占共用的 300 封/天额度和账户信誉
+
+## bin-write-inferred-rules-brief-allowed
+bin/write 的终检会把「建议类句子」（从事实推出的做法建议）算成「推断出的规则」，于是报告「可发布：否」。10-03「实测 101 个目录站」稿 7 句都属这类，而 brief 明确允许由事实推出建议。处理：通读全文逐句确认这些句子确实由 brief 授权、有事实支撑 → 手改真正的问题（如标题与首句重复、把「没给信号」说过头的句子改成「我们的记录里没有可靠信号」）→ 再跑 ai-flavor 复查 clean 即可放行。不要为了过检把建议全删掉。
+
+## nofollow-sample-bias
+自有目录数据集里 link（rel）只有 30/101 站实测：nofollow 23 / dofollow 6 / ugc 1。我们通常是发现异常（如 nofollow）时才在台账里记 rel，所以 nofollow 占比被高估。对外引用这组数字必须同时写明样本量和偏差，不能说成「77% 目录站是 nofollow」。

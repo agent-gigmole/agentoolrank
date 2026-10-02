@@ -247,3 +247,6 @@
 | 自有目录数据集 / build-directory-dataset.ts / Jev 评测 eval-typesafe-scope.ts | LOG.md#2026-10-03 – 自有目录数据集 + TypeSafe Jev 评测 |
 | Brevo SMTP key xsmtpsib- vs API key xkeysib- 不通用 / SMTP 登录名 xxx@smtp-brevo.com 不是账户邮箱 / 已认证域名新发件人即生效 / Gmail 代发无 tag 占共用额度 | GOTCHAS.md#brevo-smtp-key-vs-api-key |
 | Brevo SMTP 供 Gmail 代发 / gmail-send-as / hello@newsiteradar.com id3 | LOG.md#2026-10-03 02:20– Brevo SMTP 供 Gmail 代发 |
+| bin/write 可发布：否 / 推断规则 是 brief 允许的建议 / 通读确认后手改 + ai-flavor 复查放行 | GOTCHAS.md#bin-write-inferred-rules-brief-allowed |
+| nofollow 统计样本偏差 / link 只 30 站实测 / 发现异常才记 rel / 对外写明样本量 | GOTCHAS.md#nofollow-sample-bias |
+| 自有数据集 101 站统计 / 数据文章 devto-101-directories | LOG.md#2026-10-03 – 自有数据集全量完成 + 数据文章稿 |

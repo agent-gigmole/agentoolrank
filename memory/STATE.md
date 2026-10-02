@@ -708,3 +708,16 @@
 - 风险已提醒：Gmail 代发占共用 300 封/天额度和账户信誉，且无 tag，按 tag 监控看不到
 - **待办**：brevo-tag-health 加账户总量一行
 - 坑：GOTCHAS#brevo-smtp-key-vs-api-key
+
+## 2026-10-03 02:50– 自有数据集全量完成 + 「实测 101 个目录站」数据文章稿（78b2890、6705f02）
+- **数据集** data/directories-verified.json 共 101 站（data/ 在 gitignore，脚本已提交）：
+  - outcome：submitted 61 / listed 5 / skipped 19 / retry 9 / blocked_captcha 5 / blocked_badge 2
+  - 有免费档 81；免费条件 queue 56 / badge 14 / backlink 12 / x_post 1 / none 18
+  - link 只 30 站实测（**样本有偏**，通常发现异常才记 rel）：nofollow 23 / dofollow 6 / ugc 1
+  - 登录：none 32 / email_password 24 / google 19；needs_human：email_inbox 30 / captcha 8
+  - 75 站有成功信号，101 站都有踩坑提示；39 站有价格，中位数 $12
+- **数据文章**：brief docs/ops/launch-kit/briefs/devto-101-directories.md → drafts/devto-101-directories.md（bin/write longform）。报告「可发布：否」，原因是 7 句推断规则，都属 brief 允许、由事实推出的建议；通读后手改 2 处（标题与首句重复；「其余 26 个站没给信号」改成「我们的记录里没有可靠信号」），ai-flavor 复查 clean，已提交
+- 发布计划：10-03 先发 devto-where-to-list，**10-07 发本文**（dev.to 品牌号），CTA → /where-to-list
+- 看板已记 02:50 条（数据集、文章、Jev、SMTP）
+- **下一步**：数据集接 /where-to-list 免费表 + Submit Kit；10-07 发文；T27 12:00 前交定稿
+- 坑：GOTCHAS#bin-write-inferred-rules-brief-allowed、GOTCHAS#nofollow-sample-bias

@@ -864,3 +864,8 @@
 - 做法：Brevo 后台 SMTP & API → SMTP 新建 key "gmail-send-as"，task_capture_key.py（prefix xsmtpsib-）存 Windows 临时文件 → ~/.config/secrets/brevo-smtp-key（600）→ 删临时文件；smtplib 只做登录测试；POST /v3/senders 加 hello@newsiteradar.com（id 3）
 - 结果：登录 OK、未发信；新发件人 active（域名已认证即生效）；服务器/端口/登录名已回 agentkit，并提醒共用额度与无 tag 监控盲区
 - 结果：成功
+
+## 2026-10-03 02:50– 自有数据集全量完成 + 数据文章稿
+- 做法：build-directory-dataset.ts 全量跑完 101 站并出统计；写 brief devto-101-directories.md，bin/write longform 生成 drafts/devto-101-directories.md；报告「可发布：否」（7 句推断规则，均为 brief 允许的建议），通读后手改 2 处，ai-flavor 复查 clean；看板记 02:50 条
+- 结果：submitted 61 / listed 5 / skipped 19 / retry 9 / captcha 5 / badge 2；免费档 81；link 实测 30（nofollow 23，样本有偏）；39 站有价格中位 $12。稿件已提交（78b2890），定 10-07 dev.to 品牌号发
+- 结果：成功
