@@ -195,3 +195,5 @@
 | review-translations --reject 清空 source_hash / --override 后 --retry-failed 重译下架 / promptfoo | GOTCHAS.md#override-after-reject-source-hash |
 | python str.replace 改含 \u 正则 TS 源码失败 / 用 Edit 工具 | GOTCHAS.md#str-replace-insert-wrong-function |
 | T24 日语 198/200 上线 / 168+15 过审 / override 15 退回 2 / level 1 前 50 + level 2 抽 14 | LOG.md#2026-10-02 08:50–09:20 T24 日语工具页 198/200 上线 |
+| 外部提交 URL 自带 ?source=/ref 参数 / website_url 保留不规范化 / 去重按 host+path | GOTCHAS.md#external-submission-keep-ref-param |
+| 首个外部提交 Orkas / src=api / agent 读 /agents 文档自动提交 / G2 1/20 / override 写回 source_hash 已修 | LOG.md#2026-10-02 11:05–11:55 override 写回 source_hash + 第一个外部提交 Orkas（G2 1/20） |

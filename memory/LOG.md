@@ -677,3 +677,12 @@
 - 147 测试全绿，已推送
 - 坑：reject 清空 source_hash → override 后 --retry-failed 当作源已变重译并下架（promptfoo ja 中招，GOTCHAS#override-after-reject-source-hash）；python str.replace 改含 \u 正则的 TS 源码匹配失败 → 用 Edit（GOTCHAS#str-replace-insert-wrong-function）
 - human-intervention=0 / auto-resolved=1（promptfoo 被下架后重审恢复）/ 熔断=0
+
+## 2026-10-02 11:05–11:55 override 写回 source_hash + 第一个外部提交 Orkas（G2 1/20）
+- fix（fc52bad）：review-translations --override 写回当前 source_hash；translationSource/sourceHash 抽到 src/lib/i18n.ts（单测）；148 测试绿；库内空 source_hash 0 行；--retry-failed --dry-run done=0
+- 第一个外部提交 Orkas（orkas.ai，开源多 Agent 桌面平台）：10-01 23:56，src=api，免费档，URL 带 ?source=dir_agentoolrank（对方自动提交程序读了 /agents 文档）
+- 11:50 review-submissions --apply 通过 → /tool/orkas 200，类目 no-code-agent-builders；website_url 保留对方 ?source= 参数
+- G2 1/20，付费 0；已报 agentkit；看板/KPI 已刷新（5eb5543）
+- 发现：agent 可直接提交通道（JSON API / MCP / /agents / llms.txt）带来首个真实转化（N=1）→ 继续加强 MCP 目录与 agent 生态曝光
+- 坑：外部提交 URL 自带 ref 参数要保留（GOTCHAS#external-submission-keep-ref-param）
+- human-intervention=0 / auto-resolved=0 / 熔断=0

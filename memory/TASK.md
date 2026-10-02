@@ -121,6 +121,7 @@
 - 依赖: T10
 - 设计：MCP 新工具 submit_tool / get_submission_status + POST /api/v1/submissions（JSON）；返回 queue_position、eta_days、status_token、badge_html、offers[]（free / $9 priority 72h / $19 fast 24h / $49 featured 7d，每档 what_you_get + eta + 真实价值数据，不夸大）；agent 可传 max_budget_usd、deadline_days → 返回 recommended_plan（满足期限的最便宜档）；付款 = 按需生成 Stripe checkout_url 交给人付（GET .../checkout?plan=&token=，懒创建）；不对 agent 做挽留弹窗，降级选项直接写在 offers 里；llms.txt 写明流程。以后接 agent 支付协议。
 - 验收: vitest 覆盖 offers/recommend；线上 MCP tools/call submit_tool（selftest 后标 rejected）返回 offers 与 status_token；get_submission_status 返回状态；checkout 端点生成 session 并立即 expire（线上 MCP submit_tool → queued + 4 档 offers + recommended ✓；get_submission_status ✓，错 token 404 ✓；checkout 链接 303 到 Stripe（fast \$19）后立即 expire ✓；selftest 提交已标 rejected ✓；vitest 63 ✓）
+- 真实验证: 2026-10-02 首个真实 API 提交 Orkas（orkas.ai，10-01 23:56，src=api，免费档，URL 带 ?source=dir_agentoolrank → 对方自动提交程序读 /agents 文档提交）；11:50 审核通过上线 /tool/orkas；G2 1/20
 - 闸: auto
 - 失败: 0
 
@@ -133,6 +134,7 @@
 - 验收: 新增 ≥150 个工具且每个都有展示名/intelligence/alternatives；质检拒绝率记录；sitemap 同步（新增约 205 个，库内 669；质检拒绝率 24%；官方名/alternatives/related 已补；sitemap 899→2250；另加 mcp-servers 类目 29 个）
 - 闸: auto
 - 失败: 0
+- 后续: 2026-10-02 首个外部提交 Orkas 经 API 通道入库（no-code-agent-builders），扩量从「自己爬」走向「作者/agent 自己交」
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
 - 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封，先 --dry-run 看名单与实时排名
@@ -309,14 +311,15 @@
 ## G2 任务清单（截止 2026-10-21）
 
 - [x] /submit 页面 + /api/submit + submissions 表（2026-10-01 上线）
-- [ ] 审核脚本 review-submissions
+- [x] 审核脚本 review-submissions（T6；10-02 11:50 首次审外部提交 Orkas → /tool/orkas）
+- [~] **外部提交进度 1/20**（10-02：Orkas，src=api 免费档；付费 0）
 - [ ] 免费队列 + 点评/积分换排位机制
 - [ ] 付费档位设计：$19 快速上线 / $49 首页推荐 7 天（Stripe 待用户 key）
 - [~] 徽章 HTML 已在提交成功页给出（挂徽章优先审）；上榜作者邮件未做
 - [ ] 日/周榜页
 - [x] /alternatives/[slug] 页（460 条 sitemap）
 - [ ] 对比页扩充
-- [ ] MCP 服务器 / API（让 AI 可查询）
+- [x] MCP 服务器 / API（让 AI 可查询）（T15；10-02 首个真实 API 提交 Orkas 验证通道有效）
 - [ ] 外联：向工具作者发邀请提交
 
 ## 等待用户

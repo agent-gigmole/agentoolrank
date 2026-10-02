@@ -595,4 +595,7 @@ residualEnglish 只查连续 ≥4 个英文词，抓不到单个残留词（10-0
 同批另一类源数据问题：英文 tagline 里同时含英文和中文副本（siyuan）→ 译文重复。修法是清理源 tagline（只留英文）后重译；可扫一遍英文源字段里含 CJK 字符的条目。
 
 ## override-after-reject-source-hash
-review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该行 source_hash 清空；之后人读过再用 `--override` 放行，source_hash 仍是空。下一次跑 `translate-tools --retry-failed` 时，空 hash ≠ 当前源 hash → 当作「源已变」重译，ON CONFLICT 覆盖并把 human_reviewed 重置为 0 → 已放行的条目被下架。修法：`--override` 时写回当前 source_hash（待办在 TASK T24）；修好前，override 之后别再跑会覆盖它的批量任务，跑了就重数 human_reviewed。
+review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该行 source_hash 清空；之后人读过再用 `--override` 放行，source_hash 仍是空。下一次跑 `translate-tools --retry-failed` 时，空 hash ≠ 当前源 hash → 当作「源已变」重译，ON CONFLICT 覆盖并把 human_reviewed 重置为 0 → 已放行的条目被下架。修法：`--override` 时写回当前 source_hash。**已修（10-02 11:05，fc52bad）**：override 写回当前 hash，translationSource/sourceHash 抽到 src/lib/i18n.ts 供两个脚本共用（单测）；修完查库内 source_hash 空行=0，`--retry-failed --dry-run` done=0 确认不会再误下架。
+
+## external-submission-keep-ref-param
+外部提交的 URL 常自带来源参数（10-02 首个外部提交 Orkas：`https://orkas.ai/?source=dir_agentoolrank`）。这是对方的自动提交程序为了统计「从我们这里来的流量」加的，审核入库时 **website_url 保留原样，不要规范化去掉 query**。去掉后对方看不到我们带去的流量，就少了继续挂徽章 / 付费的理由。注意：src/lib/submissions.ts 的 normalizeUrl 只去 hash、保留 query，所以「带 ?source= 再交一次」不会被 URL 去重拦下。有重复提交时要改成按 host+path 去重，存储仍保留原串。

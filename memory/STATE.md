@@ -403,6 +403,15 @@
 - 147 测试全绿，已推送
 - 坑：GOTCHAS#override-after-reject-source-hash；python str.replace 改含 \u 正则的 TS 源码失败 → 并入 GOTCHAS#str-replace-insert-wrong-function
 
+## 2026-10-02 11:05–11:55 override 写回 source_hash 已修 + 第一个外部提交 Orkas（G2 1/20）
+
+- **override 已修**（fc52bad）：review-translations `--override` 写回当前 source_hash；translationSource/sourceHash 从 translate-tools 抽到 src/lib/i18n.ts（有单测）；148 测试全绿；库内 source_hash 空 0 行；`--retry-failed --dry-run` done=0
+- **第一个外部提交：Orkas**（orkas.ai，开源多 Agent 桌面平台）：10-01 23:56 提交，src=api（JSON API），免费档；提交 URL 带 `?source=dir_agentoolrank` → 判断为对方的自动提交程序读了 /agents 文档后提交
+  - 11:50 手动 `review-submissions --apply` 通过 → /tool/orkas 200，类目 no-code-agent-builders；website_url 保留对方 ?source= 参数（对方用它统计我们带去的流量）
+- **G2 外部提交 1/20**；付费单 0；已报 agentkit，看板与 KPI 已刷新（5eb5543）
+- **结论**：agent 可直接提交通道（POST /api/v1/submissions、MCP submit_tool、/agents 文档、llms.txt）有了第一个真实转化 → 值得加强：多上 MCP 目录 / agent 生态曝光
+- 坑：GOTCHAS#external-submission-keep-ref-param
+
 ## 近期排期
 
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
@@ -411,7 +420,7 @@
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-09**：T19 X 帖复盘（漏斗查 ref=x 访问与后续转化）
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
-- **T24**：中文、日语工具页各 200/200 已上线（10-02 10:50）；剩余：替代品页、对比页、/where-to-list、/submit 的本地化；review-translations --override 补回 source_hash；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
+- **T24**：中文、日语工具页各 200/200 已上线（10-02 10:50）；剩余：替代品页、对比页、/where-to-list、/submit 的本地化（--override 补回 source_hash 已于 11:05 修好）；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - **Alipay/WeChat Pay**：等老板（agentkit 09:30 汇总）批准后在 Stripe 后台开启，无需改代码
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
@@ -431,7 +440,9 @@
 - [x] T24 日语 198/200 上线（10-02 09:20，提前约一周）
 - [x] T24 中/日工具页各 200/200（10-02 10:50）：residualEnglish 单词检测、siyuan、ekko-studio、promptfoo 均完成
 - [ ] T24 剩余页型本地化：替代品页、对比页、/where-to-list、/submit；确认 sitemap/IndexNow 收录 ja 页
-- [ ] review-translations --override 时补回 source_hash（否则后续 --retry-failed 会把放行条目下架）
+- [x] review-translations --override 时补回 source_hash（10-02 11:05 已修，fc52bad）
+- [ ] G2 外部提交 1/20（首个：Orkas，API 提交，10-02 11:50 上线）；新提交每天看 submissions 表并审核
+- [ ] 加强 agent 提交通道曝光：MCP 目录 / agent 生态（首个真实提交来自 API 通道）
 - [ ] Stripe 开 Alipay/WeChat Pay：等老板批准（收款配置变更）
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
