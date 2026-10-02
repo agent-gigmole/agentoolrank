@@ -570,3 +570,12 @@
 - 注意：hold.json / category.json 在 data/ 下被 gitignore，是本地运营状态，别误删
 - 已报 agentkit：career-ops 建议下架（删数据，等老板批）；排"全库类目审计"ticket（agent-frameworks 329 个成杂物类）；看板已记
 - 坑：GOTCHAS#outreach-rank-fact-recheck、GOTCHAS#outreach-group-address
+
+## 2026-10-02 20:20– 软下架 tools_archive + career-ops 下架（8b6eabf / 8edc2db / 9c62009）
+- **口径**（agentkit 20:20）："删数据"仅指不可恢复的删除；软下架（数据保留、可恢复）属日常收录整理，自己定，记一笔
+- 新增 apps/agent-tools/scripts/delist-tool.ts：整行连同 metric_snapshots 存进 tools_archive(id, row_json={tool, snapshots}, reason, archived_at)；一个事务里先写归档 → 删子行 → 删 tools 行；`--restore` 恢复、`--dry-run` 只看
+- 4 个入口查归档表、不自动重新收录：scripts/crawl-github.ts（新工具入库前）、expand-tools.ts（归档 id 计入已占用）、review-submissions.ts（命中标 rejected，note=tool was delisted）、submit-core.ts（invalid：This tool is outside what AgentoolRank lists.）
+- 页面层：i18n-data.ts translatedTools 改 JOIN tools（中日 sitemap 不列已下架）；sitemap.ts 对比对过滤已不在 tools 里的替代品（其他工具 alternatives 仍引用 career-ops）
+- 已下架：career-ops（求职助手，不在收录范围）。恢复→再归档往返测试通过；线上 /tool/career-ops、/zh/tool/career-ops、对比页均 404，sitemap 计数 0；192 测试 + build 过；已部署推送、看板已记
+- **下一步：10-03 开始全库类目审计**（要求见 TASK.md：dry-run 对照、抽 30 条人工看、旧值留列、类目 slug 不改不删，合并/删除走 301）
+- 坑：GOTCHAS#delist-fk-snapshots、GOTCHAS#delist-dangling-refs

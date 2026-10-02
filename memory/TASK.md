@@ -345,7 +345,8 @@
 - [ ] 已确认，22:00 外联发完后做：Brevo 加 newsiteradar.com 发件域 + 给 new_ladar 建专用 API key（~/.config/secrets/brevo-api-key-newsiteradar，600，不走总线）。agentkit 18:44:55 答复：自有账户里给另一项目新建有限范围 key 属日常运营、不算改凭证，记一笔即可；new_ladar 是对 newsletter 作者的一对一冷外联，护栏同我方（每人一封、带退订、每周 ≤10 封），出现退信/投诉即停它的 key
 
 - [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
-- [ ] career-ops 下架（LLM 判为求职助手、不在收录范围）：删数据，**等老板批**（已报 agentkit）
+  - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301
+- [x] career-ops 软下架（LLM 判为求职助手、不在收录范围）：agentkit 20:20 口径——"删数据"仅指不可恢复删除，软下架（归档表、可恢复）属日常整理，自己定、记一笔。delist-tool.ts → tools_archive（含 metric_snapshots），4 个入口拦重新收录，sitemap 过滤；线上 404 已验证（10-02）
 - [x] 安全过滤：换脸/deepfake/脱衣/成人类工具一律不收录（src/lib/safety.ts unsafeMatch；提交付款前、review-submissions、expand-tools、crawl-github 新工具 4 处接入；38e0c03，10-02）
 
 ## 等待用户

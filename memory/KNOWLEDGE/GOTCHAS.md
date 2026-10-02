@@ -658,3 +658,12 @@ Brevo **一个组织只能开一个账户**：10-02 new_ladar 用同一家公司
 
 ## outreach-group-address
 爬虫抓来的"联系邮箱"可能是**公开邮件组**（MLflow 是 mlflow-users@googlegroups.com），发一封等于群发给整个社区。"每个地址只发一封"防不住。按地址模式拦：域名 googlegroups.com / lists.* / groups.io，local part users / dev / discuss / announce / list / noreply（src/lib/outreach.ts `isGroupAddress`），send-outreach 命中即永久跳过；有测试。
+
+## delist-fk-snapshots
+软下架删 tools 行时报 `FOREIGN KEY constraint failed`：metric_snapshots.tool_id 外键指向 tools 且没有 ON DELETE。libSQL `db.batch(..., "write")` 是事务，失败整体回滚、数据无损。修法：快照随工具一起存进 tools_archive.row_json（{tool, snapshots}），事务内顺序为 写归档 → 删子行 → 删 tools 行。tool_i18n 无外键（不随删，JOIN tools 过滤）。删任何主表行前先 `PRAGMA foreign_key_list(<子表>)` 查一遍。
+
+## delist-dangling-refs
+下架后还有两类残留：
+- sitemap 是部署时静态生成的，下架后要**重新部署**才会更新
+- 其他工具的 `alternatives` 数组里仍引用已下架 slug → 对比页 URL 会生成出来但 404；sitemap 生成对比对时要过滤掉已不在 tools 里的一方；i18n 列表也要 JOIN tools
+- 入口（爬虫/扩充/审核/提交）都要查归档表，否则每日爬虫会把下架工具重新收录

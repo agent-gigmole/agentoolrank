@@ -779,3 +779,10 @@
 - 今晚 10 封：hermes-agent、LangChain、Dify、NocoBase、FastGPT、langwatch、Codewhale、LiteLLM、MinerU、cognee
 - 已报 agentkit：career-ops 下架待老板批；全库类目审计 ticket；看板已记
 - 结果：成功
+
+## 2026-10-02 20:20– 软下架 tools_archive + career-ops 下架
+- 做法：agentkit 明确"删数据"=不可恢复删除，软下架可自定 → delist-tool.ts 归档到 tools_archive（含 metric_snapshots，一个事务，--restore/--dry-run）；crawl-github / expand-tools / review-submissions / submit-core 4 入口拦重新收录；i18n sitemap JOIN tools，sitemap 对比对过滤悬空替代品
+- 坑：首跑 FOREIGN KEY constraint failed（metric_snapshots.tool_id 无 ON DELETE），db.batch 事务整体回滚无损 → 快照一并归档；sitemap 静态生成需重新部署；alternatives 悬空引用会生成 404 对比页
+- 验证：往返测试过；线上 3 类 URL 404、sitemap 0 条；192 测试 + build；已部署推送，看板已记
+- 记录 agentkit 对全库类目审计的 4 条要求（明天开始）
+- 结果：成功
