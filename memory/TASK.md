@@ -153,7 +153,8 @@
 - 失败: 0
 
 ### T19 10-02 X 帖：/report 数据发现（每天 ≤1 条，已用完 10-01 的额度）
-- 状态: todo（定稿已走 content-writing，10-02 10:00 发）
+- 状态: done（2026-10-02 09:45 老板主号 @hwak8666621 发出：https://x.com/hwak8666621/status/2105834735146541311；Premium 单条 420 weighted 未拆 thread；SOCIAL_CALENDAR 已登记，看板已记，已回报 agentkit）
+- [ ] 10-09 复盘 ref=x：漏斗查 ref=x 访问与后续转化
 - 定稿 docs/ops/launch-kit/drafts/x-t19.md；brief docs/ops/launch-kit/briefs/x-t19-report.md；ph-and-x.md 旧稿作废
 - 依赖: -
 - 内容要点：669 个开源 agent 工具里 32% 半年无提交（含 68 个 5k+ 星项目），星数≠还在维护；最快增长 Skills / LangChain；链接 agentoolrank.com/report?ref=x，写明作者本人

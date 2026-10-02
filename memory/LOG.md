@@ -659,3 +659,12 @@
 - 看板已记录并推送（37cec14）
 - 坑：cut -c 切断多字节字符 → grep 当二进制（GOTCHAS#cut-c-multibyte-utf8）；审核与 --retry-failed 竞态（GOTCHAS#translate-review-race）；residualEnglish 漏单个残留词 + 源 tagline 中英混合（GOTCHAS#residual-english-single-word）
 - human-intervention=0 / auto-resolved=0 / 熔断=0
+
+## 2026-10-02 09:45 T19 X 帖已发
+- 老板主号 @hwak8666621 发出：https://x.com/hwak8666621/status/2105834735146541311
+- x-post skill：先 --dry-run 确认账号 Premium（420 weighted 单条，不拆 thread），再正式发
+- 文案 drafts/x-t19.md（content-writing，hook-first，zh），链接 ?ref=x
+- SOCIAL_CALENDAR 已登记并推送 agentkit；看板已记录（1315543）；已回报 agentkit
+- 发现：老板主号是 X Premium，中文长帖不会被自动拆 thread（GOTCHAS#content-writing-bin-write）
+- 下一步：22:00 外联第一批；10-03 dev.to 第二篇；10-09 复盘 ref=x
+- human-intervention=0 / auto-resolved=0 / 熔断=0

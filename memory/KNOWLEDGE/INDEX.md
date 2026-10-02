@@ -150,7 +150,7 @@
 | T24 多语言计划 / BOSS_DECISIONS #23 / 中文 10-05 / 日语 10-09 / hreflang 全互指 | LOG.md#2026-10-02 T24 多语言计划（BOSS_DECISIONS #23） |
 | 看板每日 KPI / KPI:START KPI:END 标记替换 / payments 懒建表 try/catch / CST→UTC 日期边界 / 看板 dirty 随改动提交 | GOTCHAS.md#kpi-dashboard-block |
 | 每日 KPI 上线 / 集团运营监管 / agentkit 09:30 汇总 | LOG.md#2026-10-02 看板每日 KPI（集团运营监管） |
-| content-writing / bin/write / brief / ai-flavor / --out FileNotFoundError mkdir -p / x-post 偏抽象手补 / CJK 2 权重 / 非 Premium 拆 thread / 中文帖时段 | GOTCHAS.md#content-writing-bin-write |
+| content-writing / bin/write / brief / ai-flavor / --out FileNotFoundError mkdir -p / x-post 偏抽象手补 / CJK 2 权重 / 非 Premium 拆 thread / 中文帖时段 / 老板主号是 Premium 不拆 | GOTCHAS.md#content-writing-bin-write |
 | ISR 缓存 / last refreshed 日期滞后 / revalidate=86400 / 查 DB 判断断更 | GOTCHAS.md#isr-stale-refresh-date |
 | #24 写作流程落地 / T19 定稿 / 10-02 10:00 发 | LOG.md#2026-10-02 #24 写作流程落地（content-writing） |
 | 翻译流水线 / 译者审校不同模型族 / noFallback / 发布门 approved+human_reviewed / DeepSeek ok 与 issues 分开 / 源 tagline 截断 / description 存中文 / next start 按 PID kill | GOTCHAS.md#translation-pipeline-review-gate |

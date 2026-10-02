@@ -385,13 +385,21 @@
 - 看板已记录并推送（37cec14）
 - 坑：GOTCHAS#cut-c-multibyte-utf8、#translate-review-race、#residual-english-single-word；源数据中英混合 tagline 见 #residual-english-single-word
 
+## 2026-10-02 09:45 T19 X 帖已发
+
+- 老板主号 @hwak8666621：https://x.com/hwak8666621/status/2105834735146541311
+- x-post skill：先 --dry-run 确认账号为 **X Premium**（420 weighted 单条，未拆 thread）再正式发
+- 文案 drafts/x-t19.md（content-writing，hook-first，zh），链接带 ?ref=x
+- SOCIAL_CALENDAR 已登记并推送 agentkit；看板已记录（1315543）；已回报 agentkit
+- 10-09 复盘：漏斗里 ref=x 的访问与后续转化
+
 ## 近期排期
 
-- **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
 - **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；需 Google 登录的站等品牌号；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
+- **10-09**：T19 X 帖复盘（漏斗查 ref=x 访问与后续转化）
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
 - **日语**：198/200 已上线（10-02 09:20）；剩 siyuan（先清源 tagline 中文副本）、ekko-studio 重译；residualEnglish 加单个常见英文词检测；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
 - **Alipay/WeChat Pay**：等老板（agentkit 09:30 汇总）批准后在 Stripe 后台开启，无需改代码
@@ -399,7 +407,8 @@
 
 ## 待办 / 下一步
 
-- [ ] T19 10-02 10:00 发 X 帖（定稿 drafts/x-t19.md），发后看板记链接、查 src=x
+- [x] T19 X 帖已发（10-02 09:45，@hwak8666621/status/2105834735146541311）
+- [ ] 10-09 复盘 T19：漏斗查 ref=x 访问与后续转化
 - [ ] T17 22:00 第一批外联；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
 - [x] T25 目录站累计 25（10-02 07:40 达成，提前）
 - [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com、smithery 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执

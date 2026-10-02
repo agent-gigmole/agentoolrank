@@ -463,6 +463,7 @@
 - 坑 2：x-post 初稿偏抽象 → 从 brief 挑具体数字/名字手补（T19 补 MetaGPT 71k、gpt-engineer 55k），**手改后必须再跑一次 ai-flavor**
 - 坑 3：brief 只放可核对事实，禁止推测性说法（如"agent 自己提交"）；ai-flavor 会抓 em dash（dev.to 第二篇 4 处）
 - X：CJK 字符按 2 权重计数；x-post skill 在非 Premium 账号自动拆 thread；中文帖放中文读者活跃时段（如北京 10:00），不半夜发
+- 老板主号 @hwak8666621 是 **X Premium**（10-02 T19 dry-run 确认：420 weighted 单条发出，不拆 thread）→ 中文长帖可写成单条；仍先 `--dry-run` 看是否拆分再正式发
 
 ## isr-stale-refresh-date
 - 页面显示的"last refreshed"日期来自 ISR 缓存：/report revalidate=86400 → 最多滞后 24h（10-02 看到 09-30，实际 DB 10-01T12:48 已全量刷新）
