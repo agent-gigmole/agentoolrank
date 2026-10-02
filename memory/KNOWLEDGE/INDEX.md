@@ -245,3 +245,5 @@
 | Jev 边界模糊判断约 84% vs DeepSeek 97% / 类目 88% 236ms / 只做第二意见 | GOTCHAS.md#typesafe-jev-fuzzy-boundary |
 | columbus 字段不能公开 / 正则统计 18% 要徽章 弃用 / 对外数字只用自家 directory-log detail / directories-verified.json | GOTCHAS.md#columbus-derived-stats |
 | 自有目录数据集 / build-directory-dataset.ts / Jev 评测 eval-typesafe-scope.ts | LOG.md#2026-10-03 – 自有目录数据集 + TypeSafe Jev 评测 |
+| Brevo SMTP key xsmtpsib- vs API key xkeysib- 不通用 / SMTP 登录名 xxx@smtp-brevo.com 不是账户邮箱 / 已认证域名新发件人即生效 / Gmail 代发无 tag 占共用额度 | GOTCHAS.md#brevo-smtp-key-vs-api-key |
+| Brevo SMTP 供 Gmail 代发 / gmail-send-as / hello@newsiteradar.com id3 | LOG.md#2026-10-03 02:20– Brevo SMTP 供 Gmail 代发 |

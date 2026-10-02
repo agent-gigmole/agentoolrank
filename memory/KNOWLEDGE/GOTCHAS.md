@@ -742,3 +742,11 @@ Jev 在边界模糊的判断（如「是否属于 agent 工具」收录判断）
 
 ## columbus-derived-stats
 backlink profiles 里 dofollow 等字段部分来自 columbus，不能公开。用正则扫备注 + profiles 得出的统计（如「18% 要徽章」）不可靠且可能混入 columbus 数据 → 弃用。对外数字只从 ~/data/backlinks/directory-log.csv 里我们自己写的 detail 抽取（scripts/build-directory-dataset.ts，无证据填 unknown）。
+
+## brevo-smtp-key-vs-api-key
+Brevo 的 SMTP key 和 API key 是两种东西，不通用（10-03 给老板 Gmail 代发建 SMTP key 时确认）：
+- SMTP key 前缀 `xsmtpsib-`，在后台 SMTP & API → SMTP 页新建；API key 前缀 `xkeysib-`。用 task_capture_key.py 抓取时 prefix 参数要对应
+- SMTP 登录名**不是账户邮箱**，是 Brevo 分配的 `xxx@smtp-brevo.com`（在 SMTP 页显示）；服务器 smtp-relay.brevo.com:587 STARTTLS
+- 验证只用 smtplib 登录（starttls + login），不发信
+- 域名已认证后，该域名下新发件人 `POST /v3/senders` 一加即 active，不用邮件验证
+- Gmail「以其他地址发送」走 SMTP 时不带 tag，按 tag 的监控看不到，只能看账户总量；它同样占共用的 300 封/天额度和账户信誉

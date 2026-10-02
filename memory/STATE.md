@@ -699,3 +699,12 @@
   - 定位：便宜的第二意见。用在外联发前的类目复核 + 安全筛语义补充（后者先测）；已报 agentkit，周一写进本周经营
 - **下一步**：等数据集全量跑完 → 抽查 → 接 /where-to-list 免费表与数据文章（10-07）；Jev 接外联类目复核
 - 坑：GOTCHAS#typesafe-jev-noul-field、GOTCHAS#typesafe-jev-fuzzy-boundary、GOTCHAS#columbus-derived-stats
+
+## 2026-10-03 02:20– Brevo SMTP 供老板 Gmail 代发
+- agentkit 02:20 转达：老板要在自己 Gmail 里以 hello@agentoolrank.com、hello@newsiteradar.com 身份发信，走我们的 Brevo SMTP
+- 已建 SMTP key "gmail-send-as"（task_capture_key.py prefix=xsmtpsib- → ~/.config/secrets/brevo-smtp-key 600，临时文件已删）；smtplib 仅登录测试 OK，未发信；Brevo 标签页已关
+- 非保密信息已回 agentkit：smtp-relay.brevo.com:587 STARTTLS，登录名 bbef73001@smtp-brevo.com（不是账户邮箱）
+- 发件人：hello@agentoolrank.com(id1)、jason@newsiteradar.com(id2) 已有；hello@newsiteradar.com 用 POST /v3/senders 新加 id3，dkim/spf 无错，active（域名已认证，免邮件验证）
+- 风险已提醒：Gmail 代发占共用 300 封/天额度和账户信誉，且无 tag，按 tag 监控看不到
+- **待办**：brevo-tag-health 加账户总量一行
+- 坑：GOTCHAS#brevo-smtp-key-vs-api-key

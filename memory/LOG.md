@@ -859,3 +859,8 @@
 - 做法：写 scripts/build-directory-dataset.ts（只用自家 directory-log.csv 的 detail，约 100 个有具体结果的站，LLM 抽 11 个结构化字段，无证据填 unknown，输出 data/directories-verified.json，全量后台跑）；写 scripts/eval-typesafe-scope.ts 在 147 条人工标注上测 Jev
 - 结果：数据集 3 条样本质量好（viesearch 排队 1200+ 拒绝率 82%；futuretools 先关 newsletter 弹窗、成功信号「Tool Submitted!」）；旧正则统计因混入 columbus 字段弃用。Jev 收录判断最高约 84%（DeepSeek 约 97%，不替换），类目 88%（65/74），236ms → 只做第二意见（外联类目复核；安全筛语义题待测），已报 agentkit
 - 结果：成功
+
+## 2026-10-03 02:20– Brevo SMTP 供 Gmail 代发
+- 做法：Brevo 后台 SMTP & API → SMTP 新建 key "gmail-send-as"，task_capture_key.py（prefix xsmtpsib-）存 Windows 临时文件 → ~/.config/secrets/brevo-smtp-key（600）→ 删临时文件；smtplib 只做登录测试；POST /v3/senders 加 hello@newsiteradar.com（id 3）
+- 结果：登录 OK、未发信；新发件人 active（域名已认证即生效）；服务器/端口/登录名已回 agentkit，并提醒共用额度与无 tag 监控盲区
+- 结果：成功

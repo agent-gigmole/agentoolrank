@@ -379,6 +379,8 @@
 - [x] MCP 服务器 / API（让 AI 可查询）（T15；10-02 首个真实 API 提交 Orkas 验证通道有效）
 - [ ] 外联：向工具作者发邀请提交
 - [x] newsiteradar.com 接入 Brevo：**完成（10-02 22:07）**——DNS 由 new_ladar 加好，PUT .../newsiteradar.com/authenticate 返回 authenticated=true、verified=true；scripts/brevo-tag-health.ts 按 tag 每日监控已挂 daily-ops.sh 21:30（5dfc46d）。发件域 id 6abfb9f2daf63ed95f090051；key "newsiteradar-outreach" 在 ~/.config/secrets/brevo-api-key-newsiteradar。规则：tag=newsiteradar 出 ALERT → Brevo 后台停用该 key + 通知 new_ladar。new_ladar 自建发件人 jason@newsiteradar.com，护栏：每人一封、带退订、每周 ≤10 封、先 --test
+- [x] Brevo SMTP 供老板 Gmail 代发（10-03 02:20 agentkit 转达）：新建 SMTP key "gmail-send-as"（~/.config/secrets/brevo-smtp-key，600，仅登录测试未发信）；smtp-relay.brevo.com:587 STARTTLS，登录名 bbef73001@smtp-brevo.com；发件人 hello@agentoolrank.com(id1)、jason@newsiteradar.com(id2)、hello@newsiteradar.com(id3，API 新加，已 active)；已回 agentkit 并提醒共用 300 封/天额度与信誉、无 tag
+- [ ] brevo-tag-health 加一行账户总量（不分 tag），覆盖 Gmail 代发等不带 tag 的发信
 
 - [x] 类目审计 dry-run 完成（10-02 23:xx–10-03 00:xx，scripts/audit-categories.ts 只读 → data/category-audit-2026-10-02.csv，670 条，$0）：在范围内 575（类目不变 364 / 变化 211）、被拒 95
 - [x] 抽查 30 条（每类随机 10）：不变 10/10 对；变化 10 条新类目都更准；被拒 9/10 对，误判 react-agent（对口，官网坏了）→ 以「官网打不开/404」为理由的拒绝不能直接下架
