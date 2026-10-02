@@ -892,3 +892,9 @@
 - 结果：Agent Frameworks 329→165，211 测试通过，线上 llms.txt 正确；pixtidy 06:35 认证通过（authenticated/verified=true，imagehub 建 launch@pixtidy.com）；洞察「付费档卖曝光但流量不足」写入 T28 周一摘要
 - 坑：GOTCHAS#sql-select-star-shadowed-alias
 - 结果：成功
+
+## 2026-10-03 07:34 中日文页收录检查 + sitemap 重新提交 + 素材包更新
+- 做法：GSC 28 天按页面拆展示；URL Inspection API 抽查 6 个 URL；webmasters 全权限 scope PUT 重新提交 sitemap；素材包 directory-listing 三语改数字和署名（c8a5d42）
+- 结果：zh/ja 展示 0（上线 1 天 + GSC 延迟，属预期），抽查均未收录，只有老英文页 indexed；sitemap 重提 204；收录覆盖率列入 T28 指标，新建 T30 每周抽查；外联 9.5 小时无回复，09:30 后统计
+- 坑：GOTCHAS#gsc-url-inspection-api
+- 结果：成功

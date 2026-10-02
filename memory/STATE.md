@@ -764,3 +764,12 @@
 - **已认证（06:35）**：imagehub 06:33 加好 5 条 DNS，authenticate 返回 authenticated=true、verified=true；imagehub 去建发件人 launch@pixtidy.com
 - **风险**：一个 Brevo 账户跑三个品牌 + 老板 Gmail 代发，共用 300 封/天额度和账户信誉
 - 坑：GOTCHAS#sql-select-star-shadowed-alias
+
+## 2026-10-03 07:34– 中日文页收录检查 + sitemap 重新提交 + 素材包更新（c8a5d42）
+- **中日文页流量为 0 属预期**：GSC 28 天 393 次展示全部来自 33 个英文页；zh/ja 10-02 才上线，GSC 有约 2 天延迟
+- **URL Inspection 抽查**：/zh/tools、/ja/tool/langchain = unknown to Google；/zh/tool/langchain、/ja、/where-to-list = Discovered - currently not indexed；只有老的 /tool/langchain indexed（7-20 抓取）。sitemap 统计 2467 提交 / 0 indexed（也滞后）
+- **sitemap 已重新提交**（webmasters 全权限 scope，PUT 返回 204，service account 有写权限）
+- **结论**：新站抓取预算低，瓶颈在 Google 收录 →「收录覆盖率」列入 T28 周一摘要指标；新建 T30 每周 URL Inspection 抽查 zh/ja
+- **素材包已更新**（c8a5d42）：593 工具、Jason T.、"近 200 个热门工具有中文和日文页面"（zh 191、ja 191）
+- 外联截至 07:30 无回复（发出约 9.5 小时），09:30 后统计
+- 坑：GOTCHAS#gsc-url-inspection-api

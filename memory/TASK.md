@@ -252,7 +252,7 @@
   - [ ] 10-09 前复查已上线站点的链接（launchboosts、conduid、cursor.directory 等是否在、rel 是什么）
   - [ ] whatlaunched / store.app 重试
   - MCP 目录站 GitHub OAuth 规则（agentkit 05:23，已入 owner-goal「老板不用管」）：专用 Chrome 里 agent-gigmole 的 GitHub，只许身份+邮箱权限；不绑仓库、不 fork、不建仓；授权页出现仓库读写**或任何 org 权限（read:org 及以上）**即取消跳过（05:28 更正：conduid 这次授权了 read:org，会暴露 agent-gigmole 组织成员关系，算例外，以后不再这样；cursor.directory 仅邮箱只读）
-  - [ ] 素材包数字和署名更新：docs/ops/launch-kit 的 directory-listing 素材仍写 669 工具 / Ethan Tan → 593 工具 / Jason T.（提交时文案实时取数）
+  - [x] 素材包数字和署名更新（10-03 07:30，c8a5d42）：directory-listing.md / -fr / -zh 改为 593 工具 / Jason T.；「前 200 中文页」改为「近 200 个热门工具有中文和日文页面」（实际 zh 191、ja 191，审计下架 9 个）
   - [ ] llms.txt 类目计数过期待查（Agent Frameworks 仍 329，审计前旧值，疑似缓存）
   - 等老板：**#35** /privacy、/terms 上线（草稿 docs/legal/privacy-draft.md、terms-draft.md 已提交）；**#36** 仓库许可证（agentkit 拟建议代码 MIT、数据/文案保留版权）
 - 10-02 晚桌面分诊（23:43 agentkit 抽查后修正）：候选 101 = skip 77 + captcha 3（alternativeto、promoteproject、startups.gallery）+ **待 10-03 浏览器/邮件提交 21 个**：
@@ -310,9 +310,16 @@
 - [x] 草案 docs/ops/weekly/2026-W41-draft.md（c1dcfc2，已推送）：7 天漏斗 会话 51（约 7/天 < 10/天阈值）、/submit 访问 1、提交 2、付费 0；来源 direct 43 / outreach 4 / devto 2。押注 ①外联放量 10→15→20 封/天（截止 10-11）②数据文章分发 dev.to /where-to-list（10-03）+「实测 100 个目录站」（10-07），≥50 访问 ③Submit Kit 预售 ≥3 单（截止 10-18）
 - [ ] **10-05（周一）交第一份**
 - [ ] 草案补洞察（10-03 06:30）：付费档卖的是曝光，但流量不足——10-02 晚 10 封外联带来 4 个会话（cognee、langchain、hermes-agent），全是 page_view，0 次维护者横幅点击 / 徽章复制 / checkout；约 8.5 小时无回信。首页每天个位数访客，$49 首页推荐作者不会买。推论：Submit Kit 卖数据和配方，本身有价值、不依赖我们的流量，作为周一摘要要点 + Submit Kit 论据
+- [ ] 周一摘要加「收录覆盖率」指标（10-03 07:34）：GSC 28 天 393 次展示全部来自 33 个英文页，zh/ja 为 0；sitemap 提交 2467、indexed 0；URL Inspection 抽查 zh/ja 页为 unknown 或 Discovered-not-indexed → 瓶颈在 Google 收录（新站抓取预算低）
 - [ ] 看板加「本周经营」固定栏 + 三个固定指标，自动出数：目录提交（已提交/已上线/成功率）、对标差距、外联漏斗
 - [ ] 周一前补：竞品扫描（对标站 + ≥3 个同类站）、新数据源 1 个、新渠道 1 个
 - 约束: 瓶颈在分发；零流量期不再堆功能（已承认这两天犯过一部分）
+- 闸: auto
+
+### T30 中日文页收录跟踪
+- 状态: todo（2026-10-03 起）
+- [ ] 每周用 URL Inspection API 抽查 zh/ja 收录（/zh/tools、/ja、/zh/tool/<slug>、/ja/tool/<slug> 各几条 + 英文对照），记录 coverageState 变化，结果进周一摘要「收录覆盖率」；方法见 GOTCHAS#gsc-url-inspection-api
+- 基线 10-03：/zh/tools、/ja/tool/langchain = URL is unknown to Google；/zh/tool/langchain、/ja、/where-to-list = Discovered - currently not indexed；/tool/langchain indexed（7-20 抓取）；sitemap 10-03 已重新提交（204）
 - 闸: auto
 
 ### T29 Jev 第二意见接入（外联类目复核；安全筛语义题待测）

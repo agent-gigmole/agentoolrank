@@ -790,3 +790,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 
 ## sql-select-star-shadowed-alias
 `SELECT c.*, (SELECT COUNT(*) …) AS tool_count FROM categories c` 时，若 categories 表本身就有存储列 `tool_count`，结果里出现两个同名列，驱动把行转成对象时只保留一个——这里拿到的是**过期的存储值**，计算值被遮蔽，且不报错（852323b，Agent Frameworks 显示 329，实际 165）。规则：表里有冗余计数/派生列时，查询一律显式列出列名，计算列别名不要与存储列同名；或者干脆删掉冗余存储列。症状是"多处显示的数字一致地错"，容易误判为缓存。
+
+## gsc-url-inspection-api
+- 逐页查 Google 收录状态：`POST https://searchconsole.googleapis.com/v1/urlInspection/index:inspect`，body `{"inspectionUrl": "...", "siteUrl": "sc-domain:agentoolrank.com"}`，service account 用 `webmasters.readonly` 即可；看 `inspectionResult.indexStatusResult.coverageState`（URL is unknown to Google / Discovered - currently not indexed / Submitted and indexed）和 lastCrawlTime。有每日配额，只做抽查。
+- 重新提交 sitemap 要 `webmasters` 全权限 scope（readonly 不行），见 #google-sitemap-resubmit-service-account。
+- 10-03 实测：zh/ja 页 10-02 上线，GSC 28 天展示为 0（GSC 本身有约 2 天延迟）；抽查全是 unknown 或 Discovered-not-indexed，只有老英文页 indexed；sitemap 统计 2467 提交、0 indexed（统计也滞后）。结论：新站抓取预算低，新语言页的瓶颈是收录而非排名；先用 URL Inspection 判断是否被收录，再谈流量。

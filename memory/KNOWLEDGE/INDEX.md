@@ -260,3 +260,4 @@
 | SELECT c.* + 同名计算列别名 被存储列遮蔽 / categories.tool_count 过期 / getCategories 显式列名 / 329→165 不是缓存 | GOTCHAS.md#sql-select-star-shadowed-alias |
 | pixtidy 接入 Brevo 已认证 / brevo-pixtidy-key / launch@pixtidy.com / 一账户三品牌共用 300 封 | TASK.md#T20 外联 Brevo 段 |
 | 外联 4 会话全 page_view 0 转化 / 付费档卖曝光流量不足 / Submit Kit 论据 | LOG.md#2026-10-03 06:29–06:35 |
+| GSC URL Inspection API 逐页查收录 / coverageState / zh ja 页未收录 / Discovered not indexed / sitemap 重提要全权限 scope | GOTCHAS.md#gsc-url-inspection-api |
