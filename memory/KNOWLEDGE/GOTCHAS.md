@@ -762,3 +762,16 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 处理：要进仓库/部署的数据文件别放任何名为 data 的目录（这次改放 src/lib/）；或把忽略规则改成 `/data/` 只匹配根目录
 - 排查：`git check-ignore -v <path>` 看是哪条规则命中
 - 另：构建日志 "Ecmascript file had an error" 来自 packages/db 的 process.cwd()（Edge Runtime 旧警告），build 退出码 0 时可忽略
+
+## public-repo-not-open-source
+仓库公开（public）≠ 开源。没有 LICENSE 文件时默认保留全部版权，法律上不算开源。agent-gigmole/agentoolrank 公开但无 LICENSE，10-02 晚据此把 libhunt、openalternative、sourceforge 当「开源类」排进提交，10-03 更正为等许可证决定（BOSS #36）。提交开源类目录前先查仓库根目录 LICENSE / GitHub 的 license 字段（`gh api repos/<o>/<r> --jq .license`）。
+
+## directory-submission-batch-1003
+10-03 第一批（T25）各站坑：
+- **task_act**：每一步除 `exact` 外只能有一个动作键（click_text + exact 可以，click_text + fill 不行）；exact 解包 bug 已修（3ef45a7）。
+- **linkcentre**：正确入口 /addurl/；/register 是要地址和电话的本地商户表，别填。
+- **best-ai**：`[name=description]` 先命中 meta → 用 `textarea[name=description]`；Firebase 魔法链接只在邮件 HTML 正文里，且是 QP 编码（先解 quoted-printable，`=3D`→`=`、软换行 `=\n`）；站方预填会误开 Open Source 开关，要手动关掉。
+- **viesearch**：确认邮件进垃圾箱；点确认链接后要回到选档页**再点一次 Wait in Line** 才算排上队。
+
+## directory-copy-live-numbers
+目录站文案里的数字/署名要实时取，不要照抄素材包：drafts/directory-listing*.md 写的是 669 工具 + Ethan Tan，10-03 实际为 593 工具 + 署名 Jason T.。素材包本身待更新（TASK T25）。

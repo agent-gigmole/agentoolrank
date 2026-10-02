@@ -241,9 +241,14 @@
 
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
 - 状态: in_progress（2026-10-02 起）— **10-03 起每天至少处理 20 个（提交或判 skip 都算），每天 21:30 报数**（agentkit 10-02 23:40 转达老板，取代原 5–8 个/天）
+- **10-03 进度（04:40 起）**：已提交 5 / 目标 ≥20 —— [x] saashub [x] viesearch [x] servicelist [x] best-ai [x] linkcentre（新账号，凭据 ~/.config/secrets/accounts/agentoolrank-linkcentre.json）
+  - 剩余：whatlaunched、store.app、askmatchbox、comparateur-ia、launchboosts、aitoolsrecap、imyshare、51tool、ai-kit.cn、alternative.me、webcatalog、foundr、10words（libhunt/openalternative/sourceforge 等 #36）
+  - [ ] 素材包数字和署名更新：docs/ops/launch-kit 的 directory-listing 素材仍写 669 工具 / Ethan Tan → 593 工具 / Jason T.（提交时文案实时取数）
+  - [ ] llms.txt 类目计数过期待查（Agent Frameworks 仍 329，审计前旧值，疑似缓存）
+  - 等老板：**#35** /privacy、/terms 上线（草稿 docs/legal/privacy-draft.md、terms-draft.md 已提交）；**#36** 仓库许可证（agentkit 拟建议代码 MIT、数据/文案保留版权）
 - 10-02 晚桌面分诊（23:43 agentkit 抽查后修正）：候选 101 = skip 77 + captcha 3（alternativeto、promoteproject、startups.gallery）+ **待 10-03 浏览器/邮件提交 21 个**：
-  - [ ] saashub [ ] viesearch [ ] linkcentre [ ] whatlaunched [ ] store.app [ ] askmatchbox [ ] best-ai [ ] comparateur-ia [ ] servicelist [ ] launchboosts [ ] aitoolsrecap
-  - 开源类（仓库公开）：[ ] libhunt [ ] openalternative [ ] sourceforge
+  - [x] saashub [x] viesearch [x] linkcentre [ ] whatlaunched [ ] store.app [ ] askmatchbox [x] best-ai [ ] comparateur-ia [x] servicelist [ ] launchboosts [ ] aitoolsrecap
+  - 开源类：[ ] libhunt [ ] openalternative [ ] sourceforge — **等许可证决定（BOSS #36）**：仓库公开但无 LICENSE，法律上不算开源（10-03 更正）
   - 中文站用 /zh 页：[ ] imyshare（邮件 niceso@163.com 投稿）[ ] 51tool [ ] ai-kit.cn
   - 最后做 nofollow 4 个：[ ] alternative.me [ ] webcatalog [ ] foundr [ ] 10words
   - 规则：他项目 skip 只沿用全局原因（只收费/关站/表单坏/链接农场/只收徽章/刷票门槛/人机验证/要交凭证），「不相关」按本项目重判；每批 skip 后复跑 candidates 对账
@@ -264,9 +269,9 @@
 - [x] 历史提交补录台账 [x] 换用 dirsub.py [x] 浏览器工具补齐（task_tab/frames/tabs/fields/find/screenshot/options，task_act js/key，5ffca5e）
 - [x] 第二批（累计 16）[x] 中文上架文案 [x] 第三批（累计 20）[x] 累计 25（10-02 07:40 达成，提前）[ ] 之后每天 5–8 个[x] aiagentsdirectory 徽章决策（不挂不付） [ ] purshology / ai-tab.cn 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
 - 10-03 邮箱注册站（hello@agentoolrank.com，排进当天 5–8 个；遇人机验证/风控即停改标 skip）:
-  - [ ] best-ai.org（Firebase 邮件魔法链接）
+  - [x] best-ai.org（Firebase 邮件魔法链接）
   - [ ] launchboosts.com（邮箱+密码）
-  - [ ] linkcentre.com（邮箱+密码）
+  - [x] linkcentre.com（邮箱+密码；入口 /addurl/）
   - [ ] whatlaunched.today（邮箱注册；new_ladar 遇站方 500，为 retry）
 - 已 skip（10-02，品牌 Google 号放弃，只支持 Google/GitHub 登录）: cursor.directory、ramen.tools、crunchbase.com、makerlist.io；conduid.com 待查登录方式；producthunt 10/10 后老板本人号
 - 规矩: 每站做完立刻关标签页；同一平台被风控一次即停（老板 #25）；表单坑见 GOTCHAS#directory-form-pitfalls

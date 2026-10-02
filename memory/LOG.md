@@ -875,3 +875,8 @@
 - 坑：JSON 先放 src/data，被 .gitignore 的 `data/`（匹配任意层级）忽略，git add 失败，&& 串联的 commit/deploy 全被跳过（deploy=1）；改放 src/lib 解决。构建日志 "Ecmascript file had an error" 是 packages/db process.cwd() 的 Edge Runtime 旧警告，退出码 0 不影响
 - 结果：211 测试 + build 通过，已部署推送；线上 101 行，gotchas/success_signal 未泄露；看板已记
 - 结果：成功
+
+## 2026-10-03 04:40– T25 目录提交第一批 + 许可证更正 + 法务草稿
+- 做法：浏览器逐站提交 saashub、viesearch、servicelist、best-ai、linkcentre，dirsub 回写步骤；linkcentre 新建账号（凭据 600 存 secrets/accounts）；修 task_act.py click_text exact 解包报错（3ef45a7）；按 agentkit 要求参照 newsiteradar 写 privacy/terms 草稿（3976655，未上线）
+- 发现：仓库公开但无 LICENSE ≠ 开源，昨晚以「开源」改回 todo 的 libhunt/openalternative/sourceforge 改为等许可证决定（BOSS #36）；/privacy /terms 404（BOSS #35）；llms.txt 类目计数过期（Agent Frameworks 329）；素材包数字/署名过时
+- 结果：今日已提交 5 / 目标 20；成功

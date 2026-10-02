@@ -252,3 +252,7 @@
 | 自有数据集 101 站统计 / 数据文章 devto-101-directories | LOG.md#2026-10-03 – 自有数据集全量完成 + 数据文章稿 |
 | .gitignore data/ 匹配任意层级 src/data 也被忽略 / .vercelignore data / git add 失败 && 后续 deploy 跳过 / git check-ignore -v / 改放 src/lib 或 /data/ | GOTCHAS.md#gitignore-data-any-depth |
 | /where-to-list 实测目录表 / export-tested-directories.ts / 公开字段 vs 付费层 gotchas success_signal | LOG.md#2026-10-03 03:30– /where-to-list 实测目录表上线 |
+| 仓库公开 ≠ 开源 / 无 LICENSE / libhunt openalternative sourceforge / BOSS #36 | GOTCHAS.md#public-repo-not-open-source |
+| 目录提交 10-03 第一批 / task_act 单动作键 exact / linkcentre /addurl/ / best-ai textarea Firebase QP / viesearch 垃圾箱 Wait in Line | GOTCHAS.md#directory-submission-batch-1003 |
+| 目录文案数字过时 / 669→593 / Ethan Tan→Jason T. / 素材包 | GOTCHAS.md#directory-copy-live-numbers |
+| 隐私政策/服务条款草稿 / /privacy /terms 404 / BOSS #35 | LOG.md#2026-10-03 04:40– T25 目录提交第一批 |

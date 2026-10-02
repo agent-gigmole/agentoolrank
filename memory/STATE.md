@@ -731,3 +731,13 @@
 - 211 测试 + build 通过，已部署推送；线上核对 h2 在、101 行、"No thanks"/"Tool Submitted" 未出现（gotchas 未泄露）；看板已记
 - **下一步**：12:00 前交 Submit Kit 定稿（吸收 imagehub、domain-invest、agentkit 意见；new_ladar 待收）；白天提交 21 个目录站；dev.to 发 devto-where-to-list（可加一句指向实测表）
 - 坑：GOTCHAS#gitignore-data-any-depth
+
+## 2026-10-03 04:40– T25 目录提交第一批 + 许可证更正 + 法务草稿（3ef45a7、3976655）
+- **已提交 5 个**：saashub、viesearch、servicelist、best-ai、linkcentre（dirsub 均已回写详细步骤）；今日目标 ≥20
+- linkcentre 新账号，凭据 ~/.config/secrets/accounts/agentoolrank-linkcentre.json（600）
+- task_act.py 修复：click_text 带 exact 时 `(k, v), = st.items()` 报错 → 改为取第一个非 exact 的键（3ef45a7）
+- **更正**：agent-gigmole/agentoolrank 公开但**无 LICENSE，法律上不算开源**；libhunt、openalternative、sourceforge 由 todo 改为「等许可证决定」→ 已报 agentkit，**BOSS #36**（agentkit 拟建议代码 MIT、数据与文案保留版权）
+- **网站缺 /privacy、/terms**（实测 404）→ **BOSS #35**；草稿 docs/legal/privacy-draft.md、terms-draft.md 已提交（3976655），参照 newsiteradar，只写实际收集的数据，删掉无依据的「超时退款」承诺；老板点头后再做页面上线
+- 待查：llms.txt 类目计数仍是审计前旧值（Agent Frameworks 329），疑似缓存
+- 待办：素材包 directory-listing.md 仍写 669 工具 / Ethan Tan → 应为 593 工具 / Jason T.
+- 坑：GOTCHAS#public-repo-not-open-source、GOTCHAS#directory-submission-batch-1003、GOTCHAS#directory-copy-live-numbers
