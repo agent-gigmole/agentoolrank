@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { compareVerdict, alternativesVerdict, compareDescription } from "./verdict";
+import { compareVerdict, alternativesVerdict, compareDescription, alternativesDescription } from "./verdict";
 
 const now = new Date("2026-10-01T00:00:00Z");
 const t = (o: Record<string, unknown>) =>
@@ -72,5 +72,30 @@ describe("compareDescription", () => {
     const d = compareDescription(t({ name: long, github_stars: 1, last_commit_date: "2025-01-01" }), t({ name: long + "Y", github_stars: 2, last_commit_date: "2026-09-30", commit_count_90d: 12345 }), now);
     expect(d.length).toBeLessThanOrEqual(160);
     expect(d.startsWith(long)).toBe(true);
+  });
+});
+
+describe("alternativesDescription", () => {
+  const alts = [
+    t({ name: "CrewAI", commit_count_90d: 120, star_velocity_30d: 800 }),
+    t({ name: "AutoGen", commit_count_90d: 400, star_velocity_30d: 300 }),
+    t({ name: "MetaGPT", commit_count_90d: 5, star_velocity_30d: 1500.4 }),
+  ];
+  it("names the closest, most active and fastest-growing alternatives with numbers", () => {
+    expect(alternativesDescription(t({ name: "LangGraph" }), alts)).toBe(
+      "3 LangGraph alternatives, ranked by live GitHub data. Closest: CrewAI. Most active: AutoGen (400 commits/90d). Fastest growing: MetaGPT (+1,500 stars/30d).",
+    );
+  });
+  it("does not claim the alternatives are open source", () => {
+    expect(alternativesDescription(t({ name: "X" }), alts)).not.toContain("open-source");
+  });
+  it("stays within 160 characters with long names", () => {
+    const long = alts.map((a, i) => ({ ...(a as object), name: "VeryLongToolName".repeat(3) + i })) as never[];
+    const d = alternativesDescription(t({ name: "AnotherVeryLongToolName" }), long);
+    expect(d.length).toBeLessThanOrEqual(160);
+    expect(d).toContain("Closest:");
+  });
+  it("handles a single alternative", () => {
+    expect(alternativesDescription(t({ name: "A" }), [t({ name: "B" })])).toBe("1 A alternative, ranked by live GitHub data. Closest: B.");
   });
 });

@@ -11,7 +11,7 @@ const signed = (v: number) => {
 };
 import { alternativesTitle, compareSlug, taglineMentionsName } from "@/lib/alternatives";
 import { alternativesFaq } from "@/lib/faq";
-import { alternativesVerdict } from "@/lib/verdict";
+import { alternativesVerdict, alternativesDescription } from "@/lib/verdict";
 import { FaqSection } from "@/components/FaqSection";
 
 export const revalidate = 86400; // 24h
@@ -56,10 +56,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return {};
   const { tool, alts } = data;
   const year = new Date().getFullYear();
-  const names = alts.slice(0, 3).map((a) => a.name).join(", ");
   return {
     title: alternativesTitle(tool.name, alts.length, year),
-    description: `Looking for a ${tool.name} alternative? Compare ${names} and ${Math.max(alts.length - 3, 0)} more open-source tools by GitHub stars, growth and recent activity.`,
+    description: alternativesDescription(tool, alts),
     alternates: { canonical: `/alternatives/${tool.id}` },
   };
 }

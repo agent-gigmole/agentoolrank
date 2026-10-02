@@ -64,3 +64,17 @@ export function compareDescription(a: Tool, b: Tool, now: Date): string {
   const cut = options[options.length - 1].slice(0, 157);
   return cut.slice(0, cut.lastIndexOf(" ")) + "...";
 }
+
+/** Meta description for /alternatives pages; drops the least important clause until it fits in 160 chars. */
+export function alternativesDescription(tool: Tool, alts: Tool[]): string {
+  if (alts.length === 0) return `${tool.name} alternatives, ranked by live GitHub data.`;
+  const head = `${alts.length} ${tool.name} alternative${alts.length === 1 ? "" : "s"}, ranked by live GitHub data.`;
+  const parts = [`Closest: ${alts[0].name}.`];
+  const active = [...alts].sort((x, y) => (y.commit_count_90d ?? 0) - (x.commit_count_90d ?? 0))[0];
+  if (alts.length > 1 && active.commit_count_90d) parts.push(`Most active: ${active.name} (${n(active.commit_count_90d)} commits/90d).`);
+  const growing = [...alts].sort((x, y) => (y.star_velocity_30d ?? 0) - (x.star_velocity_30d ?? 0))[0];
+  if (alts.length > 1 && (growing.star_velocity_30d ?? 0) >= 1) parts.push(`Fastest growing: ${growing.name} (+${n(growing.star_velocity_30d!)} stars/30d).`);
+  while (parts.length > 1 && [head, ...parts].join(" ").length > 160) parts.pop();
+  const d = [head, ...parts].join(" ");
+  return d.length <= 160 ? d : d.slice(0, d.lastIndexOf(" ", 157)) + "...";
+}
