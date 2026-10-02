@@ -359,7 +359,16 @@
 - [ ] 外联：向工具作者发邀请提交
 - [x] newsiteradar.com 接入 Brevo：**完成（10-02 22:07）**——DNS 由 new_ladar 加好，PUT .../newsiteradar.com/authenticate 返回 authenticated=true、verified=true；scripts/brevo-tag-health.ts 按 tag 每日监控已挂 daily-ops.sh 21:30（5dfc46d）。发件域 id 6abfb9f2daf63ed95f090051；key "newsiteradar-outreach" 在 ~/.config/secrets/brevo-api-key-newsiteradar。规则：tag=newsiteradar 出 ALERT → Brevo 后台停用该 key + 通知 new_ladar。new_ladar 自建发件人 jason@newsiteradar.com，护栏：每人一封、带退订、每周 ≤10 封、先 --test
 
-- [ ] 类目审计 dry-run 进行中（10-02 23:xx 起后台跑 scripts/audit-categories.ts，只读，输出 data/category-audit-2026-10-02.csv；judge 走订阅通道显示 $0，--max-usd 不生效）
+- [x] 类目审计 dry-run 完成（10-02 23:xx–10-03 00:xx，scripts/audit-categories.ts 只读 → data/category-audit-2026-10-02.csv，670 条，$0）：在范围内 575（类目不变 364 / 变化 211）、被拒 95
+- [x] 抽查 30 条（每类随机 10）：不变 10/10 对；变化 10 条新类目都更准；被拒 9/10 对，误判 react-agent（对口，官网坏了）→ 以「官网打不开/404」为理由的拒绝不能直接下架
+  - 被拒 95 拆三组：①真正超出范围 75（课程论文、通用模型 qwen3/flux/grok-1、微调库 peft/llama-factory、终端应用 jan/chatbox/siyuan 等）②官网或证据有问题 13：agent、colossalai、pezzo、langchaingo、taskingai、autonomous-hr-chatbot、gpteam、llm-chain、ai-getting-started、prompt2ui、react-agent、developer、audiogpt（不下架，修 URL 后重判）③已停更或弃用 7：llama-agents、roo-code、vision-agent、hands-on-llms、langchain-serve、turbopilot、llama3
+- [ ] 应用方案（10-03 早上执行，已报 agentkit）：
+  - [ ] tools 表新增 category_tags_old 列（回滚用）
+  - [ ] 在范围内 575 个改用 judge 主类目
+  - [ ] ①+③ 共 82 个软下架（delist-tool 归档 + 410）；下架前先查 GSC，有展示的保留另议
+  - [ ] ② 组 13 个修 URL 后重判
+  - [ ] 类目 slug 不改不删（12 个类目页仍各有工具，无 404）；Agent Frameworks 258 → 约 154
+  - [ ] 应用完再解除 data/outreach/hold.json 挂起
 - [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
   - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301
   - 待判清单：ai-job-search（也是求职工具，替代品里引用 career-ops；线上渲染时 getToolBySlug 返回 null 已过滤，无 404 链接）——审计时与 career-ops 同口径判是否软下架

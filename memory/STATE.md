@@ -644,3 +644,13 @@
   - 获客：提交成功页追加推荐、数据文章、Smithery；不冷外联。与主线基本不冲突（目录提交本身在产出配方）
 - agentkit 23:47：老板让 imagehub、new_ladar、domain-invest 10-03 10:00 前各给 ≤8 行建议；**定稿 10-03 12:00 前交**，写明采纳/未采纳及原因。agentkit 建议：先做 1 个 MCP 工具（按产品类型返回 30 站 + 提交要点），免费 10 个、完整版收费，暂不做全自动提交 → 已回复会据此收窄
 - **下一步**：10-03 10:00 收齐三方建议 → 12:00 前交定稿；定稿后才开工 MVP（不挤占 T25 每天 ≥20 个目录处理）
+
+## 2026-10-03 00:xx– 全库类目审计 dry-run 完成 + 抽查 30 条
+- dry-run 完成：scripts/audit-categories.ts（只读）→ data/category-audit-2026-10-02.csv，670 条，花费显示 $0。在范围内 575（类目不变 364 / 类目变化 211）+ 被拒 95
+- 抽查 30 条（每类随机 10）：类目不变 10/10 对；类目变化 10 条新类目都比旧的准；被拒 9/10 对，误判 react-agent（对口，只是官网坏了）→ 系统性问题：以「官网打不开 / 404」为理由的拒绝不能直接下架
+- 95 个被拒按理由拆三组：①真正超出范围 75（课程论文、通用模型 qwen3/flux/grok-1、微调训练库 peft/llama-factory、终端用户应用 jan/chatbox/siyuan 等）②官网或证据有问题 13（不下架，修 URL 后重判，id 见 TASK.md）③已停更或弃用 7（llama-agents、roo-code、vision-agent、hands-on-llms、langchain-serve、turbopilot、llama3）
+- 应用方案（10-03 早上执行，已报 agentkit）：tools 加 category_tags_old 列回滚用；575 个改用 judge 主类目；①+③ 共 82 个软下架（delist-tool 归档 + 410），下架前查 GSC，有展示的保留另议；②修 URL；类目 slug 不改不删，12 个类目页仍各有工具不会 404；Agent Frameworks 258 → 约 154；应用完再解除外联 hold.json
+- 看板已记
+- **下一步**：10-03 早上按上面方案应用（先加回滚列 → 查 GSC → 改类目 → 软下架 → 修 ② 组 URL 重判 → 解 hold.json）
+- 坑：GOTCHAS#llm-reject-reason-triage
+

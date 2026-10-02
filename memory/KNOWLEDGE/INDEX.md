@@ -232,3 +232,6 @@
 | Brevo API key 不能限权 全账户权限 / 有限范围 key 做不到 / tag 隔离监控 停 key / 无创建 key 的 API 只能网页 / senders/domains authenticate / brevo-code 账户级 / 共用 300 封/天 / WSL 无 dig 用 DoH | GOTCHAS.md#brevo-key-no-scope |
 | 他项目 skip 理由分全局/项目相关 / 不相关按本项目重判 / 只收费 关站 表单坏 链接农场 徽章 刷票 人机验证 交凭证可沿用 / 先桌面分诊再开浏览器 / 每批 skip 后复跑 candidates 对账漏写 / 只收开源先查自己仓库公开 / 邮件投稿算正常 中文站用 /zh / 链接农场未打开写未核实 columbus 访问量核对 | GOTCHAS.md#dirsub-cross-project-skip-reasons |
 | newsiteradar.com 接入 Brevo / domain id 6abfb9f2 / new_ladar key / 等 DNS 认证 + tag 监控 | LOG.md#2026-10-02 22:xx– newsiteradar.com 接入 Brevo（发件域 + new_ladar 专用 key） |
+| LLM 拒绝理由分三类 超出范围/抓取失败/停更 / 官网打不开 404 不能直接下架 / react-agent 误判 / 修 URL 后重判 / 下架前查 GSC | GOTCHAS.md#llm-reject-reason-triage |
+| 类目审计 dry-run 670 条 / 575 在范围 364 不变 211 变化 / 被拒 95 = 75+13+7 / 抽查 29/30 / 82 软下架 / category_tags_old 回滚 / Agent Frameworks 258→154 | LOG.md#2026-10-03 00:xx– 全库类目审计 dry-run + 抽查 30 条 |
+

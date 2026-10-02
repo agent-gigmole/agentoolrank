@@ -701,3 +701,11 @@ Brevo 的 API key **不能限定权限范围**：任何一把 key 都能操作�
   - **判「只收开源」前先确认自己的仓库是否公开**：AgentoolRank 仓库公开（github.com/agent-gigmole/agentoolrank）就是开源项目，libhunt、openalternative、sourceforge 不该 skip
   - **邮件投稿是正常提交方式**；有 /zh 页面时中文导航站对我们对口（imyshare 邮件投稿、51tool、ai-kit.cn）
   - **「链接农场」「被劫持」这类定论会被别的项目当结论直接沿用**：没打开过站点就写「未核实」，或至少先用 columbus 月访问量核对（weboworld、bizlinkbuilder 月访问 2–3.7 万，不是农场）；引用别人的证据要注明来源（openfuture：new_ladar 实际打开所见）
+
+## llm-reject-reason-triage
+LLM judge 批量判「不在收录范围」时，拒绝理由必须分类处理，不能统一下架（10-03 类目审计 dry-run 抽查发现）：
+- **真正超出范围**（课程/论文、通用模型、微调训练库、终端用户应用等）→ 可软下架
+- **抓取失败 / 官网打不开 / 404 / 证据不足** → 不下架，先修 URL 再重判。例：react-agent 本身对口，只因网站坏了被拒；670 条里这类有 13 个
+- **已停更或弃用** → 单独一组，软下架前同样先查 GSC
+- 做法：抽查时被拒组单独抽 ≥10 条；按理由关键词（unreachable/404/could not fetch/no evidence）先分组再定动作；任何下架前先查 GSC 展示，有展示的保留另议
+

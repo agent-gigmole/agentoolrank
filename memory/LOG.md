@@ -830,3 +830,10 @@
 - 结果：已提交推送（8eb540a），摘要发 agentkit；agentkit 建议收窄为 1 个 MCP 工具（按产品类型返 30 站+要点，免费 10 个），不做全自动提交，已同意
 - 待办：10-03 10:00 收 imagehub/new_ladar/domain-invest 建议（各 ≤8 行），12:00 前交定稿（写明采纳/不采纳及理由）
 - 结果：成功（初稿阶段）
+
+## 2026-10-03 00:xx– 全库类目审计 dry-run + 抽查 30 条
+- 做法：scripts/audit-categories.ts 只读跑全库 670 条 → data/category-audit-2026-10-02.csv（$0）；每类随机抽 10 条人工核对（明细在会话 scratchpad sample30.txt）；95 个被拒按拒绝理由拆三组
+- 结果：575 在范围内（不变 364 / 变化 211），被拒 95 = 超出范围 75 + 官网/证据有问题 13 + 停更弃用 7；抽查 29/30 对，唯一误判 react-agent（网站坏了被拒）
+- 应用方案已报 agentkit，10-03 早上执行：category_tags_old 回滚列、575 改主类目、82 个软下架（先查 GSC 有展示的保留）、13 个修 URL 重判、slug 不动、Agent Frameworks 258→约 154、之后解 hold.json；看板已记
+- 结果：成功（dry-run 阶段）
+
