@@ -11,7 +11,7 @@ If you'd like a README badge, this shows the live star count and links to your p
 
 If anything about {name} is wrong or outdated, you can reply with corrections and I'll fix it. Both are optional.
 
-Ethan Tan
+Jason T.
 AgentoolRank
 https://agentoolrank.com
 

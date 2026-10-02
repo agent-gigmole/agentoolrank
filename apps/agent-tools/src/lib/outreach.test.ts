@@ -10,7 +10,7 @@ describe("outreach", () => {
     expect(e.text).toContain(badgeMarkdown("https://agentoolrank.com", "fastmcp", "FastMCP"));
   });
   it("identifies the sender and offers an opt-out", () => {
-    expect(e.text).toContain("Ethan Tan");
+    expect(e.text).toContain("Jason T.");
     expect(e.text.toLowerCase()).toContain("reply \"no\"");
   });
   it("makes no paid pitch", () => {

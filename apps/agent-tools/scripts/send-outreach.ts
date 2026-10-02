@@ -50,8 +50,8 @@ async function send(to: string, subject: string, text: string): Promise<string> 
     method: "POST",
     headers: { "api-key": key, "Content-Type": "application/json" },
     body: JSON.stringify({
-      sender: { name: "Ethan Tan", email: "hello@agentoolrank.com" },
-      replyTo: { email: "hello@agentoolrank.com", name: "Ethan Tan" },
+      sender: { name: "Jason T.", email: "hello@agentoolrank.com" },
+      replyTo: { email: "hello@agentoolrank.com", name: "Jason T." },
       to: [{ email: to }],
       subject,
       textContent: text,

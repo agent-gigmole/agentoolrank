@@ -23,7 +23,7 @@ export function outreachEmail(
       "",
       `If anything about ${t.name} is wrong or outdated, you can reply with corrections and I'll fix it. Both are optional.`,
       "",
-      "Ethan Tan",
+      "Jason T.",
       "AgentoolRank",
       "https://agentoolrank.com",
       "",
