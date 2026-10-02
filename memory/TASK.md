@@ -276,6 +276,15 @@
 - 内容: /where-to-list 引用的第三方价格（directories.ts）10-01 在现行页面核对、标了 CHECKED 日期；给 CHECKED 加 30 天到期检查（过期测试失败/提醒），10-31 前重新在现行页面核对（不用 Wayback 快照，见 agentkit 共享坑）
 - 闸: auto
 
+### T27 目录提交套件（Submit Kit）评估
+- 状态: in_progress（2026-10-02 23:45 起，老板产品想法经 agentkit 转达）
+- [x] 一页评估初稿 docs/ops/product/directory-submit-kit.md（8eb540a，已推送，摘要已发 agentkit）
+- [ ] 10-03 10:00 前收齐 imagehub / new_ladar / domain-invest 建议（各 ≤8 行）
+- [ ] **10-03 12:00 前交定稿**：吸收三方建议 + agentkit 建议（先做 1 个 MCP 工具：按产品类型返回 30 站 + 提交要点，免费 10 个、完整版收费；暂不做全自动提交），写明采纳/未采纳及原因
+- [ ] 定稿后才开工 MVP（初稿方案：2 天最小可收钱版本 + 预售；14 天内 ≥3 单才继续投入，否则冻结付费层）
+- 约束: columbus 的 DR/访问量不进产品；家底照实说（共享日志 296 域名，实走提交流程约 101）；不冷外联；不挤占 T25 每天 ≥20 个目录处理
+- 闸: human（定稿需老板过目；收费上线涉及 Stripe 产品逐次问）
+
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked
 - 依赖: -

@@ -824,3 +824,9 @@
 ## 2026-10-02 23:43– 目录分诊修正（agentkit 抽查）
 - 做法：仓库公开 → 只收开源的 libhunt/openalternative/sourceforge 改 todo；中文站 imyshare（邮件投稿）、51tool、ai-kit.cn 改 todo 用 /zh 页；未打开核实的「链接农场/低质量」改「未核实」或撤回（weboworld、bizlinkbuilder、websurl、hotfrog、faitesvousconnaitre），openfuture 注明证据来源 new_ladar
 - 结果：101 = skip 77 + captcha 3 + 待提交 21
+
+## 2026-10-02 23:45– T27 Submit Kit 评估初稿
+- 做法：按老板产品想法（客户用自己 agent 经 CLI/MCP 本机提交目录，我们卖清单/配方/脚本）写一页评估 docs/ops/product/directory-submit-kit.md：竞品价位（ListingBott $499→$999、SubmitSaaS $60–140、清单 免费–$29、ScrollLaunch 免费 1018 站、Apify agent 提交成功率 0%）、差异=实测提交配方、家底（296 域名 / 实走约 101，columbus DR 不进产品）、MVP（免费 /where-to-list 筛选表 + 付费配方 & 3 个 MCP 工具 + license key）、定价 $39（早鸟 $19）/ 打包 Featured $59、验证闸 14 天 ≥3 单
+- 结果：已提交推送（8eb540a），摘要发 agentkit；agentkit 建议收窄为 1 个 MCP 工具（按产品类型返 30 站+要点，免费 10 个），不做全自动提交，已同意
+- 待办：10-03 10:00 收 imagehub/new_ladar/domain-invest 建议（各 ≤8 行），12:00 前交定稿（写明采纳/不采纳及理由）
+- 结果：成功（初稿阶段）

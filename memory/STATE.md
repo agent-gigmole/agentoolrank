@@ -633,3 +633,14 @@
 - 撤回证据不足的定论：weboworld、bizlinkbuilder（columbus 月访问 2–3.7 万）「链接农场」→「未核实」；websurl、hotfrog、faitesvousconnaitre 的「链接农场/低质量」撤回；openfuture 注明证据来自 new_ladar 实际打开所见
 - **修正后 101 个：skip 77 + captcha 3 + 待提交 21**（原 15 + libhunt、openalternative、sourceforge、imyshare、51tool、ai-kit.cn）
 - 坑：GOTCHAS#dirsub-cross-project-skip-reasons（已补三条）
+
+## 2026-10-02 23:45– T27 目录提交套件（Submit Kit）评估初稿（8eb540a）
+- 起因：老板 23:45 产品想法（agentkit 转达）——把目录提交做成 AI directory 的产品：客户用自己的 agent 经 CLI/MCP 在本机提交，我们提供清单、脚本等便利
+- 初稿 docs/ops/product/directory-submit-kit.md 已提交推送，摘要已发 agentkit。要点：
+  - 结论：做；先 2 天做可收钱的最小版本 + 预售验证；14 天内 ≥3 单才继续，否则冻结付费层
+  - 竞品：代提交 ListingBott $499（将涨 $999）、SubmitSaaS $60–140；清单类免费–$29，ScrollLaunch 免费 1018 站带 DR；Apify agent 提交 9 用户、成功率 0%
+  - 差异：每站实测的「提交配方」。家底照实：共享日志 296 域名，真正打开走过提交流程约 101；columbus 的 DR/访问量一律不进产品
+  - MVP：免费层 = /where-to-list 可筛选表；付费层 = 配方 + 3 个 MCP 工具 + license key。定价 $39 一次性（前 50 单早鸟 $19），与 Featured 打包 $59
+  - 获客：提交成功页追加推荐、数据文章、Smithery；不冷外联。与主线基本不冲突（目录提交本身在产出配方）
+- agentkit 23:47：老板让 imagehub、new_ladar、domain-invest 10-03 10:00 前各给 ≤8 行建议；**定稿 10-03 12:00 前交**，写明采纳/未采纳及原因。agentkit 建议：先做 1 个 MCP 工具（按产品类型返回 30 站 + 提交要点），免费 10 个、完整版收费，暂不做全自动提交 → 已回复会据此收窄
+- **下一步**：10-03 10:00 收齐三方建议 → 12:00 前交定稿；定稿后才开工 MVP（不挤占 T25 每天 ≥20 个目录处理）
