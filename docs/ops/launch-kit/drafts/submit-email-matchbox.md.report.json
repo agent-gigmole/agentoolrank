@@ -1,0 +1,35 @@
+{
+ "format": "outreach-email",
+ "lang": "en",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "helpful-answer",
+  "angle": "Connect Matchbox’s homepage problem about finding AI tools that fit a task to Jason’s AgentoolRank directory, emphasizing task-relevant comparisons and recent GitHub activity, then ask Ben to consider listing it.",
+  "why_share": "The concrete match to an existing reader problem gives Ben a clear reason to include it, with free comparisons and transparent activity signals offering practical value rather than another generic AI directory pitch.",
+  "length": "short"
+ },
+ "reader_review": {
+  "hook_ok": true,
+  "stop_at": "",
+  "why": "It is short and gives me enough concrete information to assess a listing, though GitHub activity does not establish how well a tool fits a particular task.",
+  "what_i_want": [
+   "One concrete task-to-tool matching example",
+   "A link to a representative comparison",
+   "Clarity on how task fit differs from activity ranking"
+  ],
+  "cut": [
+   "Matchbox's homepage problem about finding AI tools that fit a task caught my attention."
+  ]
+ },
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [],
+ "unsupported_final": [],
+ "inferred_rules_initial": [
+  "Task fit still needs judgment: rankings measure recent GitHub activity, not suitability, using signals like 90-day commits and issue response time."
+ ],
+ "inferred_rules_final": [],
+ "template_vars": [],
+ "missing_vars": [],
+ "publishable": true
+}

@@ -1,0 +1,35 @@
+{
+ "format": "outreach-email",
+ "lang": "zh",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "helpful-answer",
+  "angle": "以 AgentoolRank 作者 Jason T. 的身份向公开接受资源投稿的 iMyShare 站长推荐中文目录，突出免费免注册、按近期 GitHub 活跃度排序，只请求考虑收录。",
+  "why_share": "相比只看累计星数，这个每日更新的目录能帮助读者发现仍在维护的开源 AI Agent 工具，为资源站提供有明确实用价值的收录对象。",
+  "length": "short"
+ },
+ "reader_review": {
+  "hook_ok": true,
+  "stop_at": "不合适不用回复；退订请回复“退订”。",
+  "why": "投稿目的和链接很直接，但没说明是 AI Agent 工具目录，末尾的退订话术又让我怀疑这是批量营销邮件。",
+  "what_i_want": [
+   "明确是 AI Agent 工具目录",
+   "简述收录的工具类型",
+   "说明中文页面覆盖范围"
+  ],
+  "cut": [
+   "不合适不用回复；退订请回复“退订”。"
+  ]
+ },
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [
+  "不想再收到我的投稿，回复“退订”即可。"
+ ],
+ "unsupported_final": [],
+ "inferred_rules_initial": [],
+ "inferred_rules_final": [],
+ "template_vars": [],
+ "missing_vars": [],
+ "publishable": true
+}
