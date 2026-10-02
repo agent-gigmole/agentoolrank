@@ -695,3 +695,11 @@
 - 坑：第一版 "about 1 days" 复数错 → 修复重部署（GOTCHAS#human-text-pluralization）
 - 更正上次 checkpoint：「工作区别人未提交改动」实为本批进行中文件，已全部提交
 - 已报 agentkit；human-intervention=0 / auto-resolved=0 / 熔断=0
+
+## 2026-10-02 12:50–13:10 T17 外联落地页维护者横幅
+- 新增 src/components/MaintainerBanner.tsx（client）：?ref=outreach 时工具页顶部显示「Maintain X? Grab the README badge or feature it on the homepage. Maintainer options ↓」，锚点 #maintainers 到 MaintainerBox（加 id + scroll-mt-20）
+- 新埋点 maintainer_banner_click（加入 EVENT_NAMES 白名单）
+- client 端判断 → 页面仍 ISR
+- 文案 ai-flavor clean；151 测试绿；已部署（8dff4bf，看板 53850f1）；浏览器实测 /tool/hermes-agent?ref=outreach 正常
+- 坑：GOTCHAS#event-names-whitelist、GOTCHAS#isr-query-personalize-client
+- 下一步：22:00 第一批外联，按 maintainer_banner_click / checkout_click + ref=outreach 看转化

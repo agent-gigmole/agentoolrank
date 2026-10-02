@@ -423,9 +423,18 @@
 - 已报 agentkit，看板已记录
 - 更正：上次 checkpoint 说的「工作区有别人未提交改动」其实是本批进行中的文件，现已全部提交；工作区仅剩 CLAUDE.md、.tg_topic（非本任务）
 
+## 2026-10-02 12:50–13:10 T17 外联落地页：维护者横幅（commit 8dff4bf，看板 53850f1）
+
+- **src/components/MaintainerBanner.tsx**（client 组件）：URL 带 `?ref=outreach` 时在工具页顶部显示「Maintain X? Grab the README badge or feature it on the homepage. Maintainer options ↓」，锚点 #maintainers 跳到页底 MaintainerBox
+- MaintainerBox section 加 `id="maintainers"` + `scroll-mt-20`
+- 新埋点 `maintainer_banner_click`，已加进 src/lib/events.ts 的 EVENT_NAMES 白名单
+- 判断放 client 端（读 window.location）→ 工具页仍走 ISR，不变成动态渲染
+- 文案过 ai-flavor：clean；151 测试全绿；已部署；浏览器实测 /tool/hermes-agent?ref=outreach 横幅正常显示；看板已记
+- 坑：GOTCHAS#event-names-whitelist、GOTCHAS#isr-query-personalize-client
+
 ## 近期排期
 
-- **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
+- **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；落地页维护者横幅已就绪（?ref=outreach）；发后看板记数量，观察退信/退订；按 maintainer_banner_click / checkout_click 与 ref=outreach 看转化
 - **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；需 Google 登录的站等品牌号；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
@@ -439,7 +448,8 @@
 
 - [x] T19 X 帖已发（10-02 09:45，@hwak8666621/status/2105834735146541311）
 - [ ] 10-09 复盘 T19：漏斗查 ref=x 访问与后续转化
-- [ ] T17 22:00 第一批外联；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
+- [x] T17 外联落地页维护者横幅（?ref=outreach → #maintainers，10-02 13:10 上线）
+- [ ] T17 22:00 第一批外联，之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
 - [x] T25 目录站累计 25（10-02 07:40 达成，提前）
 - [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com、smithery 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执
 - [ ] Google 品牌号：老板醒后重新注册扫码

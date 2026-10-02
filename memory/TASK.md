@@ -139,7 +139,7 @@
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
 - 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封，先 --dry-run 看名单与实时排名
-- 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [ ] 22:00 第一批 [ ] 徽章嵌入数追踪
+- 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [x] 外联落地页维护者横幅（?ref=outreach → #maintainers，埋点 maintainer_banner_click，10-02 13:10 上线 8dff4bf）[ ] 22:00 发第一批，之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化 [ ] 徽章嵌入数追踪
 - 依赖: -
 - 验收: 模板经用户同意；每天 ≤10 封限速发送；徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）可追踪
 - 闸: human（对外发送）

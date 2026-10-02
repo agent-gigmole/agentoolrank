@@ -199,3 +199,6 @@
 | 首个外部提交 Orkas / src=api / agent 读 /agents 文档自动提交 / G2 1/20 / override 写回 source_hash 已修 | LOG.md#2026-10-02 11:05–11:55 override 写回 source_hash + 第一个外部提交 Orkas（G2 1/20） |
 | 模板文字单复数 / about 1 days / n=1 边界用例 / message_for_human | GOTCHAS.md#human-text-pluralization |
 | message_for_human / API 返回可转给人的说明 / llms.txt list a tool (free) / MCP submit_tool for free | LOG.md#2026-10-02 11:55–12:25 提交返回 message_for_human + 文档写明免费入口 |
+| 埋点事件名白名单 EVENT_NAMES / src/lib/events.ts / 新事件 TS 报错 / maintainer_banner_click | GOTCHAS.md#event-names-whitelist |
+| ISR 页按 query 参数个性化 / ?ref=outreach / client 组件读 window.location / 不用 searchParams 否则整页动态渲染 | GOTCHAS.md#isr-query-personalize-client |
+| 外联落地页维护者横幅 / MaintainerBanner / #maintainers 锚点 / scroll-mt-20 | LOG.md#2026-10-02 12:50–13:10 T17 外联落地页维护者横幅 |

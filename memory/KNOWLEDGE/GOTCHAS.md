@@ -602,3 +602,9 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 
 ## human-text-pluralization
 模板拼给人看的文字（10-02 message_for_human 第一版）：`about ${n} days` 在 n=1 时出 "about 1 days"，上线后才发现，又修了一次重新部署。fast/featured 档 eta 恰好是 1 天，所以这个错误在真实输出里一定会出现。修法：写 `${n} ${n === 1 ? 'day' : 'days'}` 一类的小函数；**TDD 时专门给边界值 n=1 写一个用例**（这次补了，4 用例之一）。凡是 API 返回给 agent 再转给人的句子，都把数量词当边界值测。
+
+## event-names-whitelist
+本项目埋点事件名有白名单：src/lib/events.ts 的 `EVENT_NAMES`（类型由它推出）。新增事件（如 10-02 的 `maintainer_banner_click`）必须同步加进 EVENT_NAMES，否则 track 调用处 TS 报错（或被服务端丢弃）。加新埋点时先 grep EVENT_NAMES。
+
+## isr-query-personalize-client
+想按 query 参数（如 `?ref=outreach`）给 ISR 页加个性化内容：**用 client 组件在浏览器里读 `window.location.search`（或 useSearchParams 并包 Suspense）**，不要在 page.tsx 里读 `searchParams` prop——读了整页会变成动态渲染，失去 ISR / revalidate 缓存。10-02 MaintainerBanner 就是这样做的：服务端照常 ISR 出页，横幅在客户端判断后才显示。
