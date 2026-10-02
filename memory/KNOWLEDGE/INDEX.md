@@ -256,4 +256,4 @@
 | 目录提交 10-03 第一批 / task_act 单动作键 exact / linkcentre /addurl/ / best-ai textarea Firebase QP / viesearch 垃圾箱 Wait in Line | GOTCHAS.md#directory-submission-batch-1003 |
 | 目录文案数字过时 / 669→593 / Ethan Tan→Jason T. / 素材包 | GOTCHAS.md#directory-copy-live-numbers |
 | 隐私政策/服务条款草稿 / /privacy /terms 404 / BOSS #35 | LOG.md#2026-10-03 04:40– T25 目录提交第一批 |
-| 目录提交 10-03 第二批 / aitoolsrecap ASP.NET [id$=] 姓名无句点 / alternative.me 无 name 按序 logo 后前移 / Radix tab 真实点击 / foundr gmail full / comparateur-ia verif_level standard / 邮件投稿 Brevo / MCP GitHub OAuth scope | GOTCHAS.md#directory-submission-batch-1003b |
+| 目录提交 10-03 第二批 / aitoolsrecap ASP.NET [id$=] 姓名无句点 / alternative.me 无 name 按序 logo 后前移 / Radix tab 真实点击 / foundr gmail full / comparateur-ia verif_level standard / 邮件投稿 Brevo / MCP GitHub OAuth scope read:org 即取消 / 目录暂停扩张 imagehub 30 站 1 访客 | GOTCHAS.md#directory-submission-batch-1003b |

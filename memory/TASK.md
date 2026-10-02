@@ -240,7 +240,7 @@
 - 失败: 0
 
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
-- 状态: in_progress（2026-10-02 起）— **10-03 起每天至少处理 20 个（提交或判 skip 都算），每天 21:30 报数**（agentkit 10-02 23:40 转达老板，取代原 5–8 个/天）
+- 状态: in_progress（2026-10-02 起）— **10-03 达标 20 后暂停扩张（agentkit 10-03 05:28），只做日常补漏；原「每天 ≥20」口径暂停**（agentkit 10-02 23:40 转达老板，取代原 5–8 个/天）
 - **10-03 进度：已达标 20/20**（04:40–05:28 两批，dirsub 已逐条回写）
   - 提交 15：[x] saashub [x] viesearch [x] servicelist [x] best-ai [x] linkcentre [x] launchboosts（已上线，实测 rel=nofollow）[x] aitoolsrecap [x] comparateur-ia [x] askmatchbox（邮件）[x] imyshare（邮件）[x] alternative.me [x] webcatalog [x] foundr [x] conduid（已上线 https://conduid.com/servers/agentoolrank ，信任分 54，被误归 Files 类）[x] cursor.directory（插件安全扫描中，扫完才公开）
   - retry 2：whatlaunched（站方 Supabase 发信故障）、store.app（/list 502）
@@ -248,10 +248,10 @@
   - 邮件投稿：文案 bin/write，Brevo 从 hello@ 发，tag directory-submit，草稿 docs/ops/launch-kit/drafts/submit-email-*.md
   - 新账号凭据 ~/.config/secrets/accounts/agentoolrank-*.json（600）
   - **候选 101 已全部处理**，仅剩 3 个等 #36（libhunt、openalternative、sourceforge）；默认条件（DR≥30、导航目录、表单/邮件）下无新候选
-  - [ ] 10-04 放宽候选：先博客/客座投稿类，再 DR 20–30
+  - **暂停扩张（agentkit 05:28 更正，取代「明天放宽候选」）**：不放宽到客座投稿或 DR 20–30，只做日常补漏（等 #36、重试 whatlaunched/store.app、复查已上线站点链接）。理由：imagehub 提交 30 站 14 天仅 1 访客，外链对 SEO 作用未验证，等 GSC 2–4 周数据再定是否扩张；省下的时间投外联回复、提交通道付费转化、中日文页面流量
   - [ ] 10-09 前复查已上线站点的链接（launchboosts、conduid、cursor.directory 等是否在、rel 是什么）
   - [ ] whatlaunched / store.app 重试
-  - MCP 目录站 GitHub OAuth 规则（agentkit 05:23，已入 owner-goal「老板不用管」）：专用 Chrome 里 agent-gigmole 的 GitHub，只许身份+邮箱权限；不绑仓库、不 fork、不建仓；授权页出现仓库读写即停下跳过（conduid 为 read:user、read:org；cursor.directory 仅邮箱只读）
+  - MCP 目录站 GitHub OAuth 规则（agentkit 05:23，已入 owner-goal「老板不用管」）：专用 Chrome 里 agent-gigmole 的 GitHub，只许身份+邮箱权限；不绑仓库、不 fork、不建仓；授权页出现仓库读写**或任何 org 权限（read:org 及以上）**即取消跳过（05:28 更正：conduid 这次授权了 read:org，会暴露 agent-gigmole 组织成员关系，算例外，以后不再这样；cursor.directory 仅邮箱只读）
   - [ ] 素材包数字和署名更新：docs/ops/launch-kit 的 directory-listing 素材仍写 669 工具 / Ethan Tan → 593 工具 / Jason T.（提交时文案实时取数）
   - [ ] llms.txt 类目计数过期待查（Agent Frameworks 仍 329，审计前旧值，疑似缓存）
   - 等老板：**#35** /privacy、/terms 上线（草稿 docs/legal/privacy-draft.md、terms-draft.md 已提交）；**#36** 仓库许可证（agentkit 拟建议代码 MIT、数据/文案保留版权）

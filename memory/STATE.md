@@ -750,7 +750,8 @@
   - retry：whatlaunched（站方 Supabase 发信故障）、store.app（/list 502）
   - skip：51tool（强制 ICP 备案）、ai-kit.cn（只能加微信）、10words（排队 2602 天）
 - 新账号凭据 ~/.config/secrets/accounts/agentoolrank-*.json（600）
-- **新规则（agentkit 05:23，已入 owner-goal「老板不用管」）**：MCP 类目录可用专用 Chrome 里 agent-gigmole 的 GitHub 做 OAuth，只许身份+邮箱权限；不绑仓库/不 fork/不建仓；授权页出现仓库读写即停下跳过。conduid scope=read:user、read:org；cursor.directory 仅邮箱只读
+- **新规则（agentkit 05:23，已入 owner-goal「老板不用管」）**：MCP 类目录可用专用 Chrome 里 agent-gigmole 的 GitHub 做 OAuth，只许身份+邮箱权限；不绑仓库/不 fork/不建仓；授权页出现仓库读写**或任何 org 权限（read:org 及以上）**即取消。conduid 这次授权了 read:org（会暴露组织成员关系）算例外，以后不再这样（agentkit 05:28 更正）；cursor.directory 仅邮箱只读
 - **候选 101 全部处理完**，剩 3 个等 BOSS #36（许可证）；默认条件（DR≥30、导航目录、表单或邮件）下已无新候选
-- **下一步**：10-04 放宽候选（先博客/客座投稿，再 DR 20–30）；10-09 前复查已上线站点链接；whatlaunched/store.app 重试；21:30 报数
+- **目录站暂停扩张（agentkit 05:28）**：不放宽到客座投稿/DR 20–30。理由：imagehub 30 站 14 天仅 1 访客，外链 SEO 作用未验证，等 GSC 2–4 周数据再定
+- **下一步**：只做补漏（等 #36、重试 whatlaunched/store.app、10-09 前复查已上线站点链接）；时间转投外联回复、提交通道付费转化、中日文页面流量
 - 坑：GOTCHAS#directory-submission-batch-1003b
