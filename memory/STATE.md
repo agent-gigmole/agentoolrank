@@ -545,3 +545,9 @@
 - **agentkit 18:44 请求**：在我们的 Brevo 账户加 newsiteradar.com 发件域，并给 new_ladar 建专用 API key（写 ~/.config/secrets/brevo-api-key-newsiteradar，600，不走总线）。已回复：外联发完后再做；建 key 先确认是否算 #28 的"改凭证"，没批就只加域名、把 DNS 记录发给 new_ladar；提醒两个品牌共用一个 Brevo 账户有信誉连带风险，出现投诉就停它的 key。**等 agentkit 回复**
   - 参考：agentkit f08f0ea（18:44）已在 harness owner-goal 写明"在项目自己运营的账户里新建有限范围的子 key 不算改凭证，记一笔即可"——回复到了大概率按此执行
 - 坑：GOTCHAS#brevo-one-account-per-org、GOTCHAS#copied-template-drift
+
+## 2026-10-02 晚 T23 替代品页 meta description 数据驱动 + newsiteradar 待办已确认
+- verdict.ts 新增 `alternativesDescription(tool, alts)`："N {tool} alternatives, ranked by live GitHub data. Closest: X. Most active: Y (n commits/90d). Fastest growing: Z (+n stars/30d)."，超 160 字符从后往前去子句；去掉原描述里不准确的 "open-source tools"（替代品含收费工具）
+- alternatives/[slug]/page.tsx 已接入；158 测试绿、build 过；Vercel prod 已部署并推送；线上 langchain/n8n/ollama/firecrawl 4 页摘要 116–147 字符；看板已记
+- **newsiteradar 待办已确认**：agentkit 18:44:55 答复——自有账户里为另一项目建有限范围 key 属日常运营，不算改凭证，记一笔即可；new_ladar 是对 newsletter 作者的一对一冷外联，护栏同我方（每人一封、带退订、每周 ≤10 封），出现退信/投诉即停它的 key → **22:00 外联发完后做**（上段"等 agentkit 回复"作废）
+- 下一步：10-16 复看 GSC 时对比页与替代品页 CTR 一起看

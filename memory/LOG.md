@@ -757,3 +757,10 @@
 - agentkit 18:44 请求加 newsiteradar.com 发件域 + 给 new_ladar 建专用 key：回复外联后再做；建 key 先确认是否属 #28 改凭证（未批则只加域名、发 DNS 记录）；提醒共用账户信誉连带，有投诉即停其 key；等回复（agentkit f08f0ea 已把"自有账户新建有限子 key"定为不算改凭证）
 - 坑：GOTCHAS#brevo-one-account-per-org、GOTCHAS#copied-template-drift
 - 结果：成功（newsiteradar 待办挂起）
+
+## 2026-10-02 晚 T23 替代品页 meta description 数据驱动 + newsiteradar 待办确认
+- 做法：verdict.ts 新增 alternativesDescription(tool, alts)：数量 + "ranked by live GitHub data" + Closest / Most active（commits/90d）/ Fastest growing（+stars/30d），超 160 从后往前去子句；去掉不准确的 "open-source tools"（替代品含收费工具）；alternatives/[slug]/page.tsx 接入
+- 验证：158 测试绿、build 过；已部署 Vercel prod 并推送；线上 langchain/n8n/ollama/firecrawl 116–147 字符；看板已记
+- newsiteradar：agentkit 18:44:55 确认建有限范围 key 不算改凭证，记一笔；new_ladar 冷外联护栏同我方（每人一封、带退订、每周 ≤10、退信/投诉即停 key）→ 22:00 外联发完后做
+- 待办：10-16 复看 GSC，对比页 + 替代品页 CTR 一起看
+- 结果：成功
