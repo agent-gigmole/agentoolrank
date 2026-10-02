@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { localizedAlternates, parseToolTranslation, numbersPreserved, residualEnglish } from "./i18n";
+import { translationSource, sourceHash, localizedAlternates, parseToolTranslation, numbersPreserved, residualEnglish } from "./i18n";
 
 describe("localizedAlternates", () => {
   it("lists every language version, itself included, plus x-default", () => {
@@ -44,5 +44,13 @@ describe("residualEnglish", () => {
     expect(residualEnglish("seven種類の異なるAgentフレームワーク", [])).toBe(true);
     expect(residualEnglish("支持 MCP 和 the API", [])).toBe(true);
     expect(residualEnglish("Agent ワークフローと MCP サーバー、Python SDK に対応", [])).toBe(false);
+  });
+});
+
+describe("sourceHash", () => {
+  const row = { id: "x", name: "X", tagline: "T", description: "D", intelligence: JSON.stringify({ capabilities: ["a"], key_differentiator: "k" }) };
+  it("is stable for the same source and changes when the source changes", () => {
+    expect(sourceHash(translationSource(row))).toBe(sourceHash(translationSource({ ...row })));
+    expect(sourceHash(translationSource(row))).not.toBe(sourceHash(translationSource({ ...row, tagline: "T2" })));
   });
 });

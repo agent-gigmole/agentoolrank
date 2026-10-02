@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 // Localized pages: shared helpers for hreflang, translation parsing and deterministic checks.
 // Pages are added per language only where a reviewed translation exists (see scripts/translate-tools.ts).
 const BASE = "https://agentoolrank.com";
@@ -66,4 +68,23 @@ export function residualEnglish(dst: string, names: string[]): boolean {
   let s = dst;
   for (const n of names) s = s.split(n).join(" ");
   return /\b[A-Za-z][A-Za-z'-]*(?:\s+[A-Za-z][A-Za-z'-]*){3,}\b/.test(s) || LEFTOVER_WORDS.test(s);
+}
+
+export interface SourceRow { id: string; name: string; tagline: string; description: string; intelligence: string }
+
+/** The English fields a translation is made from (tagline, description, intelligence lists). */
+export function translationSource(r: SourceRow): ToolTranslation {
+  let intel: Record<string, unknown> = {};
+  try { intel = JSON.parse(r.intelligence || "{}"); } catch { /* keep empty */ }
+  const list = (k: string) => (Array.isArray(intel[k]) ? (intel[k] as unknown[]).filter((x): x is string => typeof x === "string") : []);
+  return {
+    tagline: r.tagline, description: r.description,
+    key_differentiator: typeof intel.key_differentiator === "string" ? intel.key_differentiator : "",
+    capabilities: list("capabilities"), best_for: list("best_for"), not_for: list("not_for"), limitations: list("limitations"),
+  };
+}
+
+/** Changes whenever the English source changes; stored with each translation so stale ones get redone. */
+export function sourceHash(src: ToolTranslation): string {
+  return createHash("sha1").update(JSON.stringify(src)).digest("hex");
 }

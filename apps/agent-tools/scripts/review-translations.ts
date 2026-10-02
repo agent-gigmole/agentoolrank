@@ -9,6 +9,7 @@
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
+import { translationSource, sourceHash, type SourceRow } from "../src/lib/i18n";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
 const arg = (k: string) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split("=").slice(1).join("=");
@@ -42,9 +43,17 @@ if (process.argv.includes("--list")) {
   const r = await db.execute({ sql: `UPDATE tool_i18n SET human_reviewed = ? WHERE lang = ? AND status = 'approved' AND tool_id IN (${ids.map(() => "?").join(",")})`, args: [level, lang, ...ids] });
   console.log(`published ${r.rowsAffected} (level ${level})`);
 } else if (arg("override")) {
+  // Store the current source hash too: a rejected row has an empty hash, and without this the next
+  // translate-tools --retry-failed would treat it as stale, re-translate it and unpublish it.
   const ids = arg("override")!.split(",");
-  const r = await db.execute({ sql: `UPDATE tool_i18n SET status = 'approved', human_reviewed = 1, issues = 'owner override: ' || issues WHERE lang = ? AND status = 'review_failed' AND tool_id IN (${ids.map(() => "?").join(",")})`, args: [lang, ...ids] });
-  console.log(`overridden ${r.rowsAffected}`);
+  let n = 0;
+  for (const id of ids) {
+    const t = (await db.execute({ sql: "SELECT id, name, tagline, description, intelligence FROM tools WHERE id = ?", args: [id] })).rows[0] as unknown as SourceRow | undefined;
+    if (!t) continue;
+    const r = await db.execute({ sql: `UPDATE tool_i18n SET status = 'approved', human_reviewed = 1, source_hash = ?, issues = 'owner override: ' || issues WHERE lang = ? AND status = 'review_failed' AND tool_id = ?`, args: [sourceHash(translationSource(t)), lang, id] });
+    n += r.rowsAffected;
+  }
+  console.log(`overridden ${n}`);
 } else if (arg("reject")) {
   const ids = arg("reject")!.split(",");
   const r = await db.execute({ sql: `UPDATE tool_i18n SET status = 'review_failed', source_hash = '', issues = ? WHERE lang = ? AND tool_id IN (${ids.map(() => "?").join(",")})`, args: [`owner: ${arg("note") ?? "rejected"}`, lang, ...ids] });

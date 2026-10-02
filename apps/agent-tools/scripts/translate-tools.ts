@@ -9,9 +9,8 @@
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
-import { createHash } from "node:crypto";
 import { llm, openrouter, llmStats } from "./llm";
-import { parseToolTranslation, numbersPreserved, residualEnglish, type ToolTranslation } from "../src/lib/i18n";
+import { parseToolTranslation, numbersPreserved, residualEnglish, translationSource as source, sourceHash, type ToolTranslation, type SourceRow } from "../src/lib/i18n";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
 const arg = (k: string) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split("=")[1];
@@ -37,18 +36,7 @@ await db.execute(`CREATE TABLE IF NOT EXISTS tool_i18n (
   issues TEXT NOT NULL DEFAULT '', source_hash TEXT NOT NULL, human_reviewed INTEGER NOT NULL DEFAULT 0,
   updated_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (tool_id, lang))`);
 
-interface Row { id: string; name: string; tagline: string; description: string; intelligence: string }
-
-function source(r: Row): ToolTranslation {
-  let intel: Record<string, unknown> = {};
-  try { intel = JSON.parse(r.intelligence || "{}"); } catch { /* keep empty */ }
-  const list = (k: string) => (Array.isArray(intel[k]) ? (intel[k] as unknown[]).filter((x): x is string => typeof x === "string") : []);
-  return {
-    tagline: r.tagline, description: r.description,
-    key_differentiator: typeof intel.key_differentiator === "string" ? intel.key_differentiator : "",
-    capabilities: list("capabilities"), best_for: list("best_for"), not_for: list("not_for"), limitations: list("limitations"),
-  };
-}
+type Row = SourceRow;
 
 const flat = (t: ToolTranslation) => [t.tagline, t.description, t.key_differentiator, ...t.capabilities, ...t.best_for, ...t.not_for, ...t.limitations];
 
@@ -111,7 +99,7 @@ const existing = new Map((await db.execute({ sql: "SELECT tool_id, source_hash, 
 let done = 0, approved = 0, failed = 0;
 async function one(r: Row) {
   const src = source(r);
-  const hash = createHash("sha1").update(JSON.stringify(src)).digest("hex");
+  const hash = sourceHash(src);
   if (existing.get(r.id) === hash) return;
   const dst = await translate(r, src).catch(() => null);
   if (!dst) { console.log(`skip ${r.id}: translator unavailable or unparseable`); return; }
