@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isMetaNote, stripMetaNotes, stripMetaSentences, isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
+import { englishOnlyTagline, isMetaNote, stripMetaNotes, stripMetaSentences, isTruncatedTagline, submissionTagline, parseReview, toolRowFromReview, hasBacklink, reviewOrder } from "./review";
 
 const cats = ["coding-agents", "agent-frameworks", "memory-knowledge"];
 
@@ -87,5 +87,19 @@ describe("reviewer meta-notes", () => {
   it("strips them from every intelligence list", () => {
     expect(stripMetaNotes({ limitations: ["Needs Docker", "Website details unavailable"], best_for: ["RAG"], key_differentiator: "x" }))
       .toEqual({ limitations: ["Needs Docker"], best_for: ["RAG"], key_differentiator: "x" });
+  });
+});
+
+describe("englishOnlyTagline", () => {
+  it("drops CJK segments from bilingual taglines", () => {
+    expect(englishOnlyTagline("An open-source, privacy-first knowledge workspace 开源、隐私优先的知识工作空间")).toBe("An open-source, privacy-first knowledge workspace");
+    expect(englishOnlyTagline("基于 ChatGPT API 的划词翻译插件    -    Browser extension for translation based on ChatGPT API.")).toBe("Browser extension for translation based on ChatGPT API.");
+    expect(englishOnlyTagline("🔥 MaxKB is an open-source platform for building enterprise-grade agents.  强大易用的开源企业级智能体平台。")).toBe("🔥 MaxKB is an open-source platform for building enterprise-grade agents.");
+  });
+  it("keeps the English part when CJK comes first with a separator", () => {
+    expect(englishOnlyTagline("🏛️ 三省六部制 · OpenClaw Multi-Agent Orchestration System")).toBe("OpenClaw Multi-Agent Orchestration System");
+  });
+  it("leaves pure English taglines alone", () => {
+    expect(englishOnlyTagline("Run LLMs locally")).toBe("Run LLMs locally");
   });
 });

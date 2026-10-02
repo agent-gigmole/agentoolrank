@@ -40,4 +40,9 @@ describe("residualEnglish", () => {
     expect(residualEnglish("Dify 是一个开源的 LLM 应用开发平台", ["Dify"])).toBe(false);
     expect(residualEnglish("Dify is an open-source platform for building apps", ["Dify"])).toBe(true);
   });
+  it("flags single common English words left inside CJK text", () => {
+    expect(residualEnglish("seven種類の異なるAgentフレームワーク", [])).toBe(true);
+    expect(residualEnglish("支持 MCP 和 the API", [])).toBe(true);
+    expect(residualEnglish("Agent ワークフローと MCP サーバー、Python SDK に対応", [])).toBe(false);
+  });
 });

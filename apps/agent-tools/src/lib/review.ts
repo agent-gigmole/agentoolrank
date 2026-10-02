@@ -82,7 +82,7 @@ export function isTruncatedTagline(t: string): boolean {
 
 /** A raw GitHub description is only usable as a tagline if it fits; otherwise let the reviewer's tagline win. */
 export function submissionTagline(desc: string): string {
-  const s = desc.trim();
+  const s = englishOnlyTagline(desc.trim());
   return s.length <= 160 ? s : "";
 }
 
@@ -102,4 +102,12 @@ export function stripMetaNotes(intel: Record<string, unknown>): Record<string, u
   const out: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(intel)) out[k] = Array.isArray(v) ? v.filter((x) => typeof x !== "string" || !isMetaNote(x)) : v;
   return out;
+}
+
+/** Some GitHub descriptions are bilingual ("English text 中文翻译"); keep the English part for the English site. */
+export function englishOnlyTagline(t: string): string {
+  if (!/[一-鿿぀-ヿ]{4,}/.test(t)) return t;
+  const parts = t.split(/\s+[-·|]\s+|\s{2,}|(?<=[.!?])\s+|\s+(?=[一-鿿぀-ヿ])/).map((p) => p.trim()).filter(Boolean);
+  const english = parts.filter((p) => !/[一-鿿぀-ヿ]{2,}/.test(p) && /[A-Za-z]{3,}/.test(p));
+  return english.length ? english.join(" ").trim() : t;
 }

@@ -58,9 +58,12 @@ export function numbersPreserved(src: string, dst: string): boolean {
   return nums.every((n) => dst.includes(n));
 }
 
-/** True when the translation still contains a run of 4+ English words (ignoring known proper names). */
+// Common English words that should never survive in a CJK translation (product names and acronyms are fine).
+const LEFTOVER_WORDS = /(?:^|[^A-Za-z])(the|and|with|for|from|that|this|which|your|our|one|two|three|four|five|six|seven|eight|nine|ten|hundred|thousand|million|only|also|more|most|than|into|over|under|about|between|through)(?=[^A-Za-z]|$)/i;
+
+/** True when the translation still has a run of 4+ English words, or a single common English word (ignoring known names). */
 export function residualEnglish(dst: string, names: string[]): boolean {
   let s = dst;
   for (const n of names) s = s.split(n).join(" ");
-  return /\b[A-Za-z][A-Za-z'-]*(?:\s+[A-Za-z][A-Za-z'-]*){3,}\b/.test(s);
+  return /\b[A-Za-z][A-Za-z'-]*(?:\s+[A-Za-z][A-Za-z'-]*){3,}\b/.test(s) || LEFTOVER_WORDS.test(s);
 }
