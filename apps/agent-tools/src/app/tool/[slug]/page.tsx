@@ -6,6 +6,7 @@ import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
 import { MaintainerBox } from "@/components/MaintainerBox";
+import { MaintainerBanner } from "@/components/MaintainerBanner";
 import { toolTitle, toolDescription } from "@/lib/titles";
 import { staleness } from "@/lib/staleness";
 import { localizedAlternates } from "@/lib/i18n";
@@ -317,6 +318,7 @@ export default async function ToolPage({ params }: Props) {
           ...(tool.category_tags.length > 0 ? [{ label: tool.category_tags[0].replace(/-/g, " "), href: `/category/${tool.category_tags[0]}` }] : []),
           { label: tool.name },
         ]} />
+        <MaintainerBanner name={tool.name} />
         {/* Hero */}
         <div className="flex items-start gap-4 mb-6">
           {tool.logo_url ? (

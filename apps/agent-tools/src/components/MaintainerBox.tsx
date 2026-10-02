@@ -33,7 +33,7 @@ export function MaintainerBox({ slug, name, paymentsEnabled }: { slug: string; n
   }
 
   return (
-    <section className="mt-10 border border-gray-200 rounded-xl p-5 bg-gray-50">
+    <section id="maintainers" className="mt-10 border border-gray-200 rounded-xl p-5 bg-gray-50 scroll-mt-20">
       <h2 className="font-semibold text-gray-900 mb-1">Maintain {name}?</h2>
       <p className="text-sm text-gray-600 mb-4">
         Show your live rank in your README, or put {name} in front of every visitor to AgentoolRank.
