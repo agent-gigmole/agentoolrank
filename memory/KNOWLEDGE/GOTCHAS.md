@@ -611,3 +611,10 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 
 ## localized-pages-need-internal-links
 多语言页（10-02：400 个 /zh/tool、/ja/tool 页）**只放 sitemap + hreflang 不够**：站内没有任何链接指向它们，爬虫只能靠 sitemap 发现，内链权重为 0，/ja 甚至没有首页。补法（3fd4130）：① 每种语言一个总览/索引页（/zh/tools、/ja，列出全部已发布译文，按分数排序），索引页自身也带 hreflang 组（en 首页 ↔ /zh/tools ↔ /ja + x-default）；② 全站页脚放语言入口链接（`<a hrefLang="zh">中文</a>`）；③ 本地化详情页面包屑的「首页」指向本语言索引页而非英文首页；④ sitemap 收录索引页。上线新语言页型时把「站内入口」列为验收项（线上数索引页链接数 = 已发布数）。
+
+## github-app-vs-oauth-revoke
+用「Sign in with GitHub」登录第三方站（10-02 Smithery）时，先看授权页是 **GitHub App** 还是 OAuth App：Smithery 是 GitHub App（clavia-labs，client Iv23li… 开头的 client id 就是 GitHub App 的特征）。GitHub App 的用户授权**不在** Settings → Applications → Authorized OAuth Apps 里，要去 **github.com/settings/apps/authorizations**（Authorized GitHub Apps）查看/撤销；「install」到仓库又是另一处（/settings/installations）。授权前核对权限：Smithery 只要身份、邮箱、gist、star/watch，不要仓库权限也不需 install——用 URL 发布远程 MCP 时不必给仓库权限。
+
+## outreach-pick-best-category
+外联邮件里写「#N in 类目」时，工具属于多个类目，**不能取第一个类目**（10-02 dry-run：LangChain 被写成「#7 in Memory & Knowledge」，作者读来不对）。改为按排名百分位（rank/类目总数）最好的类目报，并带分母：「#9 of 329 Agent Frameworks」（6f36d98）。凡是对外引用工具「排名」的模板（邮件、徽章文案、X 帖）都按「最有代表性/百分位最好」选类目，dry-run 时逐封读一遍排名句。
+

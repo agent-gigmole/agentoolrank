@@ -434,7 +434,7 @@
 
 ## 近期排期
 
-- **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；落地页维护者横幅已就绪（?ref=outreach）；发后看板记数量，观察退信/退订；按 maintainer_banner_click / checkout_click 与 ref=outreach 看转化
+- **10-02 22:00 CST**：T17 外联第一批 10 封——**署名待定**（BOSS_DECISIONS #27 对外统一 Jason T.，但这批原定 Ethan Tan，已请 agentkit 问老板）；**21:30 前无答复 → 推迟到 10-03 22:00**（避免同一批人先后看到两个名字）；dry-run 已过（排名取百分位最好的类目，6f36d98）；落地页维护者横幅已就绪（?ref=outreach）；发后看板记数量，观察退信/退订；按 maintainer_banner_click / checkout_click 与 ref=outreach 看转化
 - **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；需 Google 登录的站等品牌号；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
@@ -449,9 +449,10 @@
 - [x] T19 X 帖已发（10-02 09:45，@hwak8666621/status/2105834735146541311）
 - [ ] 10-09 复盘 T19：漏斗查 ref=x 访问与后续转化
 - [x] T17 外联落地页维护者横幅（?ref=outreach → #maintainers，10-02 13:10 上线）
-- [ ] T17 22:00 第一批外联，之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
+- [ ] T17 22:00 第一批外联（署名待定 #27：21:30 前无答复则推迟到 10-03），之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
 - [x] T25 目录站累计 25（10-02 07:40 达成，提前）
-- [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com、smithery 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执
+- [x] smithery.ai 已上线（10-02 17:00，https://smithery.ai/servers/admin-avz6/agentoolrank ，5 tools，dirsub submitted）
+- [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执
 - [ ] Google 品牌号：老板醒后重新注册扫码
 - [ ] 确认 10-05 weekly-ops newsletter 实跑（订阅者 0 的空跑路径）
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）
@@ -470,7 +471,8 @@
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
-- [ ] MCP 目录：Smithery 等免费渠道（mcp.so issue 路线卡在 gh 权限，老板待办 #26）
+- [ ] MCP 目录：Smithery ✅（10-02）；mcp.so issue 路线卡在 gh 权限（agentkit 建议不做）
+- [ ] directories.ts（/where-to-list 第三方价格）CHECKED 日期 30 天到期复核：10-31 前重新核对现行页面（不用 Wayback 快照）
 - [ ] 新工具入库接展示名/alternatives/related 管道；related 覆盖 350/669
 - [ ] 观察 Google 是否重新抓取 sitemap；IndexNow 每日推送跟踪
 - [ ] 查 daily-update 刷新失败仓库；PeerPush 改用户名
@@ -481,6 +483,8 @@
 - Brevo key：~/.config/secrets/brevo-api-key；Cloudflare DNS token：~/.config/cloudflare/agentoolrank.token（找凭据先查 ~/.config/<provider>/ 与 ~/.config/secrets/）
 - 会话环境可能仍带失效 GITHUB_TOKEN → git/gh 前 `env -u GITHUB_TOKEN`
 - 用户 crontab 顶部有明文 TELEGRAM_BOT_TOKEN（已告知，未改动）
+- **agentoolrank-chrome 保持着 GitHub 账号 agent-gigmole 的登录状态**（10-02 老板为 Smithery 登录）；Smithery 授权是 GitHub App（clavia-labs），撤销去 github.com/settings/apps/authorizations
+- 对外署名：BOSS_DECISIONS #27 统一 **Jason T.**；已用 Ethan Tan 建的资料（Peerlist、Google 号、各目录账号）暂不改
 - 长期服务用 systemctl --user，不用 pkill -f；next start 本地预览完按 PID kill，不用 pkill
 - 目录站提交台账：~/data/backlinks/directory-log.csv，只通过 $AGENTKIT_ROOT/skills/directory-submission 的 dirsub.py check/add
 - Windows Chrome 内存紧：每站做完关标签页；同一平台被风控一次即停（老板 #25）
@@ -494,3 +498,10 @@
 - 151 测试绿；已部署（3fd4130，看板 7dfc7b9）；线上 /ja、/zh/tools 各 200 条工具链接，首页页脚有 /ja
 - 经验：本地化页只进 sitemap 不够，要有站内入口（总览页 + 全站页脚 + 面包屑）（KNOWLEDGE/GOTCHAS#localized-pages-need-internal-links）
 - T24 剩余：替代品页 / 对比页 / /where-to-list / /submit 本地化；numbersPreserved 字母数字 token 误报
+
+## 2026-10-02 15:57–17:05 外联预演修正 + 署名 #27 + Smithery 上线
+- **外联 dry-run**：LangChain 被写成「#7 in Memory & Knowledge」（取了第一个类目）→ send-outreach 改为选排名百分位最好的类目，现为「#9 of 329 Agent Frameworks」（6f36d98 已提交）；role 信箱规则：只排除 security/legal/privacy/careers 等专用信箱，support@/hello@ 等通用信箱照发
+- **BOSS_DECISIONS #27**：对外署名统一 Jason T.；已用 Ethan Tan 建的资料（Peerlist、Google 号、目录账号）暂不改。今晚 22:00 第一批原署名 Ethan Tan → 已请 agentkit 问老板；**21:30 前无答复则推迟到 10-03**（agentkit 同意）
+- **smithery.ai（决定 #26）上线**：老板在 agentoolrank-chrome 登录 GitHub agent-gigmole；Smithery 是 GitHub App（clavia-labs，client Iv23liKzS9TgjuxyG4Uw），权限仅身份/邮箱/gist/star-watch，无仓库权限、无 install；以 URL 发布远程 MCP，namespace 自动生成 admin-avz6（另有空的 admin-pw59、admin-z8z5），部署成功、识别 5 tools；已设 displayName/description/homepage，未设 unlisted → https://smithery.ai/servers/admin-avz6/agentoolrank ；dirsub add --update 改 submitted；看板 1e262f8
+- **Wayback 共享坑自查**（agentkit）：仅 /where-to-list 引用第三方价格，10-01 在现行页面核对并标 CHECKED 日期，未用快照；计划 directories.ts 加 30 天到期复核（10-31）；已回报 agentkit，看板已记
+- 注意：agentoolrank-chrome 仍保持 agent-gigmole 的 GitHub 登录

@@ -204,3 +204,6 @@
 | 外联落地页维护者横幅 / MaintainerBanner / #maintainers 锚点 / scroll-mt-20 | LOG.md#2026-10-02 12:50–13:10 T17 外联落地页维护者横幅 |
 | 本地化页只靠 sitemap/hreflang 不够 / 站内入口 / 语言索引页 /zh/tools /ja / 页脚 hrefLang / 面包屑指本语言索引 | GOTCHAS.md#localized-pages-need-internal-links |
 | T24 本地化索引页 / translatedToolList / LocalizedToolIndex / 各 200 条链接 | LOG.md#2026-10-02 13:53–14:15 T24 本地化索引页 + 站内入口 |
+| GitHub App vs OAuth App 授权 / 撤销去 /settings/apps/authorizations / Smithery clavia-labs / Iv23li client id | GOTCHAS.md#github-app-vs-oauth-revoke |
+| 外联排名选类目 / 多类目取百分位最好 / LangChain Memory & Knowledge 误报 / #9 of 329 | GOTCHAS.md#outreach-pick-best-category |
+| Smithery 上线 / admin-avz6 / URL 发布远程 MCP / 署名 #27 Jason T. / 外联署名待定 21:30 推迟规则 | LOG.md#2026-10-02 15:57–17:05 外联预演修正 + 署名 #27 + Smithery 上线 |

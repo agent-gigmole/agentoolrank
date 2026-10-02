@@ -710,3 +710,12 @@
 - 面包屑首页改指本语言索引；RootFooter「中文 / 日本語」（hrefLang）；sitemap 收录两索引页
 - 151 测试绿；已部署 3fd4130（看板 7dfc7b9）；线上 /ja、/zh/tools 各 200 条链接，首页页脚可见 /ja
 - 结果：成功；经验写入 GOTCHAS#localized-pages-need-internal-links
+
+## 2026-10-02 15:57–17:05 外联预演修正 + 署名 #27 + Smithery 上线
+- send-outreach --dry-run：LangChain 写成「#7 in Memory & Knowledge」（取第一个类目）→ 改选排名百分位最好的类目，现「#9 of 329 Agent Frameworks」（6f36d98）；role 信箱只排除 security/legal/privacy/careers，support@/hello@ 照发
+- BOSS_DECISIONS #27：对外署名统一 Jason T.，已用 Ethan Tan 的资料暂不改；22:00 第一批署名待老板答复，21:30 前无答复推迟到 10-03（agentkit 同意）
+- smithery.ai 上线（#26）：GitHub App（clavia-labs）登录 agent-gigmole，权限仅身份/邮箱/gist/star-watch；URL 发布远程 MCP，namespace admin-avz6，5 tools，https://smithery.ai/servers/admin-avz6/agentoolrank ；dirsub submitted；看板 1e262f8
+- Wayback 共享坑自查：只有 /where-to-list 引用第三方价格，10-01 现行页核对过，无快照；新增 T26 directories.ts 30 天到期复核（10-31）
+- 坑：GOTCHAS#github-app-vs-oauth-revoke、GOTCHAS#outreach-pick-best-category
+- 结果：成功；agentoolrank-chrome 保持 agent-gigmole GitHub 登录态
+

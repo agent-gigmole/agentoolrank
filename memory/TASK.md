@@ -138,7 +138,9 @@
 - 后续: 2026-10-02 首个外部提交 Orkas 经 API 通道入库（no-code-agent-builders），扩量从「自己爬」走向「作者/agent 自己交」
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
-- 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封，先 --dry-run 看名单与实时排名
+- 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封；dry-run 已过（排名改取百分位最好的类目，6f36d98）
+- **署名待定（BOSS_DECISIONS #27 对外统一 Jason T.，这批原定 Ethan Tan，已请 agentkit 问老板）：21:30 前无答复则推迟到 10-03 22:00**
+- role 信箱：只排除 security/legal/privacy/careers 等专用信箱；support@/hello@ 通用信箱照发
 - 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [x] 外联落地页维护者横幅（?ref=outreach → #maintainers，埋点 maintainer_banner_click，10-02 13:10 上线 8dff4bf）[ ] 22:00 发第一批，之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化 [ ] 徽章嵌入数追踪
 - 依赖: -
 - 验收: 模板经用户同意；每天 ≤10 封限速发送；徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）可追踪
@@ -239,17 +241,23 @@
   - badge：aiagentsdirectory.com（DR74，免费档须挂徽章 → 周决策，建议挂；验证邮件未点）
   - 10-02 新提交 7：futuretools、websitelaunches（之前已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally）、startupstash（Typeform）
   - retry：purshology、ai-tab.cn（本机访问超时）
-  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、smithery、producthunt（10/10 后老板本人号）、cursor.directory（需 GitHub/Google 登录）
+  - [x] smithery.ai done（10-02 17:00，决定 #26）：GitHub App 登录 agent-gigmole，URL 发布远程 MCP，namespace admin-avz6，5 tools → https://smithery.ai/servers/admin-avz6/agentoolrank ，dirsub submitted
+  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、producthunt（10/10 后老板本人号）、cursor.directory（需 GitHub/Google 登录）
   - 选站：按 mcp / agent / 智能体 关键词筛 columbus 原表
 - 目标: 10-03 24:00 前累计 25（agentkit 已裁定：5–8/天是单站/单账号防风控节奏，非总数上限；10-02 白天、10-03 各一批；连续两个验证码即停）
 - 文案: brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）/ directory-listing-fr.md（fr）；中文单独 brief directory-listing-zh.md → drafts/directory-listing-zh.md；bin/write landing-copy
 - [x] 历史提交补录台账 [x] 换用 dirsub.py [x] 浏览器工具补齐（task_tab/frames/tabs/fields/find/screenshot/options，task_act js/key，5ffca5e）
 - [x] 第二批（累计 16）[x] 中文上架文案 [x] 第三批（累计 20）[x] 累计 25（10-02 07:40 达成，提前）[ ] 之后每天 5–8 个[x] aiagentsdirectory 徽章决策（不挂不付） [ ] purshology / ai-tab.cn 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
-- 等 Google 号的待办: cursor.directory、conduid.com、smithery 等需 Google/GitHub 登录的站 → 品牌 Google 号建好（老板扫码）后做；producthunt 10/10 后老板本人号
+- 等 Google 号的待办: cursor.directory、conduid.com 等需 Google/GitHub 登录的站 → 品牌 Google 号建好（老板扫码）后做；producthunt 10/10 后老板本人号
 - 规矩: 每站做完立刻关标签页；同一平台被风控一次即停（老板 #25）；表单坑见 GOTCHAS#directory-form-pitfalls
 - 相关账号: Google 品牌号 hello@agentoolrank.com（Ethan Tan，老板已批真名）卡扫码，等老板醒后重注册；GitHub 品牌号被风控 → 按 #25 停
 - 闸: auto（用老板已批准的品牌身份；花钱的付费上架逐次问）
 - 失败: 0
+
+### T26 directories.ts CHECKED 30 天到期复核
+- 状态: todo，截止 10-31
+- 内容: /where-to-list 引用的第三方价格（directories.ts）10-01 在现行页面核对、标了 CHECKED 日期；给 CHECKED 加 30 天到期检查（过期测试失败/提醒），10-31 前重新在现行页面核对（不用 Wayback 快照，见 agentkit 共享坑）
+- 闸: auto
 
 ### T11 重复工具清理（embedchain、gpt-index）
 - 状态: blocked
