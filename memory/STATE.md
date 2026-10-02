@@ -364,6 +364,18 @@
 - **后续节奏**：每天 5–8 个；剩下的主要是需要 Google 登录的站（cursor.directory、conduid 等），等品牌 Google 号建好（老板扫码）再做
 - 已回报 agentkit，看板已记录，代码已推送
 
+## 2026-10-02 08:15–08:45 T24 日语版开工 + 中文读者付款能力核实
+
+- **第二门语言抽象完成（commit 0fd2ce1，已部署）**：按 seo-geo「第二门语言时才抽象」
+  - src/lib/tool-i18n.ts：COPY 字典 zh/ja（键集合一致由测试保证）+ wan（zh "15 万" / ja "15万"）+ localToolTitle / localStatus / localToolFaq
+  - 标题截断规则：≤32 字，切在 32 字内最后一个标点/空格；该处 <12 字则硬切
+  - 共享组件 src/components/LocalizedToolPage.tsx（localizedToolMetadata + 页面）；hreflang 用 translatedLangs 生成全互指
+  - 薄路由 src/app/zh/tool/[slug]、src/app/ja/tool/[slug]；sitemap 按语言列表生成 zh/ja 工具页
+  - 删 zh-tool.ts 及其测试，zh 用例原样迁到 tool-i18n.test.ts，输出不变；143 测试全绿；线上 /zh/tool/dify 标题与之前一致
+- **日语翻译**：translate-tools.ts 加 ja 术语表（オープンソース、フレームワーク等，です/ます体）+ ja 情态映射；试译 3：dify、langchain 过，ollama 审校误报未过；**前 200 个后台跑中**，日志 data/ops-logs/translate-ja-2026-10-02.log → 跑完审稿发布（level 1：前 50 逐篇读，其余抽 10%）
+- **中文读者付款能力（只读 ops key 查 Stripe）**：TENSO LLC 美国账户，capabilities card_payments / link 均 active，银联卡走卡通道可用；Default payment_method_configuration 中 alipay、wechat_pay 均 off；我们 checkout 未写 payment_method_types（动态支付方式）→ **后台开启即生效，无需改代码**。属收款配置变更 → 已报 agentkit 进 09:30 汇总，建议开通；看板已记（6ff0f69）
+- 方法见 GOTCHAS#stripe-local-payment-methods-check、GOTCHAS#test-expectation-follow-rule
+
 ## 近期排期
 
 - **10-02 10:00**：T19 X 帖（drafts/x-t19.md，x-post），发后看板记链接、查 src=x
@@ -372,7 +384,8 @@
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
-- **10-09**：T24 日语上线；同日提前报 agentkit：10/10 后 PH 老板本人登录
+- **日语**：前 200 个译完 → 审稿发布（前 50 逐篇读，其余抽 10%），争取早于原定 10-09；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
+- **Alipay/WeChat Pay**：等老板（agentkit 09:30 汇总）批准后在 Stripe 后台开启，无需改代码
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
 ## 待办 / 下一步
@@ -386,7 +399,9 @@
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（canonical→/where-to-list，?ref=devto2）
 - [ ] 10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- [ ] T24 中文：确认 sitemap 刷新出 200 个 zh 页 + IndexNow；其余页型 → 日语 10-09 → 西语 10-30 看数据
+- [ ] T24 中文：确认 sitemap 刷新出 200 个 zh 页 + IndexNow；其余页型 → 西语 10-30 看数据
+- [ ] T24 日语：200 个翻译跑完（data/ops-logs/translate-ja-2026-10-02.log）→ 审稿 → 发布 → sitemap/IndexNow；ollama 误报复核
+- [ ] Stripe 开 Alipay/WeChat Pay：等老板批准（收款配置变更）
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速

@@ -185,3 +185,7 @@
 | 仅 mailto 入口的目录站 / Brevo 从 hello@ 发推荐邮件 / 按页面模板写标题 / 不算冷邮件 | GOTCHAS.md#directory-email-only-submission |
 | MCP 索引站 endpoint 实时握手 / agenstry 即时收录 / MCP 加认证会失败 | GOTCHAS.md#mcp-directory-live-handshake |
 | T25 第四批 累计 25 达标 / agentlocker linkstartai agenstry magicnetworld thedailyworkflow / 之后每天 5–8 / 等 Google 号 | LOG.md#2026-10-02 07:06–07:40 T25 目录站第四批（累计 25 达标） |
+| Stripe 查支付宝/微信支付是否开通 / payment_method_configurations display_preference / account capabilities / 动态支付方式不改代码 | GOTCHAS.md#stripe-local-payment-methods-check |
+| 改规则时测试期望按规则手算 / 截断切标点 / 不迁就实现 / 迁移旧用例做回归基线 | GOTCHAS.md#test-expectation-follow-rule |
+| 第二门语言抽象 / tool-i18n.ts COPY zh/ja / LocalizedToolPage / /ja/tool/[slug] 薄路由 / translatedLangs hreflang | LOG.md#2026-10-02 08:15–08:45 T24 日语版开工 + 中文读者付款能力核实 |
+| ja 术语表 / です/ます体 / ja 情态映射 / translate-ja 日志 | LOG.md#2026-10-02 08:15–08:45 T24 日语版开工 + 中文读者付款能力核实 |

@@ -571,3 +571,13 @@ MCP 目录常见两条路线：GitHub repo 走免费队列（mcpmarket Free Queu
 
 ## mcp-directory-live-handshake
 MCP 证据/索引站（如 agenstry.com）提交时粘贴 MCP endpoint，对方会实时握手并列出 tools（我们 5 个），通过即时收录。我们的 MCP 无认证，一次过；若以后给 MCP 加认证，这类站会握手失败，需要给出公开只读 endpoint。
+
+## stripe-local-payment-methods-check
+查 Stripe 账户能否收支付宝/微信支付等本地支付方式（10-02，TENSO LLC 美国账户，只读 ops key 即可）：
+1. `GET /v1/account` 看 `capabilities`（card_payments、link 等是否 active；银联卡走 card 通道，card_payments active 即可收）
+2. `GET /v1/payment_method_configurations` 找 Default 配置，看各方法的 `<method>.display_preference`（preference / value 为 on/off）——本次 alipay、wechat_pay 都是 off
+3. 再看代码里 Checkout Session 是否写死 `payment_method_types`：没写 = 动态支付方式，后台 Dashboard 开启后立即生效，**不用改代码**；写死了则要把新方法加进去
+开启属于收款配置变更 → 走老板审批（agentkit 汇总），不自行开。
+
+## test-expectation-follow-rule
+改规则（如标题截断从"硬切 32 字"改为"切在 32 字内最后一个标点/空格，<12 字硬切"）时，测试期望值要**按新规则手算重写**，不能先跑实现再把输出抄进断言。10-02 有两处期望写错（例句里的标点位置其实在 12 字阈值之前，按规则应硬切），已更正为规则下的正确输出。重构迁移旧用例（zh-tool.test → tool-i18n.test）时原用例应原样保留、输出不变，作为回归基线。

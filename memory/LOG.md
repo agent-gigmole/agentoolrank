@@ -641,3 +641,12 @@
 - 已回报 agentkit，看板已记，代码已推送
 - 坑：[name=] 选择器先命中 <meta name=description>；同名 Submit 用 form 内 button[type=submit]；仅邮箱入口用发信服务发推荐；蜜罐字段留空；MCP 索引站实时握手（GOTCHAS#directory-form-pitfalls、#directory-email-only-submission、#mcp-directory-live-handshake）
 - human-intervention=0 / auto-resolved=0 / 熔断=0
+
+## 2026-10-02 08:15–08:45 T24 日语版开工 + 中文读者付款能力核实
+- 第二门语言抽象（0fd2ce1，已部署）：src/lib/tool-i18n.ts（COPY 字典 zh/ja 键集合一致由测试保证；wan zh "15 万"/ja "15万"；localToolTitle/localStatus/localToolFaq）+ 共享组件 src/components/LocalizedToolPage.tsx（localizedToolMetadata + 页面，hreflang 由 translatedLangs 全互指）+ 薄路由 /zh/tool/[slug]、/ja/tool/[slug]；sitemap 按语言列表生成
+- 标题截断规则：≤32 字，切在 32 字内最后一个标点/空格；不到 12 字则硬切
+- 删 zh-tool.ts 及测试，zh 用例原样迁到 tool-i18n.test.ts；143 测试全绿；线上 /zh/tool/dify 标题不变
+- 日语翻译：translate-tools.ts 加 ja 术语表（オープンソース、フレームワーク…，です/ます体）+ ja 情态映射；试译 dify/langchain 过、ollama 审校误报；前 200 后台跑（data/ops-logs/translate-ja-2026-10-02.log），跑完审稿（前 50 逐篇读、其余抽 10%）
+- Stripe（只读 ops key）：TENSO LLC 美国账户 card_payments/link active，银联卡走卡通道；Default payment_method_configuration 中 alipay/wechat_pay off；checkout 未写 payment_method_types（动态支付方式）→ 后台开启即可，不改代码；收款配置变更已报 agentkit 进 09:30 汇总，建议开通；看板已记（6ff0f69）
+- 坑：Stripe 查本地支付方式方法（GOTCHAS#stripe-local-payment-methods-check）；改截断规则时测试期望按新规则重写，有两处期望写错已更正为规则输出，不迁就实现（GOTCHAS#test-expectation-follow-rule）
+- human-intervention=0 / auto-resolved=0 / 熔断=0（Alipay/WeChat 开通待老板批准）
