@@ -709,3 +709,12 @@ LLM judge 批量判「不在收录范围」时，拒绝理由必须分类处理�
 - **已停更或弃用** → 单独一组，软下架前同样先查 GSC
 - 做法：抽查时被拒组单独抽 ≥10 条；按理由关键词（unreachable/404/could not fetch/no evidence）先分组再定动作；任何下架前先查 GSC 展示，有展示的保留另议
 
+
+## archived-flag-verify
+「已停更 / 弃用 / 仍活跃」的判断，无论来自 LLM 还是人的印象，都必须用 GitHub API 的 archived 标志核对（`gh api repos/OWNER/REPO --jq '.archived,.pushed_at'`）。10-03 类目审计两个方向都错过：
+- LLM 把仍活跃的项目判成已停更：llama-agents（9-25 仍有推送）、vision-agent 都未归档
+- agentkit 印象中 roo-code 仍活跃，实际 2026-05-15 已归档
+- 规则：archived=true 才按停更下架；未归档但 LLM 说停更 → 转复核，看 pushed_at
+
+## bulk-recategorize-empty-guard
+批量改类目前先模拟应用结果，检查每个类目的工具数；任何类目会被清空就中止（scripts/apply-category-audit.ts 内置此检查），否则对应类目页会 404，丢 SEO。同时先加回滚列（category_tags_old）再改。

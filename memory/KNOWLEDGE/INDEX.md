@@ -235,3 +235,6 @@
 | LLM 拒绝理由分三类 超出范围/抓取失败/停更 / 官网打不开 404 不能直接下架 / react-agent 误判 / 修 URL 后重判 / 下架前查 GSC | GOTCHAS.md#llm-reject-reason-triage |
 | 类目审计 dry-run 670 条 / 575 在范围 364 不变 211 变化 / 被拒 95 = 75+13+7 / 抽查 29/30 / 82 软下架 / category_tags_old 回滚 / Agent Frameworks 258→154 | LOG.md#2026-10-03 00:xx– 全库类目审计 dry-run + 抽查 30 条 |
 
+| 已停更/仍活跃 用 GitHub API archived 核对 / LLM 判停更有误 llama-agents vision-agent / 人印象有误 roo-code 2026-05-15 已归档 / 未归档转复核看 pushed_at | GOTCHAS.md#archived-flag-verify |
+| 批量改类目 类目被清空 类目页 404 / apply-category-audit.ts 清空即中止 / category_tags_old 回滚列 | GOTCHAS.md#bulk-recategorize-empty-guard |
+| 类目审计应用上线 / 320 改主类目 / 软下架 74 delisted 75 / GSC 保留 pydantic buzz chatgpt-next-web mergekit / /submit#what-we-list 收录规则 / hold.json 解除 | LOG.md#2026-10-03 – 类目审计应用上线 |

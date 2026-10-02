@@ -654,3 +654,17 @@
 - **下一步**：10-03 早上按上面方案应用（先加回滚列 → 查 GSC → 改类目 → 软下架 → 修 ② 组 URL 重判 → 解 hold.json）
 - 坑：GOTCHAS#llm-reject-reason-triage
 
+
+## 2026-10-03 – 类目审计应用上线
+- agentkit 23:54 同意方案并补 3 点要求，已全部落实、部署、推送
+- ③组用 GitHub API archived 核对：roo-code（2026-05-15 已归档，agentkit 原以为活跃）、hands-on-llms、langchain-serve、turbopilot、llama3 下架；llama-agents（9-25 仍推送）、vision-agent 未归档 → 待复核
+- ①组 75 个逐个人工过：autogpt-js、langstream 官网被劫持成博彩站但工具对口 → 移入修 URL 组
+- 收录规则定稿写在 /submit#what-we-list：收构建/运行/托管/评估 agent 的工具 + 能自主行动的 agent（coding/browser/research/voice）；不收通用聊天客户端、单一用途 AI 应用、模型及训练/微调库、课程、论文清单、提示词合集、已归档或官网失效项目
+- GSC 近 90 天有展示保留：pydantic 24、buzz 33、chatgpt-next-web 20、mergekit 6（data/category-audit-gsc-hits.json）
+- scripts/apply-category-audit.ts：加 category_tags_old 列；320 个改 judge 主类目；任一类目被清空即中止。回滚 `UPDATE tools SET category_tags = category_tags_old WHERE category_tags_old IS NOT NULL`
+- delist-tool.ts 软下架 74 个，delisted-ids.ts 共 75（含 career-ops）
+- 线上：qwen3/jan/roo-code 410；pydantic/llama-agents/langchain/类目页/submit 200；sitemap 无下架工具；204 测试 + build 通过
+- 外联 hold.json、category.json → *-2026-10-02.json.bak，挂起解除；下一批 dry-run 类目一致，career-ops 自动跳过
+- 已回报 agentkit，看板已记
+- **待办**：修 URL 15 个（②组 13 + autogpt-js、langstream）后重判；llama-agents、vision-agent 复核；保留的 4 个另议
+- 坑：GOTCHAS#archived-flag-verify、GOTCHAS#bulk-recategorize-empty-guard

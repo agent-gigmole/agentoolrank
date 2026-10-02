@@ -837,3 +837,9 @@
 - 应用方案已报 agentkit，10-03 早上执行：category_tags_old 回滚列、575 改主类目、82 个软下架（先查 GSC 有展示的保留）、13 个修 URL 重判、slug 不动、Agent Frameworks 258→约 154、之后解 hold.json；看板已记
 - 结果：成功（dry-run 阶段）
 
+
+## 2026-10-03 – 类目审计应用上线
+- 做法：按 agentkit 23:54 同意的方案执行。③组用 GitHub API archived 核对（roo-code/hands-on-llms/langchain-serve/turbopilot/llama3 已归档下架；llama-agents、vision-agent 未归档转复核）；①组 75 个人工过一遍（autogpt-js、langstream 官网被劫持成博彩站转修 URL 组）；收录规则写到 /submit#what-we-list；查 GSC 近 90 天保留 pydantic/buzz/chatgpt-next-web/mergekit；新增 scripts/apply-category-audit.ts（category_tags_old 回滚列、320 个改主类目、类目被清空即中止）；delist-tool.ts 软下架 74 个（delisted-ids 共 75）；外联 hold.json/category.json 改 .bak 解除挂起
+- 结果：204 测试 + build 通过，已部署推送；线上 410/200/sitemap 核对通过；下一批外联 dry-run 类目一致；已回报 agentkit、看板已记
+- 待办：修 URL 15 个后重判；llama-agents、vision-agent 复核；保留 4 个另议
+- 结果：成功

@@ -362,14 +362,19 @@
 - [x] 类目审计 dry-run 完成（10-02 23:xx–10-03 00:xx，scripts/audit-categories.ts 只读 → data/category-audit-2026-10-02.csv，670 条，$0）：在范围内 575（类目不变 364 / 变化 211）、被拒 95
 - [x] 抽查 30 条（每类随机 10）：不变 10/10 对；变化 10 条新类目都更准；被拒 9/10 对，误判 react-agent（对口，官网坏了）→ 以「官网打不开/404」为理由的拒绝不能直接下架
   - 被拒 95 拆三组：①真正超出范围 75（课程论文、通用模型 qwen3/flux/grok-1、微调库 peft/llama-factory、终端应用 jan/chatbox/siyuan 等）②官网或证据有问题 13：agent、colossalai、pezzo、langchaingo、taskingai、autonomous-hr-chatbot、gpteam、llm-chain、ai-getting-started、prompt2ui、react-agent、developer、audiogpt（不下架，修 URL 后重判）③已停更或弃用 7：llama-agents、roo-code、vision-agent、hands-on-llms、langchain-serve、turbopilot、llama3
-- [ ] 应用方案（10-03 早上执行，已报 agentkit）：
-  - [ ] tools 表新增 category_tags_old 列（回滚用）
-  - [ ] 在范围内 575 个改用 judge 主类目
-  - [ ] ①+③ 共 82 个软下架（delist-tool 归档 + 410）；下架前先查 GSC，有展示的保留另议
-  - [ ] ② 组 13 个修 URL 后重判
-  - [ ] 类目 slug 不改不删（12 个类目页仍各有工具，无 404）；Agent Frameworks 258 → 约 154
-  - [ ] 应用完再解除 data/outreach/hold.json 挂起
-- [ ] **全库类目审计**（10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
+- [x] 应用方案（10-03 已上线，agentkit 23:54 同意并补 3 点要求）：
+  - [x] tools 表新增 category_tags_old 列（回滚：UPDATE tools SET category_tags = category_tags_old WHERE category_tags_old IS NOT NULL）
+  - [x] 320 个工具改为 judge 主类目（scripts/apply-category-audit.ts；应用前检查任一类目被清空即中止，防类目页 404）
+  - [x] 软下架 74 个（delist-tool.ts；delisted-ids.ts 共 75 个 id，含 career-ops）；③组用 GitHub API archived 核对：roo-code（2026-05-15 已归档）、hands-on-llms、langchain-serve、turbopilot、llama3 下架
+  - [x] GSC 近 90 天有展示的保留：pydantic 24、buzz 33、chatgpt-next-web 20、mergekit 6（data/category-audit-gsc-hits.json）
+  - [x] 收录规则写到 /submit#what-we-list
+  - [x] 类目 slug 不改不删；线上核对 qwen3/jan/roo-code 410，pydantic/llama-agents/langchain/各类目页/submit 200，sitemap 无下架工具；204 测试 + build 通过，已部署推送
+  - [x] 外联挂起解除：hold.json、category.json 改名 *-2026-10-02.json.bak；下一批 dry-run 类目与审计一致，career-ops 自动跳过
+- [ ] 类目审计遗留：
+  - [ ] 修 URL 15 个（原②组 13 个 + autogpt-js、langstream——官网被劫持成博彩站，工具本身对口）修完后重判
+  - [ ] llama-agents（未归档，9-25 仍有推送）、vision-agent（未归档）复核
+  - [ ] GSC 有展示而保留的 4 个（pydantic、buzz、chatgpt-next-web、mergekit）另议
+- [x] **全库类目审计**（10-03 应用上线；10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
   - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301
   - 待判清单：ai-job-search（也是求职工具，替代品里引用 career-ops；线上渲染时 getToolBySlug 返回 null 已过滤，无 404 链接）——审计时与 career-ops 同口径判是否软下架
 - [x] career-ops 软下架（LLM 判为求职助手、不在收录范围）：agentkit 20:20 口径——"删数据"仅指不可恢复删除，软下架（归档表、可恢复）属日常整理，自己定、记一笔。delist-tool.ts → tools_archive（含 metric_snapshots），4 个入口拦重新收录，sitemap 过滤；线上 404 已验证（10-02）
