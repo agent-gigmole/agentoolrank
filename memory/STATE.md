@@ -485,3 +485,12 @@
 - 目录站提交台账：~/data/backlinks/directory-log.csv，只通过 $AGENTKIT_ROOT/skills/directory-submission 的 dirsub.py check/add
 - Windows Chrome 内存紧：每站做完关标签页；同一平台被风控一次即停（老板 #25）
 - 非交互 shell 无 bun：用 ~/.bun/bin/bun（ops 脚本已 export PATH）；scripts/indexnow.ts 等含 top-level await 的脚本只能用 bun 跑，npx tsx 报 cjs 错
+
+## 2026-10-02 13:53–14:15 T24 本地化索引页 + 站内入口
+- 问题：400 个 zh/ja 工具页只靠 sitemap + hreflang 被发现，站内 0 链接；/ja 无首页
+- 新增 i18n-data.translatedToolList(lang)（已发布译文，按 score 排序）
+- 新增 src/components/LocalizedToolIndex.tsx（metadata：hreflang 指 en 首页 / /zh/tools / /ja / x-default + 列表组件）；路由 src/app/zh/tools/page.tsx、src/app/ja/page.tsx；COPY 新增 indexTitle/indexH1/indexIntro（zh/ja 键集合一致由测试保证）
+- 链接：LocalizedToolPage 面包屑「首页/ホーム」→ /zh/tools、/ja；RootFooter 加「中文 / 日本語」（带 hrefLang）；sitemap 收录 /zh/tools、/ja
+- 151 测试绿；已部署（3fd4130，看板 7dfc7b9）；线上 /ja、/zh/tools 各 200 条工具链接，首页页脚有 /ja
+- 经验：本地化页只进 sitemap 不够，要有站内入口（总览页 + 全站页脚 + 面包屑）（KNOWLEDGE/GOTCHAS#localized-pages-need-internal-links）
+- T24 剩余：替代品页 / 对比页 / /where-to-list / /submit 本地化；numbersPreserved 字母数字 token 误报

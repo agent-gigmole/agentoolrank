@@ -608,3 +608,6 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 
 ## isr-query-personalize-client
 想按 query 参数（如 `?ref=outreach`）给 ISR 页加个性化内容：**用 client 组件在浏览器里读 `window.location.search`（或 useSearchParams 并包 Suspense）**，不要在 page.tsx 里读 `searchParams` prop——读了整页会变成动态渲染，失去 ISR / revalidate 缓存。10-02 MaintainerBanner 就是这样做的：服务端照常 ISR 出页，横幅在客户端判断后才显示。
+
+## localized-pages-need-internal-links
+多语言页（10-02：400 个 /zh/tool、/ja/tool 页）**只放 sitemap + hreflang 不够**：站内没有任何链接指向它们，爬虫只能靠 sitemap 发现，内链权重为 0，/ja 甚至没有首页。补法（3fd4130）：① 每种语言一个总览/索引页（/zh/tools、/ja，列出全部已发布译文，按分数排序），索引页自身也带 hreflang 组（en 首页 ↔ /zh/tools ↔ /ja + x-default）；② 全站页脚放语言入口链接（`<a hrefLang="zh">中文</a>`）；③ 本地化详情页面包屑的「首页」指向本语言索引页而非英文首页；④ sitemap 收录索引页。上线新语言页型时把「站内入口」列为验收项（线上数索引页链接数 = 已发布数）。

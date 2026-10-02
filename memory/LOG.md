@@ -703,3 +703,10 @@
 - 文案 ai-flavor clean；151 测试绿；已部署（8dff4bf，看板 53850f1）；浏览器实测 /tool/hermes-agent?ref=outreach 正常
 - 坑：GOTCHAS#event-names-whitelist、GOTCHAS#isr-query-personalize-client
 - 下一步：22:00 第一批外联，按 maintainer_banner_click / checkout_click + ref=outreach 看转化
+
+## 2026-10-02 13:53–14:15 T24 本地化索引页 + 站内入口
+- 400 个 zh/ja 工具页此前站内无入口（仅 sitemap/hreflang），/ja 无首页
+- translatedToolList(lang) + LocalizedToolIndex 组件 + /zh/tools、/ja 路由；COPY 加 indexTitle/indexH1/indexIntro（zh/ja 键一致有测试）
+- 面包屑首页改指本语言索引；RootFooter「中文 / 日本語」（hrefLang）；sitemap 收录两索引页
+- 151 测试绿；已部署 3fd4130（看板 7dfc7b9）；线上 /ja、/zh/tools 各 200 条链接，首页页脚可见 /ja
+- 结果：成功；经验写入 GOTCHAS#localized-pages-need-internal-links

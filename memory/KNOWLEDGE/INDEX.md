@@ -202,3 +202,5 @@
 | 埋点事件名白名单 EVENT_NAMES / src/lib/events.ts / 新事件 TS 报错 / maintainer_banner_click | GOTCHAS.md#event-names-whitelist |
 | ISR 页按 query 参数个性化 / ?ref=outreach / client 组件读 window.location / 不用 searchParams 否则整页动态渲染 | GOTCHAS.md#isr-query-personalize-client |
 | 外联落地页维护者横幅 / MaintainerBanner / #maintainers 锚点 / scroll-mt-20 | LOG.md#2026-10-02 12:50–13:10 T17 外联落地页维护者横幅 |
+| 本地化页只靠 sitemap/hreflang 不够 / 站内入口 / 语言索引页 /zh/tools /ja / 页脚 hrefLang / 面包屑指本语言索引 | GOTCHAS.md#localized-pages-need-internal-links |
+| T24 本地化索引页 / translatedToolList / LocalizedToolIndex / 各 200 条链接 | LOG.md#2026-10-02 13:53–14:15 T24 本地化索引页 + 站内入口 |

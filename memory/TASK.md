@@ -201,6 +201,7 @@
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A 等），减少审校数字误报
 - [ ] 确认 sitemap 刷新出全部 200 个 zh 工具页 + IndexNow 推送（21:30 daily-ops）
 - [ ] 中文其余页型：替代品页、对比页（GSC 有展示的）、/where-to-list、/submit 价格页
+- [x] **本地化索引页 + 站内入口**（10-02，3fd4130）：/zh/tools、/ja 索引页（translatedToolList 按 score，各 200 条）；面包屑首页指本语言索引；全站页脚「中文 / 日本語」；sitemap 收录
 - [x] **第二门语言抽象（共享组件+字典）**（10-02，0fd2ce1）：src/lib/tool-i18n.ts（COPY zh/ja + wan + localToolTitle/localStatus/localToolFaq）+ src/components/LocalizedToolPage.tsx + 薄路由 /zh|/ja/tool/[slug]；hreflang 由 translatedLangs 全互指；sitemap 按语言列表派生；143 测试全绿，/zh/tool/dify 输出不变。原计划条目：i18n 字典 + 语言页登记表 + /[lang]/ 薄路由；hreflang 全互指（含自引用 + x-default）；sitemap 从登记表派生；付款回跳同语言页（白名单）
 - [ ] 译文：模板/界面文案逐条人工核；标语/简介用 LLM + 术语表，前 50 页逐页核，其余抽查 10% 并跑脚本检查（术语、长度、残留英文）；专有名词/数字/日期不译；按 owner-goal #23 加第二模型回译比对（回译与英文原文语义偏差大的条目进人工复核）；审校 prompt 单列「情态方向核对」：逐句列原文/译文的 must / must not / need not / may / should 对照（中文：必须/不得/不必/可以/应当；日语：なければならない/てはいけない/なくてもよい/てもよい/べき），方向不一致即退回（agentkit 10-02，imagehub 意大利语 non devono 事故）
 - [x] **中文读者付款能力已核实（待老板开 Alipay/WeChat）**（10-02）：TENSO LLC 美国账户 card_payments/link active（银联卡走卡通道）；alipay/wechat_pay 在 Default payment_method_configuration 为 off；checkout 用动态支付方式 → 后台开启即可，无需改代码；已报 agentkit 09:30 汇总、看板已记。原要求：核实 Stripe（TENSO LLC 美国账户）能否为大陆用户开通支付宝/微信支付/银联卡，结论写进看板单独跟踪（agentkit 10-02 要求）
