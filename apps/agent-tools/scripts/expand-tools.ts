@@ -8,6 +8,7 @@ import { createClient } from "@libsql/client";
 import { pickCandidates, type GhRepo } from "../src/lib/discover";
 import { toolRowFromReview, submissionTagline } from "../src/lib/review";
 import { judge, readme, spentUsd } from "./judge";
+import { unsafeMatch } from "../src/lib/safety";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 const args = process.argv.slice(2);
@@ -74,8 +75,12 @@ async function main() {
       if (ids.has(slug) || repoNames.has(repoName.toLowerCase())) continue; // probably the same tool under a moved org
       ids.add(slug); // reserve before the slow LLM call so parallel workers don't double-insert
       repoNames.add(repoName.toLowerCase());
+      const pre = unsafeMatch(`${r.full_name} ${r.description ?? ""} ${siteUrl(r)}`);
+      if (pre) { rejected++; rejectedLog.push(`${r.full_name}: unsafe category "${pre}"`); continue; }
       const verdict = await judge(repoName, siteUrl(r), r.description ?? "", "", await readme(r.html_url), categories);
       judged++;
+      const post = verdict ? unsafeMatch(`${verdict.tagline} ${verdict.description}`) : null;
+      if (post) { rejected++; rejectedLog.push(`${r.full_name}: unsafe category "${post}"`); continue; }
       if (!verdict || verdict.decision !== "approve") {
         rejected++;
         rejectedLog.push(`${r.full_name}: ${verdict?.reason ?? "unparseable"}`);

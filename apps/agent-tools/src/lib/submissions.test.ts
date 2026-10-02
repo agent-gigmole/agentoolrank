@@ -21,6 +21,13 @@ describe("validateSubmission", () => {
     }
   });
 
+  it("rejects face swap / adult tools up front, including glued spellings in the domain", () => {
+    const r = validateSubmission({ ...good, url: "https://aiswapface.org", name: "AI Swap" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors).toContain("AgentoolRank doesn't list face swap, deepfake or adult tools.");
+    expect(validateSubmission({ ...good, tagline: "Undress any photo with AI" }).ok).toBe(false);
+  });
+
   it("rejects missing url, bad email, non-http url", () => {
     expect(validateSubmission({ ...good, url: "" }).ok).toBe(false);
     expect(validateSubmission({ ...good, url: "javascript:alert(1)" }).ok).toBe(false);

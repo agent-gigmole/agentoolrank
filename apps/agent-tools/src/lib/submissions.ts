@@ -1,4 +1,5 @@
 // Maker submissions: validation, slug + badge helpers for /submit.
+import { unsafeMatch } from "./safety";
 
 export const FREE_REVIEWS_PER_DAY = 3;
 
@@ -57,6 +58,8 @@ export function validateSubmission(input: SubmissionInput): ValidationResult {
   const githubRaw = str(input.github_url).replace(/\/$/, "").replace(/\.git$/, "");
   const github_url = githubRaw ? githubRaw : null;
   if (github_url && !GITHUB_REPO.test(github_url)) errors.push("GitHub URL must look like https://github.com/owner/repo.");
+
+  if (unsafeMatch([url, name, tagline, github_url ?? ""].join(" "))) errors.push("AgentoolRank doesn't list face swap, deepfake or adult tools.");
 
   if (errors.length > 0 || !url) return { ok: false, errors };
   return { ok: true, value: { url, name, email, tagline, github_url } };

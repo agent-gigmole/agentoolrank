@@ -10,6 +10,7 @@ import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { spawnSync } from "node:child_process";
 import { toolRowFromReview, hasBacklink, reviewOrder } from "../src/lib/review";
+import { unsafeMatch } from "../src/lib/safety";
 import { fetchText, readme, judge } from "./judge";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -62,7 +63,15 @@ async function main() {
 
   let approved = 0;
   for (const s of batch) {
-    const r = await judge(s.name, s.url, s.tagline, pages.get(s.id)?.text ?? "", await readme(s.github_url), categories);
+    const pre = unsafeMatch([s.name, s.slug, s.url, s.github_url ?? "", s.tagline].join(" "));
+    const r = pre ? null : await judge(s.name, s.url, s.tagline, pages.get(s.id)?.text ?? "", await readme(s.github_url), categories);
+    const bad = pre ?? (r ? unsafeMatch(`${r.tagline} ${r.description}`) : null);
+    if (bad) {
+      // Face swap / nudify / adult tools are never listed, whatever the reviewer says (also skips the LLM call).
+      console.log(`#${s.id} ${s.slug}: reject (unsafe category: "${bad}")`);
+      if (apply) await db.execute({ sql: "UPDATE submissions SET status='rejected', note=?, reviewed_at=datetime('now') WHERE id=?", args: [`unsafe category: ${bad}`, s.id] });
+      continue;
+    }
     if (!r) { console.log(`#${s.id} ${s.slug}: unparseable verdict, skipped`); continue; }
     console.log(`#${s.id} ${s.slug}: ${r.decision} [${r.category}] ${r.reason}${s.backlink_verified ? " (badge)" : ""}`);
     if (!apply) continue;

@@ -7,6 +7,7 @@
  * Usage: GITHUB_TOKEN=xxx bun run scripts/crawl-github.ts
  */
 import { db } from "../packages/db/src/index";
+import { unsafeMatch } from "../apps/agent-tools/src/lib/safety";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN) {
@@ -248,6 +249,13 @@ async function fetchAndUpsertRepo(owner: string, name: string, existingId?: stri
       });
       console.log(`  ✓ ${existingId} (★${repo.stargazerCount})`);
       return true;
+    }
+
+    // New tools only: never list face swap / nudify / adult repos (glued spellings like "swapface" included).
+    const unsafe = unsafeMatch(`${owner}/${name} ${repo.description ?? ""} ${repo.homepageUrl ?? ""}`);
+    if (unsafe) {
+      console.log(`  ✗ ${owner}/${name}: unsafe category "${unsafe}", not inserted`);
+      return false;
     }
 
     await db.execute({
