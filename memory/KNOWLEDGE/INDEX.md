@@ -229,3 +229,5 @@
 | 已下架页 410 + X-Robots-Tag noindex / delisted-ids.ts 静态名单 delist-tool 自动重生成 / 改完提交部署 / 不 301 到错类目 / ai-job-search 同类待审 | GOTCHAS.md#delisted-410-static-list |
 | 外联限速 30 秒间隔 10 封超 5 分钟 / Bash 300 秒超时 / 限速批处理先算总时长 run_in_background / sent.json 对账 / Apple 隐私代理虚假打开 打开率仅参考 | GOTCHAS.md#outreach-send-bash-timeout |
 | 已下架页面 410 005953b / middleware→proxy / isGonePath / 替代品内链核对 ai-job-search | LOG.md#2026-10-02 20:26– 已下架页面 410 + proxy 迁移 |
+| Brevo API key 不能限权 全账户权限 / 有限范围 key 做不到 / tag 隔离监控 停 key / 无创建 key 的 API 只能网页 / senders/domains authenticate / brevo-code 账户级 / 共用 300 封/天 / WSL 无 dig 用 DoH | GOTCHAS.md#brevo-key-no-scope |
+| newsiteradar.com 接入 Brevo / domain id 6abfb9f2 / new_ladar key / 等 DNS 认证 + tag 监控 | LOG.md#2026-10-02 22:xx– newsiteradar.com 接入 Brevo（发件域 + new_ladar 专用 key） |

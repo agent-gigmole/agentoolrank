@@ -800,3 +800,10 @@
 - 下一步：10-03 09:30 后统计回复率，退订加 optout.json；hold.json 10 个等类目审计
 - 结果：成功
 
+
+## 2026-10-02 22:xx– newsiteradar.com 接入 Brevo（发件域 + new_ladar 专用 key）
+- 做法：POST /v3/senders/domains 加 newsiteradar.com（id 6abfb9f2daf63ed95f090051），4 条 DNS（2 条 DKIM CNAME、brevo-code TXT、DMARC 沿用 p=quarantine）+ SPF 原记录加 include:spf.brevo.com 已发 new_ladar 在 Cloudflare 添加；网页后台建 key "newsiteradar-outreach"，task_capture_key.py 存 Windows 临时文件 → 搬到 ~/.config/secrets/brevo-api-key-newsiteradar（600）→ 删临时文件；GET /v3/account 200
+- 约定：new_ladar 只调发信接口、发信带 tags:["newsiteradar"]、认证后再建发件人、共用免费档 300 封/天；已回报 agentkit
+- 坑：Brevo API key 无权限范围（拿到即全账户权限），"有限范围 key"做不到 → 靠约定 + tag 隔离监控 + 出事停 key；Brevo 无创建 key 的 API；brevo-code 是账户级、两域名同值；WSL 无 dig → DoH
+- 下一步：DNS 加完后 PUT .../newsiteradar.com/authenticate，监控 tag=newsiteradar 退信/投诉
+- 结果：成功（等对方 DNS）

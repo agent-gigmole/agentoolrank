@@ -681,3 +681,12 @@ Next.js 16 起 `middleware.ts` 约定已弃用（构建会提示），改为 `sr
 send-outreach 每封之间 sleep 30 秒限速，10 封要 5 分钟以上；在 Bash 工具前台跑会撞上 300 秒超时（命令被杀或结果拿不全，已发几封要回 sent.json 对账）。**凡是"N 条 × 固定间隔"的限速批处理，先算总时长：超过约 4 分钟就用 `run_in_background: true` 跑**，日志落文件，结束后看 sent.json + Brevo 事件核对。
 - 附：Brevo 打开事件含 Apple Mail 隐私代理的预取，会伪造"已打开"；外联效果看回复、maintainer_banner_click、ref=outreach，不看打开率
 
+
+## brevo-key-no-scope
+Brevo 的 API key **不能限定权限范围**：任何一把 key 都能操作整个账户（发信、联系人、发件人、域名、账户信息）。所以给兄弟项目建"有限范围 key"在 Brevo 上做不到。10-02 给 new_ladar 建 newsiteradar-outreach key 时的缓解：
+- 约定只调发信接口；发信必须带 `tags:["newsiteradar"]`，按 tag 单独看退信/投诉；出问题就在后台停用这把 key
+- IP 白名单也能限，但开了会影响我们自己的发信，没开
+- Brevo **没有创建 API key 的 API**，只能网页后台建（专用 Chrome + task_capture_key.py 存临时文件 → 搬 ~/.config/secrets/ 600 → 删临时文件 → `GET /v3/account` 验 200）
+- 加发件域：`POST /v3/senders/domains` 返回所需 DNS；认证 `PUT /v3/senders/domains/<domain>/authenticate`；DNS 生效后才能 `POST /v3/senders` 建发件人。brevo-code TXT 是**账户级**，同账户各域名同值
+- 多项目共用免费档每天 300 封额度，要互相知会
+- WSL 上没有 dig：`curl 'https://cloudflare-dns.com/dns-query?name=X&type=TXT' -H 'accept: application/dns-json'`

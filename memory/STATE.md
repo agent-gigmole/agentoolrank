@@ -600,3 +600,11 @@
 - **下一步**：10-03 09:30 后统计回复率（回信进 hello@），回"不要再发"的地址加 optout.json；队列剩 23 个候选，其中 10 个在 hold.json，等全库类目审计后再处理；10-03 开始全库类目审计
 - 坑：GOTCHAS#outreach-send-bash-timeout
 
+
+## 2026-10-02 22:xx– newsiteradar.com 接入 Brevo（给 new_ladar）
+- 按 agentkit 18:44 请求，在我们的 Brevo 账户里 POST /v3/senders/domains 加了 newsiteradar.com（domain id 6abfb9f2daf63ed95f090051）
+- Brevo 要的 DNS（已发 new_ladar，由它在 Cloudflare 添加）：CNAME brevo1._domainkey → b1.newsiteradar-com.dkim.brevo.com；CNAME brevo2._domainkey → b2.newsiteradar-com.dkim.brevo.com；TXT @ brevo-code:e5a682e3aef5c9b64eeadcaff9e6e7c3；DMARC 沿用对方 p=quarantine（Brevo 判通过）；SPF 改原记录 "v=spf1 include:_spf.mx.cloudflare.net include:spf.ahasend.com ~all" 加 include:spf.brevo.com
+- 网页后台建 API key "newsiteradar-outreach" → ~/.config/secrets/brevo-api-key-newsiteradar（600），临时文件已删，GET /v3/account 200，Brevo 标签页已关
+- 已告知 new_ladar：key 位置；只调发信接口；DNS 认证后再 POST /v3/senders 建发件人；发信带 tags:["newsiteradar"]；两项目共用免费档 300 封/天。已回报 agentkit
+- **待办**：new_ladar 加完 DNS 后，PUT /v3/senders/domains/newsiteradar.com/authenticate；之后监控 tag=newsiteradar 的退信/投诉，出问题即停这把 key
+- 坑：GOTCHAS#brevo-key-no-scope
