@@ -734,3 +734,11 @@
 - 坑：两个同名 "Default" 配置，另一个属 Connect 应用（application=ca_RyQW…、有 parent，两项 off），不影响自有 Checkout → GOTCHAS#stripe-pmc-connect-child
 - 待办：available 后建 $9 结账会话目测 Alipay/WeChat 选项，回 agentkit
 - 结果：成功（检查已上线，等审核）
+
+## 2026-10-02 17:11– 品牌 Google 号放弃 + 只能 Google 登录的站标 skip
+- agentkit 17:11 通知：品牌 Google 号彻底放弃（红米 +34 号码被 Google 判「用过太多次」），本项目不再注册 Google
+- dirsub add 标 skip（附原因）：cursor.directory、ramen.tools、crunchbase.com、makerlist.io（只支持 Google/GitHub 登录）
+- agentkit 清单里 4 站其实可用邮箱：best-ai.org（Firebase 魔法链接）、launchboosts.com、linkcentre.com（邮箱+密码）、whatlaunched.today（邮箱注册，new_ladar 那次是站方 500 → retry）→ 按 #28 不标 skip，10-03 起用 hello@agentoolrank.com 注册，排进每天 5–8 个；遇人机验证/风控即停改标 skip
+- producthunt 维持老板本人号原排期（≥10-10）；已回复 agentkit
+- 坑：dirsub add --update 是追加行、以最新行为准（GOTCHAS#dirsub-update-appends）；agentkit「只支持 Google」清单有误判，标 skip 前先对照共享台账其他项目实测登录方式（GOTCHAS#verify-login-before-skip）
+- 结果：成功

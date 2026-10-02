@@ -435,8 +435,8 @@
 ## 近期排期
 
 - **10-02 22:00 CST**：T17 外联第一批 10 封——**Jason T. 署名，照常发**（BOSS #28 自决，be87fb0；原「21:30 无答复则推迟」规则已取消）；dry-run 已过（排名取百分位最好的类目，6f36d98）；落地页维护者横幅已就绪（?ref=outreach）；发后看板记数量，观察退信/退订；按 maintainer_banner_click / checkout_click 与 ref=outreach 看转化
-- **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；需 Google 登录的站等品牌号；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
-- **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
+- **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；~~需 Google 登录的站等品牌号~~ **已放弃**（10-02 17:11 品牌 Google 号放弃，只能 Google/GitHub 登录的站标 skip）；10-03 起加入 4 个邮箱注册站（hello@agentoolrank.com）：best-ai.org、launchboosts.com、linkcentre.com、whatlaunched.today；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
+- ~~**老板醒后**：重新注册 Google 品牌号（扫码）~~ **已放弃**（10-02 17:11，+34 号码被 Google 判用过太多次；本项目不再注册 Google）
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-09**：T19 X 帖复盘（漏斗查 ref=x 访问与后续转化）
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
@@ -452,8 +452,8 @@
 - [ ] T17 22:00 第一批外联（Jason T. 署名已定，照常发，be87fb0），之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
 - [x] T25 目录站累计 25（10-02 07:40 达成，提前）
 - [x] smithery.ai 已上线（10-02 17:00，https://smithery.ai/servers/admin-avz6/agentoolrank ，5 tools，dirsub submitted）
-- [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执
-- [ ] Google 品牌号：老板醒后重新注册扫码
+- [ ] T25 后续：每天 5–8 个；10-03 起 4 个邮箱注册站（best-ai.org、launchboosts.com、linkcentre.com、whatlaunched.today，用 hello@agentoolrank.com）；~~等 Google 号的站~~ 已放弃（cursor.directory、ramen.tools、crunchbase.com、makerlist.io 已标 skip）；conduid.com 待查登录方式；producthunt 10/10 后老板本人号；purshology、ai-tab.cn 重试；ainewshub 补回执
+- [x] ~~Google 品牌号：老板醒后重新注册扫码~~ 已放弃（10-02 17:11 agentkit 通知）
 - [ ] 确认 10-05 weekly-ops newsletter 实跑（订阅者 0 的空跑路径）
 - [ ] T23 后续：按 GSC 有曝光的查询扩写对比/替代品内容（goose-vs-open-webui、claude-code-vs-openhands）
 - [ ] 10-03 发 dev.to 第二篇（canonical→/where-to-list，?ref=devto2）
@@ -518,3 +518,16 @@
 - 当前：pmc_1TMYOSH5wuG7WMCfzIzwrkcQ alipay=on/pending wechat_pay=on/pending
 - 下一步：变 available 后建 $9 结账会话（只打开不付款），目测 Alipay、WeChat 选项都在，再回 agentkit
 - 坑：账户下有两个都叫 "Default" 的配置，另一个 pmc_1TNNqU… 属于 Connect 应用（application=ca_RyQW…，有 parent），两项为 off，与我们的结账无关（GOTCHAS#stripe-pmc-connect-child）
+
+## 2026-10-02 17:11– 品牌 Google 号放弃 + 只能 Google 登录的站标 skip
+- **agentkit 17:11 通知**：品牌 Google 号彻底放弃（红米 +34 号码被 Google 判「用过太多次」）；本项目也不再注册 Google。上文所有「等品牌 Google 号 / 老板扫码重注册」的待办 → **已放弃**
+- **dirsub add 标 skip（写了原因）**：cursor.directory、ramen.tools、crunchbase.com、makerlist.io（只支持 Google/GitHub 登录；GitHub 按 #25 不碰）
+- **agentkit 清单有误判**：以下 4 站其实支持邮箱（据共享台账 new_ladar 实测）→ 按 #28 自决**不标 skip**，改用品牌邮箱 hello@agentoolrank.com 注册，排进 10-03 起每天 5–8 个的批次；遇人机验证/风控即停改标 skip：
+  - best-ai.org（Continue with email，Firebase 邮件魔法链接，链接在 HTML 正文里）
+  - launchboosts.com（邮箱+密码，邮件链接验证，免费档即时上线、nofollow）
+  - linkcentre.com（邮箱+密码，邮件激活，人工审核免费队列）
+  - whatlaunched.today（有邮箱注册；new_ladar 那次 Supabase signup 500 是站方故障，状态 retry）
+- conduid.com 仍 todo（需 sign in，登录方式未查）
+- producthunt 维持老板本人号的原排期（≥10-10）
+- 已回复 agentkit
+- 坑：GOTCHAS#dirsub-update-appends、GOTCHAS#verify-login-before-skip

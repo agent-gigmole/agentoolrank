@@ -211,3 +211,6 @@
 | Stripe 两个同名 Default 配置 / Connect 应用子配置 application ca_ parent / 只看 is_default 且 application=null / available=false 审核中 / stripe-pm-status.ts daily-ops 21:30 | GOTCHAS.md#stripe-pmc-connect-child |
 | #29 Alipay/WeChat 待审核 / pmc_1TMYOSH5 on/pending / $9 会话目测待办 | LOG.md#2026-10-02 晚 Stripe Alipay/WeChat 每日检查（#29） |
 | BOSS #28 自决范围 / 仍找老板清单 / #29 Stripe acct_1TMYNwH5wuG7WMCf live / 外联署名 Jason T. be87fb0 / 22:00 照常发 | LOG.md#2026-10-02 17:04–17:30 BOSS #28 自决范围 + #29 Stripe + 外联署名 Jason T. |
+| dirsub add --update 追加行不改旧行 / 以最新一行为准 / 台账同站多行正常 | GOTCHAS.md#dirsub-update-appends |
+| 标 skip 前先 dirsub check 看他项目实测登录方式 / agentkit 只支持 Google 清单误判 / best-ai launchboosts linkcentre whatlaunched 可用邮箱 | GOTCHAS.md#verify-login-before-skip |
+| 品牌 Google 号放弃 / +34 号码用过太多次 / cursor.directory ramen crunchbase makerlist 标 skip / 10-03 邮箱注册 4 站 | LOG.md#2026-10-02 17:11– 品牌 Google 号放弃 + 只能 Google 登录的站标 skip |

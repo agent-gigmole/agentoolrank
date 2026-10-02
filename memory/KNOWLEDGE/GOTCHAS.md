@@ -626,3 +626,9 @@ Stripe 受限 key（rk_live_，本项目的 checkout key 与只读 ops key 都�
 - 自有：`is_default=true`、`application=null`、`parent=null`（pmc_1TMYOSH5wuG7WMCfzIzwrkcQ）——我们自己的 Checkout（动态支付方式）实际用这个
 - Connect 应用的子配置：`application=ca_RyQW…`、有 `parent`（pmc_1TNNqU…），里面 alipay/wechat_pay 为 off，**不影响**我们的结账
 判断时只看 `is_default && application == null` 那个；不要按 name 取第一个，否则可能误报"没开"。`display_preference.value=on` 只表示已点启用，`available=false` 表示还在审核，`available=true` 才真正可用。脚本：apps/agent-tools/scripts/stripe-pm-status.ts（daily-ops 21:30）。可用后建 $9 结账会话只打开不付款，目测选项。
+
+## dirsub-update-appends
+`dirsub.py add --update` **不改旧行**，而是在 ~/data/backlinks/directory-log.csv 追加一行，读取时以同站同项目的最新一行为准。所以 csv 里同一站点出现 todo → skip 多行是正常的，不要手工删旧行（台账只通过 dirsub 读写）。
+
+## verify-login-before-skip
+10-02 agentkit 给的「只支持 Google 登录」站点清单有误判：best-ai.org（Firebase 邮件魔法链接）、launchboosts.com、linkcentre.com（邮箱+密码）、whatlaunched.today（有邮箱注册）其实都能用邮箱。**标 skip 之前先 `dirsub check <域名>` 看共享台账里其他项目（pixtidy、new_ladar 等）实测出的登录方式**，备注里写着「邮箱+密码注册」「Continue with email」之类就不该 skip。另外别把某项目当时的 retry（如 new_ladar 在 whatlaunched 遇到 Supabase signup 500，是站方故障）当成「不支持邮箱」。

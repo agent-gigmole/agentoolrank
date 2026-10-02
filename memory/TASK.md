@@ -243,15 +243,20 @@
   - 10-02 新提交 7：futuretools、websitelaunches（之前已被自动收录）、visalytica、ainewshub（回执未截到）、aitoolscapital、outils.ai（法语 Tally）、startupstash（Typeform）
   - retry：purshology、ai-tab.cn（本机访问超时）
   - [x] smithery.ai done（10-02 17:00，决定 #26）：GitHub App 登录 agent-gigmole，URL 发布远程 MCP，namespace admin-avz6，5 tools → https://smithery.ai/servers/admin-avz6/agentoolrank ，dirsub submitted
-  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、producthunt（10/10 后老板本人号）、cursor.directory（需 GitHub/Google 登录）
+  - todo：mcp.so（issue 路线卡 gh 权限，老板待办 #26，agentkit 建议不做）、producthunt（10/10 后老板本人号）、cursor.directory（需 GitHub/Google 登录 → 10-02 已标 skip）
   - 选站：按 mcp / agent / 智能体 关键词筛 columbus 原表
 - 目标: 10-03 24:00 前累计 25（agentkit 已裁定：5–8/天是单站/单账号防风控节奏，非总数上限；10-02 白天、10-03 各一批；连续两个验证码即停）
 - 文案: brief docs/ops/launch-kit/briefs/directory-listing.md → drafts/directory-listing.md（en）/ directory-listing-fr.md（fr）；中文单独 brief directory-listing-zh.md → drafts/directory-listing-zh.md；bin/write landing-copy
 - [x] 历史提交补录台账 [x] 换用 dirsub.py [x] 浏览器工具补齐（task_tab/frames/tabs/fields/find/screenshot/options，task_act js/key，5ffca5e）
 - [x] 第二批（累计 16）[x] 中文上架文案 [x] 第三批（累计 20）[x] 累计 25（10-02 07:40 达成，提前）[ ] 之后每天 5–8 个[x] aiagentsdirectory 徽章决策（不挂不付） [ ] purshology / ai-tab.cn 重试 [ ] ainewshub 补回执 [ ] 每周查收录/反链
-- 等 Google 号的待办: cursor.directory、conduid.com 等需 Google/GitHub 登录的站 → 品牌 Google 号建好（老板扫码）后做；producthunt 10/10 后老板本人号
+- 10-03 邮箱注册站（hello@agentoolrank.com，排进当天 5–8 个；遇人机验证/风控即停改标 skip）:
+  - [ ] best-ai.org（Firebase 邮件魔法链接）
+  - [ ] launchboosts.com（邮箱+密码）
+  - [ ] linkcentre.com（邮箱+密码）
+  - [ ] whatlaunched.today（邮箱注册；new_ladar 遇站方 500，为 retry）
+- 已 skip（10-02，品牌 Google 号放弃，只支持 Google/GitHub 登录）: cursor.directory、ramen.tools、crunchbase.com、makerlist.io；conduid.com 待查登录方式；producthunt 10/10 后老板本人号
 - 规矩: 每站做完立刻关标签页；同一平台被风控一次即停（老板 #25）；表单坑见 GOTCHAS#directory-form-pitfalls
-- 相关账号: Google 品牌号 hello@agentoolrank.com（Ethan Tan，老板已批真名）卡扫码，等老板醒后重注册；GitHub 品牌号被风控 → 按 #25 停
+- 相关账号: Google 品牌号已放弃（10-02 17:11，+34 号码被 Google 判用过太多次，不再注册）；GitHub 品牌号被风控 → 按 #25 停；目录站账号一律用邮箱 hello@agentoolrank.com
 - 闸: auto（用老板已批准的品牌身份；花钱的付费上架逐次问）
 - 失败: 0
 
