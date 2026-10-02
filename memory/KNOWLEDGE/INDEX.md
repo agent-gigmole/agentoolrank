@@ -258,5 +258,5 @@
 | 隐私政策/服务条款草稿 / /privacy /terms 404 / BOSS #35 | LOG.md#2026-10-03 04:40– T25 目录提交第一批 |
 | 目录提交 10-03 第二批 / aitoolsrecap ASP.NET [id$=] 姓名无句点 / alternative.me 无 name 按序 logo 后前移 / Radix tab 真实点击 / foundr gmail full / comparateur-ia verif_level standard / 邮件投稿 Brevo / MCP GitHub OAuth scope read:org 即取消 / 目录暂停扩张 imagehub 30 站 1 访客 | GOTCHAS.md#directory-submission-batch-1003b |
 | SELECT c.* + 同名计算列别名 被存储列遮蔽 / categories.tool_count 过期 / getCategories 显式列名 / 329→165 不是缓存 | GOTCHAS.md#sql-select-star-shadowed-alias |
-| pixtidy 接入 Brevo / brevo-pixtidy-key / DNS 后 authenticate / 一账户三品牌共用 300 封 | TASK.md#T20 外联 Brevo 段 |
+| pixtidy 接入 Brevo 已认证 / brevo-pixtidy-key / launch@pixtidy.com / 一账户三品牌共用 300 封 | TASK.md#T20 外联 Brevo 段 |
 | 外联 4 会话全 page_view 0 转化 / 付费档卖曝光流量不足 / Submit Kit 论据 | LOG.md#2026-10-03 06:29–06:35 |

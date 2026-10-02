@@ -889,6 +889,6 @@
 
 ## 2026-10-03 06:29–06:35 类目计数修复 + pixtidy 接入 Brevo + 外联转化观察
 - 做法：查外联访客事件（4 会话全 page_view，0 横幅/徽章/checkout）；定位 getCategories `c.*` 与计算列别名 tool_count 重名 → 显式列名（852323b）；Brevo API 添加 pixtidy.com 发件域、建专用 key、DNS 记录交 imagehub；brevo-tag-health 加 pixtidy、directory-submit（18f1406）；看板记录（07fd93c）
-- 结果：Agent Frameworks 329→165，211 测试通过，线上 llms.txt 正确；pixtidy 等 DNS 后认证；洞察「付费档卖曝光但流量不足」写入 T28 周一摘要
+- 结果：Agent Frameworks 329→165，211 测试通过，线上 llms.txt 正确；pixtidy 06:35 认证通过（authenticated/verified=true，imagehub 建 launch@pixtidy.com）；洞察「付费档卖曝光但流量不足」写入 T28 周一摘要
 - 坑：GOTCHAS#sql-select-star-shadowed-alias
 - 结果：成功

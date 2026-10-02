@@ -761,6 +761,6 @@
 - **洞察**：$49 首页推荐卖的是曝光，首页每天个位数访客，作者不会买 → 周一经营摘要要点（T28）；也是 Submit Kit 的论据：卖数据和配方，本身有价值，不依赖我们的流量
 - **bug 修复（852323b）**：packages/db/src/queries.ts getCategories 用 `SELECT c.*, (COUNT…) AS tool_count`，categories 表有过期存储列 tool_count 同名，行对象取到存储值 → 改为显式列名；Agent Frameworks 329→165；211 测试通过，已部署推送，线上 llms.txt 核对无误（04:40 记的"llms.txt 类目计数过期"已解决，不是缓存）
 - **pixtidy 接入 Brevo**：域名已添加，DNS 记录已发 imagehub，专用 key「pixtidy-outreach」在 ~/.config/secrets/brevo-pixtidy-key（600，测试 200）；brevo-tag-health 加 pixtidy、directory-submit tag（18f1406）
-- **待办**：imagehub 加完 DNS 后 PUT /v3/senders/domains/pixtidy.com/authenticate
+- **已认证（06:35）**：imagehub 06:33 加好 5 条 DNS，authenticate 返回 authenticated=true、verified=true；imagehub 去建发件人 launch@pixtidy.com
 - **风险**：一个 Brevo 账户跑三个品牌 + 老板 Gmail 代发，共用 300 封/天额度和账户信誉
 - 坑：GOTCHAS#sql-select-star-shadowed-alias

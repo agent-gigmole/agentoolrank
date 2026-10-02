@@ -400,7 +400,7 @@
 - [x] Brevo SMTP 供老板 Gmail 代发（10-03 02:20 agentkit 转达）：新建 SMTP key "gmail-send-as"（~/.config/secrets/brevo-smtp-key，600，仅登录测试未发信）；smtp-relay.brevo.com:587 STARTTLS，登录名 bbef73001@smtp-brevo.com；发件人 hello@agentoolrank.com(id1)、jason@newsiteradar.com(id2)、hello@newsiteradar.com(id3，API 新加，已 active)；已回 agentkit 并提醒共用 300 封/天额度与信誉、无 tag
 - [ ] brevo-tag-health 加一行账户总量（不分 tag），覆盖 Gmail 代发等不带 tag 的发信
 - [x] pixtidy.com 接入 Brevo（imagehub 10-03 06:30 请求，agentkit：一个公司一个账户）：POST /v3/senders/domains 已添加；DNS 记录已发 imagehub（DKIM CNAME×2、brevo-code TXT、SPF 原记录加 include:spf.brevo.com、新增 _dmarc）；专用 key「pixtidy-outreach」存 ~/.config/secrets/brevo-pixtidy-key（600，测试 200）；已给外联脚本路径、--test 用法和护栏；brevo-tag-health 加 pixtidy、directory-submit 两个 tag（18f1406）
-- [ ] **pixtidy DNS 加好后认证**：PUT /v3/senders/domains/pixtidy.com/authenticate，确认 authenticated/verified=true 后回 imagehub
+- [x] **pixtidy DNS 后认证（10-03 06:35 完成）**：imagehub 06:33 加好 5 条 DNS，PUT /v3/senders/domains/pixtidy.com/authenticate 返回 authenticated=true、verified=true；已通知 imagehub 建发件人 launch@pixtidy.com
 - 注意：一个 Brevo 账户现跑 agentoolrank、newsiteradar、pixtidy 三个品牌 + 老板 Gmail 代发，共用 300 封/天额度和账户信誉
 
 - [x] 类目审计 dry-run 完成（10-02 23:xx–10-03 00:xx，scripts/audit-categories.ts 只读 → data/category-audit-2026-10-02.csv，670 条，$0）：在范围内 575（类目不变 364 / 变化 211）、被拒 95
