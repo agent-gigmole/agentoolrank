@@ -36,7 +36,7 @@
   <p class="muted">更新于 <span id="updated">…</span>（文件修改时间，每 60 秒自动刷新）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
 
   <!-- KPI:START -->
-  <p class="muted">每日 KPI（自动生成 2026-10-02 11:17，每小时刷新）</p>
+  <p class="muted">每日 KPI（自动生成 2026-10-02 11:45，每小时刷新）</p>
   <div class="kpis">
     <div class="kpi"><b>23</b><span>访客（10-01）· 7 天 33</span></div>
     <div class="kpi"><b>0</b><span>提交（10-01）· 7 天 1 · 提交页访客 1</span></div>
@@ -159,6 +159,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-02 12:25 顺着第一个"agent 自动提交"往收入方向推了一步：提交接口（API 和 MCP）的返回里新增一段可以直接转给人看的说明（message_for_human），写清免费档什么时候上线，以及三个一次性付费档：$9 三天内上线、$19 一天内上线、$49 一天内上线并上首页 7 天，每档都附付款链接，审核不通过全额退款。llms.txt、/agents 文档和 MCP 工具说明里也都写明了"免费提交"。</li>
     <li>2026-10-02 11:50 <b>收到第一个外部提交</b>：Orkas（开源多 Agent 桌面平台）在 10-01 深夜通过我们的 JSON API 提交了免费收录。它的网址带 source=dir_agentoolrank，看起来是对方的自动提交程序读了我们的 /agents 文档后自己提交的，说明"让 AI agent 直接提交"这条路走得通。已审核上线：<a href="https://agentoolrank.com/tool/orkas">/tool/orkas</a>。外部提交目标进度 1/20，付费单仍是 0。</li>
     <li>2026-10-02 10:50 T24：中文和日语工具页都已上线，各 200 个，全部经过人工审核。收尾时修了两处：一是自动检查现在能抓出单个漏翻的英文词，比如之前漏掉的 "seven"；二是 7 个工具的英文简介里夹着一段中文，英文站显示有问题、翻译时也会重复，已只保留英文部分（有回滚文件）。</li>
     <li>2026-10-02 09:45 T19 X 帖子已经用老板主号发出：<a href="https://x.com/hwak8666621/status/2105834735146541311">x.com/hwak8666621/status/2105834735146541311</a>。内容是中文的 /report 数据：669 个工具里 32% 已超过半年没有提交，配了 MetaGPT、gpt-engineer 两个例子。文案由写作 skill 生成（开头放钩子），链接带 ?ref=x，方便统计从 X 来的访问。一周后看点击和转化效果。</li>
