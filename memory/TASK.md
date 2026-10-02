@@ -139,7 +139,7 @@
 
 ### T17 反链飞轮：给已上榜工具作者发徽章邀请（邮件/Issue 模板先给用户过目）
 - 状态: 发送就绪（10-02），第一批定 10-02 22:00 CST（美东 10:00）10 封；dry-run 已过（排名改取百分位最好的类目，6f36d98）
-- **署名待定（BOSS_DECISIONS #27 对外统一 Jason T.，这批原定 Ethan Tan，已请 agentkit 问老板）：21:30 前无答复则推迟到 10-03 22:00**
+- **署名已定 Jason T.**（10-02 据 BOSS #28 自决；outreach.ts / outreach.test.ts / send-outreach.ts sender+replyTo / drafts/outreach-maker-v2.md，be87fb0）；22:00 首批照常发，原「21:30 无答复则推迟」规则取消
 - role 信箱：只排除 security/legal/privacy/careers 等专用信箱；support@/hello@ 通用信箱照发
 - 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [x] 外联落地页维护者横幅（?ref=outreach → #maintainers，埋点 maintainer_banner_click，10-02 13:10 上线 8dff4bf）[ ] 22:00 发第一批，之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化 [ ] 徽章嵌入数追踪
 - 依赖: -
@@ -207,6 +207,7 @@
 - [x] **第二门语言抽象（共享组件+字典）**（10-02，0fd2ce1）：src/lib/tool-i18n.ts（COPY zh/ja + wan + localToolTitle/localStatus/localToolFaq）+ src/components/LocalizedToolPage.tsx + 薄路由 /zh|/ja/tool/[slug]；hreflang 由 translatedLangs 全互指；sitemap 按语言列表派生；143 测试全绿，/zh/tool/dify 输出不变。原计划条目：i18n 字典 + 语言页登记表 + /[lang]/ 薄路由；hreflang 全互指（含自引用 + x-default）；sitemap 从登记表派生；付款回跳同语言页（白名单）
 - [ ] 译文：模板/界面文案逐条人工核；标语/简介用 LLM + 术语表，前 50 页逐页核，其余抽查 10% 并跑脚本检查（术语、长度、残留英文）；专有名词/数字/日期不译；按 owner-goal #23 加第二模型回译比对（回译与英文原文语义偏差大的条目进人工复核）；审校 prompt 单列「情态方向核对」：逐句列原文/译文的 must / must not / need not / may / should 对照（中文：必须/不得/不必/可以/应当；日语：なければならない/てはいけない/なくてもよい/てもよい/べき），方向不一致即退回（agentkit 10-02，imagehub 意大利语 non devono 事故）
 - [x] **中文读者付款能力已核实（待老板开 Alipay/WeChat）**（10-02）：TENSO LLC 美国账户 card_payments/link active（银联卡走卡通道）；alipay/wechat_pay 在 Default payment_method_configuration 为 off；checkout 用动态支付方式 → 后台开启即可，无需改代码；已报 agentkit 09:30 汇总、看板已记。原要求：核实 Stripe（TENSO LLC 美国账户）能否为大陆用户开通支付宝/微信支付/银联卡，结论写进看板单独跟踪（agentkit 10-02 要求）
+- [ ] **Alipay/WeChat Pay 开通后复查**（BOSS #29，10-02）：agentkit 在 Stripe 后台开（acct_1TMYNwH5wuG7WMCf，TENSO LLC，live）；开好后用只读 ops key 查 `GET /v1/payment_method_configurations`，确认 Default 配置 alipay / wechat_pay 的 display_preference.value=on，结果记看板（受限 key 改不了该配置，见 GOTCHAS#stripe-restricted-key-pmc）
 - [x] 抽象剩余项（本次未涉及，待核）：付款回跳同语言页（白名单）；确认 hreflang 含 x-default（核实：localizedAlternates 已带 x-default，单测覆盖）；回跳：zh/ja 页面的 CTA 指向英文 /submit，结账不经过本地化页面，所以目前没有回跳问题，以后做本地化 /submit 时再加白名单
 - [x] **日语 198/200 上线**（10-02 09:20，原定 10-09 提前约一周）：首轮 approved 168 / failed 32，--retry-failed 再过 15；前 50 逐篇读 level 1，其余 133 抽 14 读 level 2 整批；17 失败中 --override 放行 15（promptfoo 源文确为 "now backed by OpenAI"），退回 2；/ja/tool/langchain、/ja/tool/dify 200，hreflang en/ja/zh/x-default 全互指
 - [x] residualEnglish 加单个常见英文词检测（10-02，84b4918）：src/lib/i18n.ts LEFTOVER_WORDS（the/and/for/with/one…ten/than…）；扫已发布 398 条命中 11，全是正当专有名词（React Three Fiber、Chrome for Testing、Human-in-the-loop）→ 只作人工复核门槛，不硬拦截

@@ -434,14 +434,14 @@
 
 ## 近期排期
 
-- **10-02 22:00 CST**：T17 外联第一批 10 封——**署名待定**（BOSS_DECISIONS #27 对外统一 Jason T.，但这批原定 Ethan Tan，已请 agentkit 问老板）；**21:30 前无答复 → 推迟到 10-03 22:00**（避免同一批人先后看到两个名字）；dry-run 已过（排名取百分位最好的类目，6f36d98）；落地页维护者横幅已就绪（?ref=outreach）；发后看板记数量，观察退信/退订；按 maintainer_banner_click / checkout_click 与 ref=outreach 看转化
+- **10-02 22:00 CST**：T17 外联第一批 10 封——**Jason T. 署名，照常发**（BOSS #28 自决，be87fb0；原「21:30 无答复则推迟」规则已取消）；dry-run 已过（排名取百分位最好的类目，6f36d98）；落地页维护者横幅已就绪（?ref=outreach）；发后看板记数量，观察退信/退订；按 maintainer_banner_click / checkout_click 与 ref=outreach 看转化
 - **目录站**：累计 25 已达成（10-02 07:40）→ 之后每天 5–8 个；需 Google 登录的站等品牌号；dirsub.py check/add；每站做完关标签页；连续两个验证码即停
 - **老板醒后**：重新注册 Google 品牌号（扫码），二维码 ~/data/handoff/
 - **10-03**：发 dev.to 第二篇（devto-where-to-list.md，canonical→/where-to-list）；发后用漏斗查 src=devto2；外联第二批 ≤10
 - **10-09**：T19 X 帖复盘（漏斗查 ref=x 访问与后续转化）
 - **10-05（周一）**：weekly-ops 的 newsletter 现在能真正发出（Brevo key 已就绪；订阅者 0 时应空跑不报错）；T24 中文剩余页型（替代品 / 对比 / /where-to-list / /submit）
 - **T24**：中文、日语工具页各 200/200 已上线（10-02 10:50）；剩余：替代品页、对比页、/where-to-list、/submit 的本地化（--override 补回 source_hash 已于 11:05 修好）；10-09 提前报 agentkit：10/10 后 PH 老板本人登录
-- **Alipay/WeChat Pay**：等老板（agentkit 09:30 汇总）批准后在 Stripe 后台开启，无需改代码
+- **Alipay/WeChat Pay**：agentkit 在 Stripe 后台开（acct_1TMYNwH5wuG7WMCf，live）；开好后用只读 key 复查 payment_method_configurations，无需改代码
 - **10-30**：看 GSC（墨西哥/阿根廷等）再定西语
 
 ## 待办 / 下一步
@@ -449,7 +449,7 @@
 - [x] T19 X 帖已发（10-02 09:45，@hwak8666621/status/2105834735146541311）
 - [ ] 10-09 复盘 T19：漏斗查 ref=x 访问与后续转化
 - [x] T17 外联落地页维护者横幅（?ref=outreach → #maintainers，10-02 13:10 上线）
-- [ ] T17 22:00 第一批外联（署名待定 #27：21:30 前无答复则推迟到 10-03），之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
+- [ ] T17 22:00 第一批外联（Jason T. 署名已定，照常发，be87fb0），之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化；之后每日 ≤10，跟踪退信/退订/回复与徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）
 - [x] T25 目录站累计 25（10-02 07:40 达成，提前）
 - [x] smithery.ai 已上线（10-02 17:00，https://smithery.ai/servers/admin-avz6/agentoolrank ，5 tools，dirsub submitted）
 - [ ] T25 后续：每天 5–8 个；等 Google 号的站（cursor.directory、conduid.com 等）；producthunt 10/10 后；purshology、ai-tab.cn 重试；ainewshub 补回执
@@ -467,7 +467,7 @@
 - [x] 提交返回 message_for_human + llms.txt / /agents / MCP 写明免费入口（10-02 12:25）
 - [ ] 加强 agent 提交通道曝光：MCP 目录 / agent 生态（首个真实提交来自 API 通道）
 - [ ] 观察下一个 API/MCP 提交是否因 message_for_human 带来付费档点击（漏斗/checkout 事件）
-- [ ] Stripe 开 Alipay/WeChat Pay：等老板批准（收款配置变更）
+- [ ] Stripe Alipay/WeChat Pay：agentkit 开通中 → 开好后用只读 key 复查 payment_method_configurations
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能
 - [ ] T12 对比页扩充；T13 首页 Featured 位展示；T18 /weekly 真实 30 天增速
@@ -505,3 +505,9 @@
 - **smithery.ai（决定 #26）上线**：老板在 agentoolrank-chrome 登录 GitHub agent-gigmole；Smithery 是 GitHub App（clavia-labs，client Iv23liKzS9TgjuxyG4Uw），权限仅身份/邮箱/gist/star-watch，无仓库权限、无 install；以 URL 发布远程 MCP，namespace 自动生成 admin-avz6（另有空的 admin-pw59、admin-z8z5），部署成功、识别 5 tools；已设 displayName/description/homepage，未设 unlisted → https://smithery.ai/servers/admin-avz6/agentoolrank ；dirsub add --update 改 submitted；看板 1e262f8
 - **Wayback 共享坑自查**（agentkit）：仅 /where-to-list 引用第三方价格，10-01 在现行页面核对并标 CHECKED 日期，未用快照；计划 directories.ts 加 30 天到期复核（10-31）；已回报 agentkit，看板已记
 - 注意：agentoolrank-chrome 仍保持 agent-gigmole 的 GitHub 登录
+
+## 2026-10-02 17:04– BOSS #28 自决范围 + #29 Stripe + 外联署名 Jason T.
+- **BOSS #28（17:04）自决范围**：日常运营由项目自定——按日历用老板的 PH/X 发帖不用问；收款账户里不花钱、不改提现的配置可自判开启（共用账户先通知同账户的其他项目）；风险高/收益低的事直接判不做并写原因。**仍找老板**：超授权花钱、改凭证、删数据、提现/KYC、本人身份登录或验证码、法律文件。报事前先对这份清单
+- **BOSS #29 Stripe**：已回 agentkit 账户 id acct_1TMYNwH5wuG7WMCf（TENSO LLC, US），checkout 为 live（checkout key 与 ops key 都是 rk_live_ 受限 key）；由 agentkit 在后台开 Alipay/WeChat Pay；开好后用只读 key 复查 payment_method_configurations
+- 坑：受限 key 不能改 payment method configuration；扩 key 权限 = 改凭证（老板闸），所以由 agentkit 去点（GOTCHAS#stripe-restricted-key-pmc）
+- **外联署名据 #28 自决改为 Jason T.**：outreach.ts、outreach.test.ts、send-outreach.ts 的 sender/replyTo、drafts/outreach-maker-v2.md；151 测试绿、dry-run 过；be87fb0 已推送。今晚 22:00 首批 10 封照常发，取消「21:30 无答复则推迟」

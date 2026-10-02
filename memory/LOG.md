@@ -719,3 +719,10 @@
 - 坑：GOTCHAS#github-app-vs-oauth-revoke、GOTCHAS#outreach-pick-best-category
 - 结果：成功；agentoolrank-chrome 保持 agent-gigmole GitHub 登录态
 
+## 2026-10-02 17:04–17:30 BOSS #28 自决范围 + #29 Stripe + 外联署名 Jason T.
+- BOSS #28（17:04）：日常运营项目自定（按日历用老板 PH/X 发帖不问；收款账户里不花钱、不改提现的配置可自判开启，共用账户先通知同账户项目；风险高/收益低直接判不做写原因）；仍找老板：超授权花钱、改凭证、删数据、提现/KYC、本人身份登录/验证码、法律文件；报事前先对清单
+- BOSS #29：回 agentkit Stripe 账户 acct_1TMYNwH5wuG7WMCf（TENSO LLC, US），checkout live（checkout/ops key 均 rk_live_ 受限）；agentkit 后台开 Alipay/WeChat Pay，开好后只读 key 复查 payment_method_configurations
+- 据 #28 自决外联署名改 Jason T.（outreach.ts、outreach.test.ts、send-outreach.ts sender/replyTo、drafts/outreach-maker-v2.md）；151 测试绿、dry-run 过；be87fb0 已推送；22:00 首批 10 封照常发，取消 21:30 推迟规则
+- 坑：受限 key 改不了 payment method configuration，扩权限=改凭证（老板闸）→ GOTCHAS#stripe-restricted-key-pmc
+- 结果：成功
+

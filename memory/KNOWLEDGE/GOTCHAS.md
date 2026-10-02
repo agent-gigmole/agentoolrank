@@ -618,3 +618,5 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 ## outreach-pick-best-category
 外联邮件里写「#N in 类目」时，工具属于多个类目，**不能取第一个类目**（10-02 dry-run：LangChain 被写成「#7 in Memory & Knowledge」，作者读来不对）。改为按排名百分位（rank/类目总数）最好的类目报，并带分母：「#9 of 329 Agent Frameworks」（6f36d98）。凡是对外引用工具「排名」的模板（邮件、徽章文案、X 帖）都按「最有代表性/百分位最好」选类目，dry-run 时逐封读一遍排名句。
 
+## stripe-restricted-key-pmc
+Stripe 受限 key（rk_live_，本项目的 checkout key 与只读 ops key 都是）**不能修改 payment method configuration**（开/关 Alipay、WeChat Pay 等）。要用 API 改就得给 key 扩权限，而扩 key 权限 = 改凭证，属于老板闸。做法（10-02 BOSS #29）：由持有 Dashboard 的 agentkit 在后台开启；本项目开好后只用只读 key 跑 `GET /v1/payment_method_configurations` 复查 display_preference。共用账户（TENSO LLC）改收款配置前先通知同账户的其他项目（BOSS #28）。
