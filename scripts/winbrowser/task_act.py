@@ -26,6 +26,20 @@ SUMMARY_JS = """() => {
   };
 }"""
 
+SECRETS = []  # fill_secret values seen this run; never printed
+
+
+def redact(x):
+    """Replace every fill_secret value, and any leading part of one (8+ chars), so values the summary
+    truncates (input values are cut to 30 chars, text to 600) cannot leak a prefix of a secret (agentkit 17c55ce)."""
+    x = str(x)
+    for v in sorted(SECRETS, key=len, reverse=True):
+        for n in range(len(v), 7, -1):
+            if v[:n] in x: x = x.replace(v[:n], "<secret>")
+        if v: x = x.replace(v, "<secret>")
+    return x
+
+
 async def main(path):
     spec = json.load(open(path, encoding="utf-8"))
     async with async_playwright() as p:
@@ -58,14 +72,15 @@ async def main(path):
                     await page.keyboard.insert_text(v[1])
                 elif k == "fill_secret":  # [selector, path to a file holding the value]; value is never printed
                     secret = open(v[1], encoding="utf-8").read().strip()
+                    SECRETS.append(secret)
                     await page.locator(v[0].removeprefix("css=")).first.fill(secret, timeout=15000)
                     v = [v[0], "<secret>"]
                 elif k == "check": await page.locator(v.removeprefix("css=")).first.check(timeout=15000)
                 elif k == "js":  # run a JS expression in the page (e.g. tick custom-styled checkboxes); result printed
-                    print("   js ->", str(await page.evaluate(v))[:200])
-                print(f"ok  {k}: {str(v)[:60]}")
+                    print("   js ->", redact(await page.evaluate(v))[:200])
+                print(f"ok  {k}: {redact(v)[:60]}")
             except Exception as e:
-                print(f"ERR {k}: {str(v)[:60]} -> {str(e).splitlines()[0][:160]}")
+                print(f"ERR {k}: {redact(v)[:60]} -> {redact(str(e).splitlines()[0])[:160]}")
                 break
             await page.wait_for_timeout(800)
             if len(ctx.pages) > before:  # popup opened (e.g. OAuth)
@@ -73,10 +88,10 @@ async def main(path):
                 await page.wait_for_load_state("domcontentloaded")
                 print("-> switched to popup:", page.url[:80])
         await page.wait_for_timeout(spec.get("settle", 1500))
-        print("URL:", page.url[:150])
-        print("TITLE:", await page.title())
+        print("URL:", redact(page.url)[:150])
+        print("TITLE:", redact(await page.title()))
         for k, v in (await page.evaluate(SUMMARY_JS)).items():
-            print(f"{k.upper()}:", v)
+            print(f"{k.upper()}:", redact(v))
         if spec.get("shot"):
             await page.screenshot(path=spec["shot"])
 
