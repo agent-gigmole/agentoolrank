@@ -1,0 +1,1631 @@
+[
+ {
+  "domain": "10words.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "about 2,602 days",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "agenstry.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "agentlocker.ai",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Standard review takes over one month; optional badge can expedite to within 24 hours.",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ai-tab.cn",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ai123.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "1–3 business days",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aiagentsdirectory.com",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": "Until badge verification passes",
+  "paidFrom": 19,
+  "link": "nofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aiai.tools",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review; listing is not guaranteed",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aicatalog.com.ua",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "hcaptcha",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aideckly.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "15–30 business days without a badge",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "email_password",
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ainavbar.ai",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ainavhub.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ainewshub.org",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aisharenet.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Pending editorial review",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aisupersmart.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Up to 72 hours for manual approval",
+  "paidFrom": 99,
+  "link": "unknown",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aitoolex.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aitools.inc",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "30–90 days",
+  "paidFrom": 129,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aitoolscapital.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "24 hours",
+  "paidFrom": 49,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aitoolsrecap.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": "Pending as of 2026-10-02",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "aivalley.ai",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "allaboutai.com",
+  "free": "no",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": 99,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [
+   "payment"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "alternative.me",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "alternativeto.net",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Free queue has a backlog of thousands",
+  "paidFrom": 5,
+  "link": "nofollow",
+  "login": [
+   "email_password",
+   "google",
+   "github",
+   "other"
+  ],
+  "captcha": "hcaptcha",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "anyfp.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "turnstile",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "bai.tools",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Review up to 30 days; free listing may take 1–6 months",
+  "paidFrom": 19.9,
+  "link": "unknown",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "best-ai.org",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "1-2 weeks manual review",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "magic_link",
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "betterlaunch.co",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Until Mon Nov 2, about one month",
+  "paidFrom": 9,
+  "link": "unknown",
+  "login": [
+   "email_password",
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "bowora.com",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": 1,
+  "link": "nofollow",
+  "login": [
+   "email_password",
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "buildinpublic.com",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "x"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "buildway.cc",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": 4.99,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "chatableapps.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "79 submissions ahead; estimated within 1 month",
+  "paidFrom": 9,
+  "link": "nofollow",
+  "login": [
+   "magic_link"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "comparateur-ia.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Up to 10 days for review",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "crunchbase.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ctrlalt.cc",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review queue; earliest selectable launch date was 2026-10-09.",
+  "paidFrom": 19,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "dev.to",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "recaptcha",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "directree.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "35 days, approximately until 2026-11-06",
+  "paidFrom": 19,
+  "link": "dofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "famed.tools",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink",
+   "queue"
+  ],
+  "queue": "about 12 weeks (queued until 12/21)",
+  "paidFrom": 19,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "findly.tools",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": 9,
+  "link": "dofollow",
+  "login": [
+   "email_password",
+   "google",
+   "github"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "foundr.ai",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "several weeks",
+  "paidFrom": 10,
+  "link": "nofollow",
+  "login": [
+   "magic_link"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "futuretools.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Pending Matt's review",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "turnstile",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "glama.ai",
+  "free": "unknown",
+  "conditions": [],
+  "queue": "Observed listing the next day after official MCP Registry publication",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "index.dodopayments.com",
+  "free": "unknown",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Pending manual review; no timeframe stated",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "magic_link"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "iui.su",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "journaliststoolbox.ai",
+  "free": "yes",
+  "conditions": [],
+  "queue": "Manual review; no timeframe stated",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "google"
+  ],
+  "captcha": "recaptcha",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "krowdbase.com",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "recaptcha",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "launchboosts.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "email_password",
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "launchbuff.com",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink",
+   "queue"
+  ],
+  "queue": "about 1 year",
+  "paidFrom": 19,
+  "link": "unknown",
+  "login": [
+   "magic_link"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "launchtry.com",
+  "free": "yes",
+  "conditions": [
+   "badge"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "linkcentre.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review in the free queue; expected around page 7 of Data Analytics",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "linkstartai.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "listmystartup.app",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_password",
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "magicnetworld.com",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "make.rs",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "ugc",
+  "login": [
+   "magic_link"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "makerlist.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "7 listings ahead; automatic listing on 2026-10-03",
+  "paidFrom": 29,
+  "link": "dofollow",
+  "login": [
+   "google",
+   "github"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "mcpmarket.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "4–6 weeks",
+  "paidFrom": 29,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "mcprepository.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "mcpservers.org",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Up to 2 weeks",
+  "paidFrom": 39,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "nav4ai.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": "Immediate listing",
+  "paidFrom": 9.9,
+  "link": "unknown",
+  "login": [
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "newname.ai",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "7–15 days",
+  "paidFrom": 9.99,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "news.netwrck.com",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "other"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "outils.ai",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review takes several days; listing is not guaranteed.",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "pavelzanek.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "dofollow",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "peerlist.io",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "real_name"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "peerpush.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "about 62 days (#4290)",
+  "paidFrom": 39,
+  "link": "unknown",
+  "login": [
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "producthunt.com",
+  "free": "unknown",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "At least 7 days between launches from the same maker account.",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "productwatch.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "30 days",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "projecthunt.me",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "promoteproject.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "recaptcha",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "publishyoursaas.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "2–3 weeks for manual review",
+  "paidFrom": 9.99,
+  "link": "nofollow",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "purshology.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "3-7 days",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "ramen.tools",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "dofollow",
+  "login": [
+   "google",
+   "x",
+   "other"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "registry.modelcontextprotocol.io",
+  "free": "yes",
+  "conditions": [],
+  "queue": "instant",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "other"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "saasgrow.app",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "saashub.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "up to 32 days; placed at the back of the queue",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "hcaptcha",
+  "human": [
+   "captcha",
+   "email_inbox"
+  ],
+  "verified": "2026-10-01"
+ },
+ {
+  "domain": "saaspo.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "turnstile",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "servicelist.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "5–7 business days for manual review",
+  "paidFrom": 500,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "shipstry.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Scheduled for Jan 4–10, 2027; earlier weeks were full",
+  "paidFrom": 9.9,
+  "link": "unknown",
+  "login": [
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "showmebest.ai",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink",
+   "queue"
+  ],
+  "queue": "72 hours to 4 weeks",
+  "paidFrom": 49.99,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "smithery.ai",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "github"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "startup88.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review; 200+ submissions per month, no stated ETA",
+  "paidFrom": 9.95,
+  "link": "nofollow",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "startupjuicer.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Standby #53 for the Oct 26 weekly listing",
+  "paidFrom": 6.99,
+  "link": "nofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "startups.gallery",
+  "free": "unknown",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review; duration unknown",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "recaptcha",
+  "human": [
+   "captcha"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "startupstash.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": "Pending review",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "recaptcha",
+  "human": [
+   "real_name"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "store.app",
+  "free": "unknown",
+  "conditions": [],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "thedailyworkflow.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "1–3 days",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "tinylaunch.com",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "queue"
+  ],
+  "queue": "Review under 24h; scheduled for Nov 2, 2026 PT if approved",
+  "paidFrom": 9,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "tinystartups.com",
+  "free": "yes",
+  "conditions": [
+   "x_post"
+  ],
+  "queue": null,
+  "paidFrom": 69,
+  "link": "nofollow",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "x_post"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "toolbit.ai",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "dofollow",
+  "login": [],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "toolhunter.ai",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "toolnest.ai",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "3–5 days for editorial review",
+  "paidFrom": 4.99,
+  "link": "unknown",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "topaihubs.com",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink",
+   "queue"
+  ],
+  "queue": "Review within 72 hours",
+  "paidFrom": 9.9,
+  "link": "unknown",
+  "login": [
+   "email_password",
+   "google",
+   "github"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "upperstory.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review; result sent by email",
+  "paidFrom": 3.99,
+  "link": "nofollow",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "verifiedtools.info",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "About 7–9 weeks (997 submissions ahead)",
+  "paidFrom": 12,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "vibekettle.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Standby #58 for the Oct 26 weekly batch",
+  "paidFrom": 6.99,
+  "link": "unknown",
+  "login": [
+   "email_password"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "viesearch.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "1200+ submissions; free tier has an 82% rejection rate",
+  "paidFrom": 12,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "visalytica.com",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "1-2 weeks",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "webcatalog.io",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "Manual review; rejection arrived after 6 minutes",
+  "paidFrom": null,
+  "link": "nofollow",
+  "login": [
+   "email_code"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "websitelaunches.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": "Automatic review before listing and launch-date assignment",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "whatlaunched.today",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "about 5 weeks",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "email_password",
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "worthtotry.com",
+  "free": "yes",
+  "conditions": [],
+  "queue": "Manual review within one day",
+  "paidFrom": null,
+  "link": "unknown",
+  "login": [
+   "magic_link"
+  ],
+  "captcha": "unknown",
+  "human": [
+   "email_inbox"
+  ],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "yourfirst.app",
+  "free": "yes",
+  "conditions": [
+   "queue"
+  ],
+  "queue": "About 195 days; estimated publication 2027-04-15",
+  "paidFrom": 29,
+  "link": "nofollow",
+  "login": [
+   "google"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ },
+ {
+  "domain": "zplatform.ai",
+  "free": "yes",
+  "conditions": [
+   "badge",
+   "backlink"
+  ],
+  "queue": null,
+  "paidFrom": 39,
+  "link": "unknown",
+  "login": [
+   "none"
+  ],
+  "captcha": "unknown",
+  "human": [],
+  "verified": "2026-10-02"
+ }
+]

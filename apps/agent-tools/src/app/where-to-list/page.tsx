@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DIRECTORIES, CHECKED } from "@/lib/directories";
 import { FaqSection } from "@/components/FaqSection";
+import { TestedDirectoryTable } from "@/components/TestedDirectoryTable";
+import { summarize, type TestedDirectory } from "@/lib/tested-directories";
+import tested from "@/lib/directories-tested.json";
+
+const TESTED = tested as TestedDirectory[];
+const S = summarize(TESTED);
 
 export const revalidate = 86400;
 
@@ -56,6 +62,18 @@ export default function WhereToListPage() {
           </tbody>
         </table>
       </div>
+
+      <section className="mb-10">
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">{S.total} directories we actually submitted to</h2>
+        <p className="text-gray-700 mb-2">
+          Beyond the AI-agent directories above, these are the general startup, SaaS and AI directories our own products went through
+          (2026-09-29 to 2026-10-02). {S.free} had a free option, but {S.badgeOrBacklink} wanted a badge or backlink in return, and {S.needsHuman} had
+          a captcha or another step only a person can do. We checked the live link on {S.linkChecked} of them; {S.nofollowOfChecked} were not dofollow
+          (we mostly checked when something looked off, so treat that as a warning, not a rate).
+        </p>
+        <p className="text-xs text-gray-500 mb-4">Facts come from our own submission notes, not from third-party lists. Rules change; if one is out of date, email hello@agentoolrank.com.</p>
+        <TestedDirectoryTable rows={TESTED} />
+      </section>
 
       <section className="space-y-3 text-gray-700 mb-10">
         <h2 className="text-xl font-semibold text-gray-900">Which one should you pick?</h2>
