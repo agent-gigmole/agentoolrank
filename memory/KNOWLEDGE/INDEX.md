@@ -241,3 +241,7 @@
 | judge 判弃用可能读旧文档旧分支 / 当前 README grep deprecat + archived 一起核对 / llama-agents vision-agent 误判人工覆盖 | GOTCHAS.md#judge-deprecated-verify |
 | 官网被劫持成博彩站 状态码 200 / autogpt-js langstream gpteam / 改 github_url 先备份 / 社交主页 HF Space 报错同理 / 定期扫状态码+博彩关键词 | GOTCHAS.md#website-hijack-gambling |
 | rejudge-tools --category 不写 category_tags_old / 回滚用 rejudge-backup-*.json | GOTCHAS.md#rejudge-no-category-old |
+| TypeSafe Jev 字段名 noul 不是 value/probability / 准确率全 0 先打印原始响应 | GOTCHAS.md#typesafe-jev-noul-field |
+| Jev 边界模糊判断约 84% vs DeepSeek 97% / 类目 88% 236ms / 只做第二意见 | GOTCHAS.md#typesafe-jev-fuzzy-boundary |
+| columbus 字段不能公开 / 正则统计 18% 要徽章 弃用 / 对外数字只用自家 directory-log detail / directories-verified.json | GOTCHAS.md#columbus-derived-stats |
+| 自有目录数据集 / build-directory-dataset.ts / Jev 评测 eval-typesafe-scope.ts | LOG.md#2026-10-03 – 自有目录数据集 + TypeSafe Jev 评测 |

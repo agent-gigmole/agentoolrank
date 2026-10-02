@@ -686,3 +686,16 @@
 - 草案 docs/ops/weekly/2026-W41-draft.md（c1dcfc2）三个押注：①外联 10→15（10-08）→20（10-12）封/天，前提 0 退信 0 投诉，预期一周 100 封 → 约 35 访问、≥5 提交、≥1 付费，截止 10-11 ②dev.to /where-to-list（10-03）+「实测 100 个目录站」（10-07），≥50 访问 ③Submit Kit 预售 ≥3 单，截止 10-18
 - 看板固定指标：目录提交（已提交/已上线/成功率）、对标差距、外联漏斗
 - **下一步**：10-05 交第一份（T28）；周一前补竞品扫描 + 新数据源/渠道；看板固定栏自动出数；T27 定稿 12:00 前交照旧
+
+## 2026-10-03 02:30– 自有目录数据集 + TypeSafe Jev 评测（a3d192d、42f498c）
+- **自有目录数据集**：scripts/build-directory-dataset.ts（a3d192d）。输入只用 ~/data/backlinks/directory-log.csv 里我们自己写的 detail（不用 columbus 的 DR/访问量）；只收至少一个项目走到具体结果（submitted/badge/captcha/retry/x-verify）的站，约 100 个
+  - LLM 抽字段：free_option、free_conditions、queue_wait、paid_from_usd、link（必须实测得出）、login、captcha、needs_human、gotchas、success_signal、outcome；无证据填 unknown
+  - 输出 data/directories-verified.json，供 /where-to-list 免费表、「实测目录站」数据文章、Submit Kit 共用；**全量在后台跑**
+  - 3 条样本质量好：viesearch 免费档排队 1200+、拒绝率 82%；futuretools 要先关 newsletter 弹窗，成功信号「Tool Submitted!」
+  - 先前用正则扫备注得到的统计（如「18% 要徽章」）**弃用**：profiles 的 dofollow 等字段部分来自 columbus，不能公开
+- **TypeSafe Jev 评测**：scripts/eval-typesafe-scope.ts（42f498c）。key ~/.config/secrets/typesafe-api-key；POST https://api.typesafe.ai/v1/systemone，返回 answers.<id>.noul 或 .choice/.probabilities
+  - 147 条人工标注：收录判断（noul）阈值 0.6 准确率 84%，任何阈值都不超过约 84%；DeepSeek judge 约 97% → 不替换
+  - 12 选 1 类目（choice）：与复核一致 65/74（88%）；平均 236ms
+  - 定位：便宜的第二意见。用在外联发前的类目复核 + 安全筛语义补充（后者先测）；已报 agentkit，周一写进本周经营
+- **下一步**：等数据集全量跑完 → 抽查 → 接 /where-to-list 免费表与数据文章（10-07）；Jev 接外联类目复核
+- 坑：GOTCHAS#typesafe-jev-noul-field、GOTCHAS#typesafe-jev-fuzzy-boundary、GOTCHAS#columbus-derived-stats

@@ -854,3 +854,8 @@
 - 做法：读 agentkit 转达的老板 4c/4d 要求并回复；拉 7 天漏斗（会话 51、/submit 1、提交 2、付费 0；direct 43 / outreach 4 / devto 2）；写 docs/ops/weekly/2026-W41-draft.md（记分牌 + 3 押注：外联 10→15→20、数据文章分发、Submit Kit 预售 ≥3 单）；TASK 新增 T28，T17 加放量计划
 - 结果：草案已提交推送（c1dcfc2）；10-05 起每周一交
 - 结果：成功
+
+## 2026-10-03 02:30– 自有目录数据集 + TypeSafe Jev 评测
+- 做法：写 scripts/build-directory-dataset.ts（只用自家 directory-log.csv 的 detail，约 100 个有具体结果的站，LLM 抽 11 个结构化字段，无证据填 unknown，输出 data/directories-verified.json，全量后台跑）；写 scripts/eval-typesafe-scope.ts 在 147 条人工标注上测 Jev
+- 结果：数据集 3 条样本质量好（viesearch 排队 1200+ 拒绝率 82%；futuretools 先关 newsletter 弹窗、成功信号「Tool Submitted!」）；旧正则统计因混入 columbus 字段弃用。Jev 收录判断最高约 84%（DeepSeek 约 97%，不替换），类目 88%（65/74），236ms → 只做第二意见（外联类目复核；安全筛语义题待测），已报 agentkit
+- 结果：成功

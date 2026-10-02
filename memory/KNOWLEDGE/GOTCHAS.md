@@ -733,3 +733,12 @@ LLM judge 判「已弃用/deprecated」可能读的是旧文档或旧分支（10
 
 ## rejudge-no-category-old
 scripts/rejudge-tools.ts --category 改类目时**不写** tools.category_tags_old（那一列只由 apply-category-audit.ts 写）。回滚要用 rejudge 自己输出的 rejudge-backup-*.json，不能靠 `UPDATE ... SET category_tags = category_tags_old`（会回到审计前的值或空值）。
+
+## typesafe-jev-noul-field
+TypeSafe Jev（POST https://api.typesafe.ai/v1/systemone）二元题的答案字段名是 `answers.<id>.noul`，不是 `value` 或 `probability`；选择题是 `answers.<id>.choice` / `.probabilities`。10-03 第一次按 value 解析，所有阈值准确率都是 0（全是 undefined）。准确率全 0 或全相同 → 先打印一条原始响应核对字段名。
+
+## typesafe-jev-fuzzy-boundary
+Jev 在边界模糊的判断（如「是否属于 agent 工具」收录判断）上准确率明显低于大模型：147 条人工标注，任何阈值最高约 84%（阈值 0.6），DeepSeek judge 约 97%。规则清晰的分类表现好些（12 选 1 类目 88%），平均 236ms。只用作便宜的第二意见（外联类目复核、安全筛语义补充），不替代 judge。
+
+## columbus-derived-stats
+backlink profiles 里 dofollow 等字段部分来自 columbus，不能公开。用正则扫备注 + profiles 得出的统计（如「18% 要徽章」）不可靠且可能混入 columbus 数据 → 弃用。对外数字只从 ~/data/backlinks/directory-log.csv 里我们自己写的 detail 抽取（scripts/build-directory-dataset.ts，无证据填 unknown）。
