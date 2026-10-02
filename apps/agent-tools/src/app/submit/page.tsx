@@ -26,9 +26,21 @@ export default async function SubmitPage() {
         <li>✓ A badge for your site and README</li>
       </ul>
       <SubmitForm paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} />
-      <p className="text-xs text-gray-500 mt-6">
-        Comparing options? See <a href="/where-to-list" className="underline">where to list an AI agent tool</a> (free vs paid directories). We review every submission. We list tools for building, running or evaluating AI agents; unrelated products are declined.
-      </p>
+      <section id="what-we-list" className="mt-8 text-sm text-gray-700">
+        <h2 className="text-base font-semibold text-gray-900 mb-2">What we list</h2>
+        <p className="mb-2">
+          <strong>Yes:</strong> tools for building, running, hosting or evaluating AI agents (frameworks, memory and RAG, MCP servers,
+          sandboxes, observability and evals, protocols), and agents that act on their own (coding, browser, research and voice agents).
+        </p>
+        <p className="mb-2">
+          <strong>No:</strong> general chat clients, single-purpose AI apps (translation, transcription, note-taking, vertical consumer apps),
+          models and model-training or fine-tuning libraries, courses, paper lists and prompt collections, and projects that are archived or whose site no longer works.
+        </p>
+        <p className="text-xs text-gray-500">
+          Every listed tool is re-checked against these rules from its own README and website; tools that no longer fit are unlisted.
+          Comparing options? See <a href="/where-to-list" className="underline">where to list an AI agent tool</a> (free vs paid directories).
+        </p>
+      </section>
     </main>
   );
 }
