@@ -206,7 +206,7 @@
 - [x] residualEnglish 加单个常见英文词检测（10-02，84b4918）：src/lib/i18n.ts LEFTOVER_WORDS（the/and/for/with/one…ten/than…）；扫已发布 398 条命中 11，全是正当专有名词（React Three Fiber、Chrome for Testing、Human-in-the-loop）→ 只作人工复核门槛，不硬拦截
 - [x] siyuan：清理英文源 tagline 里混入的中文副本后重译 → 人读 → 发布（10-02）。englishOnlyTagline（review.ts，TDD；submissionTagline 先过它）+ scripts/clean-bilingual-taglines.ts 清 7 个（chatgpt-shortcut、openai-translator、mirofish、siyuan、xiaozhi-esp32、maxkb、edict；回滚 data/bilingual-tagline-backup-*.json）；siyuan zh/ja 重译重审
 - [x] ekko-studio 重译 → 人读 → 发布（10-02，ja，--override）；promptfoo（ja）被 --retry-failed 误下架后重译重审
-- [ ] review-translations --override 时补回当前 source_hash（reject 会清空 source_hash，override 后再跑 --retry-failed 会当作源已变重译并 human_reviewed 归 0 → 下架；见 GOTCHAS#override-after-reject-source-hash）
+- [x] review-translations --override 时补回当前 source_hash（reject 会清空 source_hash，override 后再跑 --retry-failed 会当作源已变重译并 human_reviewed 归 0 → 下架；见 GOTCHAS#override-after-reject-source-hash）（10-02 11:05 已修：--override 写回当前 hash；source/hash 抽到 lib/i18n，148 测试绿；库内 source_hash 为空的行 0 条）
 - [ ] 西语 10-30 看 GSC（墨西哥/阿根廷）后再定
 - 闸: auto（不整站机翻；不新增事实）
 - 失败: 0
