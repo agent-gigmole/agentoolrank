@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { compareVerdict, alternativesVerdict } from "./verdict";
+import { compareVerdict, alternativesVerdict, compareDescription } from "./verdict";
 
 const now = new Date("2026-10-01T00:00:00Z");
 const t = (o: Record<string, unknown>) =>
@@ -55,5 +55,22 @@ describe("alternativesVerdict", () => {
   });
   it("returns nothing without alternatives", () => {
     expect(alternativesVerdict(t({ name: "X" }), [], now)).toEqual([]);
+  });
+});
+
+describe("compareDescription", () => {
+  it("leads with both star counts and the strongest data point", () => {
+    const d = compareDescription(t({ name: "n8n", github_stars: 152300, star_velocity_30d: 2000 }), t({ name: "Windmill", github_stars: 15100, star_velocity_30d: 300 }), now);
+    expect(d).toBe("n8n (152.3k GitHub stars) vs Windmill (15.1k): n8n is growing faster: +2,000 GitHub stars in the last 30 days vs +300 for Windmill.");
+  });
+  it("skips the tagline-based verdict and falls back to a generic tail", () => {
+    const d = compareDescription(t({ name: "A", github_stars: 900, tagline: "Run LLMs locally" }), t({ name: "B", tagline: "Hosted agents" }), now);
+    expect(d).toBe("A (900 GitHub stars) vs B: GitHub activity, pricing, pros & cons side by side, refreshed daily.");
+  });
+  it("never exceeds 160 characters", () => {
+    const long = "X".repeat(40);
+    const d = compareDescription(t({ name: long, github_stars: 1, last_commit_date: "2025-01-01" }), t({ name: long + "Y", github_stars: 2, last_commit_date: "2026-09-30", commit_count_90d: 12345 }), now);
+    expect(d.length).toBeLessThanOrEqual(160);
+    expect(d.startsWith(long)).toBe(true);
   });
 });

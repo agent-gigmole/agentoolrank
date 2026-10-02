@@ -8,7 +8,7 @@ import { compareSlug } from "@/lib/alternatives";
 import { canonicalToolId } from "@/lib/merged";
 import { compareTitle } from "@/lib/titles";
 import { compareFaq } from "@/lib/faq";
-import { compareVerdict } from "@/lib/verdict";
+import { compareVerdict, compareDescription } from "@/lib/verdict";
 import { FaqSection } from "@/components/FaqSection";
 
 export const revalidate = 86400; // 24h
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: compareTitle(a.name, b.name, new Date().getFullYear()),
     alternates: { canonical: `/compare/${compareSlug(a.id, b.id)}` },
-    description: `Compare ${a.name} and ${b.name}. Side-by-side comparison of features, GitHub activity, pros & cons.`,
+    description: compareDescription(a, b, new Date()),
   };
 }
 

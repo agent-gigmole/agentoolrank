@@ -43,3 +43,24 @@ export function alternativesVerdict(tool: Tool, alts: Tool[], now: Date): string
   if (stale.length) out.push(`No commit in 6+ months: ${list(stale.slice(0, 4))}${stale.length > 4 ? ` and ${stale.length - 4} more` : ""}.`);
   return out;
 }
+
+const k = (x: number) => (x >= 1000 ? `${(x / 1000).toFixed(1).replace(/\.0$/, "")}k` : String(x));
+const GENERIC = "GitHub activity, pricing, pros & cons side by side, refreshed daily.";
+
+/** Meta description for /compare pages: star counts plus the first data-driven verdict that fits in 160 chars. */
+export function compareDescription(a: Tool, b: Tool, now: Date): string {
+  let unit = " GitHub stars";
+  const label = (t: Tool) => {
+    if (t.github_stars === null || t.github_stars === undefined) return t.name;
+    const s = `${t.name} (${k(t.github_stars)}${unit})`;
+    unit = "";
+    return s;
+  };
+  const head = `${label(a)} vs ${label(b)}: `;
+  const facts = compareVerdict(a, b, now).filter((s) => !s.startsWith("Pick "));
+  const options = [...facts.map((f) => `${head}${f} Live stats and which to pick.`), ...facts.map((f) => head + f), head + GENERIC];
+  const fit = options.find((o) => o.length <= 160);
+  if (fit) return fit;
+  const cut = options[options.length - 1].slice(0, 157);
+  return cut.slice(0, cut.lastIndexOf(" ")) + "...";
+}
