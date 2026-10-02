@@ -412,6 +412,17 @@
 - **结论**：agent 可直接提交通道（POST /api/v1/submissions、MCP submit_tool、/agents 文档、llms.txt）有了第一个真实转化 → 值得加强：多上 MCP 目录 / agent 生态曝光
 - 坑：GOTCHAS#external-submission-keep-ref-param
 
+## 2026-10-02 11:55–12:25 提交返回 message_for_human + 文档写明免费入口（响应 agentkit 建议）
+
+- **offers.ts messageForHuman(name, offers)**（TDD 4 用例，其中 1 个专测单数 "1 day"）：生成 agent 可原样转给人的说明：免费结果（约 N 天上线、永久页面）+ 逐条列付费档（$9 3 天内上线 / $19 1 天内上线 / $49 1 天内上线并上首页 7 天）+ 每档付款链接 + 「不通过全额退款」
+- **submit-core** queued 返回新增 `message_for_human`，API（POST /api/v1/submissions）与 MCP submit_tool 共用
+- 文档：llms.txt agent 段标题改 "list a tool (free)" + 一行 Free submission 说明；/agents 页加 message_for_human 说明；MCP submit_tool 描述改为 "for free" 并提 message_for_human
+- 文案过 ai-flavor：clean
+- 151 测试全绿，已部署（commits 15c88b9 / e36c457，看板 bbb7619）；线上 selftest #4（example.org）验证后标 rejected（note: internal selftest）
+- 第一版 "about 1 days" 复数错 → 已修重部署（GOTCHAS#human-text-pluralization）
+- 已报 agentkit，看板已记录
+- 更正：上次 checkpoint 说的「工作区有别人未提交改动」其实是本批进行中的文件，现已全部提交；工作区仅剩 CLAUDE.md、.tg_topic（非本任务）
+
 ## 近期排期
 
 - **10-02 22:00 CST**：T17 外联第一批 10 封（`scripts/send-outreach.ts`，先 --dry-run 看名单与实时排名）；发后看板记数量，观察退信/退订
@@ -442,7 +453,9 @@
 - [ ] T24 剩余页型本地化：替代品页、对比页、/where-to-list、/submit；确认 sitemap/IndexNow 收录 ja 页
 - [x] review-translations --override 时补回 source_hash（10-02 11:05 已修，fc52bad）
 - [ ] G2 外部提交 1/20（首个：Orkas，API 提交，10-02 11:50 上线）；新提交每天看 submissions 表并审核
+- [x] 提交返回 message_for_human + llms.txt / /agents / MCP 写明免费入口（10-02 12:25）
 - [ ] 加强 agent 提交通道曝光：MCP 目录 / agent 生态（首个真实提交来自 API 通道）
+- [ ] 观察下一个 API/MCP 提交是否因 message_for_human 带来付费档点击（漏斗/checkout 事件）
 - [ ] Stripe 开 Alipay/WeChat Pay：等老板批准（收款配置变更）
 - [ ] numbersPreserved 忽略字母数字混合 token（E2E、A2A、GPT-4o 等）
 - [ ] 观察对账 cron（hourly-ops 日志）与漏斗真实访问；零流量期不再加新功能

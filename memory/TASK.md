@@ -121,6 +121,7 @@
 - 依赖: T10
 - 设计：MCP 新工具 submit_tool / get_submission_status + POST /api/v1/submissions（JSON）；返回 queue_position、eta_days、status_token、badge_html、offers[]（free / $9 priority 72h / $19 fast 24h / $49 featured 7d，每档 what_you_get + eta + 真实价值数据，不夸大）；agent 可传 max_budget_usd、deadline_days → 返回 recommended_plan（满足期限的最便宜档）；付款 = 按需生成 Stripe checkout_url 交给人付（GET .../checkout?plan=&token=，懒创建）；不对 agent 做挽留弹窗，降级选项直接写在 offers 里；llms.txt 写明流程。以后接 agent 支付协议。
 - 验收: vitest 覆盖 offers/recommend；线上 MCP tools/call submit_tool（selftest 后标 rejected）返回 offers 与 status_token；get_submission_status 返回状态；checkout 端点生成 session 并立即 expire（线上 MCP submit_tool → queued + 4 档 offers + recommended ✓；get_submission_status ✓，错 token 404 ✓；checkout 链接 303 到 Stripe（fast \$19）后立即 expire ✓；selftest 提交已标 rejected ✓；vitest 63 ✓）
+- [x] message_for_human + 文档写明免费入口（10-02 12:25，15c88b9/e36c457）：queued 返回一段可原样转给人的说明（免费结果 + 付费档价格/速度/付款链接/不通过全退），API 与 MCP 共用；llms.txt "list a tool (free)"、/agents、MCP 描述 "for free"；151 测试；线上 selftest #4 验证后 rejected
 - 真实验证: 2026-10-02 首个真实 API 提交 Orkas（orkas.ai，10-01 23:56，src=api，免费档，URL 带 ?source=dir_agentoolrank → 对方自动提交程序读 /agents 文档提交）；11:50 审核通过上线 /tool/orkas；G2 1/20
 - 闸: auto
 - 失败: 0

@@ -599,3 +599,6 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 
 ## external-submission-keep-ref-param
 外部提交的 URL 常自带来源参数（10-02 首个外部提交 Orkas：`https://orkas.ai/?source=dir_agentoolrank`）。这是对方的自动提交程序为了统计「从我们这里来的流量」加的，审核入库时 **website_url 保留原样，不要规范化去掉 query**。去掉后对方看不到我们带去的流量，就少了继续挂徽章 / 付费的理由。注意：src/lib/submissions.ts 的 normalizeUrl 只去 hash、保留 query，所以「带 ?source= 再交一次」不会被 URL 去重拦下。有重复提交时要改成按 host+path 去重，存储仍保留原串。
+
+## human-text-pluralization
+模板拼给人看的文字（10-02 message_for_human 第一版）：`about ${n} days` 在 n=1 时出 "about 1 days"，上线后才发现，又修了一次重新部署。fast/featured 档 eta 恰好是 1 天，所以这个错误在真实输出里一定会出现。修法：写 `${n} ${n === 1 ? 'day' : 'days'}` 一类的小函数；**TDD 时专门给边界值 n=1 写一个用例**（这次补了，4 用例之一）。凡是 API 返回给 agent 再转给人的句子，都把数量词当边界值测。

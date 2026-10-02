@@ -197,3 +197,5 @@
 | T24 日语 198/200 上线 / 168+15 过审 / override 15 退回 2 / level 1 前 50 + level 2 抽 14 | LOG.md#2026-10-02 08:50–09:20 T24 日语工具页 198/200 上线 |
 | 外部提交 URL 自带 ?source=/ref 参数 / website_url 保留不规范化 / 去重按 host+path | GOTCHAS.md#external-submission-keep-ref-param |
 | 首个外部提交 Orkas / src=api / agent 读 /agents 文档自动提交 / G2 1/20 / override 写回 source_hash 已修 | LOG.md#2026-10-02 11:05–11:55 override 写回 source_hash + 第一个外部提交 Orkas（G2 1/20） |
+| 模板文字单复数 / about 1 days / n=1 边界用例 / message_for_human | GOTCHAS.md#human-text-pluralization |
+| message_for_human / API 返回可转给人的说明 / llms.txt list a tool (free) / MCP submit_tool for free | LOG.md#2026-10-02 11:55–12:25 提交返回 message_for_human + 文档写明免费入口 |

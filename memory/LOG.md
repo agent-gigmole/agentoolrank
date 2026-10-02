@@ -686,3 +686,12 @@
 - 发现：agent 可直接提交通道（JSON API / MCP / /agents / llms.txt）带来首个真实转化（N=1）→ 继续加强 MCP 目录与 agent 生态曝光
 - 坑：外部提交 URL 自带 ref 参数要保留（GOTCHAS#external-submission-keep-ref-param）
 - human-intervention=0 / auto-resolved=0 / 熔断=0
+
+## 2026-10-02 11:55–12:25 提交返回 message_for_human + 文档写明免费入口
+- 响应 agentkit 建议：offers.ts 新增 messageForHuman(name, offers)（TDD 4 用例，含单数 "1 day"）——免费结果（约 N 天、永久页）+ 付费档 $9 3 天 / $19 1 天 / $49 1 天+首页 7 天，每档付款链接，「不通过全额退款」
+- submit-core queued 返回 message_for_human，API 与 MCP 共用
+- llms.txt agent 段改 "list a tool (free)" + Free submission 行；/agents 加 message_for_human 说明；MCP submit_tool 描述 "for free" + message_for_human
+- 文案过 ai-flavor clean；151 测试绿；已部署（15c88b9、e36c457；看板 bbb7619）；线上 selftest #4 example.org 验证后标 rejected（internal selftest）
+- 坑：第一版 "about 1 days" 复数错 → 修复重部署（GOTCHAS#human-text-pluralization）
+- 更正上次 checkpoint：「工作区别人未提交改动」实为本批进行中文件，已全部提交
+- 已报 agentkit；human-intervention=0 / auto-resolved=0 / 熔断=0
