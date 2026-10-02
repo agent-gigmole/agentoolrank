@@ -787,3 +787,6 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **MCP 目录 GitHub OAuth**：授权页先看 scope，只接受身份/邮箱（read:user、user:email）；出现 repo / public_repo / 写权限，或**任何 org 权限（read:org 及以上）**即取消跳过——read:org 会暴露账号的组织成员关系。conduid 10-03 授权了 read:org，算例外，以后不再这样（agentkit 05:28）。
 - **扩张前先验证外链效果**：imagehub 提交 30 站 14 天只来 1 个访客；目录站 10-03 起暂停扩张，等 GSC 2–4 周数据再决定。
 - 跳过原因参考：51tool 强制 ICP 备案；ai-kit.cn 只能加微信；10words 排队 2602 天。
+
+## sql-select-star-shadowed-alias
+`SELECT c.*, (SELECT COUNT(*) …) AS tool_count FROM categories c` 时，若 categories 表本身就有存储列 `tool_count`，结果里出现两个同名列，驱动把行转成对象时只保留一个——这里拿到的是**过期的存储值**，计算值被遮蔽，且不报错（852323b，Agent Frameworks 显示 329，实际 165）。规则：表里有冗余计数/派生列时，查询一律显式列出列名，计算列别名不要与存储列同名；或者干脆删掉冗余存储列。症状是"多处显示的数字一致地错"，容易误判为缓存。

@@ -755,3 +755,12 @@
 - **目录站暂停扩张（agentkit 05:28）**：不放宽到客座投稿/DR 20–30。理由：imagehub 30 站 14 天仅 1 访客，外链 SEO 作用未验证，等 GSC 2–4 周数据再定
 - **下一步**：只做补漏（等 #36、重试 whatlaunched/store.app、10-09 前复查已上线站点链接）；时间转投外联回复、提交通道付费转化、中日文页面流量
 - 坑：GOTCHAS#directory-submission-batch-1003b
+
+## 2026-10-03 06:29–06:35 类目计数修复 + pixtidy 接入 Brevo + 付费转化洞察（852323b、18f1406、07fd93c）
+- **外联访客行为**：10-02 晚 10 封外联 → 4 个会话（cognee、langchain、hermes-agent），全是 page_view；维护者横幅点击、徽章复制、checkout 均为 0；约 8.5 小时无回信
+- **洞察**：$49 首页推荐卖的是曝光，首页每天个位数访客，作者不会买 → 周一经营摘要要点（T28）；也是 Submit Kit 的论据：卖数据和配方，本身有价值，不依赖我们的流量
+- **bug 修复（852323b）**：packages/db/src/queries.ts getCategories 用 `SELECT c.*, (COUNT…) AS tool_count`，categories 表有过期存储列 tool_count 同名，行对象取到存储值 → 改为显式列名；Agent Frameworks 329→165；211 测试通过，已部署推送，线上 llms.txt 核对无误（04:40 记的"llms.txt 类目计数过期"已解决，不是缓存）
+- **pixtidy 接入 Brevo**：域名已添加，DNS 记录已发 imagehub，专用 key「pixtidy-outreach」在 ~/.config/secrets/brevo-pixtidy-key（600，测试 200）；brevo-tag-health 加 pixtidy、directory-submit tag（18f1406）
+- **待办**：imagehub 加完 DNS 后 PUT /v3/senders/domains/pixtidy.com/authenticate
+- **风险**：一个 Brevo 账户跑三个品牌 + 老板 Gmail 代发，共用 300 封/天额度和账户信誉
+- 坑：GOTCHAS#sql-select-star-shadowed-alias

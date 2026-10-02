@@ -886,3 +886,9 @@
 - 结果：今日处理 20 = 提交 15 + retry 2（whatlaunched、store.app）+ skip 3（51tool、ai-kit.cn、10words）；launchboosts、conduid 已上线；101 候选全部处理完，剩 3 个等 #36；agentkit 05:28 更正：暂停扩张只做补漏（imagehub 30 站 14 天 1 访客，等 GSC 数据），GitHub OAuth 出现 org 权限即取消（conduid read:org 为例外）
 - 坑：aitoolsrecap ASP.NET [id$=]、姓名无句点；alternative.me 无 name 按序定位、上传 logo 后序号前移、/account/submissions 不带斜杠；Radix tab 要真实点击；foundr 魔法链接读 gmail full 格式；comparateur-ia verif_level 改 standard
 - 结果：成功
+
+## 2026-10-03 06:29–06:35 类目计数修复 + pixtidy 接入 Brevo + 外联转化观察
+- 做法：查外联访客事件（4 会话全 page_view，0 横幅/徽章/checkout）；定位 getCategories `c.*` 与计算列别名 tool_count 重名 → 显式列名（852323b）；Brevo API 添加 pixtidy.com 发件域、建专用 key、DNS 记录交 imagehub；brevo-tag-health 加 pixtidy、directory-submit（18f1406）；看板记录（07fd93c）
+- 结果：Agent Frameworks 329→165，211 测试通过，线上 llms.txt 正确；pixtidy 等 DNS 后认证；洞察「付费档卖曝光但流量不足」写入 T28 周一摘要
+- 坑：GOTCHAS#sql-select-star-shadowed-alias
+- 结果：成功

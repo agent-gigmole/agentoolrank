@@ -309,6 +309,7 @@
 - 要求：每周一交一页「本周经营」= 记分牌（收入、付费单数、利润、漏斗，对比上周和目标）+ 竞品扫描（对标站 + ≥3 个同类站）+ 新数据源 1 个 + 新渠道 1 个 + 副产品变现 + 下周 3 个押注（带数字和截止日期）+ 上周押注复盘；老板问过一次的问题变成看板固定指标；资源随业绩分配
 - [x] 草案 docs/ops/weekly/2026-W41-draft.md（c1dcfc2，已推送）：7 天漏斗 会话 51（约 7/天 < 10/天阈值）、/submit 访问 1、提交 2、付费 0；来源 direct 43 / outreach 4 / devto 2。押注 ①外联放量 10→15→20 封/天（截止 10-11）②数据文章分发 dev.to /where-to-list（10-03）+「实测 100 个目录站」（10-07），≥50 访问 ③Submit Kit 预售 ≥3 单（截止 10-18）
 - [ ] **10-05（周一）交第一份**
+- [ ] 草案补洞察（10-03 06:30）：付费档卖的是曝光，但流量不足——10-02 晚 10 封外联带来 4 个会话（cognee、langchain、hermes-agent），全是 page_view，0 次维护者横幅点击 / 徽章复制 / checkout；约 8.5 小时无回信。首页每天个位数访客，$49 首页推荐作者不会买。推论：Submit Kit 卖数据和配方，本身有价值、不依赖我们的流量，作为周一摘要要点 + Submit Kit 论据
 - [ ] 看板加「本周经营」固定栏 + 三个固定指标，自动出数：目录提交（已提交/已上线/成功率）、对标差距、外联漏斗
 - [ ] 周一前补：竞品扫描（对标站 + ≥3 个同类站）、新数据源 1 个、新渠道 1 个
 - 约束: 瓶颈在分发；零流量期不再堆功能（已承认这两天犯过一部分）
@@ -398,6 +399,9 @@
 - [x] newsiteradar.com 接入 Brevo：**完成（10-02 22:07）**——DNS 由 new_ladar 加好，PUT .../newsiteradar.com/authenticate 返回 authenticated=true、verified=true；scripts/brevo-tag-health.ts 按 tag 每日监控已挂 daily-ops.sh 21:30（5dfc46d）。发件域 id 6abfb9f2daf63ed95f090051；key "newsiteradar-outreach" 在 ~/.config/secrets/brevo-api-key-newsiteradar。规则：tag=newsiteradar 出 ALERT → Brevo 后台停用该 key + 通知 new_ladar。new_ladar 自建发件人 jason@newsiteradar.com，护栏：每人一封、带退订、每周 ≤10 封、先 --test
 - [x] Brevo SMTP 供老板 Gmail 代发（10-03 02:20 agentkit 转达）：新建 SMTP key "gmail-send-as"（~/.config/secrets/brevo-smtp-key，600，仅登录测试未发信）；smtp-relay.brevo.com:587 STARTTLS，登录名 bbef73001@smtp-brevo.com；发件人 hello@agentoolrank.com(id1)、jason@newsiteradar.com(id2)、hello@newsiteradar.com(id3，API 新加，已 active)；已回 agentkit 并提醒共用 300 封/天额度与信誉、无 tag
 - [ ] brevo-tag-health 加一行账户总量（不分 tag），覆盖 Gmail 代发等不带 tag 的发信
+- [x] pixtidy.com 接入 Brevo（imagehub 10-03 06:30 请求，agentkit：一个公司一个账户）：POST /v3/senders/domains 已添加；DNS 记录已发 imagehub（DKIM CNAME×2、brevo-code TXT、SPF 原记录加 include:spf.brevo.com、新增 _dmarc）；专用 key「pixtidy-outreach」存 ~/.config/secrets/brevo-pixtidy-key（600，测试 200）；已给外联脚本路径、--test 用法和护栏；brevo-tag-health 加 pixtidy、directory-submit 两个 tag（18f1406）
+- [ ] **pixtidy DNS 加好后认证**：PUT /v3/senders/domains/pixtidy.com/authenticate，确认 authenticated/verified=true 后回 imagehub
+- 注意：一个 Brevo 账户现跑 agentoolrank、newsiteradar、pixtidy 三个品牌 + 老板 Gmail 代发，共用 300 封/天额度和账户信誉
 
 - [x] 类目审计 dry-run 完成（10-02 23:xx–10-03 00:xx，scripts/audit-categories.ts 只读 → data/category-audit-2026-10-02.csv，670 条，$0）：在范围内 575（类目不变 364 / 变化 211）、被拒 95
 - [x] 抽查 30 条（每类随机 10）：不变 10/10 对；变化 10 条新类目都更准；被拒 9/10 对，误判 react-agent（对口，官网坏了）→ 以「官网打不开/404」为理由的拒绝不能直接下架
