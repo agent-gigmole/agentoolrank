@@ -72,7 +72,8 @@ export async function getToolBySlug(slug: string): Promise<Tool | null> {
 
 export async function getCategories(): Promise<Category[]> {
   const result = await db.execute(
-    "SELECT c.*, (SELECT COUNT(*) FROM tools t WHERE t.category_tags LIKE '%\"' || c.slug || '\"%') as tool_count FROM categories c ORDER BY tool_count DESC"
+    // Explicit columns: categories also has a stored (stale) tool_count column, and c.* would shadow the live count.
+    "SELECT c.slug, c.name, c.description, c.icon, (SELECT COUNT(*) FROM tools t WHERE t.category_tags LIKE '%\"' || c.slug || '\"%') as tool_count FROM categories c ORDER BY tool_count DESC"
   );
   return result.rows.map((row) => CategorySchema.parse(row));
 }
