@@ -620,3 +620,9 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 
 ## stripe-restricted-key-pmc
 Stripe 受限 key（rk_live_，本项目的 checkout key 与只读 ops key 都是）**不能修改 payment method configuration**（开/关 Alipay、WeChat Pay 等）。要用 API 改就得给 key 扩权限，而扩 key 权限 = 改凭证，属于老板闸。做法（10-02 BOSS #29）：由持有 Dashboard 的 agentkit 在后台开启；本项目开好后只用只读 key 跑 `GET /v1/payment_method_configurations` 复查 display_preference。共用账户（TENSO LLC）改收款配置前先通知同账户的其他项目（BOSS #28）。
+
+## stripe-pmc-connect-child
+`GET /v1/payment_method_configurations` 可能返回**多个都叫 "Default"** 的配置（10-02 TENSO 账户实测）：
+- 自有：`is_default=true`、`application=null`、`parent=null`（pmc_1TMYOSH5wuG7WMCfzIzwrkcQ）——我们自己的 Checkout（动态支付方式）实际用这个
+- Connect 应用的子配置：`application=ca_RyQW…`、有 `parent`（pmc_1TNNqU…），里面 alipay/wechat_pay 为 off，**不影响**我们的结账
+判断时只看 `is_default && application == null` 那个；不要按 name 取第一个，否则可能误报"没开"。`display_preference.value=on` 只表示已点启用，`available=false` 表示还在审核，`available=true` 才真正可用。脚本：apps/agent-tools/scripts/stripe-pm-status.ts（daily-ops 21:30）。可用后建 $9 结账会话只打开不付款，目测选项。

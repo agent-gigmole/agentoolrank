@@ -208,4 +208,6 @@
 | 外联排名选类目 / 多类目取百分位最好 / LangChain Memory & Knowledge 误报 / #9 of 329 | GOTCHAS.md#outreach-pick-best-category |
 | Smithery 上线 / admin-avz6 / URL 发布远程 MCP / 署名 #27 Jason T. / 外联署名待定 21:30 推迟规则 | LOG.md#2026-10-02 15:57–17:05 外联预演修正 + 署名 #27 + Smithery 上线 |
 | Stripe 受限 key rk_live_ 改不了 payment_method_configurations / 扩权限=改凭证=老板闸 / agentkit 后台开 Alipay WeChat / 只读 key 复查 | GOTCHAS.md#stripe-restricted-key-pmc |
+| Stripe 两个同名 Default 配置 / Connect 应用子配置 application ca_ parent / 只看 is_default 且 application=null / available=false 审核中 / stripe-pm-status.ts daily-ops 21:30 | GOTCHAS.md#stripe-pmc-connect-child |
+| #29 Alipay/WeChat 待审核 / pmc_1TMYOSH5 on/pending / $9 会话目测待办 | LOG.md#2026-10-02 晚 Stripe Alipay/WeChat 每日检查（#29） |
 | BOSS #28 自决范围 / 仍找老板清单 / #29 Stripe acct_1TMYNwH5wuG7WMCf live / 外联署名 Jason T. be87fb0 / 22:00 照常发 | LOG.md#2026-10-02 17:04–17:30 BOSS #28 自决范围 + #29 Stripe + 外联署名 Jason T. |

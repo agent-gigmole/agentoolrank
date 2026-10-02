@@ -726,3 +726,11 @@
 - 坑：受限 key 改不了 payment method configuration，扩权限=改凭证（老板闸）→ GOTCHAS#stripe-restricted-key-pmc
 - 结果：成功
 
+
+## 2026-10-02 晚 Stripe Alipay/WeChat 每日检查（#29）
+- agentkit 已在 Stripe 后台启用 Alipay/WeChat Pay，待审核（数日）
+- 新增 apps/agent-tools/scripts/stripe-pm-status.ts（只读 key，只看 is_default 且 application=null 的自有配置，打印 value/available），挂进 daily-ops.sh 21:30；4d4e71e
+- 首次结果：pmc_1TMYOSH5wuG7WMCfzIzwrkcQ alipay=on/pending wechat_pay=on/pending
+- 坑：两个同名 "Default" 配置，另一个属 Connect 应用（application=ca_RyQW…、有 parent，两项 off），不影响自有 Checkout → GOTCHAS#stripe-pmc-connect-child
+- 待办：available 后建 $9 结账会话目测 Alipay/WeChat 选项，回 agentkit
+- 结果：成功（检查已上线，等审核）

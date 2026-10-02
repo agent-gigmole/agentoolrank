@@ -511,3 +511,10 @@
 - **BOSS #29 Stripe**：已回 agentkit 账户 id acct_1TMYNwH5wuG7WMCf（TENSO LLC, US），checkout 为 live（checkout key 与 ops key 都是 rk_live_ 受限 key）；由 agentkit 在后台开 Alipay/WeChat Pay；开好后用只读 key 复查 payment_method_configurations
 - 坑：受限 key 不能改 payment method configuration；扩 key 权限 = 改凭证（老板闸），所以由 agentkit 去点（GOTCHAS#stripe-restricted-key-pmc）
 - **外联署名据 #28 自决改为 Jason T.**：outreach.ts、outreach.test.ts、send-outreach.ts 的 sender/replyTo、drafts/outreach-maker-v2.md；151 测试绿、dry-run 过；be87fb0 已推送。今晚 22:00 首批 10 封照常发，取消「21:30 无答复则推迟」
+
+## 2026-10-02 晚 Stripe Alipay/WeChat 每日检查（#29）
+- agentkit 已在 Stripe 后台给 Alipay/WeChat Pay 点启用，状态**待审核**（要几天）
+- 新增 apps/agent-tools/scripts/stripe-pm-status.ts（只读 key；取 is_default 且 application=null 的自有 payment_method_configuration，打印 alipay/wechat_pay 的 value 与 available），已挂 daily-ops.sh（21:30）；提交 4d4e71e
+- 当前：pmc_1TMYOSH5wuG7WMCfzIzwrkcQ alipay=on/pending wechat_pay=on/pending
+- 下一步：变 available 后建 $9 结账会话（只打开不付款），目测 Alipay、WeChat 选项都在，再回 agentkit
+- 坑：账户下有两个都叫 "Default" 的配置，另一个 pmc_1TNNqU… 属于 Connect 应用（application=ca_RyQW…，有 parent），两项为 off，与我们的结账无关（GOTCHAS#stripe-pmc-connect-child）
