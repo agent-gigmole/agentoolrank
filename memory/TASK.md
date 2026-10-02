@@ -371,9 +371,12 @@
   - [x] 类目 slug 不改不删；线上核对 qwen3/jan/roo-code 410，pydantic/llama-agents/langchain/各类目页/submit 200，sitemap 无下架工具；204 测试 + build 通过，已部署推送
   - [x] 外联挂起解除：hold.json、category.json 改名 *-2026-10-02.json.bak；下一批 dry-run 类目与审计一致，career-ops 自动跳过
 - [ ] 类目审计遗留：
-  - [ ] 修 URL 15 个（原②组 13 个 + autogpt-js、langstream——官网被劫持成博彩站，工具本身对口）修完后重判
-  - [ ] llama-agents（未归档，9-25 仍有推送）、vision-agent（未归档）复核
+  - [x] 修 URL 15 个（原②组 13 个 + autogpt-js、langstream——官网被劫持成博彩站，工具本身对口）修完后重判
+    - 10-03 完成：官网 404/打不开/被劫持成博彩站（autogpt-js、langstream、gpteam）/只是社交主页（developer）/HF Space 报错（audiogpt）的，website_url 改为 github_url（旧值备份 data/fixurl-backup-2026-10-03.json）；rejudge-tools --category 重判 12 个在范围内并改类目；colossalai、ai-getting-started、prompt2ui 链接正常但超范围 → 软下架，下架共 78（含 career-ops）
+  - [x] llama-agents（未归档，9-25 仍有推送）、vision-agent（未归档）复核
+    - 10-03 结论：judge 两次判弃用，但 README 当前版本无 deprecat 字样、未归档（llama-agents 现为活跃的 LlamaIndex 文档类 agent 框架）→ judge 误判，两个都保留（人工覆盖）
   - [ ] GSC 有展示而保留的 4 个（pydantic、buzz、chatgpt-next-web、mergekit）另议
+- [ ] 官网健康定期扫描（状态码 + 博彩关键词）：全库 website_url 定期查状态码与页面内容（博彩/赌博关键词、跳转到无关域名），命中的改用 github_url 或转复核；10-03 已发现 3 个被劫持（autogpt-js、langstream、gpteam）
 - [x] **全库类目审计**（10-03 应用上线；10-02 外联复核发现类目普遍偏，agent-frameworks 329 个成了杂物类）：rejudge-tools.ts --category 分批跑（先 --dry-run，保留回滚文件，含 category_tags），LLM 重判不手改数据；审完再逐个解除 data/outreach/hold.json 的挂起
   - agentkit 要求（10-02 20:20，10-03 开始）：① 先 dry-run，输出新旧类目对照 ② 抽 30 条人工看 ③ 旧值留一列，便于回滚 ④ 类目页 URL 不能 404：类目 slug 不改名、不删除，只调整工具归属；如要合并或删除类目，做 301
   - 待判清单：ai-job-search（也是求职工具，替代品里引用 career-ops；线上渲染时 getToolBySlug 返回 null 已过滤，无 404 链接）——审计时与 career-ops 同口径判是否软下架

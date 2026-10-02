@@ -718,3 +718,18 @@ LLM judge 批量判「不在收录范围」时，拒绝理由必须分类处理�
 
 ## bulk-recategorize-empty-guard
 批量改类目前先模拟应用结果，检查每个类目的工具数；任何类目会被清空就中止（scripts/apply-category-audit.ts 内置此检查），否则对应类目页会 404，丢 SEO。同时先加回滚列（category_tags_old）再改。
+
+## judge-deprecated-verify
+LLM judge 判「已弃用/deprecated」可能读的是旧文档或旧分支（10-03：llama-agents、vision-agent 两次都被判弃用，实际 llama-agents 是活跃的 LlamaIndex 文档类 agent 框架）。下架前两项一起核对：
+- 当前默认分支 README 里有没有 `deprecat` 字样：`gh api repos/OWNER/REPO/readme --jq .content | base64 -d | grep -i deprecat`
+- `gh api repos/OWNER/REPO --jq .archived`
+- 两项都没有 → judge 误判，人工覆盖保留，并在 TASK/STATE 记一笔
+
+## website-hijack-gambling
+过期域名被抢注改成博彩/赌博内容农场，是目录数据的常见腐坏模式。10-03 一次发现 3 个：autogpt-js、langstream、gpteam（gpteamai.com）。状态码仍是 200，只查状态码发现不了，要查页面内容。
+- 处理：website_url 改为 github_url（先备份旧值），再重判
+- 同类坏官网：404/打不开、只是社交主页（developer→twitter）、HF Space 构建报错（audiogpt）
+- 预防：定期全库扫描官网状态码 + 博彩关键词（casino/slot/betting/judi/togel 等）+ 跳到无关域名（TASK 待办）
+
+## rejudge-no-category-old
+scripts/rejudge-tools.ts --category 改类目时**不写** tools.category_tags_old（那一列只由 apply-category-audit.ts 写）。回滚要用 rejudge 自己输出的 rejudge-backup-*.json，不能靠 `UPDATE ... SET category_tags = category_tags_old`（会回到审计前的值或空值）。

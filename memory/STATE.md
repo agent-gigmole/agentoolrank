@@ -668,3 +668,13 @@
 - 已回报 agentkit，看板已记
 - **待办**：修 URL 15 个（②组 13 + autogpt-js、langstream）后重判；llama-agents、vision-agent 复核；保留的 4 个另议
 - 坑：GOTCHAS#archived-flag-verify、GOTCHAS#bulk-recategorize-empty-guard
+
+## 2026-10-03 01:00– 类目审计遗留处理（8b53072）
+- 修 URL 组：逐个查官网状态码 + GitHub API homepage。官网 404/打不开、被劫持成博彩站（autogpt-js、langstream、gpteam——gpteamai.com 现为赌博内容农场）、只是社交主页（developer→twitter）、HF Space 构建报错（audiogpt）→ website_url 改为 github_url，旧值备份 data/fixurl-backup-2026-10-03.json
+- rejudge-tools --category 重判：12 个在范围内并改类目（agent、pezzo、langchaingo、taskingai、autonomous-hr-chatbot、gpteam、llm-chain、react-agent、developer、audiogpt、autogpt-js、langstream）。注意 rejudge 改类目不写 category_tags_old，旧值在 rejudge-backup-*.json
+- colossalai、ai-getting-started、prompt2ui 链接正常但超范围 → 软下架；**下架共 78（含 career-ops）**
+- llama-agents、vision-agent：judge 两次判弃用，但当前 README 无 deprecat 字样、未归档 → judge 误判，保留（人工覆盖）
+- GSC 有展示的 4 个（pydantic、buzz、chatgpt-next-web、mergekit）仍挂着另议
+- 线上：colossalai 410；langchaingo、gpteam、llama-agents 200；已推送、已回报 agentkit
+- **待办**：保留的 4 个另议；新增「官网健康定期扫描（状态码 + 博彩关键词）」
+- 坑：GOTCHAS#judge-deprecated-verify、GOTCHAS#website-hijack-gambling、GOTCHAS#rejudge-no-category-old

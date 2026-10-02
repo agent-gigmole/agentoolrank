@@ -238,3 +238,6 @@
 | 已停更/仍活跃 用 GitHub API archived 核对 / LLM 判停更有误 llama-agents vision-agent / 人印象有误 roo-code 2026-05-15 已归档 / 未归档转复核看 pushed_at | GOTCHAS.md#archived-flag-verify |
 | 批量改类目 类目被清空 类目页 404 / apply-category-audit.ts 清空即中止 / category_tags_old 回滚列 | GOTCHAS.md#bulk-recategorize-empty-guard |
 | 类目审计应用上线 / 320 改主类目 / 软下架 74 delisted 75 / GSC 保留 pydantic buzz chatgpt-next-web mergekit / /submit#what-we-list 收录规则 / hold.json 解除 | LOG.md#2026-10-03 – 类目审计应用上线 |
+| judge 判弃用可能读旧文档旧分支 / 当前 README grep deprecat + archived 一起核对 / llama-agents vision-agent 误判人工覆盖 | GOTCHAS.md#judge-deprecated-verify |
+| 官网被劫持成博彩站 状态码 200 / autogpt-js langstream gpteam / 改 github_url 先备份 / 社交主页 HF Space 报错同理 / 定期扫状态码+博彩关键词 | GOTCHAS.md#website-hijack-gambling |
+| rejudge-tools --category 不写 category_tags_old / 回滚用 rejudge-backup-*.json | GOTCHAS.md#rejudge-no-category-old |

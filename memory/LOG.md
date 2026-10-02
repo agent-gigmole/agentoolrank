@@ -843,3 +843,9 @@
 - 结果：204 测试 + build 通过，已部署推送；线上 410/200/sitemap 核对通过；下一批外联 dry-run 类目一致；已回报 agentkit、看板已记
 - 待办：修 URL 15 个后重判；llama-agents、vision-agent 复核；保留 4 个另议
 - 结果：成功
+
+## 2026-10-03 01:00– 类目审计遗留处理
+- 做法：修 URL 组逐个查官网状态码 + GitHub homepage，坏的/被劫持（autogpt-js、langstream、gpteam 博彩站）/社交主页/HF Space 报错的 website_url 改 github_url（备份 data/fixurl-backup-2026-10-03.json）；rejudge-tools --category 重判，12 个在范围内改类目；colossalai、ai-getting-started、prompt2ui 超范围软下架（共 78）；llama-agents、vision-agent 核对当前 README 无 deprecat、未归档 → 人工覆盖保留
+- 结果：部署推送，线上 colossalai 410、langchaingo/gpteam/llama-agents 200；已回报 agentkit
+- 待办：GSC 有展示的 4 个另议；官网健康定期扫描
+- 结果：成功
