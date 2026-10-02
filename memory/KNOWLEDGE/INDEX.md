@@ -214,3 +214,5 @@
 | dirsub add --update 追加行不改旧行 / 以最新一行为准 / 台账同站多行正常 | GOTCHAS.md#dirsub-update-appends |
 | 标 skip 前先 dirsub check 看他项目实测登录方式 / agentkit 只支持 Google 清单误判 / best-ai launchboosts linkcentre whatlaunched 可用邮箱 | GOTCHAS.md#verify-login-before-skip |
 | 品牌 Google 号放弃 / +34 号码用过太多次 / cursor.directory ramen crunchbase makerlist 标 skip / 10-03 邮箱注册 4 站 | LOG.md#2026-10-02 17:11– 品牌 Google 号放弃 + 只能 Google 登录的站标 skip |
+| GSC 查询多匿名 / 排名 3–7 CTR≈0 先改摘要 / meta description 全站同模板 / compareDescription 星数+首条结论 ≤160 / Live stats 尾句被丢正常 | GOTCHAS.md#gsc-anonymous-queries-ctr-first |
+| 对比页 meta description 数据驱动 8dcf578 / 175 曝光 3 点击 / 10-16 复看 CTR / 替代品页同法待办 | LOG.md#2026-10-02 晚 T23 对比页 meta description 数据驱动 |

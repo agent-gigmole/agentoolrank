@@ -224,6 +224,9 @@
 - [x] 对比页 Short answer（answer-first，数据驱动；verdict.ts compareVerdict，commits de79e4c/73f89f8/d3ed359，2026-10-01）
 - [x] 替代品页 Short answer（verdict.ts alternativesVerdict：最接近/最活跃/增长最快/停更≤4+N more；星增速 signed() 修 "+-0"；commits c46db50/4e3f35c/8def881，117 测试，线上 3 页核验，2026-10-01）
 - [x] 线上内部字样自查（agentkit 要求）：106 页 HTML+内嵌 JSON 无泄露，仅误报；/favicon.ico 404 → rewrites 到 /icon（e698675），已回复 agentkit
+- [x] 对比页 meta description 数据驱动（verdict.ts compareDescription：星数 + 首条数据结论 + 可选尾句，≤160 字符；GSC 对比页排名 3–7 但 175 曝光仅 3 点击；8dcf578，线上 4 页 119–154 字符，2026-10-02）
+- [ ] 2026-10-16 复看 GSC 对比页 CTR（基线：28 天 175 曝光 / 3 点击，排名 3–7）
+- [ ] 替代品页 meta description 同法数据驱动（用 alternativesVerdict 首条结论）
 - [ ] 根据 GSC 有曝光的查询扩写对比/替代品内容（GSC 28 天 /compare 175/397 曝光；先做 goose-vs-open-webui、claude-code-vs-openhands 等有曝光的对）
 - [ ] 站外文章：草稿 docs/ops/launch-kit/devto-where-to-list.md 已写好（canonical→/where-to-list），定于 2026-10-03 用 dev.to 品牌号发布，与 10-01 长文错开
 - [ ] 更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）

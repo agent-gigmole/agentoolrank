@@ -742,3 +742,11 @@
 - producthunt 维持老板本人号原排期（≥10-10）；已回复 agentkit
 - 坑：dirsub add --update 是追加行、以最新行为准（GOTCHAS#dirsub-update-appends）；agentkit「只支持 Google」清单有误判，标 skip 前先对照共享台账其他项目实测登录方式（GOTCHAS#verify-login-before-skip）
 - 结果：成功
+
+## 2026-10-02 晚 T23 对比页 meta description 数据驱动
+- 起因：GSC 28 天对比页排名 3–7（promptfoo-vs-worldmonitor 4.4、gstack-vs-ollama 3.4、n8n-vs-windmill 6.3、goose-vs-open-webui 7.5），175 曝光仅 3 点击，全站 meta description 同一模板
+- 做法：verdict.ts 新增 compareDescription(a,b,now)：星数（首个带 "GitHub stars"）+ compareVerdict 首条数据结论（跳过 "Pick " 标语）+ 放得下才加 "Live stats and which to pick."，≤160 字符，兜底通用尾句/词边界截断；generateMetadata 改用
+- 验证：154 测试绿、build 过；8dcf578 已推送并部署 Vercel prod；线上 4 页 119–154 字符；看板已记（补 17:15 Google 号放弃）
+- 坑：GSC page+query 维度大多查询匿名，按查询逐对扩写数据不够 → 先改全站 CTR；"Live stats…" 尾句在增速句后常超 160 被丢掉属正常（GOTCHAS#gsc-anonymous-queries-ctr-first）
+- 待办：10-16 复看对比页 CTR；替代品页 meta description 同法（alternativesVerdict）
+- 结果：成功

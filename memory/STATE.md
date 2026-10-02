@@ -531,3 +531,10 @@
 - producthunt 维持老板本人号的原排期（≥10-10）
 - 已回复 agentkit
 - 坑：GOTCHAS#dirsub-update-appends、GOTCHAS#verify-login-before-skip
+
+## 2026-10-02 晚 T23 对比页 meta description 数据驱动（8dcf578）
+- GSC 28 天：对比页排在第 3–7 位（promptfoo-vs-worldmonitor 4.4、gstack-vs-ollama 3.4、n8n-vs-windmill 6.3、goose-vs-open-webui 7.5），共 175 次曝光只有 3 次点击；原因是全站对比页 meta description 都是同一句模板
+- 新增 src/lib/verdict.ts `compareDescription(a,b,now)`：双方 GitHub 星数（第一个带 "GitHub stars" 单位）→ compareVerdict 第一条数据结论（停更/增速/价格，跳过 "Pick " 开头的标语句）→ 放得下再加 "Live stats and which to pick."；≤160 字符，都放不下用通用尾句或词边界截断
+- compare/[slugs]/page.tsx generateMetadata 改用它；154 测试绿、build 过；Vercel prod 已部署并推送，线上 4 页核对 119–154 字符；看板已记（另补 17:15 品牌 Google 号放弃一条）
+- 下一步：10-16 复看 GSC 对比页 CTR；替代品页 meta description 用 alternativesVerdict 同法改
+- 坑：GSC 查询多为匿名，先改全站 CTR 再逐对扩写（GOTCHAS#gsc-anonymous-queries-ctr-first）

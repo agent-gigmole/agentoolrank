@@ -632,3 +632,6 @@ Stripe 受限 key（rk_live_，本项目的 checkout key 与只读 ops key 都�
 
 ## verify-login-before-skip
 10-02 agentkit 给的「只支持 Google 登录」站点清单有误判：best-ai.org（Firebase 邮件魔法链接）、launchboosts.com、linkcentre.com（邮箱+密码）、whatlaunched.today（有邮箱注册）其实都能用邮箱。**标 skip 之前先 `dirsub check <域名>` 看共享台账里其他项目（pixtidy、new_ladar 等）实测出的登录方式**，备注里写着「邮箱+密码注册」「Continue with email」之类就不该 skip。另外别把某项目当时的 retry（如 new_ladar 在 whatlaunched 遇到 Supabase signup 500，是站方故障）当成「不支持邮箱」。
+
+## gsc-anonymous-queries-ctr-first
+GSC 按 page+query 维度查，对比页的大部分查询是**匿名的**（低量查询被隐去），能看到的查询不足以支撑"按查询逐对扩写内容"。排名已在 3–7 位但 CTR 近 0（10-02：175 曝光 / 3 点击）时，先改**全站该页型的标题/摘要**——原因多半是 meta description 全站同一句模板。做法：verdict.ts `compareDescription` 用每页数据生成（星数 + 首条数据结论 + 放得下才加尾句，≤160 字符，词边界截断）。注意 "Live stats and which to pick." 尾句接在增速句后通常超 160 被丢掉，属正常，不是 bug。效果 10-16 复看。
