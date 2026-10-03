@@ -96,7 +96,8 @@
 - ✅ Submit Kit 链接按工具类目带 ?type=（上线通知信、API/MCP 已收录回复；10-04 05:0x 上线，线上核对：MCP servers → type=mcp_server，CrewAI → ai_tool）
 - ✅ /submit-kit 对 ref=live-notify / agent-listed / agent-queued 访客页顶加一句接上来意（10-04 05:2x 上线核对：三种 ref 各自文案、无 ref 不显示，canonical 仍为 /submit-kit）
 - ✅ Submit Kit 付款可归因（4479fd9 + 修 at_src）：KitBuyButton 带会话来源，Stripe metadata.src = submit-kit-page|<来源>，线上实测核对；顺带修了提交表单一直读不存在的 utm_src（会话来源键实为 at_src，以前免费提交只记到 referrer）
-- 已收录工具的 $49 推荐位付款也带来源：详情页 MaintainerBox 和提交结果页 PaidOptions 调 /api/checkout 时带 at_src（checkout 已读 body.src 写进 metadata 与 payments.src），看哪条入口（外联 / 上线通知 / API）成交（进行中）
+- ✅ $49 推荐位付款带来源（aa65ef7，10-04 05:5x 部署；真 Chrome 详情页点推荐位 → Stripe metadata.src = tool-page|selftest-featsrc）
+- 详情页维护者区的 Submit Kit 链接写死 type=ai_tool，改用 kitTypeForCategories（MCP 类目的工具进 MCP 清单）（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

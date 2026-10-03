@@ -4,7 +4,7 @@ import { useState } from "react";
 import { sessionSource, track } from "@/components/Analytics";
 
 /** Shown on every tool page: maintainers can feature their tool or grab the README badge. */
-export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = false }: { slug: string; name: string; paymentsEnabled: boolean; hasDownloads?: boolean }) {
+export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = false, kitType = "ai_tool" }: { slug: string; name: string; paymentsEnabled: boolean; hasDownloads?: boolean; kitType?: string }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const badge = `[![${name} on AgentoolRank](https://agentoolrank.com/api/badge/${slug})](https://agentoolrank.com/tool/${slug})`;
@@ -83,7 +83,7 @@ export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = fals
       {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
       <p className="text-sm text-gray-600 mt-4">
         Listing {name} on other directories too?{" "}
-        <a href="/submit-kit?type=ai_tool" data-testid="maintainer-kit" className="text-blue-600 hover:underline">The Submit Kit</a> shows which ones fit an
+        <a href={`/submit-kit?type=${kitType}`} data-testid="maintainer-kit" className="text-blue-600 hover:underline">The Submit Kit</a> shows which ones fit an
         agent tool, the form gotchas, and which to skip (top 10 free).
       </p>
     </section>

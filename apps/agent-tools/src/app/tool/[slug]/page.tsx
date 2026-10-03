@@ -7,6 +7,7 @@ import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
 import { MaintainerBox } from "@/components/MaintainerBox";
+import { kitTypeForCategories } from "@/lib/directory-kit";
 import { MaintainerBanner } from "@/components/MaintainerBanner";
 import { toolTitle, toolDescription } from "@/lib/titles";
 import { staleness } from "@/lib/staleness";
@@ -566,7 +567,7 @@ export default async function ToolPage({ params }: Props) {
             </div>
           </Section>
         )}
-              <MaintainerBox slug={tool.id} name={tool.name} paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} hasDownloads={downloads.length > 0} />
+              <MaintainerBox slug={tool.id} name={tool.name} paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} hasDownloads={downloads.length > 0} kitType={kitTypeForCategories(tool.category_tags)} />
       </main>
     </>
   );
