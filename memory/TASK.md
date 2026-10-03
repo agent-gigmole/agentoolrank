@@ -34,7 +34,10 @@
 - 10-12 周一 09:30 前把 ops/bets.json 换成下周 3 个押注、本周押注写 status（hit/miss），周报押注节对应（ops/bets.json 现有的 3 个就是 10-05 这周的押注）
 - ✅ /downloads 和 /alternatives 加维护者入口（徽章 / 首页推荐 $49，链 /tool/<id>#maintainers；10-03 21:0x 上线，真 Chrome 点击已记 ui_click label=downloads-maintainer-cta）
 - 外联信对有下载量的工具加一句事实：「你的 npm/PyPI 包近 30 天 X 次下载」，链 /downloads（数据开头、不提付费，符合外部评测第 1 条）——代码已上（73ac9d9，≥1,000 才加，dry-run 5/6 带这句），待 10-03 22:00 定时器首发后核对实际发出的信里有这句（未核实）
-- ops/daily.md 加一行「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」，看付费推荐漏斗
+- ✅ ops/daily.md 加一行「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」，看付费推荐漏斗（5f0fd7b：渠道行「维护者：入口点击 · 复制徽章 · 首页推荐结账」）
+- ✅ 下载量 README 徽章（/api/badge/<slug>?metric=downloads，维护者区「Copy downloads badge」；顺带修了星数徽章 ★ 显示成方框、长名字被截断，10-03 20:5x 上线核对）
+- ✅ 外联 MX 预检只在 DNS 明确无记录时退订，临时错误重试一次后本轮跳过（agentkit mx-transient）
+- 外联信里的徽章改成按工具选：下载量 ≥10 万的给 downloads 徽章，其余给星数徽章
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

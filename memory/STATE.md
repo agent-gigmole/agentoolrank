@@ -1128,3 +1128,13 @@
 - 坑：KNOWLEDGE/GOTCHAS.md#outreach-downloads-line-threshold
 - **TASK 队列**：维护者入口 ✅；外联下载量一句代码已上待首发核对；新增 ops/daily.md 维护者入口点击行（未做）
 - **下一步**：ops/daily.md 加「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」；22:00 外联第二批送达 + 下载量句核对（未核实）；futurepedia 价格（未核实）；10-05 周一 08:50 周报数字定时器首次自动运行核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）
+
+## 2026-10-03 20:36–20:43 下载量 README 徽章 + MX 临时错误修复 + 日报维护者漏斗（9002fd4、089d581、10c4163、b0efe91、fbd5181、5f0fd7b）
+- **下载量徽章**（9002fd4，已部署并看过 PNG）：/api/badge/<slug>?metric=downloads 显示「⬇ 7.4M/mo」（tool_packages 各包 30 天下载求和）；MaintainerBox 在 hasDownloads 时多一个「Copy downloads badge」（data-testid badge-downloads-copy，badge_copy 事件 path 带 ?metric=downloads）；详情页传 hasDownloads
+  - 顺带修两个老 bug：徽章固定宽 320 截断长名/下载量 → 按文字长度 320–560（089d581）；★ 在 @vercel/og 默认字体里是方框 → 改 ⭐ emoji（10c4163；⚡⬇ 正常）
+- **MX 临时错误**（b0efe91，agentkit 20:41 mx-transient，源自 new_ladar 012cb63）：lib/outreach.ts mxVerdict——ENOTFOUND/ENODATA/空记录 = none（退订），其他错误 = unknown；send-outreach.ts mxCheck 遇 unknown 2 秒后重试一次，仍失败本轮跳过、不写 optout；data/outreach/optout.json 不存在 → 无误伤需清理；今晚 dry-run 10 封通过；已 bus 回复 agentkit
+- **ops/daily.md 维护者漏斗**（5f0fd7b）：渠道行加「维护者：入口点击 · 复制徽章 · 首页推荐结账」（7 天，kpi.ts maintainer 计数），测试通过
+- 看板已记（fbd5181）
+- 坑：KNOWLEDGE/GOTCHAS.md#vercel-og-glyphs-and-width、#mx-verdict-definite-only
+- **TASK 队列**：下载量徽章 ✅、MX 修复 ✅、日报维护者行 ✅；新增「外联信徽章按工具选：下载 ≥10 万给 downloads 徽章」（未做）
+- **下一步**：外联徽章按工具选；22:00 外联第二批实发 + 下载量句核对（未核实）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）

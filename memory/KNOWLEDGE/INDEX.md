@@ -298,3 +298,6 @@
 | 花费库 agentkit bin/spend spend.db / Airwallex 每 6h 入库 spend-map.json / 非 Airwallex 当天 bin/spend add / --json last_7d_by_project / scoreboard spend_usd_7d 失败回退 spend-ledger warnings / 累计 $10.46 未对账 | STATE.md#2026-10-03 20:12 周报数字段流水线 + 花费库接入 + 每星下载榜开工 |
 | 外联信加下载量一句 / 对方公开数据做开头 / ≥1,000 门槛 几百显得冷清 / 取最高一个包 / 不提价格链 /downloads / 73ac9d9 | GOTCHAS.md#outreach-downloads-line-threshold |
 | 维护者入口 downloads-maintainer-cta alternatives-maintainer-cta / ui_click label / 真 Chrome ?internal=0 临时验证 自测会话标 selftest / a764e9c | STATE.md#2026-10-03 20:30– 维护者入口全部上线 + 外联信加下载量一句 |
+| @vercel/og ImageResponse ★ 方框 豆腐块 改 ⭐ emoji / 固定宽度截断长名 下载量 按文字长度 320–560 / 线上 PNG 用 Read 看图 / 下载量徽章 metric=downloads badge-downloads-copy 9002fd4 | GOTCHAS.md#vercel-og-glyphs-and-width |
+| MX 预检 dns resolveMx ENOTFOUND ENODATA 空记录才退订 / 临时错误 ETIMEOUT ESERVFAIL 重试一次本轮跳过 / mxVerdict mxCheck / optout.json 误伤清理 / mx-transient new_ladar b0efe91 | GOTCHAS.md#mx-verdict-definite-only |
+| ops/daily.md 维护者漏斗 入口点击 复制徽章 首页推荐结账 7 天 / kpi.ts maintainer / 5f0fd7b | STATE.md#2026-10-03 20:36–20:43 下载量 README 徽章 + MX 临时错误修复 + 日报维护者漏斗 |

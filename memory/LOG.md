@@ -1113,3 +1113,9 @@
 - 结果：320 测试通过；22:00 批次 dry-run 5 封带这句（Browser-Use 7.4M、Firecrawl 3.3M、vLLM 1.9M、headroom 246.3K、OmniRoute 232.6K），World Monitor 434 不带；实际发出未核实；alternatives 框真点击未核实
 - 坑：下载数很小（几百）写进外联反而显得冷清 → 设 1,000 门槛 → GOTCHAS#outreach-downloads-line-threshold
 - 结果：成功（22:00 首发核对待做）
+
+## 2026-10-03 20:36–20:43 下载量 README 徽章 + MX 临时错误修复 + 日报维护者漏斗（9002fd4、089d581、10c4163、b0efe91、fbd5181、5f0fd7b）
+- 做法：/api/badge/<slug>?metric=downloads（⬇ N/mo，tool_packages 求和）+ 维护者区 Copy downloads badge（badge-downloads-copy）；修徽章宽度截断（320–560 随文字）与 ★ 方框（改 ⭐）；按 agentkit mx-transient 改 MX 预检（只有 ENOTFOUND/ENODATA/空记录才退订，其他错误重试一次后本轮跳过）；ops/daily.md 加维护者漏斗行（kpi.ts）；看板记一行；TASK 补外联徽章按工具选
+- 结果：徽章已部署、PNG 已看；optout.json 不存在无误伤；dry-run 10 封通过；测试通过；已 bus 回复 agentkit；22:00 实发未核实
+- 坑：@vercel/og 默认字体缺 ★、固定宽度截断动态文字 → GOTCHAS#vercel-og-glyphs-and-width；dns resolveMx 只有 ENOTFOUND/ENODATA 是确定无 MX → GOTCHAS#mx-verdict-definite-only
+- 结果：成功

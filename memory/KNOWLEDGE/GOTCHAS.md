@@ -979,3 +979,15 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 只取下载最高的一个包；不提价格，只链公开排行 /downloads
 - 实现：src/lib/outreach.ts outreachEmail 的可选 downloads 字段；scripts/send-outreach.ts 从 tool_packages 取数；发前用 --dry-run 看哪些信带了这句
 - 来源：2026-10-03 73ac9d9（dry-run：World Monitor 434 不带，其余 5 封带）
+
+## vercel-og-glyphs-and-width
+- **字形**：@vercel/og（ImageResponse）默认字体没有 ★ 这类非 emoji 符号，渲染成方框（豆腐块）；emoji（⭐ ⚡ ⬇）会走 emoji 字体正常显示。徽章里用 emoji 或纯文字，或显式加载含该字形的字体
+- **宽度**：ImageResponse 固定 width 时，动态文字（长工具名、下载量尾巴）超出直接被截断不报错 → 按文字长度估宽并夹在区间内（这里 320–560）
+- **验证**：测试和 HTTP 200 都看不出这两个问题，必须把线上 PNG 下载下来用 Read 看图
+- 来源：2026-10-03 下载量徽章（9002fd4、089d581、10c4163）
+
+## mx-verdict-definite-only
+- 外联发前 MX 预检：Node `dns.resolveMx` 只有 **ENOTFOUND / ENODATA / 返回空数组** 才算「确定没有 MX」→ 可退订；ETIMEOUT / ESERVFAIL / ECONNREFUSED 等是临时错误 → 2 秒后重试一次，仍失败就本轮跳过，不写 optout（否则网络抖一下就永久误伤收件人）
+- 实现：src/lib/outreach.ts mxVerdict（none/ok/unknown）+ 测试；scripts/send-outreach.ts mxCheck
+- 上线后查 data/outreach/optout.json 有没有之前因临时错误被误加的条目（10-03 文件不存在，无需清理）
+- 来源：agentkit mx-transient（new_ladar 012cb63 首例）→ 本项目 b0efe91
