@@ -32,7 +32,9 @@
 - ✅ 首页加「Most downloaded」一栏（前 6 名 + 链 /downloads，10-03 20:4x 上线核对）
 - ✅ /downloads 加「Used far more than they are starred」每星下载榜（≥10 万门槛，10-03 20:5x 上线核对：OpenAI Python 8,955/星、MCP Python SDK 8,952、AI SDK 3,984）
 - 10-12 周一 09:30 前把 ops/bets.json 换成下周 3 个押注、本周押注写 status（hit/miss），周报押注节对应（ops/bets.json 现有的 3 个就是 10-05 这周的押注）
-- /downloads 和 /alternatives 加维护者入口：「你维护其中一个？放实时排名徽章 / 上首页推荐」链到详情页的 MaintainerBox（付费推荐 $49），点击用现有 ui_click 的 label 统计（/downloads 部分 756b991 已提交未部署，/alternatives 未做）
+- ✅ /downloads 和 /alternatives 加维护者入口（徽章 / 首页推荐 $49，链 /tool/<id>#maintainers；10-03 21:0x 上线，真 Chrome 点击已记 ui_click label=downloads-maintainer-cta）
+- 外联信对有下载量的工具加一句事实：「你的 npm/PyPI 包近 30 天 X 次下载」，链 /downloads（数据开头、不提付费，符合外部评测第 1 条）——代码已上（73ac9d9，≥1,000 才加，dry-run 5/6 带这句），待 10-03 22:00 定时器首发后核对实际发出的信里有这句（未核实）
+- ops/daily.md 加一行「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」，看付费推荐漏斗
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

@@ -1107,3 +1107,9 @@
 - 结果：线上 OpenAI Python 8,955/星、MCP Python SDK 8,952、AI SDK 3,984、LangChain 1,149、LangGraph 1,023；维护者框 756b991 已提交未部署，/alternatives 入口未做
 - 坑：无新坑
 - 结果：成功（维护者入口进行中）
+
+## 2026-10-03 20:23–20:34 维护者入口上线 + 外联信加下载量一句（756b991、a764e9c、feab441、73ac9d9）
+- 做法：/downloads 与 /alternatives/* 底部维护者框（徽章 / 首页推荐 $49/7 天，链 /tool/<id>#maintainers，data-testid 走 ui_click label），部署；真 Chrome（临时 ?internal=0）点 downloads 框，ui_click 已记并跳到 openai-python#maintainers，自测会话 p9ug93nmmd 标 selftest，?internal=1 恢复；看板记一行；outreachEmail 加可选 downloads 字段，≥1,000 时加一句 30 天下载量事实链 /downloads，不提价格，send-outreach 取最高的包
+- 结果：320 测试通过；22:00 批次 dry-run 5 封带这句（Browser-Use 7.4M、Firecrawl 3.3M、vLLM 1.9M、headroom 246.3K、OmniRoute 232.6K），World Monitor 434 不带；实际发出未核实；alternatives 框真点击未核实
+- 坑：下载数很小（几百）写进外联反而显得冷清 → 设 1,000 门槛 → GOTCHAS#outreach-downloads-line-threshold
+- 结果：成功（22:00 首发核对待做）

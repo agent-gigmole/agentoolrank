@@ -296,3 +296,5 @@
 | 竞品上架价格 TAAFT Basic $49 Maximum Exposure $437 无免费档 / toolify $99 6 个 dofollow / futurepedia 需登录未核实 / 我们 $9–$49 不要求徽章 / 43ae771 | STATE.md#2026-10-03 20:3x– 替代品页下载量上线 + 竞品上架价格 |
 | 周报数字段 weekly-numbers.ts / replaceScoreboard 只换「## 记分牌」节 无则插 H1 后 / reviewMonday 北京时间 / kpi-latest.json / agentoolrank-weekly-numbers 周一 08:50 / systemd ExecStart bun 显式 WorkingDirectory PATH / 带 token URL push 报错不打印 URL / 只 add 自己生成的文件 / 9e98f75 | GOTCHAS.md#systemd-bun-unit-and-token-push |
 | 花费库 agentkit bin/spend spend.db / Airwallex 每 6h 入库 spend-map.json / 非 Airwallex 当天 bin/spend add / --json last_7d_by_project / scoreboard spend_usd_7d 失败回退 spend-ledger warnings / 累计 $10.46 未对账 | STATE.md#2026-10-03 20:12 周报数字段流水线 + 花费库接入 + 每星下载榜开工 |
+| 外联信加下载量一句 / 对方公开数据做开头 / ≥1,000 门槛 几百显得冷清 / 取最高一个包 / 不提价格链 /downloads / 73ac9d9 | GOTCHAS.md#outreach-downloads-line-threshold |
+| 维护者入口 downloads-maintainer-cta alternatives-maintainer-cta / ui_click label / 真 Chrome ?internal=0 临时验证 自测会话标 selftest / a764e9c | STATE.md#2026-10-03 20:30– 维护者入口全部上线 + 外联信加下载量一句 |

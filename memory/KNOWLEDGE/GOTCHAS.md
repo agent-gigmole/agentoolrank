@@ -973,3 +973,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **脚本内用带 token 的 URL push**：git 报错信息会带上完整 URL（含 token），catch 后只打印脱敏信息（不打印命令行/URL/原始 stderr），日志进 journalctl 也算回显
 - 定时脚本只 add/commit 自己生成的那个文件，不要 `git add -A`（工作区常有别人的未提交改动）
 - 来源：2026-10-03 周报数字段流水线（9e98f75）
+
+## outreach-downloads-line-threshold
+- 外联信里引用对方自己的公开数据（npm/PyPI 30 天下载量）做一句事实开头，但**数字太小（几百）写出来反而显得项目冷清、像在揭短**，所以设最低门槛：≥1,000 才加这句，低于门槛整句不出现（不写 0 或小数字）
+- 只取下载最高的一个包；不提价格，只链公开排行 /downloads
+- 实现：src/lib/outreach.ts outreachEmail 的可选 downloads 字段；scripts/send-outreach.ts 从 tool_packages 取数；发前用 --dry-run 看哪些信带了这句
+- 来源：2026-10-03 73ac9d9（dry-run：World Monitor 434 不带，其余 5 封带）

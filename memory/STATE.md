@@ -1117,3 +1117,14 @@
 - **TASK 队列修正**：ops/bets.json 现有 3 个押注就是 10-05 这周的 → 更新动作改为 10-12 周一 09:30 前；新增「/downloads 和 /alternatives 加维护者入口」
 - **进行中**：维护者入口（756b991，已提交未部署）：/downloads 底部「Maintain one of these tools?」框，README 实时排名徽章 / 首页推荐 $49/7 天，前 5 个工具链 /tool/<id>#maintainers（MaintainerBox 的 section id）；链接 data-testid="downloads-maintainer-cta"，由现有 ui_click 的 label 统计，不新增事件名；剩 /alternatives 同样入口、部署、线上核对
 - **下一步**：/alternatives 维护者入口 + 部署核对；futurepedia 价格（未核实）；22:00 外联第二批送达核对（未核实）；10-05 周一 08:50 周报数字定时器首次自动运行核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）
+
+## 2026-10-03 20:30– 维护者入口全部上线 + 外联信加下载量一句（a764e9c 已部署，feab441 看板，73ac9d9 已提交推送）
+- **维护者入口**（756b991 + a764e9c，均已部署）：/downloads 底部与 /alternatives/* 底部「Maintain …?」框（README 实时排名徽章 / 首页推荐 $49/7 天），前几个工具链 /tool/<id>#maintainers；data-testid downloads-maintainer-cta / alternatives-maintainer-cta，由 ui_click 的 label 统计
+  - 真 Chrome 点击验证（临时 ?internal=0）：ui_click label=downloads-maintainer-cta 已记，跳到 /tool/openai-python#maintainers；会话 p9ug93nmmd 已标 selftest；?internal=1 已恢复；看板已记（feab441）
+  - alternatives-maintainer-cta 未做真点击验证（未核实）
+- **外联信加下载量一句**（73ac9d9）：outreachEmail 新增可选 downloads 字段；有数据且 ≥1,000 时加「Its <PyPI|npm> package <pkg> had <N> downloads in the last 30 days; the page shows that next to stars (…/downloads).」，不提价格；send-outreach.ts 从 tool_packages 取下载最高的一个包
+  - 今晚 22:00 批次 dry-run：OmniRoute 232.6K、vLLM 1.9M、headroom 246.3K、Browser-Use 7.4M、Firecrawl 3.3M 带这句；World Monitor 434 低于门槛不带
+  - 测试 320 通过；**22:00 定时器实际发出的信是否带这句未核实**
+- 坑：KNOWLEDGE/GOTCHAS.md#outreach-downloads-line-threshold
+- **TASK 队列**：维护者入口 ✅；外联下载量一句代码已上待首发核对；新增 ops/daily.md 维护者入口点击行（未做）
+- **下一步**：ops/daily.md 加「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」；22:00 外联第二批送达 + 下载量句核对（未核实）；futurepedia 价格（未核实）；10-05 周一 08:50 周报数字定时器首次自动运行核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）
