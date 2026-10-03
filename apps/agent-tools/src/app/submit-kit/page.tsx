@@ -26,6 +26,9 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
   // The same free top 10 an agent gets from recommend_directories without a key, shown to people too.
   const free = recommendDirectories(kitData as KitData, { productType, full: false, now: new Date() });
   // Proof from our own listings (scripts/check-listings.ts → listing_checks): where our own page actually went live.
+  const tally = await db
+    .execute("SELECT COUNT(*) n, SUM(state = 'live') live, SUM(state = 'live' AND target = 'site' AND (rel IS NULL OR (rel NOT LIKE '%nofollow%' AND rel NOT LIKE '%ugc%' AND rel NOT LIKE '%sponsored%'))) followed FROM listing_checks")
+    .then((r) => ({ n: Number(r.rows[0]?.n ?? 0), live: Number(r.rows[0]?.live ?? 0), followed: Number(r.rows[0]?.followed ?? 0) }), () => ({ n: 0, live: 0, followed: 0 }));
   const ours: Record<string, string> = await db
     .execute("SELECT domain, state, rel, target FROM listing_checks WHERE state = 'live'")
     .then((r) => Object.fromEntries(r.rows.map((x) => [String(x.domain), ourResultLabel({ state: "live", rel: x.rel === null ? null : String(x.rel), target: x.target === null ? null : String(x.target) })])), () => ({}));
@@ -44,6 +47,12 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
         <li><b>Not included:</b> automated submission, captcha solving, or any promise of traffic, rankings or dofollow links.</li>
       </ul>
       {process.env.STRIPE_SECRET_KEY && <KitBuyButton price={KIT_PRICE_USD} />}
+      {tally.n > 0 && (
+        <p className="text-sm text-gray-600 mb-4" data-testid="kit-our-tally">
+          Our own run so far: we submitted agentoolrank.com to {tally.n} of these directories; {tally.live} are live, {tally.followed} with a
+          followed link. Most free listings take days to weeks, and many links are nofollow — the kit tells you which.
+        </p>
+      )}
       <h2 className="text-lg font-semibold text-gray-900 mb-2">Free top 10, right here</h2>
       <div className="flex flex-wrap gap-2 mb-3 text-sm">
         {TYPES.map((t) => (
