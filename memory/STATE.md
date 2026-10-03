@@ -1413,3 +1413,11 @@
 - **进行中：/submit-kit 对 ref=live-notify / agent-listed / agent-queued 访客页顶加一句接上来意**——ee2dd67 kitIntro 函数（data-testid=kit-intro），已 push **未部署**
 - **注意**：看板 KPI 块每小时被 kpi.ts 改写，提交看板时会一并带进去，属正常
 - **下一步**：kitIntro 接页面 → 测试 → 部署 → 真 Chrome 核对三种 ref 显示、无 ref 不显示 → 看板；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 05:25 /submit-kit 来意说明上线（ee2dd67 已部署）+ Submit Kit 付款归因上线（4479fd9、df59df4 已部署）+ $49 推荐位付款带来源开工（aa65ef7 未部署）
+- **来意说明已上线**：/submit-kit?ref=live-notify / agent-listed / agent-queued 页顶各一句（data-testid=kit-intro），无 ref 不显示，canonical 仍 /submit-kit；curl 线上核对
+- **Kit 付款归因已上线**：KitBuyButton 发 src=submit-kit-page|<会话来源>；真 Chrome 手动 sessionStorage at_src=selftest-kitsrc 后结账，用 Stripe ops key 读 checkout session，metadata.src='submit-kit-page|selftest-kitsrc' ✅（自测留下一个未付款 session，无害）
+- **修 bug（df59df4）**：Analytics 会话来源存在 sessionStorage **at_src**，SubmitForm 一直读 utm_src（无人写入）→ 免费提交 src 此前实际只有 document.referrer；已改读 at_src（GOTCHAS#session-source-key-at-src）
+- 看板已记，TASK ✅
+- **进行中：$49 推荐位付款带来源**——aa65ef7：Analytics 导出 sessionSource()；MaintainerBox 发 tool-page|<来源>；PaidOptions 发 submit|<来源> / submit-listed|<来源>；已 push **未部署**。注意 /api/checkout 对已有 submission 用 DB 里的 sub.src，只有已收录工具（无 submission）才用 body.src
+- **下一步**：aa65ef7 测试 → 部署 → 真 Chrome（?internal=1 + 手动 setItem at_src=selftest-*）实测详情页 #maintainers 结账 metadata.src → 看板；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

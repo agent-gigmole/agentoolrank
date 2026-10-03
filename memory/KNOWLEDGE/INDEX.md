@@ -338,3 +338,4 @@
 | 提交表单预填 / /api/prefill GitHub 公开 API 5s 超时 GITHUB_TOKEN / 失焦只填空字段 / 长简介整句≥40 或整词截 160 / 埋点 prefill EVENT_NAMES / 6028f22 53a9e47 | STATE.md#2026-10-04 02:5x 提交表单预填上线 + 已收录工具提交结果页维护者入口开工（6028f22、53a9e47 部署并 push，034778e，684df92） |
 | 表单承诺「We'll email you when your page is live」从未实现 / 对外文案承诺要对照代码 / live-email.ts liveEmail / Brevo 事务性邮件 标签别用 outreach / 防重发 / 48c812e / 已修复 e1451cc send-live-emails live_emails live-notify | GOTCHAS.md#form-promise-not-implemented |
 | 线上自测 API/MCP 污染 api_calls 统计 / withCallLog / src 只取 URL ?src= 或 MCP args.src / body 里的 selftest 不生效 / 事后 UPDATE src / 6d9078f | GOTCHAS.md#api-calls-selftest-src-from-url |
+| 会话来源键是 at_src 不是 utm_src / SubmitForm 读错键 免费提交 src 只有 referrer / sessionSource() 统一读 / ?internal=1 track 直接 return 不写 at_src 手动 setItem / Stripe ops key 读 checkout metadata.src / 未付款自测 session 无害 / /api/checkout 有 submission 用 sub.src / df59df4 aa65ef7 | GOTCHAS.md#session-source-key-at-src |

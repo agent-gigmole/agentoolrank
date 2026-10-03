@@ -1091,3 +1091,12 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 原因：kpi.ts 只按 api_calls.src NOT LIKE '%selftest%' 剔除；而 src 在 REST 只取 URL 查询参数 `?src=`（src/lib/api-log.ts），MCP 只取工具参数 args.src —— 写在 POST body 或 header 里的 selftest 标记不会进 api_calls
 - 做法：线上自测 REST 时在 URL 上加 `?src=selftest-<用途>`，MCP 在 arguments 里加 `"src":"selftest-<用途>"`；忘了加就事后按 ts + tool + client(UA) 定位那一行 UPDATE src='selftest-…'
 - 来源：2026-10-04 API/MCP 已收录回复线上 crewAI 实测（6d9078f）
+
+## session-source-key-at-src
+- 现象：SubmitForm 读 sessionStorage 'utm_src' 作提交来源，但全站没有任何代码写 utm_src → 免费提交的 src 一直只是 document.referrer，渠道归因静默失效（不报错）
+- 原因：Analytics 的会话来源实际存在 sessionStorage **'at_src'**（session() 首次落地时写入）。键名凭印象写，没对照写入方
+- 做法：读会话来源统一用 Analytics 导出的 sessionSource()（aa65ef7），不要在组件里手写 sessionStorage 键名；新加的读取方先 grep 写入方确认键名
+- **内部实测坑**：?internal=1 的会话 track() 直接 return，session() 不跑，at_src 根本不会写 → 真 Chrome 内部浏览器测来源归因必须先手动 `sessionStorage.setItem('at_src','selftest-<用途>')` 再点结账
+- 核对付款归因：用 Stripe ops key 读 checkout sessions 看 metadata.src（如 'submit-kit-page|selftest-kitsrc'）；自测会留下未付款 checkout session，无害，不用清
+- /api/checkout：已有 submission 时用 DB 里的 sub.src（提交时已存），只有已收录工具（无 submission）才用 body.src——改结账来源前先看走哪条分支
+- 来源：2026-10-04 Submit Kit 付款归因（4479fd9 → df59df4 修键名）
