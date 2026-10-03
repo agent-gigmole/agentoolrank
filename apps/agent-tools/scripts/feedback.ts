@@ -3,7 +3,8 @@
  *   bun run scripts/feedback.ts collect        dev.to comments on our articles + GitHub issues on our repo (hourly cron)
  *   bun run scripts/feedback.ts add --source email --author <a> --url <u> --kind suggestion --text "<original>"
  *                                              (outreach replies / user mail found in the hello@ inbox)
- *   bun run scripts/feedback.ts decide <id> adopted|declined|answered "<decision>" [ticket]
+ *   bun run scripts/feedback.ts decide <id> adopted|declined|answered "<decision>" [ticket] --hit "<说中了什么>" --misread "<误解了什么>" --want "<想要而我们没有的>"
+ *                                              (boss 10-03 16:11: read every reply as an outside review of the product)
  *   bun run scripts/feedback.ts list           our entries still waiting for a decision (overdue = past 48h)
  */
 import { appendFileSync, existsSync, readFileSync } from "node:fs";
@@ -45,10 +46,11 @@ else if (cmd === "add") {
   append({ id, source: flag("source") ?? "email", url: flag("url") ?? "", author: flag("author") ?? "", text: (flag("text") ?? "").slice(0, 1000), project: PROJECT, kind: flag("kind") ?? "other", collected_at: now(), status: "new", decision: "" });
   console.log(`added ${id}`);
 } else if (cmd === "decide") {
-  const [id, status, decision, ticket] = rest;
+  const [id, status, decision, ticket] = rest.filter((a, i) => !a.startsWith("--") && !rest[i - 1]?.startsWith("--"));
+  const review = { hit: flag("hit") ?? "", misread: flag("misread") ?? "", want: flag("want") ?? "" };
   const cur = currentById(rows()).get(id);
   if (!cur || !["adopted", "declined", "answered"].includes(status) || !decision) throw new Error("usage: decide <existing id> adopted|declined|answered \"<decision>\" [ticket]");
-  append({ ...cur, status, decision, ...(ticket ? { ticket } : {}) });
+  append({ ...cur, status, decision, review, ...(ticket ? { ticket } : {}) });
   console.log(`${id} → ${status}`);
 } else {
   const open = [...currentById(rows()).values()].filter((r) => r.project === PROJECT && r.status === "new");
