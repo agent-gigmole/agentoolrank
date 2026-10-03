@@ -1,0 +1,20 @@
+[
+  {
+    "name": "hourly-ops",
+    "entry": "apps/agent-tools/scripts/hourly-ops.sh",
+    "timer": "agentoolrank-hourly.timer",
+    "notes": "每小时 :17。Stripe 对账（漏单补发 Submit Kit key）→ ops/scoreboard.json → 看板 KPI 块 + ops/daily.md（vi 块在前）→ 反馈收集（dev.to 评论、GitHub issue）→ 补发被 post-gate 顺延的 X 周榜。任一步失败则服务失败。单元文件 ops/systemd/"
+  },
+  {
+    "name": "daily-ops",
+    "entry": "apps/agent-tools/scripts/daily-ops.sh",
+    "timer": "agentoolrank-daily.timer",
+    "notes": "每天 21:30。审核提交（付费全审 + 免费 3 个）→ 7 天漏斗 → IndexNow → Stripe 支付宝/微信状态 → Brevo 各 tag 健康 → GSC 28 天。日志 apps/agent-tools/data/ops-logs/<日期>.log"
+  },
+  {
+    "name": "weekly-ops",
+    "entry": "apps/agent-tools/scripts/weekly-ops.sh",
+    "timer": "agentoolrank-weekly.timer",
+    "notes": "每周一 10:00（SOCIAL_CALENDAR 固定时段）。X 周榜：文案检查（自家 + bin/post-copy-check）→ post-gate --channel x-main → 发帖 → post-log；周报 newsletter 群发"
+  }
+]

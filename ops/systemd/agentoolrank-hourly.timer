@@ -1,0 +1,9 @@
+[Unit]
+Description=AgentoolRank hourly ops: Stripe reconcile, scoreboard, KPI and ops/daily.md, feedback collect, deferred X post (*-*-* *:17:00)
+
+[Timer]
+OnCalendar=*-*-* *:17:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
