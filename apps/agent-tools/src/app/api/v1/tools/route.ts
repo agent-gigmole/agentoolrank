@@ -1,3 +1,4 @@
+import { withCallLog } from "@/lib/api-log";
 import { NextRequest } from "next/server";
 import { getTools, searchTools } from "@repo/db/queries";
 import { toPublicTool, clampLimit } from "@/lib/public-api";
@@ -8,7 +9,7 @@ export const revalidate = 3600;
 const SORTS = ["score", "stars", "new", "velocity"] as const;
 const HEADERS = { "Access-Control-Allow-Origin": "*", "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" };
 
-export async function GET(req: NextRequest) {
+async function handleGET(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const p = req.nextUrl.searchParams;
   const limit = clampLimit(p.get("limit"));
@@ -25,3 +26,5 @@ export async function GET(req: NextRequest) {
     { headers: HEADERS },
   );
 }
+
+export const GET = withCallLog("list_tools", handleGET);

@@ -1,3 +1,4 @@
+import { withCallLog } from "@/lib/api-log";
 import { NextRequest } from "next/server";
 import { createSubmission } from "@/lib/submit-core";
 
@@ -8,7 +9,7 @@ import { createSubmission } from "@/lib/submit-core";
 const CORS = { "Access-Control-Allow-Origin": "*" };
 const recent = new Map<string, number[]>();
 
-export async function POST(req: NextRequest) {
+async function handlePOST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   const now = Date.now();
   const hits = (recent.get(ip) ?? []).filter((t) => now - t < 3600_000);
@@ -54,3 +55,5 @@ export async function POST(req: NextRequest) {
 export async function OPTIONS() {
   return new Response(null, { status: 204, headers: { ...CORS, "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type" } });
 }
+
+export const POST = withCallLog("submit_tool", handlePOST);

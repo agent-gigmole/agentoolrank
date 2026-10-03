@@ -1,3 +1,4 @@
+import { withCallLog } from "@/lib/api-log";
 import { NextRequest } from "next/server";
 import { db } from "@repo/db";
 import { checkToken } from "@/lib/submit-core";
@@ -6,7 +7,7 @@ import { stripe } from "@/lib/paid";
 
 // Payment link handed from an agent to its human: creates a Stripe Checkout session on click
 // (so unused offers never create sessions) and redirects there.
-export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+async function handleGET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const plan = req.nextUrl.searchParams.get("plan");
   const token = req.nextUrl.searchParams.get("token") ?? "";
@@ -29,3 +30,5 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     return new Response("Could not start checkout, please try again.", { status: 502 });
   }
 }
+
+export const GET = withCallLog("submission_checkout", handleGET);

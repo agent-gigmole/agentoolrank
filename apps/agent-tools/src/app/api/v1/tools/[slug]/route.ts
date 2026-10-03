@@ -1,9 +1,11 @@
+import { withCallLog } from "@/lib/api-log";
+import type { NextRequest } from "next/server";
 import { getToolBySlug } from "@repo/db/queries";
 import { toPublicTool } from "@/lib/public-api";
 
 export const revalidate = 3600;
 
-export async function GET(_req: Request, { params }: { params: Promise<{ slug: string }> }) {
+async function handleGET(_req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const { slug } = await params;
   const tool = await getToolBySlug(slug);
@@ -11,3 +13,5 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
   if (!tool) return Response.json({ error: "not found" }, { status: 404, headers });
   return Response.json(toPublicTool(tool, baseUrl), { headers });
 }
+
+export const GET = withCallLog("get_tool", handleGET);
