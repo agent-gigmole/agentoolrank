@@ -547,6 +547,7 @@
 - **`[name=xxx]` 选择器命中 meta**（10-02 第四批，agentlocker）：`[name=description]` 会先命中 `<head>` 里的 `<meta name="description">` → 表单字段一律加 tag 前缀，如 `textarea[name=description]`、`input[name=email]`。
   - **变体（10-03 Smithery 设置页，第 3 次出现：agentlocker → best-ai → Smithery）**：描述框根本没有 name 属性，只有 `id=description`，页面里唯一带 `name=description` 的是 meta → `[name=description]` 甚至 `textarea[name=description]` 都选不中，要用 `#description`。通用规则：description 字段先查 DOM 里实际是 `textarea` 的哪个属性（id/name），用 tag+具体属性定位，绝不用裸 `[name=description]`。
   - **Smithery 运营小抄**：改 /servers/<ns>/<server>/settings 的描述（写清工具数、每个工具用途）即可提升质量分（10-03：69→77）；重新发布 = Releases → Publish → Publish via URL（已预填）→ Continue → 连接参数选 Skip（key 走工具参数时）→ 约 9 秒 SUCCESS，随后重扫工具列表；公开页有缓存，新工具可能延迟显示。
+  - **Smithery 远程 MCP 的连接参数描述（如 apiKey）不在 Settings**（10-03 代 new_ladar 改 admin-pw59/new-site-radar）：Settings 只能改 server 描述（textarea #description，原生 setter + input 事件 → Save Settings → 刷新核对）。连接参数要走发布流程：Releases → Publish → Publish via URL（已预填 URL）→ Continue → 连接参数页改 `textarea[name="parameters.0.description"]` → Continue → SUCCESS。改完 registry.smithery.ai/servers/<ns>/<server> 仍返回旧描述（缓存，刷新时长未核实），要登记 24h 回查。
 - **同名 Submit**：页面标题、导航链接和提交按钮都叫 "Submit" / "Submit Agent"（thedailyworkflow、ainewshub、aiagentsdirectory）→ 一律用 `form button[type=submit]` 定位，不要按文字匹配。
 - **蜜罐字段**：thedailyworkflow 有隐藏字段 `website`，必须留空，填了会被判 bot；按字段名批量填表前先排除隐藏输入。
 - **层层付费引导**：很多站依次弹 付费档 → Priority Pass → 徽章 三层，要逐层选免费那一项；免费档要求挂徽章的（如 aiagentsdirectory）不当场决定，留周决策。
@@ -941,6 +942,7 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 现象：`curl https://agentoolrank.com/tool/xxx` 核对线上内容时，Next.js App Router 页面在 HTML 里内联了巨量 RSC 负载（self.__next_f.push），整页输出会刷屏、浪费上下文
 - 做法：只用 `curl -s URL | grep -o '短匹配.\{0,80\}' | head` 抽取需要的片段（如 `grep -o 'Package downloads[^<]\{0,120\}'`），绝不整页输出
 - 另：详情页 revalidate 24h，新字段上线后别的工具页要等缓存过期才出现，核对时挑刚部署后首次渲染的页面或带新数据的页面
+- **新数据源先填表再部署**（10-03 /where-to-list「Our result」列，listing_checks 表）：页面 revalidate 长（24h）时，部署前必须先把新表跑满数据；否则首次渲染把空列缓存住，一整天都显示空
 - 来源：2026-10-03 详情页下载量核对（df555e8）
 
 ## repo-ui-breadcrumbs-and-ranking-raw-numbers

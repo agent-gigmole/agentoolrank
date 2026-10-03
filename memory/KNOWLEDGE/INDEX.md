@@ -181,7 +181,7 @@
 | MCP 目录两条路线 / GitHub repo 免费队列 / remote server 付费 $69 / mcpmarket mcprepository / glama 官方 Registry 自动同步 | GOTCHAS.md#mcp-directory-repo-vs-remote |
 | 按项目关键词 mcp/agent/智能体 筛 columbus 原表 / 比 candidates 默认队列准 | GOTCHAS.md#directory-candidates-rejudge-relevance |
 | T25 第三批 累计 20 / glama mcpmarket mcprepository ai123 / aiagentsdirectory 不挂不付 / cursor.directory todo | LOG.md#2026-10-02 06:00–06:55 T25 目录站第三批（累计 20） |
-| [name=] 选择器命中 meta name=description（第 3 次：Smithery 只有 id → 用 #description）/ Smithery 改描述提质量分 69→77 + Releases→Publish→Continue→Skip 重发布 / 加 tag 前缀 textarea[name=] / 同名 Submit 用 form button[type=submit] / 蜜罐字段 website 留空 | GOTCHAS.md#directory-form-pitfalls |
+| [name=] 选择器命中 meta name=description（第 3 次：Smithery 只有 id → 用 #description）/ Smithery 改描述提质量分 69→77 + Releases→Publish→Continue→Skip 重发布 / Smithery 连接参数(apiKey)描述不在 Settings 要走 Publish via URL 改 parameters.0.description + registry 缓存 24h 回查 / 加 tag 前缀 textarea[name=] / 同名 Submit 用 form button[type=submit] / 蜜罐字段 website 留空 | GOTCHAS.md#directory-form-pitfalls |
 | 仅 mailto 入口的目录站 / Brevo 从 hello@ 发推荐邮件 / 按页面模板写标题 / 不算冷邮件 | GOTCHAS.md#directory-email-only-submission |
 | MCP 索引站 endpoint 实时握手 / agenstry 即时收录 / MCP 加认证会失败 | GOTCHAS.md#mcp-directory-live-handshake |
 | T25 第四批 累计 25 达标 / agentlocker linkstartai agenstry magicnetworld thedailyworkflow / 之后每天 5–8 / 等 Google 号 | LOG.md#2026-10-02 07:06–07:40 T25 目录站第四批（累计 25 达标） |
@@ -287,7 +287,7 @@
 | 目录站上线复查 / check-listings.ts listing-check.ts / daily-ops 21:30 / JS 渲染 HTML 找不到不降级 只 WARN / conduid 人工看 / rel 实测 noopener 不算 nofollow / knownListingUrl candidateUrls / 1.5 秒限速 / baa4aa2 / safety AI 检测规避 学术作弊 / 不能只写 bypass detection 误伤 stealth 浏览器 / 717edd9 | GOTCHAS.md#listing-check-and-safety-rules |
 | element_seen 按钮漏斗 / data-vi-seen submit_button kit_buy_button / SEEN_RATIO 0.5 / funnelLine ops/daily.md 两行 / 10-03 17:40 起有数据 | STATE.md#2026-10-03 17:20– 目录站上线复查 |
 | npm PyPI 下载量 / downloads.ts fetch-downloads.ts / tool_packages 表 / monorepo xxx-workspace private 候选名 / @repo/core 去 js 后缀 langchainjs→langchain / 回链同一 GitHub 仓库 repoMatches / pypistats 2 秒 npm 0.4 秒 / weekly-ops 周一 / 1a316ab / conduid 只链 GitHub 仓库 target=github 623ac18 | GOTCHAS.md#package-downloads-name-matching |
-| curl 线上 Next 页面 RSC 负载刷屏 / grep -o 短匹配 / 详情页 revalidate 24h / downloadsLine getToolPackages df555e8 / goal.txt 第一行 goal-keeper 30 分钟 5ca2889 | GOTCHAS.md#curl-next-rsc-output |
+| curl 线上 Next 页面 RSC 负载刷屏 / grep -o 短匹配 / 详情页 revalidate 24h / 新数据源先填表再部署 listing_checks / downloadsLine getToolPackages df555e8 / goal.txt 第一行 goal-keeper 30 分钟 5ca2889 | GOTCHAS.md#curl-next-rsc-output |
 | /downloads 下载量排行榜 / getDownloadRows rankByDownloads perStar 每星下载 / 前 100 / @repo/ui Breadcrumbs BreadcrumbJsonLd { label, href? } 不是 name / NEXT_PUBLIC_BASE_URL / 排序用原始数 n 不解析 169.4M / ItemList JSON-LD sitemap weekly 0.8 / ad85ebe | GOTCHAS.md#repo-ui-breadcrumbs-and-ranking-raw-numbers |
 | GSC sitemap 每日重提交 gsc_sitemap.py / ROOT dirname×4 = 仓库根 ai-directory 不是 workspace / gsc-service-account.json 在仓库根 / webmasters 全权限 非 readonly / 204 / 失败 exit 1 / daily-ops IndexNow 之后 / 5e62501 / 对比页下载量 totalDownloads MetricRow format a542c9a | GOTCHAS.md#gsc-scripts-repo-root-and-scope |
 | bin/write 用法 --brief --format longform --lang en --out / 不要再加 write 子命令 unrecognized arguments / 推断句 inferred claims 逐句改完再发 / writer.py check 只查 AI 味不做事实核查 / dev.to 定时发布 devto-publish.ts ops/devto-schedule.json devto-published.json 防重发 hourly / 发前 check 不 clean 抛错 / 20bcb96 c4d79a3 | GOTCHAS.md#bin-write-usage-and-inferred-claims |

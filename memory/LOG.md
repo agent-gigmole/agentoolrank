@@ -1203,3 +1203,9 @@
 - 结果：排队页文案线上核对通过；brief 已提交，稿未写、未排期；未完成 10 件
 - 坑：高星低下载不等于炒作，应用类走 Docker/安装器，包下载低估 → GOTCHAS#stars-vs-downloads-distribution-bias
 - 结果：成功（第二篇文章进行中）
+
+## 2026-10-03 23:xx 代改 Smithery 描述与 apiKey 参数 + /where-to-list「我们的结果」列开工
+- 做法：代 new_ladar 在 Smithery（admin-pw59/new-site-radar）改 Settings 描述末句（#description 原生 setter + input 事件，保存后刷新核对），apiKey 连接参数描述走 Releases → Publish via URL → parameters.0.description 改为 87 字符新文案 → SUCCESS；/where-to-list 加 Our result 列：listing_checks 表 + ourResultLabel + 测试、check-listings 每天写表、TestedDirectoryTable ours 列、页首说明
+- 结果：Smithery 后台已保存、发布成功；registry 接口仍旧描述（缓存，未核实何时刷新，new_ladar 登记 24h 回查）；Our result 列测试 342 通过，未提交未部署，后台重跑 check-listings 填表中
+- 坑：Smithery 连接参数描述不在 Settings，要走 Publish via URL 的参数步骤重新发布 → GOTCHAS#directory-form-pitfalls；页面 revalidate 长时新数据源要先填好再部署 → GOTCHAS#curl-next-rsc-output
+- 结果：部分完成（Our result 列进行中）

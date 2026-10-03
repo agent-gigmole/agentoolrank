@@ -1250,3 +1250,8 @@
 - 下一步：bin/write 出稿 → 复检 → 加进 ops/devto-schedule.json（2026-10-12）
 - 坑：「高星低下载」不能直接读成炒作，自托管应用/平台多经 Docker/安装器分发，包下载低估使用，文章要写明 → GOTCHAS#stars-vs-downloads-distribution-bias
 - 结果：成功（第二篇文章进行中，稿未写、未排期）
+
+## 2026-10-03 23:xx 代改 Smithery + /where-to-list「Our result」列开工
+- **代 new_ladar 改 Smithery**（admin-pw59/new-site-radar）：①Settings 描述末句改为「Listing tools is free; tool calls need an API key (x-api-key header): a free key from newsiteradar.com/mcp (20 calls a day) or a Pro key.」，Save Settings 后刷新核对已保存；②apiKey 连接参数描述走 Releases → Publish → Publish via URL → Continue → `textarea[name="parameters.0.description"]` 改为「Free key (newsiteradar.com/mcp, 20 calls/day) or Pro key, nsr_…. Needed for tool calls.」→ Continue → SUCCESS。registry.smithery.ai 仍返回旧描述（缓存，刷新时长未核实），new_ladar 已用 await 登记 24h 回查
+- **/where-to-list「Our result (agentoolrank.com)」列（进行中，未提交未部署）**：lib/listing-check.ts 加 CREATE_LISTING_CHECKS（Turso 表 listing_checks：domain、state live|submitted、url、rel、target、checked）+ ourResultLabel（Live · followed link / Live · nofollow / Live · links our GitHub / Submitted, not live yet）+ 测试；check-listings.ts 每天写表；TestedDirectoryTable 加 ours 列；页面服务端读表；页首加一句说明。测试 342 通过。后台正在重跑 check-listings 填表，填完再提交部署（页面 revalidate 24h，必须先有数据）
+- **下一步**：等 check-listings 填满 → 提交 → 部署 → 线上核对 ours 列；明早 07:40 checkout-smoke 首跑（未核实）；10-05 公众号稿定稿；dev.to 第二篇出稿排 10-12
