@@ -40,6 +40,8 @@ describe("recommendDirectories", () => {
     expect(r.sites.length).toBeLessThanOrEqual(10);
     expect(r.avoid).toBeUndefined();
     expect(r.upgrade).toMatch(/\$29/);
+    // People reading the agent's answer can open the same free list on the web for their product type.
+    expect(r.upgrade).toContain("https://agentoolrank.com/submit-kit?type=");
   });
   it("keeps avoid-tier sites out of the recommendations and lists the avoid reasons in full mode", () => {
     const r = recommendDirectories(data, { productType: "ai_tool", full: true, now });

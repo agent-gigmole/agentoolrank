@@ -85,7 +85,7 @@ export function recommendDirectories(
     sites: picked,
     human_checklist: [...checklist].map(([step, domains]) => ({ step, domains })),
     avoid: o.full ? [...data.avoid, ...matching.filter((s) => tierOf(s) === "avoid").map(avoidReason)] : undefined,
-    upgrade: o.full ? undefined : `Showing ${picked.length} of ${Math.min(recommended.length, 30)}. The full list (30 sites plus the "don't submit" list with reasons, updated for 30 days) is a one-time $${KIT_PRICE_USD}: https://agentoolrank.com/submit-kit`,
+    upgrade: o.full ? undefined : `Showing ${picked.length} of ${Math.min(recommended.length, 30)}. The full list (30 sites plus the "don't submit" list with reasons, updated for 30 days) is a one-time $${KIT_PRICE_USD}: https://agentoolrank.com/submit-kit?type=${o.productType} (the same free 10 are shown there for a person to read).`,
     notes: [
       "Facts come from our own submissions (last_verified). Rules change; entries older than 30 days are marked stale.",
       "link_measured is only set where we checked the live rel attribute; unknown means not checked, not dofollow.",
