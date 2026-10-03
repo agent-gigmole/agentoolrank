@@ -1314,3 +1314,8 @@
 - 结果：Brevo tag=live-notify 5 requests / 5 delivered / 0 bounce / 0 blocked；dry-run 0 待发。已发 5 封链接不带 ref
 - 坑：交互 shell 无 bun 在 PATH（用 ~/.bun/bin/bun）；npx tsx 跑 TLA 脚本要复制成 .mts 且 import 带 .ts 后缀（GOTCHAS#bun-path-noninteractive-tla 已补）；表单承诺的通知邮件此前从未实现，GOTCHAS#form-promise-not-implemented 标已修复
 - 结果：成功（日报 live-notify 维护者行未做）
+
+## 2026-10-04 03:46 日报加上线通知信来源（3f61735）+ API/MCP 已收录回复开工（ecd98c2）
+- 做法：await 9b7cd6 收尾（5/5 送达）；kpi.ts 维护者行加 live-notify 会话数与结账点击（src LIKE '%live-notify%'），跑出新行，367 测试全过，TASK 该项 ✅；开工 API/MCP 提交已收录工具回复 $49 推荐位：src/lib/offers.ts listedReply（buy_url ?ref=agent-listed#maintainers、badge_html、message_for_human）+2 测试已提交；已 bus 回复 agentkit
+- 结果：成功（listedReply 未接入 /api/v1/submissions 与 MCP submit_tool）
+- 坑：无新坑

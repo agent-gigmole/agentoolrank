@@ -1375,3 +1375,9 @@
 - **注意**：已发这 5 封的链接不带 ?ref，无法从站内统计区分它们的落地
 - **进行中：上线通知落地可测**——第一步 91b0ab6（liveEmail 链接带 ?ref=live-notify，测试过）已提交；日报维护者行加 live-notify 会话数与推荐位结账点击未做
 - **下一步**：日报维护者行加 live-notify 会话 + 推荐位结账点击；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 03:46 日报加上线通知信来源（3f61735）+ API/MCP 提交已收录工具回复推荐位开工（ecd98c2）
+- **await 9b7cd6 完成**：上线通知 5 封 Brevo 5/5 送达
+- **日报维护者行已加**：ops/daily.md 维护者行新增「上线通知信 N 个会话、结账 N」（src LIKE '%live-notify%' 的 page_view / checkout_click）；kpi.ts 已跑出新行；367 测试全过。TASK 队列该项 ✅
+- **进行中：API/MCP 提交已收录工具时回复里给 $49 推荐位**——回复带 buy_url（/tool/<slug>?ref=agent-listed#maintainers）、badge_html、message_for_human。第一步 ecd98c2：src/lib/offers.ts listedReply 纯函数 + 2 测试已提交；**未接**进 /api/v1/submissions 和 MCP submit_tool（deps.submit 的 listed 分支）。已 bus 回复 agentkit
+- **下一步**：listedReply 接入 /api/v1/submissions + MCP submit_tool → 测试 → 部署 → 线上实测；日报可加 ref=agent-listed 来源；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
