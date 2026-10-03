@@ -84,7 +84,8 @@
 - ✅ 提交表单预填：GitHub 栏移到第一格，贴地址失焦后从 GitHub 公开 API 填官网、简介、名字（只填空格子，长简介按整句/整词截），埋点 prefill（10-04 02:5x 上线，真 Chrome 实测：手填名字保留、官网和简介自动填）
 - ✅ 提交时工具已收录的结果页给维护者入口：「Feature it · $49」按钮 + 徽章代码（10-04 03:0x 上线；真 Chrome 实测 crewAI → 结果页 → 点按钮到 Stripe「featured listing (7 days)」；埋点 checkout_click 路径 /submit-listed#featured 可单独统计）
 - ✅ /submit 页顶部给已收录工具的维护者一句直达说明（10-04 03:4x 上线核对）；顺带已收录工具的 Stripe 推荐位说明去掉「Fast-track review」（真 Chrome 到 Stripe 页核对）
-- 审核通过后发「你的页面已上线」邮件：表单承诺了「We'll email you when your page is live」但从没发过；邮件带页面链接、徽章代码、$49 推荐位链接（提交者自己留的邮箱、事务性邮件，不是外联）；review-submissions --apply 通过时发，记 sent 防重发（进行中）
+- ✅ 审核通过后发「你的页面已上线」邮件（e1451cc）：send-live-emails.ts 并入 daily-ops 紧跟 review --apply，live_emails 表防重发，Brevo 标签 live-notify（不算外联）；10-04 03:5x 补发欠的 5 封（orkas、hourtick、hol-guard-plugin、hol-plugins、claude-resets），Brevo 5/5 送达 0 退信
+- 上线通知邮件的落地可测：信里链接加 ?ref=live-notify，日报「维护者」行加 live-notify 来的会话数和推荐位结账点击，看这条通知能不能带来 $49（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
