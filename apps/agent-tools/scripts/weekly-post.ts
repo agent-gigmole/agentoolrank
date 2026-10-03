@@ -21,7 +21,9 @@ const home = process.env.HOME;
 /** Post one file through the gate; returns false (and leaves the pending marker) when the gate says not now. */
 function gatedPost(file: string): boolean {
   // Copy check first (owner 10-03 16:31): never say the post itself was written or posted by AI. A hit is a bug, not a delay.
-  const hit = aiAuthorshipMatch(readFileSync(file, "utf8"));
+  // Our own patterns plus agentkit's shared bin/post-copy-check, so the two rule sets can't drift apart unnoticed.
+  const shared = spawnSync(`${home}/project/agentkit/bin/post-copy-check`, [file], { encoding: "utf8" });
+  const hit = aiAuthorshipMatch(readFileSync(file, "utf8")) ?? (shared.status === 0 ? null : (shared.stdout + shared.stderr).trim() || `post-copy-check exit ${shared.status}`);
   if (hit) {
     rmSync(PENDING, { force: true });
     console.log(`copy check: refusing to post, the text says it was AI-written/auto-posted ("${hit}")`);
