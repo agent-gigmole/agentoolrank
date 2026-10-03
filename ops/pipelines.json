@@ -3,7 +3,7 @@
     "name": "hourly-ops",
     "entry": "apps/agent-tools/scripts/hourly-ops.sh",
     "timer": "agentoolrank-hourly.timer",
-    "notes": "每小时 :17。Stripe 对账（漏单补发 Submit Kit key）→ ops/scoreboard.json → 看板 KPI 块 + ops/daily.md（vi 块在前）→ 反馈收集（dev.to 评论、GitHub issue）→ 补发被 post-gate 顺延的 X 周榜。任一步失败则服务失败。单元文件 ops/systemd/"
+    "notes": "每小时 :17。Stripe 对账（漏单补发 Submit Kit key）→ ops/scoreboard.json → 看板 KPI 块 + ops/daily.md（vi 块在前）→ 反馈收集（dev.to 评论、GitHub issue）→ 补发被 post-gate 顺延的 X 周榜。任一步失败则服务失败。单元文件 ops/systemd/；dev.to 定时发文 devto-publish.ts（ops/devto-schedule.json，发前过 content-writing check，已发 URL 记 data/devto-published.json 防重发）"
   },
   {
     "name": "daily-ops",
