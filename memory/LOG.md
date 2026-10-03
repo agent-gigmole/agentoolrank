@@ -1259,3 +1259,9 @@
 - 结果：Submit Kit 价格结构化数据已上线；/submit Product JSON-LD 未部署
 - 坑：无新坑
 - 结果：成功（/submit Product JSON-LD 进行中）
+
+## 2026-10-04 01:50 /submit Product JSON-LD 上线 + 对比页补齐开工（eceb186 部署、05573e0、4fb4d95）
+- 做法：部署 eceb186，线上核对 /submit 四档 price 0/9/19/49，看板记一行（05573e0）；开工对比页补齐：lib/downloads.ts downloadPairs(rows, categories, topN=6) 用 compareSlug 生成各类目下载量前 6 的两两对比 slug + 测试（4fb4d95）
+- 结果：上架价格结构化数据已上线；对比页补齐剩 sitemap（去重）、/downloads/<category> 页底链接、部署核对
+- 坑：无新坑
+- 结果：成功（对比页补齐进行中）

@@ -78,7 +78,8 @@
 - ✅ 对比页 /compare/* 结构化数据：ItemList 两个 SoftwareApplication + 下载量计数（10-04 01:1x 上线核对）
 - ✅ 替代品页 ItemList 每项改为 SoftwareApplication + 下载量计数（10-04 01:10 上线核对）
 - ✅ /submit-kit 加 Product JSON-LD（Free $0 + Full $29，10-04 01:30 上线核对）
-- /submit 页加 Product JSON-LD：上架服务四档 Offer（Free $0 / Priority $9 / Fast-track $19 / Featured $49），价格从 PLANS 读（进行中：eceb186 已提交未部署）
+- ✅ /submit 页加 Product JSON-LD（四档 0/9/19/49，10-04 01:50 上线核对）
+- 对比页补齐：同类目里下载量前列、但还没有 /compare 页的工具对（如 Pydantic vs OpenAI Python 这类高搜索量组合），按数据自动生成候选并上线（进行中：4fb4d95 downloadPairs + 测试已提交；剩 sitemap 去重收录、/downloads/<category> 页底链接、部署核对）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

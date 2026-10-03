@@ -1314,3 +1314,9 @@
 - **/submit-kit Product JSON-LD**（5ce3f74，01:30 已部署；看板 7eaac9c）：线上 Product「AgentoolRank Submit Kit」，Offer price 0 与 29（已核对）；TASK ✅
 - **/submit Product JSON-LD（进行中，eceb186 已提交未部署）**：lib/plans.ts listingProductJsonLd，四档 Offer：Free listing $0 + Priority $9 / Fast-track $19 / Featured $49，名称与价格从 PLANS 读（不硬编码）+ 测试
 - **下一步**：eceb186 部署并线上核对 /submit JSON-LD 四档价格；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
+
+## 2026-10-04 01:50 /submit Product JSON-LD 上线 + 对比页补齐开工（eceb186 部署、05573e0、4fb4d95）
+- **/submit Product JSON-LD**（eceb186，01:50 已部署；看板 05573e0）：线上四档 Offer price 0 / 9 / 19 / 49（已核对）；TASK ✅
+- **对比页补齐（进行中，4fb4d95 WIP 已提交未部署）**：lib/downloads.ts 新增 downloadPairs(rows, categories, topN=6)，取每个类目下载量前 N 的工具两两配对，用 alternatives.compareSlug 生成 slug + 测试。/compare/[slug] 本身已能渲染任意两个已收录工具，缺的只是 sitemap 收录与站内链接
+- **剩余**：sitemap 加这些 compare URL（与已有对比 URL 去重）；/downloads/<category> 页底加「Compare the top tools」链接；测试 + 部署 + 线上核对
+- **下一步**：完成上述剩余项；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
