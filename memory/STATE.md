@@ -1400,3 +1400,9 @@
 - **已上线**：/submit 提交已收录工具的结果页加 Submit Kit 框——SubmitForm 抽出 KitBox 共用组件；已部署，真 Chrome 实测 crewAI 结果页「Feature it / Copy badge HTML / See the Submit Kit」三块都在；看板已记
 - **进行中：API/MCP 已收录回复也带 Submit Kit**——7ec7de2 listedReply 加 submit_kit_url（/submit-kit?ref=agent-listed）+ message_for_human 一句，测试过，已 push **未部署**
 - **下一步**：submit_tool 排队成功的 message_for_human 里 recommend_directories 那句加网页链接 → 测试 → 部署 → 线上实测 REST/MCP（自测 src 标 selftest）；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 04:4x API/MCP 回复带 Submit Kit 上线（7ec7de2、8228b8e 已部署）+ 日报 Submit Kit 行加进页来源（a424541、b2de2c1）+ Kit 链接按类目带 ?type= 开工（e0a52b6）
+- **已上线（agentoolrank.com）**：listedReply 带 submit_kit_url（/submit-kit?ref=agent-listed）+ message_for_human 一句；submit_tool 排队成功的 message_for_human 加 /submit-kit?ref=agent-queued 网页链接。线上 REST 用 `?src=selftest-kit`（放 URL 上）实测：已收录回复含 submit_kit_url 与说明句，/submit-kit?ref=agent-listed 200。看板已记，TASK ✅
+- **日报 Submit Kit 行**加「进页来源：上线通知信 · API 已收录 · API 排队 · 其他」（live-notify / agent-listed / agent-queued / 其他）；370 测试全过，kpi 已跑出新行
+- **进行中：Submit Kit 链接按工具类目带 ?type=**——e0a52b6 src/lib/directory-kit.ts kitTypeForCategories（类目含 mcp → mcp_server，否则 ai_tool）+ 测试；**未接**进 liveEmail / listedReply（需传类目：send-live-emails 查 tools.category_tags；listedReply 需在 route 里查工具）
+- **下一步**：kitTypeForCategories 接入 liveEmail + listedReply（REST route 与 MCP submit_tool）→ 测试 → 部署 → 线上实测（src=selftest-*）；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

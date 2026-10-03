@@ -1335,3 +1335,8 @@
 - 做法：核对 liveEmail 文本含 /submit-kit?ref=live-notify，TASK ✅；SubmitForm 抽出 KitBox，已收录结果页共用，部署后真 Chrome 实测 crewAI 结果页三块都在，看板已记；队尾新增并开工 listedReply 加 submit_kit_url（?ref=agent-listed）+ message_for_human 一句，测试过，7ec7de2 push 未部署
 - 结果：成功（还差 submit_tool 排队成功回复里 recommend_directories 句加网页链接，再部署）
 - 坑：无新坑
+
+## 2026-10-04 04:43 API/MCP 回复带 Submit Kit 上线（7ec7de2 + 8228b8e 部署）+ 日报 Kit 来源（a424541、b2de2c1）+ Kit 链接按类目开工（e0a52b6）
+- 做法：listedReply 带 submit_kit_url ?ref=agent-listed；submit_tool 排队成功 message_for_human 加 /submit-kit?ref=agent-queued；部署后 REST 以 ?src=selftest-kit 实测已收录回复含 submit_kit_url 与说明句，/submit-kit?ref=agent-listed 200，看板已记；kpi Submit Kit 行加进页来源（上线通知信/API 已收录/API 排队/其他），370 测试全过、kpi 跑出；队尾新增并开工 kitTypeForCategories（mcp→mcp_server，否则 ai_tool）+ 测试
+- 结果：成功（kitTypeForCategories 未接入 liveEmail / listedReply）
+- 坑：线上自测 REST 要把 ?src=selftest-* 放 URL 上（已有 GOTCHAS#api-calls-selftest-src-from-url，本轮照做，无新坑）
