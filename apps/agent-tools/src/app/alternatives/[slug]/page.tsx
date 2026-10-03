@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getToolBySlug } from "@repo/db/queries";
+import { getToolBySlug, getToolPackages } from "@repo/db/queries";
+import { compactCount, totalDownloads } from "@/lib/downloads";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
@@ -85,6 +86,8 @@ export default async function AlternativesPage({ params }: Props) {
   if (!data) notFound();
   const { tool, alts } = data;
   const verdict = alternativesVerdict(tool, alts, new Date());
+  const dl = new Map(await Promise.all([tool, ...alts].map(async (t) => [t.id, totalDownloads(await getToolPackages(t.id))] as const)));
+  const showDl = [...dl.values()].some((v) => v !== null);
   const intel = parseIntel(tool.intelligence);
   const year = new Date().getFullYear();
   const crumbs = [
@@ -131,6 +134,7 @@ export default async function AlternativesPage({ params }: Props) {
                 <th className="text-right py-2 px-3">GitHub stars</th>
                 <th className="text-right py-2 px-3">Stars / 30d</th>
                 <th className="text-right py-2 px-3">Last commit</th>
+                {showDl && <th className="text-right py-2 px-3">Downloads / 30d</th>}
               </tr>
             </thead>
             <tbody>
@@ -143,6 +147,7 @@ export default async function AlternativesPage({ params }: Props) {
                   <td className="py-2 px-3 text-right">{formatStars(t.github_stars)}</td>
                   <td className="py-2 px-3 text-right">{t.star_velocity_30d != null ? signed(t.star_velocity_30d) : "—"}</td>
                   <td className="py-2 px-3 text-right">{formatDate(t.last_commit_date)}</td>
+                  {showDl && <td className="py-2 px-3 text-right">{dl.get(t.id) != null ? compactCount(dl.get(t.id) as number) : "—"}</td>}
                 </tr>
               ))}
             </tbody>
