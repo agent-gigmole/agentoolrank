@@ -945,3 +945,19 @@
 - SOCIAL_CALENDAR：周一 10:00 是 ai-directory 每周排行榜固定时段，cron 已一致
 - 坑：KNOWLEDGE/GOTCHAS.md#owner-account-copy-check（共用脚本用法段）
 - **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章
+
+## 2026-10-03 16:47– visitor-insights v3 + 实盘口径（cf46fe0、6592252，已部署推送）
+- **visitor-insights v3**（对齐 agentkit 0cecb30）：
+  - events.ts 新增 `scrollPercent`（一屏放得下 = 100%）、`clickLabel`（data-testid > 同源路径 > #anchor/mailto/tel > external）；cleanProps 白名单放行 #anchor/mailto/tel
+  - Analytics.tsx：requestAnimationFrame 首测滚动、cleanup 取消；点击改用 clickLabel；engagement 按 effect 闭包里的 pathname 打标签（切页不会记到下一页，原本就对）
+  - vi-summary.ts 加 note 参数和 viNote：窗口含 10-03 17:00 前数据时标题注明「滚动口径偏低」；kpi.ts 已接
+  - 测试 263 通过；已部署推送
+  - 实测：真 Chrome（?internal=0 临时清标记）/where-to-list → 客户端跳 /submit-kit → /unsubscribe：engagement 分别记在 /where-to-list(9s,91%)、/submit-kit(3s,0%)、/unsubscribe(7s,100%，一屏页)；会话 r3q6cai5sv 已 UPDATE src='selftest-vicheck'；Chrome 已重打 ?internal=1（localStorage at_internal=1）；已 bus-send 回 agentkit
+- **实盘口径**（答 operator-lab 16:47：立项以来全部现金、建仓日 = 上线日）：
+  - 首次上线 2026-03-28（LOG「MVP 完成，站点上线」；git 首提交 03-27）
+  - 域名 agentoolrank.com 约 $10.46/年（选域名时报价，**未对账**，2027-03 续费）；2026-03 DeepSeek 官方 API 等早期 LLM 费用**未知**（日志未记）；OpenRouter 预充值消耗约 $0.53（充值时间金额未知）；Vercel/Turso/Cloudflare/Brevo 共用不分摊
+  - operator-lab 对外写「域名约 $10.46（未对账），早期 AI API 费用没有记录」，总投入标下限
+  - docs/ops/spend-ledger.md 已补立项口径和域名明细行（6592252）；记分牌 7 天支出仍 $0
+  - **待老板**：Cloudflare 账单确认域名实付、早期 LLM 账单（TASK「等待用户」）
+- 坑：KNOWLEDGE/GOTCHAS.md#visitor-insights-own-events（Playwright click 抬高滚动、?internal=0 验证后要重打）
+- **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章

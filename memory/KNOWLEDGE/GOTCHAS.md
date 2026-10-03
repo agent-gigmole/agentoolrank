@@ -886,6 +886,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **查验证事件按 sid/src 精确查**：Turso ts 是 UTC，用 `datetime('now','-N seconds')` 会混入真实访客的行；验证完把测试 sid 的 src 改成 selftest-* 免得污染统计
 - vi 块：src/lib/vi-summary.ts 与 agentkit vi_summary.py 同格式，withViBlock 放 ops/daily.md 最前；取数失败写「不是 0」，不要写 0
 - exit_survey 问卷要等隐私页（BOSS #35）批准再上
+- **v3（cf46fe0，对齐 agentkit 0cecb30）**：scrollPercent 一屏放得下的页面算 100%（否则短页永远 0%）；clickLabel 优先级 data-testid > 同源路径 > #anchor/mailto/tel > external，cleanProps 要同步放行 #anchor/mailto/tel；首测滚动用 requestAnimationFrame，effect cleanup 里 cancel；engagement 用 effect 闭包的 pathname 打标签，客户端切页不会记到下一页。vi 块窗口含 10-03 17:00 前数据时标题注「滚动口径偏低」
+- **Playwright click 会先把元素滚进视口**：验证滚动深度时 click 会抬高 scroll 值；测滚动要用 window.scrollTo / 键盘，点击测试与滚动测试分开看
+- **?internal=0 验证完必须重打 ?internal=1**：localStorage 的 at_internal 被清后，这台 Chrome 之后所有访问都会算进真实统计；验证会话再 UPDATE src='selftest-vicheck'
 
 ## owner-account-copy-check
 10-03 老板规定（agentkit 16:32 转达）：用老板 X/Reddit 号发的内容不能说这条是 AI 写/发、自动生成、定时发布；讲「AI agent 运营项目」主题可以。代码 ce06f78：

@@ -1019,3 +1019,10 @@
 - 结果：当前周榜两套检查都过、坏样例都拦；gate=3（最早 19:17）；已 bus-send 回 agentkit；承诺首笔陌生人付款当天通知 operator-lab
 - 坑：post-copy-check 只吃位置参数 <文件>，不支持 --help/-f；post-log 的 --link 是布尔开关 → GOTCHAS#owner-account-copy-check
 - 结果：成功
+
+
+## 2026-10-03 16:47– visitor-insights v3 + 实盘口径（cf46fe0、6592252）
+- 做法：按 agentkit 0cecb30 → events.ts 加 scrollPercent（一屏=100%）、clickLabel（testid>同源路径>#anchor/mailto/tel>external），cleanProps 放行 #anchor/mailto/tel；Analytics.tsx rAF 首测滚动+cleanup 取消、点击用 clickLabel；vi-summary.ts 加 viNote（含 10-03 17:00 前数据标「滚动口径偏低」），kpi.ts 接上；部署推送。答 operator-lab 16:47：上线日 2026-03-28，域名约 $10.46（未对账），早期 LLM 费用未知，OpenRouter 消耗约 $0.53，共用设施不分摊；spend-ledger 补立项口径
+- 结果：263 测试通过；真 Chrome 跨 3 页客户端跳转，engagement 各记在本页（9s/91%、3s/0%、7s/100%）；测试会话改 src='selftest-vicheck'，Chrome 已重打 ?internal=1；已 bus-send 回 agentkit；待老板确认域名实付与早期 LLM 账单
+- 坑：Playwright click 会先把元素滚进视口，抬高 scroll；?internal=0 验证后必须重打 ?internal=1 → GOTCHAS#visitor-insights-own-events
+- 结果：成功
