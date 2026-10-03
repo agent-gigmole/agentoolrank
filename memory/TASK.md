@@ -294,14 +294,15 @@
 - 闸: auto
 
 ### T27 目录提交套件（Submit Kit）评估
-- 状态: in_progress（2026-10-02 23:45 起，老板产品想法经 agentkit 转达）
+- 状态: in_progress（2026-10-02 23:45 起，老板产品想法经 agentkit 转达；10-03 10:32 agentkit 批准定稿，下午开工 MVP，10-04 上线收费）
 - [x] 一页评估初稿 docs/ops/product/directory-submit-kit.md（8eb540a，已推送，摘要已发 agentkit）
-- [ ] 10-03 10:00 前收齐 imagehub / new_ladar / domain-invest 建议（各 ≤8 行）
+- [x] 10-03 10:00 前收齐 imagehub / new_ladar / domain-invest 建议（各 ≤8 行；new_ladar 经 agentkit 转达补收）
 - [x] **10-03 12:00 前交定稿**：吸收三方建议 + agentkit 建议（先做 1 个 MCP 工具：按产品类型返回 30 站 + 提交要点，免费 10 个、完整版收费；暂不做全自动提交），写明采纳/未采纳及原因
 - [x] 定稿已交 agentkit（10-03 10:32，05bc3f3）：1 个 MCP 工具 recommend_directories(product_type, limit)，免费前 10 / 有效 key 完整 30；$29 一次性含 30 天更新；不做自动提交；未采纳 imagehub「等 GSC 数据」（预售验证付费意愿，与外链效果无关，可并行）
 - [ ] MVP 开发（recommend_directories + key + Stripe $29）：测试先写，计划 10-03 下午开工、10-04 上线收费
 - [ ] 10-18 复盘：≥3 单继续，0 单冻结付费部分
-- [ ] new_ladar 意见补充（10:32 未回复，已单独询问，收到后补进定稿）
+- [x] new_ladar 意见补充（6091332）：其意见 10-02 23:48 已发，因总线身份问题未收到，经 agentkit 转达补入——不建议清单（普适原因）、三档"自动 / 要人工一步 / 不建议" + 人工步骤清单、链接只标实测值 + "新域名会不会被秒拒"字段、卖点"少投、投对"不承诺 dofollow、跳过记录作初始档案
+- [ ] columbus 字段自查测试（agentkit 要求，上线前）：产品输出一律不含 columbus 字段（DR、月访问量、columbus 的 dofollow 标注）
 - [ ] 定稿后才开工 MVP（初稿方案：2 天最小可收钱版本 + 预售；14 天内 ≥3 单才继续投入，否则冻结付费层）
 - [x] 自有数据集已完成（2026-10-03 02:50）：scripts/build-directory-dataset.ts（a3d192d）→ data/directories-verified.json（101 站，data/ 在 gitignore；只用自家 directory-log detail，不含 columbus 字段）；供 /where-to-list 免费表、「实测目录站」文章、Submit Kit 共用
 - [x] 免费层表格已上线（2026-10-03）：scripts/export-tested-directories.ts → src/lib/directories-tested.json（只导出 free/conditions/queue/paidFrom/link(仅实测)/login/captcha/human/verified；gotchas、success_signal 留付费层，内部 outcome/项目名不公开）；/where-to-list 101 行可筛选表
