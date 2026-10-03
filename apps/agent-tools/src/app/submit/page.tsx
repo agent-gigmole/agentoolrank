@@ -1,3 +1,4 @@
+import { listingProductJsonLd } from "@/lib/plans";
 import type { Metadata } from "next";
 import { getToolCount } from "@repo/db/queries";
 import { SubmitForm } from "./SubmitForm";
@@ -15,6 +16,7 @@ export default async function SubmitPage() {
   const toolCount = await getToolCount();
   return (
     <main className="max-w-2xl mx-auto px-4 py-10">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listingProductJsonLd(process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com")) }} />
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Submit your AI agent tool</h1>
       <p className="text-gray-600 mb-6">
         Join {toolCount}+ tools ranked by real GitHub activity. Listing is free.

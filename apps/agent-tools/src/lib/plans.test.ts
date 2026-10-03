@@ -51,3 +51,13 @@ describe("listing checkout branding (agentkit checkout-brand)", () => {
     expect(f.get("branding_settings[display_name]")).toBe("AgentoolRank");
   });
 });
+
+describe("listingProductJsonLd", () => {
+  it("lists the free queue and every paid plan at its real price", async () => {
+    const { listingProductJsonLd } = await import("./plans");
+    const j = listingProductJsonLd("https://agentoolrank.com") as any;
+    expect(j["@type"]).toBe("Product");
+    expect(j.offers.map((o: any) => o.price)).toEqual(["0", "9", "19", "49"]);
+    expect(j.offers[3].name).toBe(PLANS.featured.name);
+  });
+});

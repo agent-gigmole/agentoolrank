@@ -51,3 +51,22 @@ export function checkoutForm(o: { plan: Plan; submissionId: number; slug: string
   }
   return f;
 }
+
+/** /submit structured data: listing on AgentoolRank as a Product, the free queue plus each paid plan as an Offer. */
+export function listingProductJsonLd(baseUrl: string) {
+  const url = `${baseUrl}/submit`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "List an AI agent tool on AgentoolRank",
+    description: "Submit an open-source AI agent tool to AgentoolRank. Free review queue, or pay once to be reviewed sooner or featured.",
+    brand: { "@type": "Brand", name: "AgentoolRank" },
+    url,
+    offers: [
+      { "@type": "Offer", name: "Free listing (review queue)", price: "0", priceCurrency: "USD", url },
+      ...(["priority", "fast", "featured"] as const).map((k) => ({
+        "@type": "Offer", name: PLANS[k].name, price: String(PLANS[k].amount / 100), priceCurrency: "USD", url,
+      })),
+    ],
+  };
+}
