@@ -1062,3 +1062,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 提前多天排进定时发布（ops/devto-schedule.json）的数据文章，里面的下载量/星数是写稿当天的数，到发布日已经过期；brief 要求发布当天的数
 - 做法：排期时同时在 TASK 加一条「发布前一天用最新数据（tool_packages 等）重刷文中数字 → 再跑 writer check」，不要等发布后才发现数字旧
 - 例：dev.to 第二篇 10-04 写稿、10-12 发布 → 10-11 重刷
+
+## browser-tidy-keep-newest-tab
+- 现象：agentkit 推广的 browser-tidy（new_ladar 原版）在每个浏览器任务结束后关闭除**第一个**以外的所有标签页；我们的 winbrowser 流程是一次 run.sh open 打开页面，后续多次 run.sh eval/click/fill 继续操作同一标签页
+- 原因：新打开的工作页是最后一个标签页；保留第一个会在 open 那一步结束时就把工作页关掉，下一步 eval 落到旧页上
+- 做法：task_tidy.py 保留 `ctx.pages[-1]`（最新），关闭其余；run.sh 用 `trap tidy EXIT`（成功/失败都清理），task_tidy 自身跳过 trap；没有标签页时补开一个空页。改完实测 open → eval 两步仍命中目标页、结束剩 1 个标签页
+- 来源：2026-10-04 777b4e0（scripts/winbrowser/task_tidy.py、run.sh）

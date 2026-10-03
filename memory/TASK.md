@@ -76,7 +76,8 @@
 - 10-08 核对放量首日：定时器发了 15 封、Brevo 健康仍干净
 - ✅ 工具页结构化数据加近 30 天下载量（InteractionCounter / DownloadAction，10-04 01:0x 上线核对）
 - ✅ 对比页 /compare/* 结构化数据：ItemList 两个 SoftwareApplication + 下载量计数（10-04 01:1x 上线核对）
-- 替代品页 ItemList 的每一项也改成 SoftwareApplication 并带下载量计数（复用 compare-jsonld 的 app 构造）
+- ✅ 替代品页 ItemList 每项改为 SoftwareApplication + 下载量计数（10-04 01:10 上线核对）
+- /submit-kit 加 Product JSON-LD（Offer $29 USD，免费版另一档 $0），让搜索结果能显示价格（进行中：5ce3f74 已提交未部署）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

@@ -331,3 +331,6 @@
 | boss-todo / 老板待办 / 要老板做的事 / BOSS_QUEUE.md 不手改 / --urgent 静默时段 00:30–08:30 / note 汇总 / #35 #36 #37 | RECIPES.md#boss-todo |
 | 工具页 JSON-LD 下载量 / InteractionCounter DownloadAction userInteractionCount / totalDownloads npm+PyPI 30 天 / 0120cbf | STATE.md#2026-10-04 00:44–01:1x 老板待办改用 boss-todo 库 + 工具页 JSON-LD 带下载量 + 外联主题 A/B 接入发信（0120cbf、e53799a、bbf1e61） |
 | 外联主题 A/B / outreach-a outreach-b tag / sent.json variant / subjectVariant 哈希分组 / bbf1e61 | STATE.md#2026-10-04 00:44–01:1x 老板待办改用 boss-todo 库 + 工具页 JSON-LD 带下载量 + 外联主题 A/B 接入发信（0120cbf、e53799a、bbf1e61） |
+| browser-tidy 标签页清理 / task_tidy.py 保留最新标签页 ctx.pages[-1] / run.sh trap tidy EXIT / new_ladar 保留第一个 / 分步 open→eval 同一标签页 / 777b4e0 | GOTCHAS.md#browser-tidy-keep-newest-tab |
+| 替代品页 ItemList softwareAppJsonLd / /alternatives/langchain DownloadAction / d4bae19 | STATE.md#2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74） |
+| /submit-kit Product JSON-LD kitProductJsonLd / Offer Free top 10 $0 Full list $29 USD InStock / Brand AgentoolRank / 5ce3f74 | STATE.md#2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74） |

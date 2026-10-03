@@ -1303,3 +1303,9 @@
 - **替代品页结构化数据（进行中，d4bae19 WIP 已提交未部署）**：/alternatives/[slug] 的 ItemList 每项改为 softwareAppJsonLd(alt, dl, baseUrl)
 - **TASK 队列**：对比页 JSON-LD ✅；外联 A/B 改看落地分组；替代品页 JSON-LD 进行中
 - **下一步**：d4bae19 测试+部署并线上核对 /alternatives/*；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
+
+## 2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74）
+- **browser-tidy**（agentkit 推广，来源 new_ladar，10-06 截止；777b4e0）：scripts/winbrowser/task_tidy.py 关闭除**最新**以外的所有标签页；run.sh 加 `trap tidy EXIT`，任何任务成功或失败退出都执行（task_tidy 自身不再触发）。与 new_ladar（保留第一个）不同：我们的流程是一次 open、后续多次 run.sh eval/click 同一标签页，保留第一个会关掉工作页。实测 open → eval 两步仍命中页面，结束剩 1 个标签页。已回复 agentkit，并提醒 new_ladar 检查分步流程。见 GOTCHAS#browser-tidy-keep-newest-tab
+- **替代品页结构化数据**（d4bae19，01:10 已部署）：/alternatives/[slug] 的 ItemList 每项为 softwareAppJsonLd；线上 /alternatives/langchain 有 SoftwareApplication 项与 DownloadAction 计数（已核对）；看板已记（9f0771f）；TASK ✅
+- **/submit-kit Product JSON-LD（进行中，5ce3f74 已提交未部署）**：kitProductJsonLd（Brand AgentoolRank，两个 Offer：Free top 10 $0、Full list $29 USD InStock）+ 测试
+- **下一步**：5ce3f74 部署并线上核对 /submit-kit JSON-LD；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字

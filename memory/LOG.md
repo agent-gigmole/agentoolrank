@@ -1247,3 +1247,9 @@
 - 结果：A/B 落地分组与对比页 JSON-LD 已上线核对，测试 350 通过；替代品页未部署
 - 坑：无新坑
 - 结果：成功（替代品页结构化数据进行中）
+
+## 2026-10-04 01:0x–01:1x 浏览器标签页清理 + 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工
+- 做法：按 agentkit browser-tidy 推广写 scripts/winbrowser/task_tidy.py（保留最新标签页）+ run.sh EXIT trap（777b4e0），实测 open → eval 两步仍命中页面、结束剩 1 个标签页，已回复 agentkit 并提醒 new_ladar；部署 d4bae19，线上核对 /alternatives/langchain 的 SoftwareApplication 项与下载计数，看板记一行（9f0771f）；开工 /submit-kit Product JSON-LD（kitProductJsonLd，两个 Offer $0 / $29）+ 测试（5ce3f74）
+- 结果：标签页清理与替代品页结构化数据已上线；/submit-kit Product JSON-LD 未部署
+- 坑：跨调用复用同一标签页的浏览器流程，清理要保留最新标签页而不是第一个 → GOTCHAS#browser-tidy-keep-newest-tab
+- 结果：成功（/submit-kit Product JSON-LD 进行中）
