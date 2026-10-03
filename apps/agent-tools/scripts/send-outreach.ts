@@ -16,7 +16,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dailyCap, dohMxVerdict, outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, uniqueByEmail, type BrevoStats } from "../src/lib/outreach";
+import { dailyCap, subjectVariant, dohMxVerdict, outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, uniqueByEmail, type BrevoStats } from "../src/lib/outreach";
 import { resolveMx } from "node:dns/promises";
 import { downloadsLine } from "../src/lib/downloads";
 import { cstDayRange } from "../src/lib/kpi";
@@ -30,7 +30,7 @@ const test = arg("test");
 const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN });
 
 interface Candidate { slug: string; owner: string; email: string; email_source: string }
-interface Sent { email: string; slug: string; at: string; messageId: string }
+interface Sent { email: string; slug: string; at: string; messageId: string; variant?: "A" | "B" }
 const load = <T>(f: string, d: T): T => (existsSync(dir + f) ? JSON.parse(readFileSync(dir + f, "utf8")) : d);
 const candidates = load<Candidate[]>("candidates.json", []);
 const sent = load<Sent[]>("sent.json", []);
@@ -55,7 +55,7 @@ async function live(slug: string) {
   return { name: String(t.name), rank: best.rank, total: best.total, category: catName };
 }
 
-async function send(to: string, subject: string, text: string): Promise<string> {
+async function send(to: string, subject: string, text: string, variant: "A" | "B"): Promise<string> {
   const key = readFileSync(`${process.env.HOME}/.config/secrets/brevo-api-key`, "utf8").trim();
   const res = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
@@ -67,7 +67,7 @@ async function send(to: string, subject: string, text: string): Promise<string> 
       subject,
       textContent: text,
       headers: { "List-Unsubscribe": "<mailto:hello@agentoolrank.com?subject=unsubscribe>" },
-      tags: ["outreach"],
+      tags: ["outreach", `outreach-${variant.toLowerCase()}`], // keep "outreach" so the health gate still counts every send
     }),
   });
   const data = await res.json().catch(() => ({}));
@@ -154,13 +154,14 @@ for (const c of queue) {
   // One factual line about package downloads when we have the number (top registry only).
   const pkgs = await db.execute({ sql: "SELECT registry, package, downloads_30d FROM tool_packages WHERE tool_id = ? ORDER BY downloads_30d DESC", args: [c.slug] }).then((r) => r.rows, () => []);
   const top = downloadsLine(pkgs.map((r) => ({ registry: String(r.registry), package: String(r.package), downloads_30d: r.downloads_30d === null ? null : Number(r.downloads_30d) })))[0];
-  const mail = outreachEmail({ owner: c.owner, slug: c.slug, ...t, ...(top && top.n >= 1000 ? { downloads: { label: top.label, pkg: top.pkg, value: top.value, n: top.n } } : {}) }, BASE);
+  const variant = subjectVariant(c.email);
+  const mail = outreachEmail({ owner: c.owner, slug: c.slug, variant, ...t, ...(top && top.n >= 1000 ? { downloads: { label: top.label, pkg: top.pkg, value: top.value, n: top.n } } : {}) }, BASE);
   const to = test ?? c.email;
   if (dryRun) { console.log(`--- to ${to}\nSubject: ${mail.subject}\n${mail.text}\n`); n++; continue; }
-  const id = await send(to, mail.subject, mail.text);
+  const id = await send(to, mail.subject, mail.text, variant);
   console.log(`sent ${c.slug} → ${to} (${id})`);
   if (!test) {
-    sent.push({ email: c.email, slug: c.slug, at: new Date().toISOString().slice(0, 19).replace("T", " "), messageId: id });
+    sent.push({ email: c.email, slug: c.slug, at: new Date().toISOString().slice(0, 19).replace("T", " "), messageId: id, variant });
     writeFileSync(dir + "sent.json", JSON.stringify(sent, null, 2));
   }
   n++;
