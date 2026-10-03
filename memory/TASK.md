@@ -24,7 +24,10 @@
 - Submit Kit 漏斗每天看一次：kit_click → /submit-kit 访问 → 付费，三个数写进 ops/daily.md，断在哪一步就改哪一步
 - ✅ /downloads 下载量排行榜上线（10-03 20:0x，ItemList JSON-LD、sitemap、详情页互链）
 - 10-07 数据文章加「星数 vs 下载量」一节：引用 /downloads 前 5 和每星下载量最高的工具，文末带 Submit Kit 与 /downloads 两个入口（brief 已加节 02ebddb，文章未写）
-- /downloads 提交 IndexNow 并在 GSC 请求编入索引；10-10 看曝光
+- ✅ /downloads 提交搜索引擎（IndexNow 每日整站；GSC sitemap 重提交 204，已写成 gsc_sitemap.py 并入 daily-ops）
+- 10-10 看 /downloads 在 GSC 的曝光和收录，没收录就查原因
+- ✅ 对比页加下载量一行（10-03 20:1x，/compare/* 显示 npm + PyPI 30 天下载量，高者标绿）
+- 替代品页 /alternatives/* 每个候选加下载量，并按「星数 / 下载量」给出谁用得更多的一句话结论
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

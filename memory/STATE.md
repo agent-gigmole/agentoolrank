@@ -1061,3 +1061,12 @@
 - 全量 fetch-downloads 仍在后台（已 170+ 行），最终覆盖数**未核实**
 - 坑：KNOWLEDGE/GOTCHAS.md#repo-ui-breadcrumbs-and-ranking-raw-numbers
 - **下一步**：GSC 对 /downloads 请求编入索引（未做）；核实 fetch-downloads 全量结果；22:00 后确认外联 10 封送达（未核实）；10-07 dev.to 数据文章
+
+## 2026-10-03 19:27– GSC sitemap 每日重提交脚本 + 对比页下载量（5e62501、a542c9a 已部署，1ffb6a9 看板）
+- **gsc_sitemap.py**（5e62501）：apps/agent-tools/scripts/gsc_sitemap.py，service account 读仓库根 gsc-service-account.json，scope = webmasters 全权限（readonly 不能提交），PUT sitemaps → 204；失败 exit 1 让管线报警；daily-ops.sh 在 IndexNow 之后调用。第二次手动做 → 按「第 2 次写成脚本」规则固化。手动跑一次 204
+- **对比页下载量**（a542c9a，已部署）：/compare/[slugs] MetricRow 加 format 参数；新增一行「Downloads (30d, npm + PyPI)」（compactCount，高者标绿，双方都无数据整行不显示）；lib/downloads.ts `totalDownloads` + 测试（308 通过）；线上 /compare/langchain-vs-mastra 169.4M vs 3.1M 已核对
+- **TASK 队列**：「/downloads 提交搜索引擎」✅，补「10-10 看 /downloads 在 GSC 的曝光和收录」；「对比页加下载量」✅，补「替代品页 /alternatives/* 加下载量」；看板已记（1ffb6a9）
+- **队首已开工**：10-07 数据文章按更新后的 brief 用 bin/write（--format longform --lang en）重新生成 docs/ops/launch-kit/drafts/devto-101-directories.md（后台运行中，旧稿备份 /tmp/claude-1000/devto-101-v1.md；结果未核实）
+- fetch-downloads 全量仍在后台（未核实）
+- 坑：KNOWLEDGE/GOTCHAS.md#gsc-scripts-repo-root-and-scope
+- **下一步**：核实新稿并审稿；核实 fetch-downloads 全量；22:00 后确认外联 10 封送达（未核实）；10-10 看 /downloads GSC 收录；替代品页加下载量

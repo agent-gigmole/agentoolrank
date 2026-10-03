@@ -1071,3 +1071,9 @@
 - 结果：307 测试通过；线上前五 OpenAI Python 284.2M、MCP Python SDK 219.0M、LangChain 169.4M、AI SDK 108.0M、LangGraph 43.7M 已核对；fetch-downloads 全量仍在跑（170+ 行），未核实
 - 坑：@repo/ui Breadcrumbs/BreadcrumbJsonLd 项是 { label, href? } 不是 name；JSON-LD baseUrl 取 NEXT_PUBLIC_BASE_URL；排序别解析格式化字符串，保留原始数 → GOTCHAS#repo-ui-breadcrumbs-and-ranking-raw-numbers
 - 结果：成功（全量首跑未核实）
+
+## 2026-10-03 19:27– GSC sitemap 脚本 + 对比页下载量（5e62501、a542c9a、1ffb6a9）
+- 做法：第二次手动重提交 sitemap → 写成 apps/agent-tools/scripts/gsc_sitemap.py（webmasters 全权限、失败 exit 1）并入 daily-ops（IndexNow 之后）；对比页 MetricRow 加 format，新增「Downloads (30d, npm + PyPI)」行，lib/downloads.ts totalDownloads + 测试；部署；TASK 两项 ✅ 并补两件后续；看板已记；队首 10-07 文章用 bin/write 重新生成中
+- 结果：sitemap 手动跑 204；308 测试通过；线上 /compare/langchain-vs-mastra 169.4M vs 3.1M 已核对；文章新稿与 fetch-downloads 全量均未核实
+- 坑：gsc_report.py/gsc_sitemap.py 的 ROOT 是 dirname×4 = 仓库根 ai-directory（不是 workspace）；sitemap 提交要 webmasters 非 readonly → GOTCHAS#gsc-scripts-repo-root-and-scope
+- 结果：成功（文章与全量抓取未核实）

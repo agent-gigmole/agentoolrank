@@ -948,3 +948,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **排行榜排序用原始数**：展示用的紧凑字符串（169.4M、12.5K）只用于渲染，排序、汇总、算比值（每星下载）一律用原始整数；所以 `downloadsLine` 返回结构里带原始数 `n`，`rankByDownloads` 按 n 汇总排序。不要反解析 "169.4M"
 - 新排行页清单：ItemList JSON-LD + BreadcrumbJsonLd + canonical + sitemap 条目 + 从详情页链入（避免孤儿页）
 - 来源：2026-10-03 /downloads 上线（ad85ebe）
+
+## gsc-scripts-repo-root-and-scope
+- apps/agent-tools/scripts/ 下的 gsc_report.py / gsc_sitemap.py 用 `dirname` 套 4 层得到 ROOT = 仓库根（/home/qmt/workspace/ai-directory），service account 文件是仓库根的 gsc-service-account.json —— 不是 workspace 目录，也不是 apps/agent-tools。新写 GSC 脚本照抄这个层数，别想当然多套一层
+- 只读报表用 webmasters.readonly；sitemap 重提交（PUT sitemaps）必须 webmasters 全权限，成功返回 204（另见 #google-sitemap-resubmit-service-account）
+- 每日管线里的脚本失败要 exit 1，daily-ops 才会标红；gsc_sitemap.py 放在 IndexNow 之后
