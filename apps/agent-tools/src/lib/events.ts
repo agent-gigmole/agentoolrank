@@ -1,7 +1,7 @@
 // First-party analytics: the browser posts small events to /api/e, stored in our own DB.
 // No third-party script (blocked by ad blockers, and one less vendor).
 
-export const EVENT_NAMES = ["page_view", "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click"] as const;
+export const EVENT_NAMES = ["page_view", "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click", "kit_click"] as const;
 export type EventName = (typeof EVENT_NAMES)[number];
 
 export interface AnalyticsEvent {

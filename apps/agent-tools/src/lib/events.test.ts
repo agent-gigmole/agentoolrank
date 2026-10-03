@@ -36,3 +36,10 @@ describe("sourceFromUrl", () => {
     expect(sourceFromUrl("https://agentoolrank.com/tool/dify")).toBe("");
   });
 });
+
+describe("kit_click", () => {
+  it("is an accepted event so the Submit Kit entry on /submit can be measured", async () => {
+    const { EVENT_NAMES } = await import("./events");
+    expect(EVENT_NAMES).toContain("kit_click");
+  });
+});

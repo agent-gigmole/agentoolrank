@@ -133,6 +133,14 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
             {copied ? "Copied" : "Copy badge HTML"}
           </button>
         </div>
+        <div className="border border-gray-200 rounded-xl p-6">
+          <p className="font-semibold text-gray-900">Listing it on other directories too?</p>
+          <p className="text-sm text-gray-600 mt-1 mb-3">
+            We tested 101 directories by submitting our own products. The Submit Kit tells you which ones fit this tool, the form gotchas on each,
+            and which to skip. Top 10 free; full list $29 one-time.
+          </p>
+          <a href="/submit-kit" onClick={() => track("kit_click")} className="text-sm text-blue-600 hover:underline">See the Submit Kit →</a>
+        </div>
       </div>
     );
   }
