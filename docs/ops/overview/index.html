@@ -160,6 +160,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-04 00:52 工具详情页的结构化数据（JSON-LD）加了近 30 天 npm + PyPI 下载量，格式是 schema.org 的 InteractionCounter / DownloadAction。搜索引擎和 AI 引擎读页面时能直接拿到这个数，例如 LangChain 是 169,366,312。线上已核对。</li>
     <li>2026-10-04 00:34 三处改动：①工具页维护者区加了 Submit Kit 入口；②给外联对象看的横幅文案补上了「类目页」；③本周押注①「外联放量」写进了代码：每晚发信上限 10-08 起从 10 封升到 15 封，10-12 起升到 20 封，前提是发信前的 7 天健康检查没有任何退信、拦截或投诉，否则继续 10 封。今晚仍是 10 封。</li>
     <li>2026-10-04 00:12 /submit-kit 加了一行我们自己的实测战绩：「我们把 agentoolrank.com 提交到其中 41 个目录站，7 个已上线，4 个链接可跟随」，后面还说明了免费上架大多要等几天到几周、很多链接是 nofollow。数字每天从上线复查的结果自动算出，不手写。</li>
     <li>2026-10-04 00:00 两件事。①通过 MCP 调用 recommend_directories 时，每个站多返回一个 our_listing 字段，写的是我们自己在那个站提交后的实际结果，例如「Live · followed link」「Submitted, not live yet」。免费版和 $29 完整版都带，线上调用已核对。②第二篇 dev.to 文章《Stars measure attention, downloads measure use: 230 AI agent tools》已写好，排在 10-12 21:00 自动发布。写稿工具标出的 2 句自己推断的话已改成有依据的说法，复检通过。发布前一天会用最新数据重刷文中的下载量。</li>
