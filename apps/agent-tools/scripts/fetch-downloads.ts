@@ -16,6 +16,14 @@ const arg = (k: string) => process.argv.find((a) => a.startsWith(`--${k}=`))?.sp
 const UA = { "User-Agent": "AgentoolRank/1.0 (+https://agentoolrank.com; hello@agentoolrank.com)" };
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+// Weekly history (one row per tool/registry/week) so /downloads can show risers once two weeks exist.
+await db.execute(`CREATE TABLE IF NOT EXISTS tool_packages_history (
+  tool_id TEXT NOT NULL,
+  registry TEXT NOT NULL,
+  week TEXT NOT NULL,
+  downloads_30d INTEGER NOT NULL,
+  PRIMARY KEY (tool_id, registry, week)
+)`);
 await db.execute(`CREATE TABLE IF NOT EXISTS tool_packages (
   tool_id TEXT NOT NULL,
   registry TEXT NOT NULL CHECK(registry IN ('npm','pypi')),
@@ -104,4 +112,8 @@ for (const t of tools) {
   }
   await sleep(300);
 }
+// Snapshot this week's counts (ISO-ish week key = the Monday's date, China time).
+const cst = new Date(Date.now() + 8 * 3600_000);
+const monday = new Date(cst.getTime() - ((cst.getUTCDay() + 6) % 7) * 86400_000).toISOString().slice(0, 10);
+await db.execute({ sql: "INSERT OR REPLACE INTO tool_packages_history (tool_id, registry, week, downloads_30d) SELECT tool_id, registry, ?, downloads_30d FROM tool_packages WHERE downloads_30d IS NOT NULL", args: [monday] });
 console.log(`downloads: ${tools.length} tools checked, npm ${npmN}, pypi ${pypiN}`);
