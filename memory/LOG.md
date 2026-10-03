@@ -910,3 +910,9 @@
 - 结果：送达 10/10、退信 0、投诉 0、opened 4（MPP 不准，cognee 未记打开但来访 4 页）、会话 4、回复 0、付费点击 0；212 测试通过；当前 外联 10/4、目录站 41/3、zh 3、ja 0；22:00 发第二批 10 封
 - 坑：GOTCHAS#dirsub-live-convention
 - 结果：成功
+
+## 2026-10-03 10:32 T27 Submit Kit 定稿已交
+- 做法：吸收 agentkit / domain-invest / imagehub 三方意见，定稿逐条写明采纳与否及理由（05bc3f3），看板记录（67cde72）
+- 结果：只做 1 个 MCP 工具 recommend_directories(product_type, limit)，免费前 10 / 有效 key 完整 30 站；$29 一次性（初稿 $39）含 30 天更新，复用 Stripe；不做自动提交；未采纳 imagehub「等 GSC 数据」；new_ladar 未回复待补；10-18 复盘（≥3 单继续，0 单冻结）；计划 10-03 下午开工、10-04 上线收费
+- 结果：成功
+
