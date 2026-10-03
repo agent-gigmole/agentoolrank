@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { KIT_PRICE_USD } from "@/lib/directory-kit";
+import { KitBuyButton } from "@/components/KitBuyButton";
 
 export const metadata: Metadata = {
   title: "Submit Kit: which launch directories to submit to, and which to skip",
@@ -20,9 +21,10 @@ export default function SubmitKitPage() {
       </p>
       <ul className="list-disc pl-5 space-y-1 mb-6 text-sm">
         <li><b>Free:</b> the top 10 for your product type, right now, no signup.</li>
-        <li><b>Full, ${KIT_PRICE_USD} one-time:</b> 30 sites plus the &ldquo;don&rsquo;t submit&rdquo; list with reasons (paid-only, badge-for-link, vote-for-others, broken forms, auto-reject of new domains), updated for 30 days. Payments open on 2026-10-04.</li>
+        <li><b>Full, ${KIT_PRICE_USD} one-time:</b> 30 sites plus the &ldquo;don&rsquo;t submit&rdquo; list with reasons (paid-only, badge-for-link, vote-for-others, broken forms, auto-reject of new domains), updated for 30 days. You get a key right after payment.</li>
         <li><b>Not included:</b> automated submission, captcha solving, or any promise of traffic, rankings or dofollow links.</li>
       </ul>
+      {process.env.STRIPE_SECRET_KEY && <KitBuyButton price={KIT_PRICE_USD} />}
       <h2 className="text-lg font-semibold text-gray-900 mb-2">Use it</h2>
       <pre className="bg-gray-50 border rounded-lg p-3 text-xs overflow-x-auto mb-4">{`{ "mcpServers": { "agentoolrank": { "url": "https://agentoolrank.com/api/mcp" } } }
 

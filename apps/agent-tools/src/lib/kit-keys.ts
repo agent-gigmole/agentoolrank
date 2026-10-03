@@ -38,3 +38,25 @@ export async function kitKeyValid(key: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Fulfil a paid Submit Kit Checkout Session once: issue a key and record the payment.
+ * Returns the plaintext key only on the first call for that session; later calls get { alreadyIssued: true }.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function fulfillKitSession(s: any): Promise<{ key?: string; alreadyIssued?: boolean; email: string }> {
+  await ensure();
+  const session = String(s.id);
+  const email = String(s.customer_details?.email ?? s.customer_email ?? "");
+  const done = await db.execute({ sql: "SELECT 1 FROM kit_keys WHERE stripe_session = ?", args: [session] });
+  if (done.rows.length > 0) return { alreadyIssued: true, email };
+  const key = await issueKitKey({ email, stripeSession: session });
+  await db.execute(`CREATE TABLE IF NOT EXISTS payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, submission_id INTEGER NOT NULL, plan TEXT NOT NULL, amount_cents INTEGER NOT NULL,
+    stripe_session TEXT NOT NULL UNIQUE, src TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL DEFAULT (datetime('now')))`);
+  await db.execute({
+    sql: "INSERT OR IGNORE INTO payments (submission_id, plan, amount_cents, stripe_session, src) VALUES (0, 'submit_kit', ?, ?, ?)",
+    args: [Number(s.amount_total ?? 2900), session, String(s.metadata?.src ?? "")],
+  });
+  return { key, email };
+}
