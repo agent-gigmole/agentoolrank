@@ -261,3 +261,4 @@
 | pixtidy 接入 Brevo 已认证 / brevo-pixtidy-key / launch@pixtidy.com / 一账户三品牌共用 300 封 | TASK.md#T20 外联 Brevo 段 |
 | 外联 4 会话全 page_view 0 转化 / 付费档卖曝光流量不足 / Submit Kit 论据 | LOG.md#2026-10-03 06:29–06:35 |
 | GSC URL Inspection API 逐页查收录 / coverageState / zh ja 页未收录 / Discovered not indexed / sitemap 重提要全权限 scope | GOTCHAS.md#gsc-url-inspection-api |
+| dev.to API 发文 / key 属哪个账号 / devto-api-key-agentoolrank / Forbidden Bots 403 / details textContent / 稿件内部注释外泄 | GOTCHAS.md#devto-api-publish |

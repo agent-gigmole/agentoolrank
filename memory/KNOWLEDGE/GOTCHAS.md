@@ -795,3 +795,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 逐页查 Google 收录状态：`POST https://searchconsole.googleapis.com/v1/urlInspection/index:inspect`，body `{"inspectionUrl": "...", "siteUrl": "sc-domain:agentoolrank.com"}`，service account 用 `webmasters.readonly` 即可；看 `inspectionResult.indexStatusResult.coverageState`（URL is unknown to Google / Discovered - currently not indexed / Submitted and indexed）和 lastCrawlTime。有每日配额，只做抽查。
 - 重新提交 sitemap 要 `webmasters` 全权限 scope（readonly 不行），见 #google-sitemap-resubmit-service-account。
 - 10-03 实测：zh/ja 页 10-02 上线，GSC 28 天展示为 0（GSC 本身有约 2 天延迟）；抽查全是 unknown 或 Discovered-not-indexed，只有老英文页 indexed；sitemap 统计 2467 提交、0 indexed（统计也滞后）。结论：新站抓取预算低，新语言页的瓶颈是收录而非排名；先用 URL Inspection 判断是否被收录，再谈流量。
+
+## devto-api-publish
+- **拿错 key**：~/.config/secrets/devto-api-key 属于 pixtidy 的 dev.to 账号（文章全是证件照主题），不是 agentoolrank 的。我们的 key 在 ~/.config/secrets/devto-api-key-agentoolrank（600，dev.to /settings/extensions 生成，名称 agentoolrank-publish）。用任何 key 发文前先调 `GET /api/users/me` 确认 username = agentoolrank
+- 生成的 key 显示在折叠的 `<details>` 里，`innerText` 读不到（折叠内容不渲染），要读 `textContent`；脚本 scripts/winbrowser/task_devto_key.py 生成/读取后直接写文件，不打印
+- dev.to API 对 Python 默认 User-Agent 返回 403 "Forbidden Bots" → 带自定义 UA + `Accept: application/vnd.forem.api-v1+json`
+- 稿件里的内部 HTML 注释（中文发布计划）在 markdown 渲染里不可见但会随正文上传，发布前必须删；发布脚本加断言：英文稿正文不得含中文字符

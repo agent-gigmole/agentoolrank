@@ -898,3 +898,9 @@
 - 结果：zh/ja 展示 0（上线 1 天 + GSC 延迟，属预期），抽查均未收录，只有老英文页 indexed；sitemap 重提 204；收录覆盖率列入 T28 指标，新建 T30 每周抽查；外联 9.5 小时无回复，09:30 后统计
 - 坑：GOTCHAS#gsc-url-inspection-api
 - 结果：成功
+
+## 2026-10-03 08:36–08:45 dev.to 第二篇发布
+- 做法：发现原 devto-api-key 属 pixtidy 账号 → 在 dev.to /settings/extensions 生成 agentoolrank-publish key（task_devto_key.py 读 textContent 存文件不打印）；稿件改 669→593、补实测表说明、删中文 HTML 注释；发布脚本加断言（正文无中文字符）；API 带自定义 UA + Accept 头发布
+- 结果：https://dev.to/agentoolrank/where-to-list-an-mcp-server-or-ai-agent-tool-free-vs-paid-checked-oct-2026-1eak （id 4789560），canonical /where-to-list，ref=devto2；第一篇阅读 30
+- 坑：GOTCHAS#devto-api-publish
+- 结果：成功

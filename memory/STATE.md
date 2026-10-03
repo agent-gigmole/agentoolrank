@@ -773,3 +773,12 @@
 - **素材包已更新**（c8a5d42）：593 工具、Jason T.、"近 200 个热门工具有中文和日文页面"（zh 191、ja 191）
 - 外联截至 07:30 无回复（发出约 9.5 小时），09:30 后统计
 - 坑：GOTCHAS#gsc-url-inspection-api
+
+## 2026-10-03 08:36–08:45 dev.to 第二篇发布（0549c1a、f0c946b）
+- **已发布**：品牌号 @agentoolrank《Where to list an MCP server or AI agent tool: free vs paid (checked Oct 2026)》 https://dev.to/agentoolrank/where-to-list-an-mcp-server-or-ai-agent-tool-free-vs-paid-checked-oct-2026-1eak （id 4789560），canonical → /where-to-list，站内链接带 ref=devto2
+- 发布前改 3 处：669→593；补一句"页面新增 101 个实测目录站可筛选表"；删掉稿件里的中文 HTML 注释（内部发布计划，差点外泄）；ai-flavor clean
+- 第一篇（10-01 数据文章）阅读量 30
+- **我们的 dev.to key**：~/.config/secrets/devto-api-key-agentoolrank（600，名称 agentoolrank-publish，/api/users/me 返回 agentoolrank）。**~/.config/secrets/devto-api-key 是 pixtidy 的账号，不能用**
+- 新脚本 scripts/winbrowser/task_devto_key.py：生成或读取 key 直接存文件，不打印
+- 下一步：10-07 发数据文章「实测 101 个目录站」（同一品牌号）
+- 坑：GOTCHAS#devto-api-publish

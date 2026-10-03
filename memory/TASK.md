@@ -231,7 +231,7 @@
 - [ ] 2026-10-16 复看 GSC 对比页 + 替代品页 CTR（替代品页 10-02 晚改 meta，需记基线）（基线：28 天 175 曝光 / 3 点击，排名 3–7）
 - [x] 替代品页 meta description 同法数据驱动（alternativesDescription，10-02 晚已部署）
 - [ ] 根据 GSC 有曝光的查询扩写对比/替代品内容（GSC 28 天 /compare 175/397 曝光；先做 goose-vs-open-webui、claude-code-vs-openhands 等有曝光的对）
-- [ ] 站外文章：草稿 docs/ops/launch-kit/devto-where-to-list.md 已写好（canonical→/where-to-list），定于 2026-10-03 用 dev.to 品牌号发布，与 10-01 长文错开
+- [x] 站外文章 10-03 dev.to：已发布 https://dev.to/agentoolrank/where-to-list-an-mcp-server-or-ai-agent-tool-free-vs-paid-checked-oct-2026-1eak （id 4789560，canonical→/where-to-list，ref=devto2，0549c1a）
 - [x] /where-to-list 实测表上线（2026-10-03）：h2「101 directories we actually submitted to」+ 汇总数字（nofollow 注明样本偏差）+ TestedDirectoryTable 4 个筛选开关；线上核对 101 行、gotchas 未泄露
 - [ ] 数据文章「实测 101 个目录站」10-07 用 dev.to 品牌号发（brief docs/ops/launch-kit/briefs/devto-101-directories.md → drafts/devto-101-directories.md，bin/write longform + 手改 2 处，ai-flavor clean，CTA → /where-to-list；与 10-03 devto-where-to-list 错开）
 - [ ] 更多 X vs Y / alternatives 对比内容（按 GSC 有曝光查询选题）
