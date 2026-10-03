@@ -1179,3 +1179,9 @@
 - 结果：线上 3 次带 key 调用 3 条同 key_id；smoke systemd 手动跑通，两条付款路径到 Stripe 名称金额正确；cf25b58 WIP 未接收费；07:40 定时首跑未核实
 - 坑：Vercel 路由响应后的写库要用 after()，void promise 会丢 → GOTCHAS#vercel-after-for-post-response-writes；Playwright 严格模式遇重复 data-testid 报错，用 .first → GOTCHAS#playwright-duplicate-testid-first
 - 结果：成功（共用积分模块进行中）
+
+## 2026-10-03 22:1x–22:4x Stripe 品牌名 + hourly 来源容错 + 中文市场撤回 + /api-key 入口 + 下载量补齐 + 公众号事实稿（ffdcda3、b892231、2dd8dc8、4e19a3a、9f69cc4）
+- 做法：两个结账表单加 branding_settings[display_name]=AgentoolRank + 单测，smoke 断言页头品牌名，部署后重跑；hourly 22:17 failed → feedback.ts 三个来源各包 source()（20s 超时、重试一次、WARN 不抛、邮件按 id 去重），reset-failed 后手动 start 成功；中文市场周报节写了又按老板更正撤回（周报节、队列两项、zh brief 全删）；/api-key 入口加到 MCP instructions、/agents、/submit-kit 并部署核对；fetch-downloads --missing 补空；写 handoff-wechat.ts 为 operator-lab 现算公众号事实稿，await 65ac86 等 10-05 定稿
+- 结果：smoke 通过；hourly 恢复；下载量 76/76 补齐，Pydantic 812.6M 第一；事实稿已交付草稿并通知 operator-lab；明早 07:40 smoke 定时首跑未核实
+- 坑：聚合定时任务里单个外部来源超时会让整个 systemd 服务 failed 并报警 → 每个来源各自超时 + 一次重试 + WARN → GOTCHAS#aggregate-job-per-source-isolation
+- 结果：成功

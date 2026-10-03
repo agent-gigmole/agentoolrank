@@ -1034,3 +1034,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 现象：/submit-kit 页上有两个 data-testid=kit-buy 购买按钮，Playwright locator 严格模式直接报错（resolved to 2 elements）
 - 做法：checkout_smoke.py 里用 `.first`；自查脚本只需证明一条路径能走通
 - 来源：2026-10-03 checkout-smoke
+
+## aggregate-job-per-source-isolation
+- 现象：hourly（systemd --user 定时）22:17 failed，kpi 日志里 feedback collect 对某个外部来源的请求 TimeoutError 未被捕获一路抛出 → 整个服务 failed → 触发报警，其余来源和后续步骤都没跑
+- 做法（b892231）：apps/agent-tools/scripts/feedback.ts 加 `source(name, fn)` 包装，dev.to、GitHub、hello@ inbox 各自：20s 超时 → 失败重试一次 → 仍失败打 WARN 不抛，继续下一个来源；邮件来源重试时按消息 id 去重，避免重复入库
+- 恢复：`systemctl --user reset-failed <unit>` 后手动 start，确认 inactive（成功）而非 failed
+- 通则：聚合多个外部来源的定时任务，每个来源是独立失败域：单源超时 + 一次重试 + WARN；只有「全部来源都失败」或本地逻辑错误才让任务失败。重试要幂等（按 id 去重）
+- 来源：2026-10-03 hourly 22:17 failed

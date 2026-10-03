@@ -316,3 +316,8 @@
 | checkout-smoke 付款路径每日自查 / checkout_smoke.py iPhone 13 ?internal=1 / Submit Kit $29 featured $49 Stripe 商品名断言 / ops/smoke/ 截图 test-sessions.txt / systemd 07:40 Persistent / SMOKE_NO_ALERT / pipelines.json 第 7 条 / 4b855d9 | STATE.md#2026-10-03 22:4x–23:xx 免费 API key 上线 |
 | Playwright 严格模式 重复 data-testid kit-buy .first | GOTCHAS.md#playwright-duplicate-testid-first |
 | 共用积分扣费 api-credits.ts decideCharge 当日免费额度优先 再扣余额 short / 未列工具默认 1 分 / CREATE_API_CREDITS / WIP 不接收费 / cf25b58 | STATE.md#2026-10-03 22:4x–23:xx 免费 API key 上线 |
+| hourly systemd failed / feedback collect TimeoutError / 聚合定时任务每个外部来源独立容错 source() 20s 超时 重试一次 WARN 不抛 / 邮件重试按 id 去重 / reset-failed / b892231 | GOTCHAS.md#aggregate-job-per-source-isolation |
+| Stripe Checkout 页显示品牌名 branding_settings[display_name]=AgentoolRank / kitCheckoutForm plans.checkoutForm / smoke 断言页头品牌 / imagehub 63fe4a7 推广第二例 / ffdcda3 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
+| 中文市场不做 由 operator-lab 公众号统一做（老板 22:34 更正）/ 周报节 zh brief 已撤回 2dd8dc8 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
+| operator-lab 公众号事实稿 handoff-wechat.ts ~/data/handoff/ai-directory/wechat-directories.md --to / 10-05 20:00 截止 await 65ac86 / 9f69cc4 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
+| 下载量 --missing 76/76 补齐 / Pydantic 812.6M 第一 映射核实 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |

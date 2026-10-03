@@ -56,7 +56,9 @@
 - ✅ 积分模式第 2 步：免费 API key 上线（/api-key 一键领取、无账户无邮箱、只存哈希；带 key 的 MCP 调用已能按 key 计数，线上 3 次调用核对；10-03 22:3x）
 - ✅ 付款路径每日自查 checkout-smoke（定时器 07:40 已 enabled、systemd 手动跑通；Submit Kit $29.00、首页推荐 $49.00 都到 Stripe 且商品名对；截图 ops/smoke/）
 - 共用积分扣费模块（agentkit 22:20 分工：我做共用版，new_ladar 复用；只一套扣费代码，两边定价可以不同）：api-credits.ts 余额表 + 扣费函数 + 每日免费额度，先写好带测试但不接收费，等 10-18 触发条件
-- /api-key 入口：/agents 页、/submit-kit 的 MCP 用法段、MCP initialize 说明里各加一句「可选：免费 key」
+- ✅ /api-key 入口：MCP initialize 说明、/agents、/submit-kit 用法段各加一句（10-03 22:4x 上线核对）
+- /api/v1 REST 接口也接上 recordCall（surface=api），日报的调用数才包含 API 用户
+- operator-lab 公众号素材（截止 10-05 20:00）：生成脚本 handoff-wechat.ts 已写好，草稿已放 ~/data/handoff/ai-directory/wechat-directories.md（窗口截至 10-03）；10-05 用 --to=2026-10-05 重跑定稿并通知 operator-lab（await 已登记）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

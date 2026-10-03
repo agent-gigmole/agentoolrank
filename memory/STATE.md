@@ -1218,3 +1218,14 @@
 - **共用积分扣费模块（WIP，未接收费）**（cf25b58）：src/lib/api-credits.ts decideCharge（先扣当日免费额度、再扣余额，不够返回 short；单价由调用方传，未列工具默认 1 分）+ CREATE_API_CREDITS + 测试。agentkit 22:20 分工：我们写共用版，new_ladar 复用，两边定价可不同。等 10-18 触发条件再接收费
 - **TASK 队列**：免费 key ✅、付款自查 ✅；新增「共用积分扣费模块」（进行中）、「/api-key 入口三处（/agents、/submit-kit MCP 用法段、MCP initialize 说明）」
 - **下一步**：共用积分模块收尾（余额表读写，不接收费）；/api-key 入口三处；/api/v1 接 recordCall；--missing 补回数核对（未核实）；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
+
+## 2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 + 中文市场撤回 + /api-key 入口 + 下载量补齐 + 公众号事实稿（ffdcda3、b892231、3ec8f6e、2dd8dc8、4e19a3a、538a4c1、9f69cc4）
+- **checkout-brand**（ffdcda3，已部署；agentkit 推广，imagehub 63fe4a7 为范例，本项目第二例）：kitCheckoutForm 与 plans.checkoutForm 都加 `branding_settings[display_name]=AgentoolRank` + 单测；checkout_smoke.py 新断言：商品名之前的页头文字含 AgentoolRank。smoke 重跑通过
+- **hourly 22:17 failed 修复**（b892231）：原因是 feedback collect 某个外部请求 TimeoutError 一路抛出，整个 systemd 服务 failed。feedback.ts 加 source(name, fn)：dev.to、GitHub、hello@ inbox 各自 20s 超时、失败重试一次、再失败打 WARN 不抛；邮件重试时按 id 去重。reset-failed 后手动 start 成功；已回复 agentkit → GOTCHAS#aggregate-job-per-source-isolation
+- **中文市场撤回**：22:33 agentkit 要求周报写「中文市场」节（3ec8f6e）→ 22:34 老板更正：中文市场由 operator-lab 公众号统一做，各项目不做中文版。已删周报该节、队列两项、zh-submit-kit brief（2dd8dc8）。以后不做 /zh 版 Kit 之类
+- **/api-key 入口三处**（4e19a3a，已部署核对）：MCP initialize instructions、/agents、/submit-kit MCP 用法段各一句「可选：免费 key」。看板已记（538a4c1）
+- **下载量补空**：fetch-downloads --missing 76 个空值全部补齐（76/76）。新进 Pydantic（tool_id pydantic，PyPI 包 pydantic，812.6M）成为下载量第一，映射已核实正确
+- **operator-lab 公众号事实稿**（9f69cc4；22:36 要，截止 10-05 20:00）：scripts/handoff-wechat.ts 从日志/库现算，写 ~/data/handoff/ai-directory/wechat-directories.md（窗口 09-30→今天，可 --to）。当前数：提交 41、确认上线 7（其中 1 个只链 GitHub）、可跟随链接 4/6、平均上线等待 0.7 天（样本小）、目录站带来访客 0 会话；101 个实测目录站：只收费 1、有付费档 39、挂徽章 14、回链 12；下载量前 5：Pydantic 812.6M、OpenAI Python 284.2M、MCP Python SDK 219.0M、LangChain 169.4M、AI SDK 108.0M。await 65ac86 等 10-05 用 --to=2026-10-05 重跑定稿。已通知 operator-lab
+- 看板已记两行
+- **TASK 队列**：/api-key 入口 ✅；新增「/api/v1 也接 recordCall」「operator-lab 公众号素材 10-05 定稿」
+- **下一步**：/api/v1 接 recordCall；共用积分模块收尾（不接收费）；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿、两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
