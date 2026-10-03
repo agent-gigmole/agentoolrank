@@ -50,3 +50,15 @@ describe("preflightSkip (shared Brevo account guard, agentkit 17:05)", () => {
     expect(preflightSkip("ok@acme.dev", 2, new Set(["gone@acme.dev"]))).toBeNull();
   });
 });
+
+describe("outreachEmail with package downloads", () => {
+  const base = { owner: "Jane", name: "FastMCP", slug: "fastmcp", rank: 2, total: 29, category: "MCP Servers" };
+  it("adds one factual line when we have a download count", () => {
+    const e = outreachEmail({ ...base, downloads: { label: "PyPI", pkg: "fastmcp", value: "1.2M" } }, "https://agentoolrank.com");
+    expect(e.text).toContain("Its PyPI package fastmcp had 1.2M downloads in the last 30 days; the page shows that next to stars (https://agentoolrank.com/downloads).");
+    expect(e.text).not.toMatch(/\$\d|pay|price/i);
+  });
+  it("leaves the email unchanged without one", () => {
+    expect(outreachEmail(base, "https://agentoolrank.com").text).not.toContain("downloads in the last 30 days");
+  });
+});

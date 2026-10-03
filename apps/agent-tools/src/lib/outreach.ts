@@ -6,7 +6,7 @@ export function badgeMarkdown(baseUrl: string, slug: string, name: string): stri
 
 // Wording from the content-writing skill (docs/ops/launch-kit/drafts/outreach-maker-v2.md, brief in briefs/outreach-maker.md).
 export function outreachEmail(
-  t: { owner: string; name: string; slug: string; rank: number; total: number; category: string },
+  t: { owner: string; name: string; slug: string; rank: number; total: number; category: string; downloads?: { label: string; pkg: string; value: string } },
   baseUrl: string,
 ): { subject: string; text: string } {
   return {
@@ -18,6 +18,9 @@ export function outreachEmail(
       "",
       `Could you check ${baseUrl}/tool/${t.slug}?ref=outreach ? It shows your project's stats, alternatives and side-by-side comparisons, with data refreshed daily.`,
       "",
+      ...(t.downloads
+        ? [`Its ${t.downloads.label} package ${t.downloads.pkg} had ${t.downloads.value} downloads in the last 30 days; the page shows that next to stars (${baseUrl}/downloads).`, ""]
+        : []),
       "If you'd like a README badge, this shows the live star count and links to your page:",
       badgeMarkdown(baseUrl, t.slug, t.name),
       "",
