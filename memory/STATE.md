@@ -1201,3 +1201,12 @@
 - **类目页互链（进行中）**：227c9c5 已提交未部署 —— /category/[slug] 头部在有下载子页时显示「N by npm / PyPI downloads →」链到 /downloads/<slug>
 - **TASK 队列**：外联第二批核对 ✅、await 登记 ✅、/downloads 类目子页 ✅；新增「10-05 比较两批外联（打开率、?ref=outreach 会话、回信）定下一批文案」「类目页链 /downloads/<slug>」（后者进行中）
 - **下一步**：227c9c5 部署并线上核对；10-05 两批外联比较（未核实）；10-05 周榜首发核对（未核实）；futurepedia 价格（未核实）；10-07 dev.to 数据文章（未核实）
+
+## 2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空（227c9c5 部署、c4627f1、52bbe7a、1911788、a1fbb56、4f71928）
+- **类目页链 /downloads/<slug>**（已部署核对）：门槛统一到 lib/downloads.ts DOWNLOAD_CATEGORY_MIN=3 + downloadCategorySlugs(rows, slugs)，子页 generateStaticParams、/downloads 类目列表、sitemap、类目页链接同一规则（之前 4 处写死 3）。线上 sitemap 11 条，/category/mcp-servers 显示「10 by npm / PyPI downloads」
+- **下载量 78 个空值**：原因是 pypistats 批量限流（单查 litellm/unsloth 都 200）。c4627f1：429 退避重试（retry-after 或 15s×次数，最多 4 次），--missing 只补空值。22:13 起后台跑 --missing（/tmp/claude-1000/dl-missing.log，进程仍在跑），补回数量未核实
+- **积分模式评估**（老板 22:13 转哥飞 SEO Agent 做法）：结论在 docs/ops/weekly/2026-10-05.md「副产品变现：要不要做积分模式」节（52bbe7a）——先不做积分包和账户：①记录调用 ②免费 API key（填邮箱当场发、无账户）③触发条件（10-18 前 key ≥10 或带 key 调用 ≥200）才上积分包。定价草案：带 key 每天送 20 分，$9/500、$29/2000；完整清单 10 分、提交资料每站 2 分、收录状态每站 1 分；搜索/对比/单工具免费。依据：MCP/API 累计只 2 次提交（mcp 1、api 1），Kit 0 单，kit key 0 个。agentkit 认可并写进 shared/domains/saas-pricing.md「收费方式库」。10-18 复盘 await f82a38（done = docs/ops/reviews/2026-10-18-credits-kit.md 存在）
+- **第 1 步上线**（1911788）：src/lib/api-usage.ts（CREATE_API_CALLS、clientFromUserAgent、callRow、recordCall；不存 IP、不存 key 原文，只存 sha256 前 12 位；写入失败不影响调用）+ 测试；/api/mcp 每个 tools/call 记录（key 取 arguments.key 或 Authorization/x-api-key）。线上已写入 selftest 行。模块可直接移植给 new_ladar（agentkit 要求两边同一套）。4f71928：ops/daily.md SEO 行加「MCP 调用 7 天 N（带 key K，最多 <tool>）」，排除 selftest。测试 332 通过。剩 /api/v1 接入
+- **Columbus**：老板 22:16 口径「卖数据得出的结论（咨询式）不违规，不卖原数据」；问能否只做内部排序信号 → agentkit 22:18 照旧不用（不改 Columbus 规则、条款未读到、订阅到期会让排序悄悄变）。已确认，排序只用自测字段
+- 看板已记两行（a1fbb56 等）
+- **下一步**：/api/v1 接 recordCall；--missing 结果核对（未核实）；积分第 2 步免费 API key（10-05–06）；10-05 两批外联比较、周榜首发核对（未核实）；10-18 积分复盘

@@ -306,3 +306,8 @@
 | 外联候选补货 outreach-list.ts 整份覆盖 candidates.json 先备份 .bak / sent.json 去重不重发 / --per-category=12 / agent-gigmole 令牌 github-agentoolrank | GOTCHAS.md#outreach-list-overwrites-candidates |
 | 程序化 SEO 子页最低内容门槛 ≥3 个工具 / 薄内容 / sitemap 与 generateStaticParams 同一规则 / /downloads/<category> 11 个类目 / d753262 | GOTCHAS.md#programmatic-subpage-min-threshold |
 | 外联第二批 10 封 Brevo 28/28 送达 0 退信 / await 752be9 48h / 累计 20 封 / 10-05 两批比较 | STATE.md#2026-10-03 22:0x–22:2x 外联第二批送达 + /downloads 类目子页上线 |
+| pypistats 429 限流 / 下载量空值 78 个 / 失败不能存成空 / retry-after 退避 15s×n 最多 4 次 / fetch-downloads --missing / c4627f1 | GOTCHAS.md#pypistats-429-backoff |
+| 下载子页门槛统一 DOWNLOAD_CATEGORY_MIN downloadCategorySlugs / 类目页链 /downloads/<slug> | GOTCHAS.md#programmatic-subpage-min-threshold |
+| 积分模式评估 / 先记录调用→免费 key→触发条件再上积分包 / 10-18 key≥10 或带 key 调用≥200 / $9/500 $29/2000 | STATE.md#2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空 |
+| api_calls 调用记录 / src/lib/api-usage.ts recordCall / key 只存 sha256 前 12 位 不存 IP / 可移植 new_ladar / ops/daily.md MCP 调用 7 天 | STATE.md#2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空 |
+| Columbus 数据不用于排序（老板：卖结论不卖原数据；agentkit 22:18 照旧不用） | STATE.md#2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空 |

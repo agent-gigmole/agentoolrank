@@ -50,7 +50,10 @@
 - ✅ /submit-kit 标题/描述改搜索意图词 + FAQ（FAQPage JSON-LD，数字从数据集算；10-03 22:0x 上线核对）
 - ✅ /downloads 按类目拆分子页（11 个类目 ≥3 个有数工具，10-03 22:1x 上线，sitemap 11 条，标题如「Most-Downloaded MCP Servers (npm & PyPI, Last 30 Days)」）
 - 外联两批合计 20 封：10-05 按 Brevo 打开率 / ?ref=outreach 会话 / 回信 三个数比较第一批（排名开头）和第二批（排名 + 下载量 + 下载徽章），定下一批文案
-- 类目页 /category/<slug> 顶部加「按下载量看」链到 /downloads/<slug>（有子页的 11 个类目），互链帮收录
+- ✅ 类目页顶部加「N by npm / PyPI downloads →」链 /downloads/<slug>（10-03 22:3x 上线核对；门槛统一为 downloadCategorySlugs，页面/sitemap/链接同一规则）
+- 78 个包下载数为空：原因已查明是 pypistats 批量 429（c4627f1 加退避 + --missing）；剩核对后台 --missing 补回多少（/tmp/claude-1000/dl-missing.log），仍空的逐个看
+- 积分模式第 1 步：MCP 工具调用已记入 api_calls（10-03 22:17 上线核对，src/lib/api-usage.ts 可移植给 new_ladar）；ops/daily.md「MCP 调用 7 天」行已加（4f71928）；剩 /api/v1 也接上 recordCall
+- 积分模式第 2 步：免费 API key（填邮箱当场发，无账户），key 放宽限流并计数（10-05–06）；第 3 步积分包按周报触发条件再定
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

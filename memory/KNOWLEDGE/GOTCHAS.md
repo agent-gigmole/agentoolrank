@@ -1011,6 +1011,15 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 ## programmatic-subpage-min-threshold
 - 程序化 SEO 子页（如 /downloads/<category>）要设最低内容门槛：本项目取「≥3 个有下载量数据的工具」才出页，低于门槛不生成页面、不进 sitemap、上级页不链，避免 1–2 条的薄内容页拖累整站质量
 - 门槛规则写成一个函数，generateStaticParams、sitemap、上级页链接列表、动态路由 notFound 判断全部调用它，不各写一份（否则会出现 sitemap 有链接但页面 404，或页面存在但没进 sitemap）
-- 现状（10-03 查代码）：门槛 3 在 downloads/[category]/page.tsx 是常量 MIN_TOOLS，但 downloads/page.tsx 和 sitemap.ts 各写了字面量 `>= 3`，category/[slug]/page.tsx 的链接判断也要同步 —— 改门槛时这几处要一起改，最好抽到 lib/downloads.ts 一个导出常量/函数
+- 已统一（10-03 22:3x）：src/lib/downloads.ts 导出 DOWNLOAD_CATEGORY_MIN=3 与 downloadCategorySlugs(rows, slugs)，/downloads/[category] generateStaticParams、/downloads 类目列表、sitemap、/category/[slug] 的「N by npm / PyPI downloads →」链接全部调用它（此前 4 处各写字面量 3）。新增程序化页型照此先写共享函数再接页面
 - 本次上线 11 个类目（最少的 voice-agents、agent-protocols 各 3 个）
 - 来源：2026-10-03 /downloads 类目子页（d753262）
+
+## pypistats-429-backoff
+- 现象：fetch-downloads 跑完 78 个 PyPI 包下载量为空，单独 curl pypistats（如 litellm、unsloth）都 200 —— 不是名称匹配问题，是批量请求被 pypistats 限流（429）
+- 坑：把 429/失败当成「没有数据」存成空值，空值看起来像「这个包没下载量」，静默丢工具（详情页和 /downloads 排行少了这些）
+- 做法（c4627f1）：429 时退避重试，优先读 retry-after，否则 15s × 第 n 次，最多 4 次；仍失败就不写库（保留旧值/空），不要写 0 或空覆盖；加 --missing 只补空值，避免全量重跑再触发限流
+- 通则：任何批量外部 API 抓取，「请求失败」和「真实为空」必须区分存储；空值多时先单条手查确认是限流还是数据真没有
+- 10-03 22:13 起后台跑 --missing（日志 /tmp/claude-1000/dl-missing.log），补回多少未核实
+- 来源：2026-10-03 下载量补空
+

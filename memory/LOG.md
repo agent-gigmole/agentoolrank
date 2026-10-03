@@ -1167,3 +1167,9 @@
 - 结果：外联 10/10 发出，Brevo 7 天 28/28 送达、0 退信 0 拦截 0 投诉，累计 20 封；线上 11 个类目子页、sitemap +11；测试 329 通过；227c9c5 未部署；回信未核实
 - 坑：程序化 SEO 子页要设最低内容门槛（≥3 个工具）避免薄内容，sitemap 与 generateStaticParams 必须用同一规则 → GOTCHAS#programmatic-subpage-min-threshold
 - 结果：成功（类目页互链进行中）
+
+## 2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空（227c9c5、c4627f1、52bbe7a、1911788、a1fbb56、4f71928）
+- 做法：类目页链 /downloads/<slug> 部署，门槛抽成 downloadCategorySlugs 四处共用；查 78 个下载量空值 → pypistats 批量 429，fetch-downloads 加退避重试与 --missing，后台补跑；评估哥飞式积分模式，写进 10-05 周报：先记录调用 → 免费 key → 触发条件满足再上积分包（定价草案 $9/500、$29/2000），await f82a38 10-18 复盘；上线 api-usage.ts，/api/mcp 每次 tools/call 写 api_calls（key 只存哈希前 12 位，不存 IP），ops/daily.md 加 7 天 MCP 调用行；Columbus 只做内部排序信号被 agentkit 否决，照旧不用
+- 结果：线上 sitemap 11 条、mcp-servers 类目页链接已核对；api_calls 线上已有 selftest 行；测试 332 通过；--missing 补回数未核实；/api/v1 尚未接入
+- 坑：程序化页门槛只定义一处；批量请求 pypistats 会 429，失败不能存成空值 → GOTCHAS#pypistats-429-backoff、#programmatic-subpage-min-threshold（更新）
+- 结果：成功
