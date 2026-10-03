@@ -1355,7 +1355,7 @@
 - **进行中**：/submit 顶部给已收录工具维护者一句直达说明，第一步 6a5311c 已提交未部署
 - **下一步**：/submit 顶部说明部署 + 线上核对 + 看板；考虑已收录工具的 Stripe 商品描述；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
 
-## 2026-10-04 03:3x 提交审核加诈骗模板与冒名拦截（35ba465，已 push；审核脚本不需部署）
+## 2026-10-04 03:1x 提交审核加诈骗模板与冒名拦截（35ba465，已 push；审核脚本不需部署）
 - **起因**：agentkit 03:15 转来 new_ladar 发现：「AI 交易/资本平台」诈骗模板站群 + 冒名标题，LLM 只判「是不是 AI 工具」会放过
 - **对照检查**：596 个已收录工具 593 个来自 GitHub 仓库，无 GitHub 的 3 个（hourtick、hol-plugins、claude-resets）正常；资本/理财词只命中 hummingbot、ai-berkshire、quantdinger（真实开源仓库）；16 条提交无模板站，仅 #13 sol-defi-desk 是 IP 主机（95.216.126.169.sslip.io，待审）
 - **改动**：src/lib/safety.ts 新增 scamMatch（"AI Platform for … Capital/Wealth/Trading"、capital preservation、guaranteed/daily/passive returns|income）+ holdReasons（IP 主机、sslip.io/nip.io/xip.io；与已收录工具同名但官网和仓库都不同=疑似冒名）；scripts/review-submissions.ts：hold 的提交写 note 'hold: …' 保持 pending 不自动通过；scam 模板在 LLM 前（名字/网址/简介）和 LLM 后（LLM 简介 + 官网正文前 2000 字）都直接拒。+5 测试，363 全过；dry run 正常；已 bus 回复 agentkit
