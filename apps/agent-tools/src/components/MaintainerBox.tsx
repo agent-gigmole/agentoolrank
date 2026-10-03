@@ -40,6 +40,11 @@ export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = fals
       <p className="text-sm text-gray-600 mb-4">
         Show your live rank in your README, or put {name} in front of every visitor to AgentoolRank.
       </p>
+      {/* Live preview of what the README badge looks like (raises copy rate; the image is the same URL the badge uses). */}
+      <div className="flex flex-wrap items-center gap-3 mb-3">
+        <img src={`/api/badge/${slug}`} alt={`${name} on AgentoolRank badge`} height={32} className="h-8 w-auto" loading="lazy" />
+        {hasDownloads && <img src={`/api/badge/${slug}?metric=downloads`} alt={`${name} downloads badge`} height={32} className="h-8 w-auto" loading="lazy" />}
+      </div>
       <div className="flex flex-wrap gap-3">
         <button
           type="button"
