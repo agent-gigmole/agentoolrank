@@ -9,13 +9,13 @@
     "name": "daily-ops",
     "entry": "apps/agent-tools/scripts/daily-ops.sh",
     "timer": "agentoolrank-daily.timer",
-    "notes": "每天 21:30。审核提交（付费全审 + 免费 3 个）→ 7 天漏斗 → IndexNow → Stripe 支付宝/微信状态 → Brevo 各 tag 健康 → GSC 28 天。日志 apps/agent-tools/data/ops-logs/<日期>.log"
+    "notes": "每天 21:30。审核提交（付费全审 + 免费 3 个）→ 7 天漏斗 → IndexNow → Stripe 支付宝/微信状态 → Brevo 各 tag 健康 → GSC 28 天。日志 apps/agent-tools/data/ops-logs/<日期>.log；目录站上线复查 check-listings.ts（新上线回写 dirsub）"
   },
   {
     "name": "weekly-ops",
     "entry": "apps/agent-tools/scripts/weekly-ops.sh",
     "timer": "agentoolrank-weekly.timer",
-    "notes": "每周一 10:00（SOCIAL_CALENDAR 固定时段）。X 周榜：文案检查（自家 + bin/post-copy-check）→ post-gate --channel x-main → 发帖 → post-log；周报 newsletter 群发"
+    "notes": "每周一 10:00（SOCIAL_CALENDAR 固定时段）。X 周榜：文案检查（自家 + bin/post-copy-check）→ post-gate --channel x-main → 发帖 → post-log；周报 newsletter 群发；npm/PyPI 月下载量 fetch-downloads.ts → Turso tool_packages"
   },
   {
     "name": "nightly-outreach",
