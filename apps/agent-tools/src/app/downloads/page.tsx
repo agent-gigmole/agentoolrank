@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getDownloadRows } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
-import { compactCount, rankByDownloads } from "@/lib/downloads";
+import { compactCount, rankByDownloads, usedMoreThanStarred } from "@/lib/downloads";
 
 export const revalidate = 86400; // counts refresh weekly; a daily rebuild is plenty
 
@@ -24,7 +24,8 @@ export default async function DownloadsPage() {
     name: "Most-downloaded open-source AI agent tools (npm and PyPI, last 30 days)",
     itemListElement: top.map((t, i) => ({ "@type": "ListItem", position: i + 1, url: `${BASE}/tool/${t.id}`, name: t.name })),
   };
-  const heavy = [...ranked].filter((t) => t.perStar !== null && t.total >= 100_000).sort((a, b) => (b.perStar ?? 0) - (a.perStar ?? 0))[0];
+  const usedMore = usedMoreThanStarred(ranked, 10);
+  const heavy = usedMore[0];
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
@@ -78,6 +79,26 @@ export default async function DownloadsPage() {
           </tbody>
         </table>
       </div>
+      {usedMore.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Used far more than they are starred</h2>
+          <p className="text-sm text-gray-600 mb-3">
+            Downloads per GitHub star, among tools with at least 100K downloads in the last 30 days. A high ratio usually means a library
+            other software depends on (installed in builds and CI), not an app people star after trying it.
+          </p>
+          <ol className="grid md:grid-cols-2 gap-2 text-sm">
+            {usedMore.map((t, i) => (
+              <li key={t.id} className="flex items-baseline gap-2 p-2 border border-gray-100 rounded">
+                <span className="text-gray-400 w-5">{i + 1}</span>
+                <Link href={`/tool/${t.id}`} className="font-medium text-gray-900 hover:text-blue-600">{t.name}</Link>
+                <span className="ml-auto text-gray-600">{t.perStar?.toLocaleString("en-US")} per star</span>
+                <span className="text-gray-400">({compactCount(t.total)} / {compactCount(t.stars ?? 0)} stars)</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
       <p className="text-sm text-gray-600 mt-6">
         Missing a tool? Only tools that publish an npm or PyPI package from their own repo appear here. <Link href="/submit" className="text-blue-600 hover:underline">Submit an agent tool</Link>{" "}
         or see the <Link href="/weekly" className="text-blue-600 hover:underline">fastest-growing tools this week</Link>.
