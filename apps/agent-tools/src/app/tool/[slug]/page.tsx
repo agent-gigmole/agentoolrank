@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug, getToolPackages, getTools, getToolSnapshots } from "@repo/db/queries";
-import { downloadsLine } from "@/lib/downloads";
+import { downloadsLine, totalDownloads } from "@/lib/downloads";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
@@ -253,7 +253,7 @@ function getOutboundUrl(tool: Tool): string {
   return "";
 }
 
-function JsonLd({ tool }: { tool: Tool }) {
+function JsonLd({ tool, downloads30d }: { tool: Tool; downloads30d?: number | null }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -271,6 +271,8 @@ function JsonLd({ tool }: { tool: Tool }) {
   };
   if (tool.logo_url) data.image = tool.logo_url;
   if (tool.github_url) data.downloadUrl = tool.github_url;
+  // npm + PyPI downloads in the last 30 days (same number the page shows), as a schema.org interaction counter.
+  if (downloads30d) data.interactionStatistic = { "@type": "InteractionCounter", interactionType: "https://schema.org/DownloadAction", userInteractionCount: downloads30d };
   return (
     <script
       type="application/ld+json"
@@ -286,7 +288,9 @@ export default async function ToolPage({ params }: Props) {
 
   // Get star history for chart
   const snapshots = await getToolSnapshots(tool.id);
-  const downloads = downloadsLine(await getToolPackages(tool.id));
+  const packages = await getToolPackages(tool.id);
+  const downloads = downloadsLine(packages);
+  const downloads30d = totalDownloads(packages);
 
   // Get alternatives
   const alternativeTools: Tool[] = [];
@@ -310,7 +314,7 @@ export default async function ToolPage({ params }: Props) {
 
   return (
     <>
-      <JsonLd tool={tool} />
+      <JsonLd tool={tool} downloads30d={downloads30d} />
       <BreadcrumbJsonLd items={[
         ...(tool.category_tags.length > 0 ? [{ label: tool.category_tags[0].replace(/-/g, " "), href: `/category/${tool.category_tags[0]}` }] : []),
         { label: tool.name },
