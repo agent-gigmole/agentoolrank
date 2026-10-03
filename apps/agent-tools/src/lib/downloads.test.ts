@@ -66,3 +66,12 @@ describe("rankByDownloads", () => {
     expect(r[1].perStar).toBe(90);
   });
 });
+
+describe("totalDownloads", () => {
+  it("sums known counts and is null when the tool has no package count", async () => {
+    const { totalDownloads } = await import("./downloads");
+    expect(totalDownloads([{ downloads_30d: 10 }, { downloads_30d: 5 }])).toBe(15);
+    expect(totalDownloads([{ downloads_30d: null }])).toBeNull();
+    expect(totalDownloads([])).toBeNull();
+  });
+});

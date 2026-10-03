@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
-import { getToolBySlug } from "@repo/db/queries";
+import { getToolBySlug, getToolPackages } from "@repo/db/queries";
+import { compactCount, totalDownloads } from "@/lib/downloads";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Tool } from "@repo/db/schema";
 import type { Metadata } from "next";
@@ -40,11 +41,12 @@ function formatStars(n: number | null): string {
   return String(n);
 }
 
-function MetricRow({ label, a, b, higherIsBetter = true }: {
+function MetricRow({ label, a, b, higherIsBetter = true, format = formatStars }: {
   label: string;
   a: number | null;
   b: number | null;
   higherIsBetter?: boolean;
+  format?: (n: number) => string;
 }) {
   const aVal = a ?? 0;
   const bVal = b ?? 0;
@@ -55,10 +57,10 @@ function MetricRow({ label, a, b, higherIsBetter = true }: {
     <tr className="border-b border-gray-100">
       <td className="py-3 px-4 text-sm text-gray-500 text-center">{label}</td>
       <td className={`py-3 px-4 text-sm text-center font-medium ${aWins ? "text-green-700 bg-green-50" : "text-gray-700"}`}>
-        {a !== null ? formatStars(a) : "—"}
+        {a !== null ? format(a) : "—"}
       </td>
       <td className={`py-3 px-4 text-sm text-center font-medium ${bWins ? "text-green-700 bg-green-50" : "text-gray-700"}`}>
-        {b !== null ? formatStars(b) : "—"}
+        {b !== null ? format(b) : "—"}
       </td>
     </tr>
   );
@@ -100,6 +102,7 @@ export default async function ComparePage({ params }: Props) {
   ]);
 
   if (!toolA || !toolB) notFound();
+  const [dlA, dlB] = (await Promise.all([getToolPackages(toolA.id), getToolPackages(toolB.id)])).map(totalDownloads);
   const verdict = compareVerdict(toolA, toolB, new Date());
 
   return (
@@ -175,6 +178,9 @@ export default async function ComparePage({ params }: Props) {
               <MetricRow label="Star velocity /mo" a={toolA.star_velocity_30d} b={toolB.star_velocity_30d} />
               <MetricRow label="Commits (90d)" a={toolA.commit_count_90d} b={toolB.commit_count_90d} />
               <MetricRow label="Releases (6m)" a={toolA.release_count_6m} b={toolB.release_count_6m} />
+              {(dlA !== null || dlB !== null) && (
+                <MetricRow label="Downloads (30d, npm + PyPI)" a={dlA} b={dlB} format={compactCount} />
+              )}
               <MetricRow label="Overall score" a={toolA.score} b={toolB.score} />
             </tbody>
           </table>

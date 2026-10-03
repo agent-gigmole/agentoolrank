@@ -91,3 +91,9 @@ export function rankByDownloads(rows: DownloadRow[]) {
 }
 
 export const compactCount = compact;
+
+/** npm + PyPI downloads for one tool (compare pages); null when no registry count is known. */
+export function totalDownloads(rows: { downloads_30d: number | null }[]): number | null {
+  const known = rows.filter((r) => typeof r.downloads_30d === "number");
+  return known.length ? known.reduce((s, r) => s + (r.downloads_30d as number), 0) : null;
+}
