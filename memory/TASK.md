@@ -10,10 +10,10 @@
 - ✅ 流水线化：hello@ 回信收集（agentkit bin/gmail-read，并入每小时 feedback collect；回 no 自动 optout）。原需求：可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
 - ✅ 流水线化：周报数字段（weekly-numbers.ts + 定时器 agentoolrank-weekly-numbers 周一 08:50，已 enabled、systemd 跑通；10-05 周报记分牌已自动生成 69a8210；scoreboard 支出改取 agentkit bin/spend）
 - ✅ 流水线化：dev.to 文章定时发布（devto-publish.ts 并入 hourly，ops/devto-schedule.json；数据文章排在 10-07 21:00 北京，dry-run 通过）
-- 外联每晚 22:00 由定时器自动发 10 封（会话不再手动发）；回信由每小时 feedback collect 自动收，真人回信 48 小时内写结论
+- ✅ 外联每晚 22:00 由定时器自动发 10 封、回信每小时自动收（流水线已上：agentoolrank-outreach + feedback collect）
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
-- npm/PyPI 下载量接入（数据层已做 1a316ab：每周一自动抓、包名从仓库或候选名取且必须回链同一仓库；全量首跑 10-03 19:10 进行中；详情页展示已上线 10-03 19:20；剩：数据文章用、可选作排名信号）：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
+- ✅ npm/PyPI 下载量接入（数据层、详情页、对比页、替代品页、/downloads、首页、徽章、外联都已用上）
 - 竞品三家补价格：TAAFT $49/$437、toolify $99（10-03 已写进周报）；futurepedia 需登录才见价格，周一前用专用 Chrome 登录查（不注册新账号的话记「未核实」）
 - ✅ 每天查一次已上线目录站的链接 rel（由 check-listings 每天自动做；conduid 页面是 JS 渲染、HTML 里找不到链接，需人工看一次）
 - ✅ 人工看一次 conduid.com（10-03 18:58：页面在，只链 GitHub 仓库 rel=noopener，不链官网；已记 dirsub；check-listings 改为认 GitHub 仓库链接为「已上线（只链仓库）」）
@@ -21,7 +21,7 @@
 - ✅ 接入 visitor-insights（10-03 50a649a、8394b65；engagement/ui_click 写自有 events 表 props 列，?internal=1 持久排除，ops/daily.md 顶部 vi 块，隐私草稿 docs/legal/privacy-draft.md）。exit_survey 问卷另记，等 BOSS #35 隐私页批准后再上
 - ✅ 老板号发帖文案检查（10-03 ce06f78）：weekly-post.ts 发 X 前先过 post-copy.ts aiAuthorshipMatch，再过 post-gate；以后新增任何用老板号发帖的脚本也必须先调 aiAuthorshipMatch
 - ✅ 周帖接共用文案检查 + 渠道登记表（10-03 f872066、c642f03）：aiAuthorshipMatch 与 bin/post-copy-check 双检查 → post-gate --channel x-main --has-link → 发帖 → bin/post-log 记 posts.jsonl
-- Submit Kit 漏斗每天看一次：kit_click → /submit-kit 访问 → 付费，三个数写进 ops/daily.md，断在哪一步就改哪一步
+- ✅ Submit Kit 漏斗每天自动写进 ops/daily.md（进页 → 看到按钮 → 点了 → 付款，日报 09:00 带上）
 - ✅ /downloads 下载量排行榜上线（10-03 20:0x，ItemList JSON-LD、sitemap、详情页互链）
 - ✅ 10-07 数据文章加「星数 vs 下载量」一节（10-03 20:4x 用 bin/write 重写稿件：含下载量节 + Submit Kit 入口；推断句 5 条已改为有依据的说法，去 AI 味复检 clean）
 - ✅ /downloads 提交搜索引擎（IndexNow 每日整站；GSC sitemap 重提交 204，已写成 gsc_sitemap.py 并入 daily-ops）
@@ -33,7 +33,7 @@
 - ✅ /downloads 加「Used far more than they are starred」每星下载榜（≥10 万门槛，10-03 20:5x 上线核对：OpenAI Python 8,955/星、MCP Python SDK 8,952、AI SDK 3,984）
 - 10-12 周一 09:30 前把 ops/bets.json 换成下周 3 个押注、本周押注写 status（hit/miss），周报押注节对应（ops/bets.json 现有的 3 个就是 10-05 这周的押注）
 - ✅ /downloads 和 /alternatives 加维护者入口（徽章 / 首页推荐 $49，链 /tool/<id>#maintainers；10-03 21:0x 上线，真 Chrome 点击已记 ui_click label=downloads-maintainer-cta）
-- 外联信对有下载量的工具加一句事实：「你的 npm/PyPI 包近 30 天 X 次下载」，链 /downloads（数据开头、不提付费，符合外部评测第 1 条）——代码已上（73ac9d9，≥1,000 才加，dry-run 5/6 带这句），待 10-03 22:00 定时器首发后核对实际发出的信里有这句（未核实）
+- ✅ 外联信对有下载量的工具加一句事实（73ac9d9，≥1,000 才加）
 - ✅ ops/daily.md 加一行「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」，看付费推荐漏斗（5f0fd7b：渠道行「维护者：入口点击 · 复制徽章 · 首页推荐结账」）
 - ✅ 下载量 README 徽章（/api/badge/<slug>?metric=downloads，维护者区「Copy downloads badge」；顺带修了星数徽章 ★ 显示成方框、长名字被截断，10-03 20:5x 上线核对）
 - ✅ 外联 MX 预检只在 DNS 明确无记录时退订，临时错误重试一次后本轮跳过（agentkit mx-transient）
@@ -43,6 +43,10 @@
 - ✅ 首页加「Launching an agent tool?」卡片（链 /where-to-list、/submit-kit、/submit，10-03 21:21 部署核对）
 - ✅ /submit-kit 网页直接展示免费前 10 个站（?type= 切换 AI tool / MCP server / Dev tool / SaaS，10-03 21:2x 上线核对：MCP server 24 个对口站，前 3 agenstry、glama、mcpmarket）
 - ✅ 外联候选补货：已补到 56 人、未发 47（10-03 21:26，备份 candidates-2026-10-03.json.bak）；夜间 outreach-ops.sh 发信前未发 < 20 自动备份并补货（97f19d0、4bbf302）
+- ✅ recommend_directories 免费结果的付费提示链到 /submit-kit?type=<产品类型>（10-03 21:4x 上线，线上 MCP 调用已核对）
+- /where-to-list 的 Submit Kit 框按产品类型给 4 个直达链接（/submit-kit?type=ai_tool 等），读者一点就看到对口的免费 10 个
+- X 周榜文案加一行「本月下载最多」（取 /downloads 第 1 名），给周一 10:00 的帖子一个新角度，文案过 post-copy 检查
+- 详情页「Maintain X?」框对下载量 ≥10 万的工具，首页推荐按钮文案改为强调「被 N 个下载/月 的开发者看到」？——先查首页推荐的点击数据再定，避免没依据改文案
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

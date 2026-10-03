@@ -1143,3 +1143,9 @@
 - 结果：测试 325 通过；dry-run 10 封正常；agentkit 已登记推广 mx-doh 并通知 imagehub、new_ladar；22:00 实发未核实；自动补货实际触发未核实
 - 坑：WSL 本地解析器可能对有 MX 的域名返回空结果不报错，退订类不可逆判断须第二解析源复核 → GOTCHAS#mx-verdict-definite-only；同一邮箱多工具一轮多发 → 同节
 - 结果：成功
+
+## 2026-10-03 21:3x–21:44 MCP 免费结果链网页免费清单 + 队列整理 + /where-to-list Kit 框按类型直达开工（a61c2bb、cb4091c、c7b8014）
+- 做法：recommend_directories 免费结果的 upgrade 文案链 https://agentoolrank.com/submit-kit?type=<product_type>，并说明网页上有同样的免费 10 个；directory-kit.test.ts 加断言；部署；看板记一行。TASK 整理：外联下载量句、外联夜间流水线、Submit Kit 漏斗进日报、npm/PyPI 下载量接入 四项打勾，新增 MCP 链接项（已完成）；新增待办 3 件：/where-to-list Kit 框按类型直达、X 周榜加「本月下载最多」一行、详情页首页推荐文案（先看点击数据再定）；未完成项现 10 件。开工 /where-to-list Kit 框 4 个产品类型直达链接（data-testid wtl-kit-*）
+- 结果：线上 POST /api/mcp tools/call 返回已核对含 submit-kit?type=mcp_server；c7b8014 已提交未部署；22:00 外联批次待核实（后台等待任务会提醒，未核实）
+- 坑：无新坑
+- 结果：成功（/where-to-list Kit 框直达进行中）
