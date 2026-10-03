@@ -1226,3 +1226,8 @@
 - 结果：线上 ai_tool 返回 2 个 Live（1 followed、1 nofollow）+ 4 个 Submitted；测试 343 通过；第二篇 await 136e42；dee800f 已提交未部署
 - 坑：定时发布的文章数字会在发布日前过期，发布前一天要用最新数据重刷再复检 → GOTCHAS#scheduled-post-refresh-numbers
 - 结果：成功（/submit-kit 实测战绩进行中）
+
+## 2026-10-04 00:10 /submit-kit 实测战绩上线 + 维护者区 Submit Kit 入口开工（dee800f 部署、e4487a2、9635973）
+- 做法：部署 dee800f，线上核对 /submit-kit 显示「Our own run so far: we submitted agentoolrank.com to 41 of these directories; 7 are live, 4 with a followed link…」（listing_checks 现算，data-testid kit-our-tally），看板记一行；接着在详情页 MaintainerBox 底部加 Submit Kit 链接（/submit-kit?type=ai_tool，data-testid maintainer-kit，ui_click 统计）
+- 结果：实测战绩线上通过；9635973 已提交未部署
+- 结果：成功（维护者区入口进行中）

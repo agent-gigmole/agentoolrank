@@ -1277,3 +1277,9 @@
 - **/submit-kit 实测战绩（进行中，dee800f 已提交未部署）**：页面显示「Our own run so far: submitted N, live M, followed K」，从 listing_checks 现算
 - **TASK 队列**：our_listing ✅、第二篇排期 ✅；新增「10-11 用最新 tool_packages 重刷第二篇数字后复检」「/submit-kit 实测战绩一行」；看板已记
 - **下一步**：dee800f 部署并线上核对；10-11 重刷第二篇数字；等第二周快照后做 /downloads「上升最快」；07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55
+
+## 2026-10-04 00:10 /submit-kit 实测战绩上线 + 维护者区 Submit Kit 入口开工（dee800f 部署、e4487a2、9635973）
+- **/submit-kit 实测战绩已上线**（dee800f，已部署；看板 e4487a2）：页面显示「Our own run so far: we submitted agentoolrank.com to 41 of these directories; 7 are live, 4 with a followed link…」，从 listing_checks 现算（data-testid kit-our-tally），每天随 check-listings 自动更新；线上已核对
+- **详情页维护者区 Submit Kit 入口（进行中，9635973 已提交未部署）**：MaintainerBox 底部加「Listing <工具> on other directories too? The Submit Kit …」链 /submit-kit?type=ai_tool（data-testid maintainer-kit，计入 ui_click）
+- **TASK 队列**：实测战绩 ✅；维护者区入口进行中
+- **下一步**：9635973 部署并线上核对；10-11 重刷第二篇数字；等第二周快照后做 /downloads「上升最快」；07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55
