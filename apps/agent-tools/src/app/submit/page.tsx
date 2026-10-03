@@ -27,6 +27,9 @@ export default async function SubmitPage() {
         <li>✓ Listed in our <code>llms.txt</code>, so AI assistants can find and recommend you</li>
         <li>✓ A badge for your site and README</li>
       </ul>
+      <p className="text-sm text-gray-600 mb-6">
+        Already listed? Paste its GitHub link below and submit: you&apos;ll get the badge and can feature it on the homepage and its category page.
+      </p>
       <SubmitForm paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} />
       <section id="what-we-list" className="mt-8 text-sm text-gray-700">
         <h2 className="text-base font-semibold text-gray-900 mb-2">What we list</h2>
