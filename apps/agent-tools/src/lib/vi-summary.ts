@@ -51,4 +51,20 @@ export function withViBlock(lines: string[], rest: string): string {
 
 /** Data before the v3 fix (short pages counted 0% scrolled) overlaps the window: the report must say so. */
 export const VI_V3_SINCE = new Date("2026-10-03T17:00:00+08:00");
-export const viNote = (since: Date) => (since < VI_V3_SINCE ? "含 10-03 17:00 前数据：停留统计 10-03 16:30 才上线，之前的会话都落在疑似扫描器里，滚动口径也偏低" : undefined);
+export const viNote = (since: Date) => (since < VI_V3_SINCE ? "含 10-03 17:00 前数据：停留统计 10-03 16:22 才上线，之前的会话按 page_view 计入访客，停留和滚动只覆盖之后，滚动口径偏低" : undefined);
+
+/** UTC (SQLite datetime) when engagement tracking went live (50a649a deployed; first engagement event 08:23:49 UTC). */
+export const ENGAGEMENT_SINCE = "2026-10-03 08:22:00";
+export const VISITORS_DEFINITION =
+  "访客=近 7 天发过 engagement 的会话；engagement 埋点（10-03 16:22 北京）上线前的会话按 page_view 计；上线后只有 page_view 的会话计为疑似扫描器，不算访客；排除自测；会话=标签页（sessionStorage）";
+
+/** Visitor / likely-scanner split shared by the scoreboard and the daily vi block. */
+export function classifySessions(sessions: { firstSeen: string; engaged: boolean }[], since: string) {
+  let visitors = 0;
+  let scanners = 0;
+  for (const s of sessions) {
+    if (s.engaged || s.firstSeen < since) visitors++;
+    else scanners++;
+  }
+  return { visitors, scanners };
+}

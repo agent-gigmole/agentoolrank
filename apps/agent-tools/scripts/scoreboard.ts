@@ -8,6 +8,7 @@ import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync, writeFileSync } from "node:fs";
 import { buildScoreboard, ledgerCashUsd, type PaidOrder } from "../src/lib/scoreboard";
+import { ENGAGEMENT_SINCE, VISITORS_DEFINITION, classifySessions } from "../src/lib/vi-summary";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN });
@@ -40,16 +41,20 @@ for (const r of await rows("SELECT amount_cents, stripe_session FROM payments WH
   const refunded = await refundedCents(String(r.stripe_session)).catch((e) => (warnings.push(`退款未核实：${e.message}`), 0));
   payments.push({ amountCents: Number(r.amount_cents), refundedCents: refunded });
 }
-const visitors = Number(
-  (await rows("SELECT COUNT(DISTINCT sid) n FROM events WHERE src NOT LIKE '%selftest%' AND sid != 'selftest' AND name='page_view' AND ts >= ?", [sqlTime]))[0]?.n ?? 0,
+// visitors_7d (agentkit 10-03 17:03): sessions with engagement; before engagement tracking existed, page_view sessions count.
+const split = classifySessions(
+  (await rows("SELECT MIN(ts) f, SUM(name='engagement') e FROM events WHERE src NOT LIKE '%selftest%' AND sid != 'selftest' AND name IN ('page_view','engagement') AND ts >= ? GROUP BY sid", [sqlTime]))
+    .map((r) => ({ firstSeen: String(r.f), engaged: Number(r.e) > 0 })),
+  ENGAGEMENT_SINCE,
 );
+const visitors = split.visitors;
 const spendUsd = ledgerCashUsd(readFileSync(`${ROOT}docs/ops/spend-ledger.md`, "utf8"), day(since), day(now));
 const { bets } = JSON.parse(readFileSync(`${ROOT}ops/bets.json`, "utf8"));
 
-const board = { ...buildScoreboard({ now, payments, spendUsd, visitors, bets }), sources: {
+const board = { ...buildScoreboard({ now, payments, spendUsd, visitors, bets }), likely_scanners_7d: split.scanners, visitors_definition: VISITORS_DEFINITION, sources: {
   revenue: "Turso payments（排除 selftest）减 Stripe 退款，滚动 7 天",
   spend: "docs/ops/spend-ledger.md 明细，只计现金（不含 OpenRouter 既有余额、本机 Sub2API）",
-  visitors: "Turso events 去重会话，排除 selftest，滚动 7 天",
+  visitors: "Turso events，见 visitors_definition，滚动 7 天",
   bets: "ops/bets.json（周报 docs/ops/weekly/ 的押注）",
 }, warnings };
 writeFileSync(`${ROOT}ops/scoreboard.json`, JSON.stringify(board, null, 2) + "\n");

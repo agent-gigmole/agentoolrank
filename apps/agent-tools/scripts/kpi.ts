@@ -5,7 +5,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-import { viBlock, viNote, withViBlock } from "../src/lib/vi-summary";
+import { ENGAGEMENT_SINCE, classifySessions, viBlock, viNote, withViBlock } from "../src/lib/vi-summary";
 import { cstDayRange, renderDaily, renderKpi, replaceBlock, type KpiData, type Window } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -96,8 +96,8 @@ try {
     days: 1,
     note: viNote(viSince),
     sessions: await (async () => {
-      const r = (await rowsOf(`SELECT SUM(e > 0) v, SUM(e = 0 AND pv > 0) s FROM (SELECT sid, SUM(name='engagement') e, SUM(name='page_view') pv FROM events WHERE ${REAL_EV} AND ts >= ? GROUP BY sid)`))[0];
-      return { visitors: Number(r?.v ?? 0), scanners: Number(r?.s ?? 0) };
+      const rows = await rowsOf(`SELECT MIN(ts) f, SUM(name='engagement') e FROM events WHERE ${REAL_EV} AND ts >= ? GROUP BY sid HAVING SUM(name='page_view') > 0 OR SUM(name='engagement') > 0`);
+      return classifySessions(rows.map((r) => ({ firstSeen: String(r.f), engaged: Number(r.e) > 0 })), ENGAGEMENT_SINCE);
     })(),
     sinceLabel: `北京 ${new Date(viSince.getTime() + 8 * 3600_000).toISOString().slice(5, 16).replace("T", " ")}`,
     engagement: eng.map((r) => ({ path: String(r.path), seconds: Number(r.s ?? 0), scroll: Number(r.c ?? 0) })),

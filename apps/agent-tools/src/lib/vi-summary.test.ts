@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scrollBuckets, viBlock, viNote, withViBlock } from "./vi-summary";
+import { ENGAGEMENT_SINCE, classifySessions, scrollBuckets, viBlock, viNote, withViBlock } from "./vi-summary";
 
 describe("scrollBuckets", () => {
   it("uses the shared bucket edges", () => {
@@ -36,7 +36,7 @@ describe("withViBlock", () => {
 
 describe("viNote", () => {
   it("flags windows that include data from before the v3 scroll fix", () => {
-    expect(viNote(new Date("2026-10-03T08:00:00+08:00"))).toBe("含 10-03 17:00 前数据：停留统计 10-03 16:30 才上线，之前的会话都落在疑似扫描器里，滚动口径也偏低");
+    expect(viNote(new Date("2026-10-03T08:00:00+08:00"))).toBe("含 10-03 17:00 前数据：停留统计 10-03 16:22 才上线，之前的会话按 page_view 计入访客，停留和滚动只覆盖之后，滚动口径偏低");
     expect(viNote(new Date("2026-10-05T09:00:00+08:00"))).toBeUndefined();
     expect(viBlock({ days: 1, sinceLabel: "x", engagement: [], survey: [], clicks: [], note: "n" })[0]).toContain("访客=会话；n）");
   });
@@ -47,5 +47,19 @@ describe("visitors vs likely scanners (agentkit 7e90501)", () => {
     const lines = viBlock({ days: 1, sinceLabel: "x", engagement: [{ path: "/", seconds: 20, scroll: 50 }], survey: [], clicks: [], sessions: { visitors: 9, scanners: 6 } });
     expect(lines[0]).toContain("：访客 9 个会话 · 疑似扫描器 6（只有 page_view，未计入）");
     expect(lines.length).toBe(4);
+  });
+});
+
+describe("classifySessions (agentkit 17:03 scoreboard rule)", () => {
+  it("counts engagement sessions, and page_view-only sessions from before engagement tracking existed, as visitors", () => {
+    const r = classifySessions(
+      [
+        { firstSeen: "2026-10-03 08:00:00", engaged: false }, // before tracking: a visitor
+        { firstSeen: "2026-10-03 09:00:00", engaged: true },
+        { firstSeen: "2026-10-03 09:30:00", engaged: false }, // after tracking, no engagement: likely scanner
+      ],
+      ENGAGEMENT_SINCE,
+    );
+    expect(r).toEqual({ visitors: 2, scanners: 1 });
   });
 });
