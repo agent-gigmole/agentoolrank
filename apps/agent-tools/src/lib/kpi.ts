@@ -45,13 +45,13 @@ export function replaceBlock(html: string, block: string): string {
 }
 
 /** ops/daily.md project lines (after the vi block): at most 7, so vi block (≤8) + these fit the 15 lines agentkit attaches. */
-export function renderDaily(d: KpiData & { devtoVisitors7d: number; submitFunnel: Funnel; kitFunnel: Funnel; maintainer: { ctaClicks: number; badgeCopies: number; featuredCheckouts: number; liveNotifyVisitors: number; liveNotifyCheckouts: number; agentListedVisitors: number; agentListedCheckouts: number }; apiCalls: { total: number; withKey: number; topTool: string } }): string {
+export function renderDaily(d: KpiData & { devtoVisitors7d: number; submitFunnel: Funnel; kitFunnel: Funnel; maintainer: { ctaClicks: number; badgeCopies: number; featuredCheckouts: number; liveNotifyVisitors: number; liveNotifyCheckouts: number; agentListedVisitors: number; agentListedCheckouts: number }; apiCalls: { total: number; withKey: number; topTool: string }; kitSources?: Record<"live-notify" | "agent-listed" | "agent-queued" | "other", number> }): string {
   const md = d.day.slice(5);
   return [
     `# AgentoolRank 项目数据（${d.generated} 北京时间自动生成；访客=会话）`,
     `- 访客：${md} ${d.yesterday.visitors}，近 7 天 ${d.week.visitors}；收入：本月 ${usd(d.monthRevenueCents)}，累计 ${usd(d.totalRevenueCents)}`,
     `- ${funnelLine("提交工具", d.submitFunnel)}；提交记录 7 天 ${d.week.submissions}，累计外部提交 ${d.externalSubmissions}/20`,
-    `- ${funnelLine("Submit Kit", d.kitFunnel)}（完成=付款，目标 10-18 前 3 单）`,
+    `- ${funnelLine("Submit Kit", d.kitFunnel)}（完成=付款，目标 10-18 前 3 单）${d.kitSources ? `；进页来源：上线通知信 ${d.kitSources["live-notify"]} · API 已收录 ${d.kitSources["agent-listed"]} · API 排队 ${d.kitSources["agent-queued"]} · 其他 ${d.kitSources.other}` : ""}`,
     `- 外联：累计 ${d.outreachSent} 封，近 7 天带来 ${d.outreachVisitors7d} 个会话；目录站：已提交 ${d.dirSubmitted}，已确认上线 ${d.dirLive}`,
     `- 渠道：dev.to 来源 7 天 ${d.devtoVisitors7d}；中文页 ${d.zhVisitors7d}，日文页 ${d.jaVisitors7d}；维护者：入口点击 ${d.maintainer.ctaClicks} · 复制徽章 ${d.maintainer.badgeCopies} · 首页推荐结账 ${d.maintainer.featuredCheckouts}；上线通知信 ${d.maintainer.liveNotifyVisitors} 个会话、结账 ${d.maintainer.liveNotifyCheckouts}；API 已收录回复 ${d.maintainer.agentListedVisitors} 个会话、结账 ${d.maintainer.agentListedCheckouts}`,
     `- SEO：Google 点击 28 天 ${d.gscClicks28d ?? "?"}（年底目标 1000）；MCP 调用 7 天 ${d.apiCalls.total}（带 key ${d.apiCalls.withKey}${d.apiCalls.topTool ? `，最多 ${d.apiCalls.topTool}` : ""}）`,

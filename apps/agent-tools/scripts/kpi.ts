@@ -141,6 +141,12 @@ const daily = {
       agentListedVisitors: await sess(`name='page_view' AND src LIKE '%agent-listed%'`),
       agentListedCheckouts: await sess(`name='checkout_click' AND src LIKE '%agent-listed%'`),
     },
+    // where /submit-kit visitors came from (?ref= tags on our emails and API replies)
+    kitSources: await (async () => {
+      const kit = (w: string) => sess(`name='page_view' AND path='/submit-kit' AND ${w}`);
+      const [ln, al, aq, all] = [await kit(`src LIKE '%live-notify%'`), await kit(`src LIKE '%agent-listed%'`), await kit(`src LIKE '%agent-queued%'`), await kit("1=1")];
+      return { "live-notify": ln, "agent-listed": al, "agent-queued": aq, other: Math.max(0, all - ln - al - aq) };
+    })(),
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
   };
 writeFileSync(new URL("../../../ops/daily.md", import.meta.url).pathname, withViBlock(vi, renderDaily(daily)));
