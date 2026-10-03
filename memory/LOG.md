@@ -1277,3 +1277,9 @@
 - 结果：标题加下载量已上线，10-16 GSC 对比 CTR；预填剩 /api/prefill 路由（限流兜底）、SubmitForm 失焦只填空字段、部署核对
 - 坑：无新坑
 - 结果：成功（提交表单预填进行中）
+
+## 2026-10-04 02:44 browser-tidy 改为按戳保留工作页（2faeb3c）
+- 做法：按 agentkit 02:41 转来的 new_ladar 经验，browser.py 加 stamp/stamp_of（window.name='ar_keep:<ms>'），task_act 结束打戳，task_tab open/goto/按网址挑页都打戳、pick() 优先戳最新，task_tidy 保留戳最新的页（没戳才退回最后列出的页）；已 push，已 bus 回复 agentkit
+- 结果：open → 同页再操作 → target=_blank 弹窗三种情况 tidy 后都剩 1 个标签页且保留正确
+- 坑：新 CDP 连接下 ctx.pages 不按创建顺序，"保留最后一个"不可靠；导航后 window.name 可能被清，goto 后要重打戳（GOTCHAS#browser-tidy-keep-stamped-tab，替代原 keep-newest-tab）
+- 结果：成功（提交表单预填仍进行中）

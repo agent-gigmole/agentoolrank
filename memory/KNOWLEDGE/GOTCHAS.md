@@ -1063,8 +1063,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 做法：排期时同时在 TASK 加一条「发布前一天用最新数据（tool_packages 等）重刷文中数字 → 再跑 writer check」，不要等发布后才发现数字旧
 - 例：dev.to 第二篇 10-04 写稿、10-12 发布 → 10-11 重刷
 
-## browser-tidy-keep-newest-tab
-- 现象：agentkit 推广的 browser-tidy（new_ladar 原版）在每个浏览器任务结束后关闭除**第一个**以外的所有标签页；我们的 winbrowser 流程是一次 run.sh open 打开页面，后续多次 run.sh eval/click/fill 继续操作同一标签页
-- 原因：新打开的工作页是最后一个标签页；保留第一个会在 open 那一步结束时就把工作页关掉，下一步 eval 落到旧页上
-- 做法：task_tidy.py 保留 `ctx.pages[-1]`（最新），关闭其余；run.sh 用 `trap tidy EXIT`（成功/失败都清理），task_tidy 自身跳过 trap；没有标签页时补开一个空页。改完实测 open → eval 两步仍命中目标页、结束剩 1 个标签页
-- 来源：2026-10-04 777b4e0（scripts/winbrowser/task_tidy.py、run.sh）
+## browser-tidy-keep-stamped-tab
+- 现象：browser-tidy 在每个浏览器任务结束后关掉多余标签页。new_ladar 原版保留第一个；我们 777b4e0 改成保留 `ctx.pages[-1]`（最后列出的页）。两种都不可靠
+- 原因：Playwright 每次新建 CDP 连接（connect_over_cdp）后，`ctx.pages` **不按创建顺序列出**，"最后一个"不一定是刚打开或正在用的页。new_ladar 实测因此关掉了正在用的 Google 登录弹窗。我们的 winbrowser 每次 run.sh 都是新连接，同样中招
+- 做法（2faeb3c，按 new_ladar 经验）：用页内戳标出工作页。scripts/winbrowser/browser.py 的 `stamp(pg)` 写 `window.name='ar_keep:<毫秒时间戳>'`，`stamp_of(pg)` 读回；task_act.py 结束时打戳；task_tab.py 的 open / goto / 每次按网址挑页操作都打戳，pick() 在多个匹配页里优先挑戳最新的；task_tidy.py 保留戳最新的页，没有任何戳才退回最后列出的页；没有标签页时补开空页。run.sh 仍 `trap tidy EXIT`
+- 注意：导航后 window.name 可能被清（跨站跳转），所以 goto 之后要**重新打戳**；target=_blank 弹窗要在操作它时打戳，tidy 才会留它
+- 验证：run.sh open → 同页再操作 → 点出 target=_blank 弹窗，三次 tidy 都剩 1 个标签页，分别保留 example.com / example.com / 弹窗 example.org
+- 来源：777b4e0（初版保留最后一个，已作废）→ 2026-10-04 2faeb3c（scripts/winbrowser/browser.py、task_act.py、task_tab.py、task_tidy.py）

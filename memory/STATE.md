@@ -1305,7 +1305,7 @@
 - **下一步**：d4bae19 测试+部署并线上核对 /alternatives/*；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
 
 ## 2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74）
-- **browser-tidy**（agentkit 推广，来源 new_ladar，10-06 截止；777b4e0）：scripts/winbrowser/task_tidy.py 关闭除**最新**以外的所有标签页；run.sh 加 `trap tidy EXIT`，任何任务成功或失败退出都执行（task_tidy 自身不再触发）。与 new_ladar（保留第一个）不同：我们的流程是一次 open、后续多次 run.sh eval/click 同一标签页，保留第一个会关掉工作页。实测 open → eval 两步仍命中页面，结束剩 1 个标签页。已回复 agentkit，并提醒 new_ladar 检查分步流程。见 GOTCHAS#browser-tidy-keep-newest-tab
+- **browser-tidy**（agentkit 推广，来源 new_ladar，10-06 截止；777b4e0）：scripts/winbrowser/task_tidy.py 关闭除**最新**以外的所有标签页；run.sh 加 `trap tidy EXIT`，任何任务成功或失败退出都执行（task_tidy 自身不再触发）。与 new_ladar（保留第一个）不同：我们的流程是一次 open、后续多次 run.sh eval/click 同一标签页，保留第一个会关掉工作页。实测 open → eval 两步仍命中页面，结束剩 1 个标签页。已回复 agentkit，并提醒 new_ladar 检查分步流程。**（02:4x 已改为按戳保留，见下方 2faeb3c 段与 GOTCHAS#browser-tidy-keep-stamped-tab）**
 - **替代品页结构化数据**（d4bae19，01:10 已部署）：/alternatives/[slug] 的 ItemList 每项为 softwareAppJsonLd；线上 /alternatives/langchain 有 SoftwareApplication 项与 DownloadAction 计数（已核对）；看板已记（9f0771f）；TASK ✅
 - **/submit-kit Product JSON-LD（进行中，5ce3f74 已提交未部署）**：kitProductJsonLd（Brand AgentoolRank，两个 Offer：Free top 10 $0、Full list $29 USD InStock）+ 测试
 - **下一步**：5ce3f74 部署并线上核对 /submit-kit JSON-LD；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
@@ -1332,3 +1332,11 @@
 - **提交表单预填（进行中，5802b05 WIP）**：src/lib/prefill.ts prefillFromRepo（GitHub repo JSON → name / tagline（去 emoji、≤160）/ url（无 homepage 用 repo 页）/ github_url）+ 测试
 - **剩余**：/api/prefill 路由（服务端调 GitHub 公开 API，限流兜底）；SubmitForm 在 github_url 失焦时只填空字段；部署 + 线上核对 + 看板
 - **下一步**：完成上述剩余项；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 02:4x browser-tidy 改为按戳保留工作页（2faeb3c，已 push）
+- **起因**：agentkit 02:41 转来 new_ladar 经验：Playwright 新建 CDP 连接后 ctx.pages 不按创建顺序列出，"保留最后列出的页"会关错（new_ladar 关掉了正在用的 Google 登录弹窗）。我们 777b4e0 的保留 ctx.pages[-1] 同样不可靠
+- **改法**：scripts/winbrowser/browser.py 新增 stamp(pg) / stamp_of(pg)（window.name='ar_keep:<毫秒>'）；task_act.py 结束时打戳；task_tab.py open / goto / 每次按网址挑页操作都打戳，pick() 优先挑戳最新的匹配页；task_tidy.py 保留戳最新的页，没戳才退回最后列出的页。导航后 window.name 可能被清 → goto 后重打戳
+- **实测**：run.sh open → 同页再操作 → 点出 target=_blank 弹窗，三次 tidy 都剩 1 个标签页，分别保留 example.com / example.com / 弹窗 example.org；已 bus 回复 agentkit
+- 见 GOTCHAS#browser-tidy-keep-stamped-tab
+- **提交表单预填仍进行中（5802b05 WIP）**：剩 /api/prefill 路由（服务端调 GitHub 公开 API，限流兜底）；SubmitForm 在 github_url 失焦时只填空字段；部署 + 线上核对 + 看板
+- **下一步**：完成预填剩余项；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
