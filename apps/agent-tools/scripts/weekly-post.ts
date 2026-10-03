@@ -3,7 +3,8 @@
  * directly on the owner's main account via the x-post skill (official API, ≤1 post/day, author disclosed).
  * Usage: bun run scripts/weekly-post.ts [--post]   (without --post: print only)
  *        bun run scripts/weekly-post.ts --post --if-pending   (hourly: retry a post the gate deferred)
- * Every main post on the owner's account first passes agentkit bin/post-gate (≥3h since the account's last main post);
+ * Every main post on the owner's account first passes a copy check (src/lib/post-copy.ts: no "written by AI" / "auto-posted"),
+ * then agentkit bin/post-gate (≥3h since the account's last main post);
  * exit 3 = too soon → a pending marker is left and the hourly run retries; exit 2 = unknown → don't post.
  */
 import { config } from "dotenv";
@@ -11,6 +12,7 @@ import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createClient } from "@libsql/client";
 import { spawnSync } from "node:child_process";
 import { weeklyPostText } from "../src/lib/weekly-post";
+import { aiAuthorshipMatch } from "../src/lib/post-copy";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 const PENDING = new URL("../data/ops-logs/weekly-post-pending.txt", import.meta.url).pathname;
@@ -18,6 +20,14 @@ const home = process.env.HOME;
 
 /** Post one file through the gate; returns false (and leaves the pending marker) when the gate says not now. */
 function gatedPost(file: string): boolean {
+  // Copy check first (owner 10-03 16:31): never say the post itself was written or posted by AI. A hit is a bug, not a delay.
+  const hit = aiAuthorshipMatch(readFileSync(file, "utf8"));
+  if (hit) {
+    rmSync(PENDING, { force: true });
+    console.log(`copy check: refusing to post, the text says it was AI-written/auto-posted ("${hit}")`);
+    process.exitCode = 4;
+    return false;
+  }
   const g = spawnSync(`${home}/project/agentkit/bin/post-gate`, ["--platform", "x", "--who", "ai-directory"], { encoding: "utf8" });
   if (g.status !== 0) {
     writeFileSync(PENDING, file);
@@ -32,7 +42,7 @@ function gatedPost(file: string): boolean {
 
 if (process.argv.includes("--if-pending")) {
   if (existsSync(PENDING)) gatedPost(readFileSync(PENDING, "utf8").trim());
-  process.exit(0);
+  process.exit(process.exitCode ?? 0);
 }
 const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN });
 
