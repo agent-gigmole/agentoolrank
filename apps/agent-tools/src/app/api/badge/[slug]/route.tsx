@@ -85,7 +85,7 @@ export async function GET(
           {downloads ? (
             <span style={{ fontSize: "11px", opacity: 0.85 }}>⬇ {downloads}/mo</span>
           ) : (
-            stars && <span style={{ fontSize: "11px", opacity: 0.85 }}>★ {stars}</span>
+            stars && <span style={{ fontSize: "11px", opacity: 0.85 }}>⭐ {stars}</span>
           )}
         </div>
       </div>
