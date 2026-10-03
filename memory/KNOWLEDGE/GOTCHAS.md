@@ -851,6 +851,6 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 定时器每 15 分钟 `await check --send`：done 命中通知项目「接着干」；超时或 stuck 命中通知项目 + agentkit；另扫 systemd --user failed 单元，按前缀点名（agentoolrank- → ai-directory）
 - **坑 1：命令在项目根目录（/home/qmt/workspace/ai-directory）用 bash -c 跑，限时 60 秒**；apps/agent-tools 下的脚本要先 `cd apps/agent-tools && …`；超时按退出码非 0 处理（等于"未完成"，不会报警）→ 慢命令要保证 60 秒内跑完
 - **坑 2：登记后必须马上手动跑一遍 done/stuck 命令看退出码**（当前应为 1/1），否则命令写错会永远"未完成"直到超时才发现
-- 写法：用 grep -q 判断脚本输出，例如 done = `cd apps/agent-tools && npx tsx scripts/stripe-pm-status.ts | grep -q "alipay=.*/available" && …grep -q "wechat_pay=.*/available"`；stuck = 输出含 `" error: "`；看门狗类用 `--done false`，stuck 判断时间戳超阈值（如 scoreboard.json updated_at 超 3 小时）
+- 写法（6a511c 实际命令）：done = `cd apps/agent-tools && ~/.bun/bin/bun run scripts/stripe-pm-status.ts | grep -q "alipay=[a-z]*/available wechat_pay=[a-z]*/available"`（bun 写全路径，bash -c 不一定有 PATH）；stuck = 同脚本 `| grep -q " error: "`；看门狗类（5e891f）用 `--done false`，stuck = python3 读 ops/scoreboard.json 的 updated_at，超 3 小时 exit 0
 - 命令里不要打印密钥（输出不显示，但别 echo key）
 - 已登记：6a511c Stripe 支付宝/微信支付开通（7d）；5e891f scoreboard.json 每小时刷新（30d 看门狗）；待登记：每晚 22:00 外联发出后等回信
