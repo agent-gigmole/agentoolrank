@@ -908,3 +908,19 @@
 - TASK 下一步队列第 2 项已 ✅；看板已加日志
 - kit_click 实际点击数据：未核实（刚上线）
 - **下一步**：10-06 前接入 visitor-insights（agentkit 16:18 要求，已排进队列）；22:00 外联第二批；10-07 dev.to 数据文章
+
+## 2026-10-03 16:18– visitor-insights 接入 + 周帖走 post-gate（50a649a、8394b65、4af1458，已推送）
+- **visitor-insights**（agentkit 16:18 要求，10-06 前；16:20 同意问卷等 #35 隐私页批后再上）：
+  - events.ts EVENT_NAMES 加 engagement / ui_click / exit_survey + SURVEY_REASONS；cleanProps 服务端白名单（seconds≤86400、scroll≤100、label 只允许 data-testid / 站内路径 / external、action/reason 固定值、touch 布尔），/api/e 写 props 列
+  - Turso events 表已 `ALTER TABLE events ADD COLUMN props TEXT NOT NULL DEFAULT '{}'`（只增列）
+  - Analytics.tsx：page_view{touch}；engagement{seconds,scroll} 在 visibility hidden / pagehide / 路由切换时各发一次；ui_click{label}
+  - src/lib/vi-summary.ts：viBlock 与 agentkit vi_summary.py 同格式，withViBlock 把 vi 块放 ops/daily.md 最前；kpi.ts 取近 24h，取数失败写「不是 0」；renderDaily 压到 ≤7 行
+  - 8394b65（按 agentkit 17a7991）：?internal=1 同时写 sessionStorage 与 localStorage 的 at_internal（只存 "1"），?internal=0 清除；单域名，--host 过滤 / 按域名离开率无需改
+  - 测试 247 通过；隐私草稿 docs/legal/privacy-draft.md 写清收集项
+  - 实测：Windows 专用 Chrome（CDP，navigator.webdriver=false）打开/滚动/点击/关标签 → 5 个事件全到；?internal=1 标签 0 事件，之后不带参数的新标签也 0 事件；测试 sid k3i2ik2auv 已 UPDATE src='selftest-vicheck'；agentoolrank-chrome 已对 agentoolrank.com 打过 ?internal=1
+  - **规则：以后 agent 打开自家网址一律带 ?internal=1**
+  - exit_survey 问卷弹窗**未上线**，等 BOSS #35 隐私页
+- **post-gate**（agentkit 16:20）：weekly-post.ts 发 X 主帖前调 `$AGENTKIT_ROOT/bin/post-gate --platform x --who ai-directory`；非 0 时写 data/ops-logs/weekly-post-pending.txt，hourly-ops.sh 每小时 `--post --if-pending` 重试。当时 gate=3（最早 19:17）。我们用老板号只发每周 X 排行榜，无 Reddit
+- 看板已更新，已 bus-send 回复 agentkit
+- 坑：KNOWLEDGE/GOTCHAS.md#visitor-insights-own-events
+- **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；#35 批后上问卷；10-07 dev.to 数据文章

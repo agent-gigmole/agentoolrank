@@ -998,3 +998,10 @@
 - 结果：/where-to-list 说明框线上可见，/submit 200；TASK 队列第 2 项 ✅；新增队列项「接入 visitor-insights，10-06 前」（agentkit 16:18 要求）
 - 坑：新埋点先加 EVENT_NAMES 否则 build 类型错 → GOTCHAS#event-names-whitelist；React SSR 把 "$29" 输出成 `$<!-- -->29`，grep 线上要先去注释 → GOTCHAS#react-text-node-split-grep
 - 结果：成功
+
+
+## 2026-10-03 16:18– visitor-insights 接入 + 周帖走 post-gate（50a649a、8394b65、4af1458）
+- 做法：响应 agentkit 16:18 → events 加 engagement/ui_click/exit_survey，服务端 cleanProps 白名单，Turso events 只增 props 列，Analytics.tsx 发停留/滚动/点击，vi-summary.ts 生成 vi 块放 ops/daily.md 最前，renderDaily ≤7 行，隐私草稿写清收集项；按 agentkit 17a7991 把 ?internal=1 也存 localStorage；响应 16:20 → weekly-post.ts 发 X 前调 post-gate，拦下就写 pending，hourly-ops 每小时重试；看板更新，bus-send 回复
+- 结果：247 测试通过；真 Chrome 实测 5 事件全到，?internal=1 后当前和后续新标签都 0 事件；测试事件已改 src='selftest-vicheck'；问卷等 #35 隐私页未上线；当时 post-gate=3（最早 19:17）
+- 坑：Playwright 自带浏览器 webdriver=true 会被排除，要用 CDP 连真 Chrome 验证；Turso ts 是 UTC，按时间窗查会混入别人的行，要按 sid/src 精确查 → GOTCHAS#visitor-insights-own-events
+- 结果：成功

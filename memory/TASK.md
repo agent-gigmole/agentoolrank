@@ -10,7 +10,8 @@
 - 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
 - 每天查一次已上线目录站的链接 rel，看板"已确认上线"随之更新
 - 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
-- 接入 visitor-insights（$AGENTKIT_ROOT/skills/visitor-insights/SKILL.md；engagement/ui_click/exit_survey 写进自有 events 表，?internal=1 排除，隐私页写清，汇总写 ops/daily.md vi 块），10-06 前
+- ✅ 接入 visitor-insights（10-03 50a649a、8394b65；engagement/ui_click 写自有 events 表 props 列，?internal=1 持久排除，ops/daily.md 顶部 vi 块，隐私草稿 docs/legal/privacy-draft.md）。exit_survey 问卷另记，等 BOSS #35 隐私页批准后再上
+- Submit Kit 漏斗每天看一次：kit_click → /submit-kit 访问 → 付费，三个数写进 ops/daily.md，断在哪一步就改哪一步
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

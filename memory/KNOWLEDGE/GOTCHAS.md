@@ -875,3 +875,14 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 
 ## react-text-node-split-grep
 线上核对页面文案时注意：React 把相邻的文本和表达式渲染成分开的文本节点，SSR HTML 里会插注释分隔，如 JSX `${price}` / `$29` 混写可能输出 `$<!-- -->29`。直接 `curl | grep '\$29'` 会找不到 → 误判没上线。做法：grep 去掉注释后的文本（`curl -s URL | sed 's/<!-- -->//g' | grep …`），或 grep 不含数字的独特短语。10-03 核对 /where-to-list Submit Kit 说明框时遇到。
+
+## visitor-insights-own-events
+10-03 接 agentkit visitor-insights（skill 在 $AGENTKIT_ROOT/skills/visitor-insights/SKILL.md，imagehub 维护）到自有 events 表（50a649a、8394b65）：
+- **props 必须服务端清洗**：events.ts cleanProps 白名单——seconds≤86400、scroll≤100、label 只收 data-testid / 站内路径 / "external"、action/reason 只收固定值、touch 布尔；其余丢弃。新事件名先加 EVENT_NAMES（见 #event-names-whitelist）
+- 表结构只增不改：`ALTER TABLE events ADD COLUMN props TEXT NOT NULL DEFAULT '{}'`
+- engagement 只在 visibility hidden / pagehide / 路由切换时发一次，避免重复
+- **排除自己**：?internal=1 同时写 sessionStorage 和 localStorage 的 at_internal（只存 "1"），?internal=0 清除；agent 打开自家网址一律带 ?internal=1
+- **验证要用真 Chrome**：Playwright 自带浏览器 navigator.webdriver=true，会被埋点当机器人排除，看起来像"没上报"；用 CDP 连 Windows 专用 Chrome（webdriver=false）
+- **查验证事件按 sid/src 精确查**：Turso ts 是 UTC，用 `datetime('now','-N seconds')` 会混入真实访客的行；验证完把测试 sid 的 src 改成 selftest-* 免得污染统计
+- vi 块：src/lib/vi-summary.ts 与 agentkit vi_summary.py 同格式，withViBlock 放 ops/daily.md 最前；取数失败写「不是 0」，不要写 0
+- exit_survey 问卷要等隐私页（BOSS #35）批准再上

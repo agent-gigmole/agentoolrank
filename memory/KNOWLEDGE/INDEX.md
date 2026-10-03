@@ -276,3 +276,5 @@
 | 反馈收件箱 / ~/data/feedback/feedback.jsonl 只追加 同 id 最后一行 / 48 小时 status new→adopted declined answered / feedback.ts collect add decide list / hello@ 回信 Gmail 搜法 / 外部评测三问 --hit --misread --want / 周报四节 记分牌 竞品 外部评测 押注 / 769e0c6 5207740 | GOTCHAS.md#feedback-inbox |
 | React SSR 文本节点 `$<!-- -->29` / curl grep 线上文案找不到 / 先 sed 去 <!-- --> | GOTCHAS.md#react-text-node-split-grep |
 | Submit Kit 首单路径 / /where-to-list 说明框 54cb18e / /submit 成功页入口 kit_click d92e6fb / devto brief 文末一行 | LOG.md#2026-10-03 16:35– Submit Kit 入口补齐 |
+| visitor-insights 自建事件表 / engagement ui_click exit_survey / cleanProps 服务端白名单 / events props 列只增 / ?internal=1 localStorage 持久排除 / Playwright webdriver=true 被排除 用 CDP 真 Chrome / Turso UTC 按 sid 查 / vi 块 ops/daily.md 最前 / 问卷等 #35 | GOTCHAS.md#visitor-insights-own-events |
+| post-gate / weekly-post.ts 发 X 前 bin/post-gate --platform x --who ai-directory / weekly-post-pending.txt 每小时 --if-pending 重试 / 4af1458 | STATE.md#2026-10-03 16:18– visitor-insights |
