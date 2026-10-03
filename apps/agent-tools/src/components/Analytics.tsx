@@ -19,11 +19,18 @@ function session(): { sid: string; src: string } {
   }
 }
 
-/** Our own traffic: any tab that once opened a page with ?internal=1 (sticks for the tab) never sends events. */
+/**
+ * Our own traffic never sends events: ?internal=1 marks this browser as ours (sessionStorage + a localStorage flag
+ * that holds only "1", no id), so one visit per agent browser excludes it for good; ?internal=0 clears the mark.
+ */
 function internal(): boolean {
   try {
-    if (/(^|[?&])internal=1(&|$)/.test(location.search)) sessionStorage.setItem("at_internal", "1");
-    return sessionStorage.getItem("at_internal") === "1";
+    const q = /(?:^|[?&])internal=([01])(?:&|$)/.exec(location.search)?.[1];
+    for (const store of [sessionStorage, localStorage]) {
+      if (q === "1") store.setItem("at_internal", "1");
+      if (q === "0") store.removeItem("at_internal");
+    }
+    return sessionStorage.getItem("at_internal") === "1" || localStorage.getItem("at_internal") === "1";
   } catch {
     return false;
   }
