@@ -43,11 +43,26 @@ describe("downloadsLine", () => {
   it("renders registry, package and a compact monthly count", async () => {
     const { downloadsLine } = await import("./downloads");
     expect(downloadsLine([{ registry: "pypi", package: "langchain", downloads_30d: 169366312 }, { registry: "npm", package: "@mastra/core", downloads_30d: 3093776 }])).toEqual([
-      { label: "PyPI", pkg: "langchain", value: "169.4M", url: "https://pypi.org/project/langchain/" },
-      { label: "npm", pkg: "@mastra/core", value: "3.1M", url: "https://www.npmjs.com/package/@mastra/core" },
+      { label: "PyPI", pkg: "langchain", n: 169366312, value: "169.4M", url: "https://pypi.org/project/langchain/" },
+      { label: "npm", pkg: "@mastra/core", n: 3093776, value: "3.1M", url: "https://www.npmjs.com/package/@mastra/core" },
     ]);
     expect(downloadsLine([{ registry: "npm", package: "x", downloads_30d: 950 }])[0].value).toBe("950");
     expect(downloadsLine([{ registry: "npm", package: "x", downloads_30d: 12500 }])[0].value).toBe("12.5K");
     expect(downloadsLine([{ registry: "npm", package: "x", downloads_30d: null }])).toEqual([]);
+  });
+});
+
+describe("rankByDownloads", () => {
+  it("sums registries per tool, sorts by total and computes downloads per star", async () => {
+    const { rankByDownloads } = await import("./downloads");
+    const r = rankByDownloads([
+      { id: "a", name: "A", stars: 1000, registry: "npm", package: "a", downloads_30d: 5000 },
+      { id: "b", name: "B", stars: 100, registry: "pypi", package: "b", downloads_30d: 9000 },
+      { id: "a", name: "A", stars: 1000, registry: "pypi", package: "a-py", downloads_30d: 6000 },
+      { id: "c", name: "C", stars: 50, registry: "npm", package: "c", downloads_30d: null },
+    ]);
+    expect(r.map((x) => [x.id, x.total])).toEqual([["a", 11000], ["b", 9000]]);
+    expect(r[0].packages.map((p) => p.label)).toEqual(["PyPI", "npm"]);
+    expect(r[1].perStar).toBe(90);
   });
 });

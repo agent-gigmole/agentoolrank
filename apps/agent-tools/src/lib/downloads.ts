@@ -63,7 +63,31 @@ export function downloadsLine(rows: { registry: string; package: string; downloa
     .map((r) => ({
       label: r.registry === "pypi" ? "PyPI" : "npm",
       pkg: r.package,
+      n: r.downloads_30d as number,
       value: compact(r.downloads_30d as number),
       url: r.registry === "pypi" ? `https://pypi.org/project/${r.package}/` : `https://www.npmjs.com/package/${r.package}`,
     }));
 }
+
+export interface DownloadRow { id: string; name: string; stars: number | null; registry: string; package: string; downloads_30d: number | null }
+
+/** /downloads leaderboard: one row per tool, npm + PyPI summed, plus downloads per GitHub star (usage vs attention). */
+export function rankByDownloads(rows: DownloadRow[]) {
+  const by = new Map<string, { id: string; name: string; stars: number | null; total: number; packages: ReturnType<typeof downloadsLine> }>();
+  for (const r of rows) {
+    if (typeof r.downloads_30d !== "number") continue;
+    const t = by.get(r.id) ?? { id: r.id, name: r.name, stars: r.stars, total: 0, packages: [] };
+    t.total += r.downloads_30d;
+    t.packages.push(...downloadsLine([r]));
+    by.set(r.id, t);
+  }
+  return [...by.values()]
+    .map((t) => ({
+      ...t,
+      packages: t.packages.sort((x, y) => y.n - x.n),
+      perStar: t.stars ? Math.round(t.total / t.stars) : null,
+    }))
+    .sort((a, b) => b.total - a.total);
+}
+
+export const compactCount = compact;

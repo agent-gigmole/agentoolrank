@@ -409,7 +409,8 @@ export default async function ToolPage({ params }: Props) {
                 <b className="text-gray-900">{d.value}</b>
               </span>
             ))}
-            <span className="text-gray-400"> · counts from npm and pypistats, updated weekly</span>
+            <span className="text-gray-400"> · counts from npm and pypistats, updated weekly · </span>
+            <Link href="/downloads" className="text-blue-600 hover:underline">most-downloaded agent tools</Link>
           </p>
         )}
 
