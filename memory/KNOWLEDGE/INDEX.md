@@ -262,3 +262,4 @@
 | 外联 4 会话全 page_view 0 转化 / 付费档卖曝光流量不足 / Submit Kit 论据 | LOG.md#2026-10-03 06:29–06:35 |
 | GSC URL Inspection API 逐页查收录 / coverageState / zh ja 页未收录 / Discovered not indexed / sitemap 重提要全权限 scope | GOTCHAS.md#gsc-url-inspection-api |
 | dev.to API 发文 / key 属哪个账号 / devto-api-key-agentoolrank / Forbidden Bots 403 / details textContent / 稿件内部注释外泄 | GOTCHAS.md#devto-api-publish |
+| dirsub 无 live 枚举 / 已上线记法 submitted+detail【已上线】/ 看板目录站已上线统计关键词 / Brevo opened 被 Apple MPP 虚增、以 ref=outreach 会话为准 | GOTCHAS.md#dirsub-live-convention |

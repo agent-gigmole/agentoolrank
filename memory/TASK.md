@@ -143,7 +143,7 @@
 - 今晚 10 封：hermes-agent、LangChain、Dify(no-code #2/28)、NocoBase、FastGPT、langwatch、Codewhale、LiteLLM、MinerU(memory #8/127)、cognee
 - **署名已定 Jason T.**（10-02 据 BOSS #28 自决；outreach.ts / outreach.test.ts / send-outreach.ts sender+replyTo / drafts/outreach-maker-v2.md，be87fb0）；22:00 首批照常发，原「21:30 无答复则推迟」规则取消
 - role 信箱：只排除 security/legal/privacy/careers 等专用信箱；support@/hello@ 通用信箱照发
-- 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [x] 外联落地页维护者横幅（?ref=outreach → #maintainers，埋点 maintainer_banner_click，10-02 13:10 上线 8dff4bf）[x] 首批 10 封已发（10-02 21:59–22:04，送达 10/10，退信 0，sent.json）[ ] 10-03 09:30 后统计回复率（hello@ 回信；退订加 optout.json），之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化 [ ] 徽章嵌入数追踪
+- 10-02 进展：[x] Brevo 手机验证（实体 SIM 收码线②）[x] API key 入 ~/.config/secrets/brevo-api-key [x] 域名 DKIM/SPF/DMARC 认证 [x] 模板走 bin/write（drafts/outreach-maker-v2.md → src/lib/outreach.ts）[x] scripts/send-outreach.ts（≤10/天、一人一封、optout、实时重算排名、List-Unsubscribe、--test/--dry-run）[x] 自测进 Gmail 收件箱 [x] 外联落地页维护者横幅（?ref=outreach → #maintainers，埋点 maintainer_banner_click，10-02 13:10 上线 8dff4bf）[x] 首批 10 封已发（10-02 21:59–22:04，送达 10/10，退信 0，sent.json）[x] 10-03 09:30 首批复盘（发出约 19.5 小时）：送达 10/10、退信 0、投诉 0；Brevo opened 4（nocobase、codewhale、nousresearch、langchain，Apple MPP 会虚增，仅参考）；ref=outreach 4 个会话（cognee 未记打开但实际来访看了 4 页 → 打开数不准）；回复 0、付费点击 0；已发 agentkit 作 09:30 汇总素材；10-03 22:00 照发第二批 10 封 [ ] 之后按 maintainer_banner_click / checkout_click 和 ref=outreach 看转化 [ ] 徽章嵌入数追踪
 - 依赖: -
 - 验收: 模板经用户同意；每天 ≤10 封限速发送；徽章嵌入数（GitHub 代码搜索 agentoolrank.com/api/badge）可追踪
 - 闸: human（对外发送）
@@ -242,7 +242,7 @@
 ### T25 目录站加量（共享 skill：$AGENTKIT_ROOT/skills/directory-submission）
 - 状态: in_progress（2026-10-02 起）— **10-03 达标 20 后暂停扩张（agentkit 10-03 05:28），只做日常补漏；原「每天 ≥20」口径暂停**（agentkit 10-02 23:40 转达老板，取代原 5–8 个/天）
 - **10-03 进度：已达标 20/20**（04:40–05:28 两批，dirsub 已逐条回写）
-  - 提交 15：[x] saashub [x] viesearch [x] servicelist [x] best-ai [x] linkcentre [x] launchboosts（已上线，实测 rel=nofollow）[x] aitoolsrecap [x] comparateur-ia [x] askmatchbox（邮件）[x] imyshare（邮件）[x] alternative.me [x] webcatalog [x] foundr [x] conduid（已上线 https://conduid.com/servers/agentoolrank ，信任分 54，被误归 Files 类）[x] cursor.directory（插件安全扫描中，扫完才公开）
+  - 提交 15：[x] saashub [x] viesearch [x] servicelist [x] best-ai [x] linkcentre [x] launchboosts（已上线，实测 rel=nofollow）[x] aitoolsrecap（10-03 09:30 收邮件确认已审核上线，dirsub 已更新为【已上线】）[x] comparateur-ia [x] askmatchbox（邮件）[x] imyshare（邮件）[x] alternative.me [x] webcatalog [x] foundr [x] conduid（已上线 https://conduid.com/servers/agentoolrank ，信任分 54，被误归 Files 类）[x] cursor.directory（插件安全扫描中，扫完才公开）
   - retry 2：whatlaunched（站方 Supabase 发信故障）、store.app（/list 502）
   - skip 3：51tool（强制 ICP 备案）、ai-kit.cn（只能加微信）、10words（排队 2602 天）
   - 邮件投稿：文案 bin/write，Brevo 从 hello@ 发，tag directory-submit，草稿 docs/ops/launch-kit/drafts/submit-email-*.md
@@ -311,7 +311,8 @@
 - [ ] **10-05（周一）交第一份**
 - [ ] 草案补洞察（10-03 06:30）：付费档卖的是曝光，但流量不足——10-02 晚 10 封外联带来 4 个会话（cognee、langchain、hermes-agent），全是 page_view，0 次维护者横幅点击 / 徽章复制 / checkout；约 8.5 小时无回信。首页每天个位数访客，$49 首页推荐作者不会买。推论：Submit Kit 卖数据和配方，本身有价值、不依赖我们的流量，作为周一摘要要点 + Submit Kit 论据
 - [ ] 周一摘要加「收录覆盖率」指标（10-03 07:34）：GSC 28 天 393 次展示全部来自 33 个英文页，zh/ja 为 0；sitemap 提交 2467、indexed 0；URL Inspection 抽查 zh/ja 页为 unknown 或 Discovered-not-indexed → 瓶颈在 Google 收录（新站抓取预算低）
-- [ ] 看板加「本周经营」固定栏 + 三个固定指标，自动出数：目录提交（已提交/已上线/成功率）、对标差距、外联漏斗
+- [x] 看板固定指标（自动出数，10-03 09:40，99c23fe）：看板 KPI 新增「固定指标」行，每小时刷新——外联累计发出（data/outreach/sent.json）+ 近 7 天会话（events.src 含 outreach）；目录站已提交 / 已上线（~/data/backlinks/directory-log.csv 取 ai-directory 每域名最新一条，detail 含「已上线 / is live / 已发布」算上线）；中文页、日文页近 7 天访客。kpi.test.ts 先写，212 测试通过。当前：外联 10 封 / 4 会话；目录站 41 / 3（launchboosts、conduid、aitoolsrecap）；zh 访客 3、ja 0
+- [ ] 看板「本周经营」固定栏 + 对标差距指标 + 目录提交成功率（剩余部分）
 - [ ] 周一前补：竞品扫描（对标站 + ≥3 个同类站）、新数据源 1 个、新渠道 1 个
 - 约束: 瓶颈在分发；零流量期不再堆功能（已承认这两天犯过一部分）
 - 闸: auto

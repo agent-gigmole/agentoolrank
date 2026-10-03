@@ -782,3 +782,10 @@
 - 新脚本 scripts/winbrowser/task_devto_key.py：生成或读取 key 直接存文件，不打印
 - 下一步：10-07 发数据文章「实测 101 个目录站」（同一品牌号）
 - 坑：GOTCHAS#devto-api-publish
+
+## 2026-10-03 09:24–09:40 外联首批复盘 + aitoolsrecap 上线 + 看板固定指标（99c23fe）
+- **外联首批复盘（发出约 19.5 小时）**：送达 10/10、退信 0、投诉 0；Brevo opened 4（nocobase、codewhale、nousresearch、langchain，Apple MPP 会虚增，仅参考）；ref=outreach 4 个会话（cognee 未记打开却来访看了 4 页 → 打开数不准，以站内会话为准）；回复 0、付费点击 0。已发 agentkit 作 09:30 汇总素材；今晚 22:00 照发第二批 10 封
+- **aitoolsrecap 已审核上线**（邮件确认），dirsub 已更新为【已上线】；已上线累计 3：launchboosts、conduid、aitoolsrecap
+- **看板 KPI 新增「固定指标」行**（owner-goal 4c：老板问过的问题变固定指标），每小时自动刷新：外联累计发出 + 近 7 天会话；目录站已提交 / 已上线；中文页、日文页近 7 天访客。当前：外联 10 / 4；目录站 41 / 3；zh 3、ja 0。kpi.test.ts 先写，212 测试通过
+- T28 剩余：看板「本周经营」栏、对标差距、目录提交成功率；10-05 交第一份周经营
+- 坑：GOTCHAS#dirsub-live-convention

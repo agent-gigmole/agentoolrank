@@ -801,3 +801,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 生成的 key 显示在折叠的 `<details>` 里，`innerText` 读不到（折叠内容不渲染），要读 `textContent`；脚本 scripts/winbrowser/task_devto_key.py 生成/读取后直接写文件，不打印
 - dev.to API 对 Python 默认 User-Agent 返回 403 "Forbidden Bots" → 带自定义 UA + `Accept: application/vnd.forem.api-v1+json`
 - 稿件里的内部 HTML 注释（中文发布计划）在 markdown 渲染里不可见但会随正文上传，发布前必须删；发布脚本加断言：英文稿正文不得含中文字符
+
+## dirsub-live-convention
+- dirsub.py 的 result 枚举没有 `live`（只有 submitted / badge / retry / skip / todo 等）。**约定：站点确认上线时 result 仍记 `submitted`，detail 里写「【已上线】」**（可附上线 URL、rel 属性）。
+- 看板 KPI「目录站已上线」按 ~/data/backlinks/directory-log.csv 里 ai-directory 每个域名的**最新一条**判断，detail 含「已上线 / is live / 已发布」任一关键词即算上线。写错关键词（如「上架了」「live now」）就不会被统计。
+- 外联打开数不可信：Apple Mail Privacy Protection 会预取像素虚增 opened，也有真实来访却没记 opened 的（10-03 cognee 未记打开但站内看了 4 页）。外联效果以 events 表 ref=outreach 会话为准，opened 只作参考。

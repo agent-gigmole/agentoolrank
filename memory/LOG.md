@@ -904,3 +904,9 @@
 - 结果：https://dev.to/agentoolrank/where-to-list-an-mcp-server-or-ai-agent-tool-free-vs-paid-checked-oct-2026-1eak （id 4789560），canonical /where-to-list，ref=devto2；第一篇阅读 30
 - 坑：GOTCHAS#devto-api-publish
 - 结果：成功
+
+## 2026-10-03 09:24–09:40 外联首批复盘 + 看板固定指标
+- 做法：Brevo 事件 + events 表 ref=outreach 对账首批 10 封；收 aitoolsrecap 上线邮件后 dirsub 更新 detail【已上线】；看板 KPI 加固定指标行（外联发出/会话、目录站提交/上线、zh/ja 7 天访客），kpi.test.ts 先写（99c23fe）
+- 结果：送达 10/10、退信 0、投诉 0、opened 4（MPP 不准，cognee 未记打开但来访 4 页）、会话 4、回复 0、付费点击 0；212 测试通过；当前 外联 10/4、目录站 41/3、zh 3、ja 0；22:00 发第二批 10 封
+- 坑：GOTCHAS#dirsub-live-convention
+- 结果：成功
