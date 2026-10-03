@@ -134,6 +134,9 @@ const daily = {
       ctaClicks: await sess(`name='ui_click' AND json_extract(props,'$.label') IN ('downloads-maintainer-cta','alternatives-maintainer-cta')`),
       badgeCopies: await sess(`name='badge_copy'`),
       featuredCheckouts: await sess(`name='checkout_click' AND path LIKE '%#featured'`),
+      // "your page is live" emails (send-live-emails.ts) link with ?ref=live-notify
+      liveNotifyVisitors: await sess(`name='page_view' AND src LIKE '%live-notify%'`),
+      liveNotifyCheckouts: await sess(`name='checkout_click' AND src LIKE '%live-notify%'`),
     },
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
   };
