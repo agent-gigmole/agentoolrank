@@ -5,7 +5,7 @@
 // as the other projects); the rest is our own funnel.
 export const EVENT_NAMES = [
   "page_view", "engagement", "ui_click", "exit_survey", "element_seen",
-  "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click", "kit_click",
+  "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click", "kit_click", "prefill",
 ] as const;
 export const SURVEY_REASONS = ["browsing", "later", "price", "unclear", "privacy", "other"] as const;
 export type EventName = (typeof EVENT_NAMES)[number];

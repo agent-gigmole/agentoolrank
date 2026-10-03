@@ -67,6 +67,30 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
   const [copied, setCopied] = useState(false);
+  const [prefilled, setPrefilled] = useState("");
+
+  // Paste a GitHub link → fill name / tagline / website from the repo, only into fields that are still empty.
+  async function prefill(e: React.FocusEvent<HTMLInputElement>) {
+    const form = e.currentTarget.form;
+    const gh = e.currentTarget.value.trim();
+    if (!form || !/github\.com\/[^/]+\/[^/]+/i.test(gh)) return;
+    try {
+      const res = await fetch(`/api/prefill?url=${encodeURIComponent(gh)}`);
+      const data = (await res.json()) as Partial<Record<"name" | "tagline" | "url", string>>;
+      const filled: string[] = [];
+      for (const k of ["url", "name", "tagline"] as const) {
+        const el = form.elements.namedItem(k) as HTMLInputElement | null;
+        if (el && !el.value.trim() && data[k]) {
+          el.value = data[k];
+          filled.push(k === "url" ? "website" : k);
+        }
+      }
+      if (filled.length) {
+        setPrefilled(`Filled ${filled.join(", ")} from GitHub. Edit anything you like.`);
+        track("prefill", undefined, { label: filled.join(",") });
+      }
+    } catch {}
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -153,6 +177,11 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <label className="block">
+        <span className="text-sm font-medium text-gray-700">GitHub repo (if open source)</span>
+        <input name="github_url" type="url" placeholder="https://github.com/owner/repo" onBlur={prefill} data-testid="github-url" className={input} />
+        <span className="text-xs text-gray-500">{prefilled || "Paste it first and we fill in the name, tagline and website for you."}</span>
+      </label>
+      <label className="block">
         <span className="text-sm font-medium text-gray-700">Website *</span>
         <input name="url" type="url" required placeholder="https://yourtool.com" className={input} />
       </label>
@@ -163,10 +192,6 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
       <label className="block">
         <span className="text-sm font-medium text-gray-700">Tagline *</span>
         <input name="tagline" required maxLength={160} placeholder="What does it do, in one sentence?" className={input} />
-      </label>
-      <label className="block">
-        <span className="text-sm font-medium text-gray-700">GitHub repo (if open source)</span>
-        <input name="github_url" type="url" placeholder="https://github.com/owner/repo" className={input} />
       </label>
       <label className="block">
         <span className="text-sm font-medium text-gray-700">Your email *</span>
