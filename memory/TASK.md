@@ -91,7 +91,8 @@
 - ✅ 日报维护者行加「API 已收录回复 N 个会话、结账 N」（36d7aa1，kpi 已跑出新行）
 - ✅ 上线通知信加 Submit Kit 一句（126bbee，/submit-kit?ref=live-notify，预览已核对，下次 daily-ops 发信生效）
 - ✅ 网页提交已收录工具的结果页也加 Submit Kit 框（KitBox 共用，10-04 04:3x 上线，真 Chrome 核对：推荐位、徽章、Submit Kit 三块都在）
-- API / MCP 已收录回复也带 Submit Kit：listedReply 加 submit_kit_url（/submit-kit?ref=agent-listed）并在 message_for_human 加一句；接着 submit_tool 排队成功的 message_for_human 里的 recommend_directories 那句也给网页链接（进行中）
+- ✅ API / MCP 回复带 Submit Kit：已收录回复 submit_kit_url + 说明一句（?ref=agent-listed），排队成功 message_for_human 加网页链接（?ref=agent-queued）（10-04 04:4x 上线，REST 线上核对，自测带 ?src=selftest-kit）
+- 日报 Submit Kit 漏斗后面加「进页来源」：live-notify / agent-listed / agent-queued / 其他各几个会话，看哪条入口在带人（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

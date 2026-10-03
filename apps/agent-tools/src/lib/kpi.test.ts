@@ -53,6 +53,7 @@ describe("renderDaily", () => {
     submitFunnel: { page: 9, seen: 5, clicked: 2, done: 1 }, kitFunnel: { page: 4, seen: 3, clicked: 1, done: 1 },
     maintainer: { ctaClicks: 3, badgeCopies: 2, featuredCheckouts: 1, liveNotifyVisitors: 2, liveNotifyCheckouts: 1, agentListedVisitors: 3, agentListedCheckouts: 0 },
     apiCalls: { total: 12, withKey: 2, topTool: "search_tools" },
+    kitSources: { "live-notify": 1, "agent-listed": 0, "agent-queued": 2, other: 1 },
   };
   const md = renderDaily(d);
   it("leaves room for the vi block inside the 15 lines agentkit appends", () => {
@@ -62,6 +63,7 @@ describe("renderDaily", () => {
     expect(md).toContain("外联：累计 20 封，近 7 天带来 5 个会话");
     expect(md).toContain("目录站：已提交 41，已确认上线 6");
     expect(md).toContain("Submit Kit 7 天：进页 4 → 看到按钮 3 → 点了 1 → 完成 1");
+    expect(md).toContain("进页来源：上线通知信 1 · API 已收录 0 · API 排队 2 · 其他 1");
     expect(md).toContain("提交工具 7 天：进页 9 → 看到按钮 5 → 点了 2 → 完成 1；提交记录 7 天 3");
     expect(md).toContain("dev.to 来源 7 天 7");
     expect(md).toContain("维护者：入口点击 3 · 复制徽章 2 · 首页推荐结账 1；上线通知信 2 个会话、结账 1；API 已收录回复 3 个会话、结账 0");
