@@ -1350,3 +1350,8 @@
 - 做法：kitIntro 接页面部署，curl 核对三种 ref 各一句、无 ref 不显示、canonical 不变；KitBuyButton 发 src=submit-kit-page|<会话来源>，部署后真 Chrome 手动设 at_src=selftest-kitsrc 结账，Stripe ops key 读 checkout session metadata.src 正确；看板已记，TASK ✅；队尾新增并开工 $49 推荐位付款带来源（sessionSource()、MaintainerBox tool-page|、PaidOptions submit(-listed)|），aa65ef7 push 未部署
 - 结果：成功（推荐位来源未部署）
 - 坑：会话来源键是 at_src 不是 utm_src，SubmitForm 读错键导致免费提交 src 一直只有 referrer（已修 df59df4）；?internal=1 时 track() 直接 return、session() 不跑、at_src 不写，内部实测要手动 setItem；/api/checkout 对已有 submission 用 sub.src 不用 body.src；Stripe 自测留未付款 session（无害）（GOTCHAS#session-source-key-at-src）
+
+## 2026-10-04 05:42 $49 推荐位付款带来源上线（aa65ef7）+ 维护者区 Kit 类型开工（68462ef）
+- 做法：aa65ef7 373 测试过后部署；真 Chrome /tool/crewai?internal=1 手动 setItem at_src=selftest-featsrc，点维护者区 $49 → Stripe；ops key 读最新 checkout session：metadata.src='tool-page|selftest-featsrc'、submission_id 0、plan featured；看板已记，TASK ✅；队尾新增并开工「详情页维护者区 Submit Kit 链接按类目选 type」（MaintainerBox kitType prop 默认 ai_tool，tool 页传 kitTypeForCategories(tool.category_tags)），已 push 未部署
+- 结果：成功（维护者区 Kit 类型未部署）
+- 坑：无新坑（内部实测照 GOTCHAS#session-source-key-at-src 手动 setItem at_src）

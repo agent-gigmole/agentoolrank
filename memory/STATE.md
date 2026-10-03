@@ -1421,3 +1421,8 @@
 - 看板已记，TASK ✅
 - **进行中：$49 推荐位付款带来源**——aa65ef7：Analytics 导出 sessionSource()；MaintainerBox 发 tool-page|<来源>；PaidOptions 发 submit|<来源> / submit-listed|<来源>；已 push **未部署**。注意 /api/checkout 对已有 submission 用 DB 里的 sub.src，只有已收录工具（无 submission）才用 body.src
 - **下一步**：aa65ef7 测试 → 部署 → 真 Chrome（?internal=1 + 手动 setItem at_src=selftest-*）实测详情页 #maintainers 结账 metadata.src → 看板；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 05:42 $49 推荐位付款带来源上线（aa65ef7 已部署）+ 详情页维护者区 Submit Kit 链接按类目选 type 开工（68462ef 未部署）
+- **推荐位付款归因已上线**：373 测试全过后部署；真 Chrome 打开 /tool/crewai?internal=1，手动 sessionStorage.setItem('at_src','selftest-featsrc')，点维护者区 $49 → Stripe；用 Stripe ops key 读最新 checkout session：metadata.src='tool-page|selftest-featsrc'、submission_id 0、plan featured ✅（自测留未付款 session，无害）。看板已记，TASK ✅
+- **进行中：详情页维护者区 Submit Kit 链接按类目选 type**——68462ef MaintainerBox 加 kitType prop（默认 ai_tool），tool 页传 kitTypeForCategories(tool.category_tags)；已 push **未部署**
+- **下一步**：部署 68462ef → 线上核对 MCP 类工具（如 modelcontextprotocol/servers）详情页 Kit 链接含 type=mcp_server、CrewAI 为 ai_tool → 看板；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
