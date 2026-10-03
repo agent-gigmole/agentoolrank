@@ -10,7 +10,7 @@ import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { spawnSync } from "node:child_process";
 import { toolRowFromReview, hasBacklink, reviewOrder } from "../src/lib/review";
-import { unsafeMatch } from "../src/lib/safety";
+import { unsafeMatch, scamMatch, holdReasons } from "../src/lib/safety";
 import { fetchText, readme, judge } from "./judge";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -61,11 +61,20 @@ async function main() {
   const batch = [...paid, ...subs.filter((s) => s.plan === "free").slice(0, freeQuota)];
   console.log(`pending=${subs.length} reviewing=${batch.length} (paid ${paid.length}, free quota ${freeQuota}) apply=${apply}`);
 
+  const listed = (await db.execute("SELECT name, website_url, github_url FROM tools")).rows as unknown as Array<{ name: string; website_url: string | null; github_url: string | null }>;
   let approved = 0;
   for (const s of batch) {
-    const pre = unsafeMatch([s.name, s.slug, s.url, s.github_url ?? "", s.tagline].join(" "));
+    const hold = holdReasons(s, listed);
+    if (hold.length) {
+      // Bare-IP hosts and listed-tool names on another domain wait for a human (agentkit 10-04 scam / impersonation note).
+      console.log(`#${s.id} ${s.slug}: HOLD for manual review (${hold.join("; ")})`);
+      if (apply) await db.execute({ sql: "UPDATE submissions SET note=? WHERE id=?", args: [`hold: ${hold.join("; ")}`, s.id] });
+      continue;
+    }
+    const text = [s.name, s.slug, s.url, s.github_url ?? "", s.tagline].join(" ");
+    const pre = unsafeMatch(text) ?? (scamMatch(text) ? `scam template: ${scamMatch(text)}` : null);
     const r = pre ? null : await judge(s.name, s.url, s.tagline, pages.get(s.id)?.text ?? "", await readme(s.github_url), categories);
-    const bad = pre ?? (r ? unsafeMatch(`${r.tagline} ${r.description}`) : null);
+    const bad = pre ?? (r ? unsafeMatch(`${r.tagline} ${r.description}`) ?? scamMatch(`${r.tagline} ${r.description} ${pages.get(s.id)?.text.slice(0, 2000) ?? ""}`) : null);
     if (bad) {
       // Face swap / nudify / adult tools are never listed, whatever the reviewer says (also skips the LLM call).
       console.log(`#${s.id} ${s.slug}: reject (unsafe category: "${bad}")`);

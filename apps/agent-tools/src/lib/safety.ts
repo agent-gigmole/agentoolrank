@@ -39,3 +39,53 @@ export function unsafeMatch(text: string): string | null {
   }
   return null;
 }
+
+// Scam-funnel templates (agentkit 10-04 03:15, new_ladar first screening night): clusters of "XXX AI — AI Platform for
+// Intelligent Capital Preservation" sites with random names, same title in many languages. An LLM asked "is this an AI
+// tool?" lets them through, so these are deterministic rejects.
+const SCAM = [
+  /\bAI\s+(?:platform|system|engine)\s+for\s+(?:\w+\s+){0,2}(?:capital|wealth|asset|investment|trading|profit)/i,
+  /capital[\s_.-]+preservation/i,
+  /guaranteed[\s_.-]+(?:\w+[\s_.-]+)?(?:returns?|profits?|income)/i,
+  /(?:daily|weekly|passive)[\s_.-]+(?:returns?|profits?|income)/i,
+];
+
+/** Returns the matched text if `text` reads like an investment-scam funnel, else null. */
+export function scamMatch(text: string): string | null {
+  for (const re of SCAM) {
+    const m = text.match(re);
+    if (m) return m[0];
+  }
+  return null;
+}
+
+const host = (u: string | null | undefined) => {
+  try {
+    return new URL(u ?? "").hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return "";
+  }
+};
+
+/**
+ * Reasons to hold a submission for a human instead of approving it automatically:
+ * a bare-IP / wildcard-DNS host (sslip.io, nip.io), or a name that is already a listed tool's name on a different
+ * domain and repo (possible impersonation). Empty array = nothing suspicious.
+ */
+export function holdReasons(
+  s: { name: string; url: string; github_url?: string | null },
+  listed: Array<{ name: string; website_url?: string | null; github_url?: string | null }>,
+): string[] {
+  const out: string[] = [];
+  const h = host(s.url);
+  if (/^\d{1,3}(?:\.\d{1,3}){3}$/.test(h) || /(?:^|\.)(?:sslip\.io|nip\.io|xip\.io)$/.test(h)) out.push(`bare-IP host ${h}`);
+  const name = s.name.trim().toLowerCase();
+  const gh = (s.github_url ?? "").toLowerCase().replace(/\/+$/, "");
+  for (const t of listed) {
+    if (t.name.trim().toLowerCase() !== name) continue;
+    const sameSite = h && host(t.website_url) === h;
+    const sameRepo = gh && (t.github_url ?? "").toLowerCase().replace(/\/+$/, "") === gh;
+    if (!sameSite && !sameRepo) out.push(`name matches listed tool "${t.name}" on another domain`);
+  }
+  return out;
+}

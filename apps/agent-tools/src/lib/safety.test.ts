@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { unsafeMatch } from "./safety";
+import { unsafeMatch, scamMatch, holdReasons } from "./safety";
 
 describe("unsafeMatch", () => {
   it.each([
@@ -60,4 +60,34 @@ describe("unsafeMatch: AI-detection evasion and academic cheating (agentkit 10-0
     "Bypass rate limits with a proxy pool",
     "Essay grading assistant for teachers",
   ])("allows %s", (t) => expect(unsafeMatch(t)).toBeNull());
+});
+
+
+describe("scamMatch (investment-scam funnel templates, agentkit 10-04)", () => {
+  it("catches the capital-preservation template and return promises", () => {
+    expect(scamMatch("Zvaklurenatrx AI — AI Platform for Intelligent Capital Preservation")).not.toBeNull();
+    expect(scamMatch("Earn guaranteed daily returns with our bot")).not.toBeNull();
+    expect(scamMatch("Passive income on autopilot")).not.toBeNull();
+  });
+  it("leaves real trading / finance agent tools alone", () => {
+    expect(scamMatch("Open source software that helps you create and deploy high-frequency crypto trading bots")).toBeNull();
+    expect(scamMatch("Value investing research framework for Claude Code and Codex")).toBeNull();
+    expect(scamMatch("Self-hosted AI trading platform for Python strategies, backtesting, and paper trading")).toBeNull();
+  });
+});
+
+describe("holdReasons (hold for a human, never auto-approve)", () => {
+  const listed = [{ name: "CrewAI", website_url: "https://crewai.com", github_url: "https://github.com/crewAIInc/crewAI" }];
+  it("holds bare-IP and wildcard-DNS hosts", () => {
+    expect(holdReasons({ name: "x", url: "https://95.216.126.169.sslip.io/buyer" }, [])).toHaveLength(1);
+    expect(holdReasons({ name: "x", url: "http://10.0.0.1/" }, [])).toHaveLength(1);
+  });
+  it("holds a listed tool's name on another domain and repo (impersonation)", () => {
+    expect(holdReasons({ name: "crewai", url: "https://crewai-pro.xyz" }, listed)).toHaveLength(1);
+  });
+  it("passes the real site, the real repo, and unrelated names", () => {
+    expect(holdReasons({ name: "CrewAI", url: "https://www.crewai.com/" }, listed)).toEqual([]);
+    expect(holdReasons({ name: "CrewAI", url: "https://docs.example.com", github_url: "https://github.com/crewAIInc/crewAI/" }, listed)).toEqual([]);
+    expect(holdReasons({ name: "Legba", url: "https://legba.app" }, listed)).toEqual([]);
+  });
 });
