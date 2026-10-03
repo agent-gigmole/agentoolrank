@@ -334,3 +334,5 @@
 | browser-tidy 标签页清理 / 按戳保留工作页 window.name ar_keep:<ms> / stamp stamp_of / ctx.pages 新 CDP 连接不按创建顺序 / 保留最后一个不可靠 / goto 后重打戳 / target=_blank 弹窗 / run.sh trap tidy EXIT / 2faeb3c（替代 777b4e0） | GOTCHAS.md#browser-tidy-keep-stamped-tab |
 | 替代品页 ItemList softwareAppJsonLd / /alternatives/langchain DownloadAction / d4bae19 | STATE.md#2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74） |
 | /submit-kit Product JSON-LD kitProductJsonLd / Offer Free top 10 $0 Full list $29 USD InStock / Brand AgentoolRank / 5ce3f74 | STATE.md#2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74） |
+| 已收录工具买推荐 / /api/checkout 无 submission 只允许 plan=featured / PaidOptions listed 模式 / BadgeBox / alreadyListed 结果页维护者入口 / 684df92 | GOTCHAS.md#checkout-listed-tool-featured-only |
+| 提交表单预填 / /api/prefill GitHub 公开 API 5s 超时 GITHUB_TOKEN / 失焦只填空字段 / 长简介整句≥40 或整词截 160 / 埋点 prefill EVENT_NAMES / 6028f22 53a9e47 | STATE.md#2026-10-04 02:5x 提交表单预填上线 + 已收录工具提交结果页维护者入口开工（6028f22、53a9e47 部署并 push，034778e，684df92） |

@@ -1070,3 +1070,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 注意：导航后 window.name 可能被清（跨站跳转），所以 goto 之后要**重新打戳**；target=_blank 弹窗要在操作它时打戳，tidy 才会留它
 - 验证：run.sh open → 同页再操作 → 点出 target=_blank 弹窗，三次 tidy 都剩 1 个标签页，分别保留 example.com / example.com / 弹窗 example.org
 - 来源：777b4e0（初版保留最后一个，已作废）→ 2026-10-04 2faeb3c（scripts/winbrowser/browser.py、task_act.py、task_tab.py、task_tidy.py）
+
+## checkout-listed-tool-featured-only
+- /api/checkout 给**已收录工具**（没有 submission 记录）买推荐时，只允许 plan=featured（$49）；fast/priority 等档依赖 submission 审核队列，对已收录工具无意义，会被拒
+- 做法：给已收录工具的付费入口（详情页 #maintainers、/downloads、/alternatives、提交结果页 alreadyListed）只展示 featured；PaidOptions 用 listed 模式（684df92），不要复用提交成功页的全档位列表
+- 来源：2026-10-04 684df92（已收录工具提交结果页维护者入口）

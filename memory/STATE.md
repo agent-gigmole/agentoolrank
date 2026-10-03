@@ -1340,3 +1340,10 @@
 - 见 GOTCHAS#browser-tidy-keep-stamped-tab
 - **提交表单预填仍进行中（5802b05 WIP）**：剩 /api/prefill 路由（服务端调 GitHub 公开 API，限流兜底）；SubmitForm 在 github_url 失焦时只填空字段；部署 + 线上核对 + 看板
 - **下一步**：完成预填剩余项；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 02:5x 提交表单预填上线 + 已收录工具提交结果页维护者入口开工（6028f22、53a9e47 部署并 push，034778e，684df92）
+- **预填已上线（agentoolrank.com）**：新增 /api/prefill?url=<GitHub 仓库>（服务端调 GitHub 公开 API，5s 超时，有 GITHUB_TOKEN 就带上；失败返回 {}，非 GitHub 地址 400）。SubmitForm 把 GitHub 栏挪到第一格，失焦后只往**空的**官网/名字/简介格子里填，提示「Filled … from GitHub」，埋点事件 prefill（已加进 EVENT_NAMES）
+- **简介截断（53a9e47）**：prefill.ts 长简介 >160 字时取开头整句（≥40 字），否则按最后一个空格截，不截半个词
+- **线上实测**：/api/prefill crewAI 返回整句简介；真 Chrome（?internal=1）填 browser-use 地址后官网、简介自动填，手填名字保留；看板已记（034778e）
+- **进行中：已收录工具提交结果页给维护者入口**（提交已收录工具的人多半是维护者 = $49 最对口的人）：第一步 684df92 未部署——PaidOptions 加 listed 模式只给 featured、抽出 BadgeBox 组件（徽章代码）；358 测试通过。/api/checkout 对已收录工具（无 submission）只允许 plan=featured（GOTCHAS#checkout-listed-tool-featured-only）
+- **下一步**：结果页接上 listed 模式 PaidOptions + BadgeBox → 部署 → 线上核对 → 看板；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

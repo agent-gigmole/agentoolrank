@@ -1283,3 +1283,9 @@
 - 结果：open → 同页再操作 → target=_blank 弹窗三种情况 tidy 后都剩 1 个标签页且保留正确
 - 坑：新 CDP 连接下 ctx.pages 不按创建顺序，"保留最后一个"不可靠；导航后 window.name 可能被清，goto 后要重打戳（GOTCHAS#browser-tidy-keep-stamped-tab，替代原 keep-newest-tab）
 - 结果：成功（提交表单预填仍进行中）
+
+## 2026-10-04 02:56 提交表单预填上线 + 已收录工具维护者入口开工（6028f22、53a9e47 部署并 push，034778e，684df92）
+- 做法：/api/prefill（GitHub 公开 API，5s 超时，可带 GITHUB_TOKEN，失败 {}，非 GitHub 400）+ SubmitForm GitHub 栏置顶、失焦只填空字段、埋点 prefill（6028f22）；长简介按整句（≥40 字）或整词截（53a9e47）；部署 + push，看板记一行（034778e）；开工已收录工具提交结果页维护者入口：PaidOptions listed 模式只给 featured、抽出 BadgeBox（684df92，未部署）
+- 结果：线上 /api/prefill crewAI 返回整句简介；真 Chrome 填 browser-use 后官网/简介自动填、手填名字保留；358 测试全绿
+- 坑：/api/checkout 对已收录工具（无 submission）只允许 plan=featured（GOTCHAS#checkout-listed-tool-featured-only）；构建日志 "Ecmascript file had an error" 仍是 packages/db 旧告警，已有记录
+- 结果：成功（维护者入口进行中）
