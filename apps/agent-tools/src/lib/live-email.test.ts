@@ -11,6 +11,7 @@ describe("liveEmail (the /submit form promises 'we'll email you when your page i
     expect(e.text).toContain('src="https://agentoolrank.com/api/badge/legba"');
     expect(e.text).toContain("https://agentoolrank.com/tool/legba?ref=live-notify#maintainers");
     expect(e.text).toContain("$49");
+    expect(e.text).toContain("https://agentoolrank.com/submit-kit?ref=live-notify");
   });
   it("never says it was written by AI", () => {
     expect(e.text).not.toMatch(/\bAI[- ](?:written|generated)|written by (?:an )?AI|automated message/i);

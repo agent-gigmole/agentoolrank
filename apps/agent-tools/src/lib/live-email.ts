@@ -19,6 +19,8 @@ export function liveEmail(o: { name: string; slug: string; baseUrl: string }): {
       "",
       `Want more developers to see it? Feature it for 7 days at the top of the homepage and its category page ($49, one-time): ${tracked}#maintainers`,
       "",
+      `Listing it on other directories too? We tested 101 launch directories with our own products; the Submit Kit says which fit this tool and which to skip (top 10 free): ${o.baseUrl}/submit-kit?ref=live-notify`,
+      "",
       "Thanks for submitting,",
       "Jason T., AgentoolRank",
       "",

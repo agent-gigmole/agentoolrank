@@ -88,7 +88,8 @@
 - ✅ 上线通知邮件的落地可测：链接带 ?ref=live-notify（91b0ab6），ops/daily.md 维护者行加「上线通知信 N 个会话、结账 N」（3f61735，kpi 已跑出新行）
 - ✅ API / MCP 提交已收录工具时回复带 $49 推荐位（featured_offer.buy_url 带 ?ref=agent-listed）、badge_html、message_for_human（10-04 04:0x 上线，线上 REST 与 MCP submit_tool 都已核对）
 - ✅ 详情页维护者横幅扩到 ?ref=live-notify、agent-listed（d69fa55，10-04 04:1x 上线；真 Chrome 核对：两个来源显示、无来源不显示）
-- 日报维护者行加「API 已收录回复」来源（src 含 agent-listed 的会话、结账点击），和上线通知信并列，看 API 这条路能不能带来 $49（进行中）
+- ✅ 日报维护者行加「API 已收录回复 N 个会话、结账 N」（36d7aa1，kpi 已跑出新行）
+- 上线通知信加 Submit Kit 一句（刚上线的工具正要去别的目录站投放，$29 清单最对口；链接带 ?ref=live-notify），之后每封通知同时推 $49 推荐位和 $29 Submit Kit（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
