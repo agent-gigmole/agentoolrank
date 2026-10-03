@@ -17,6 +17,8 @@ log="data/ops-logs/$(date +%F).log"
   bun run scripts/stripe-pm-status.ts || fail=1
   echo "== brevo health by tag (shared account)"
   bun run scripts/brevo-tag-health.ts || fail=1
+  echo "== directory listings (live page + our link rel)"
+  bun run scripts/check-listings.ts || fail=1
   echo "== search console (28d)"
   python3 scripts/gsc_report.py 28 || fail=1
 } >> "$log" 2>&1

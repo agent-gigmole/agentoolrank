@@ -79,6 +79,9 @@ const data: KpiData = {
 };
 writeFileSync(DASH, replaceBlock(readFileSync(DASH, "utf8"), renderKpi(data)));
 // ops/daily.md feeds agentkit's 09:00 daily report (bin/daily-report appends its first 15 lines).
+/** Distinct real sessions in the last 7 days matching an events condition (funnel steps for ops/daily.md). */
+const sess = (where: string) => n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND ${where} AND ts >= ?`, [wk.from]);
+
 // visitor-insights block (agentkit skills/visitor-insights), last 24h, first in the file.
 const viSince = new Date(now.getTime() - 86400_000);
 const viFrom = viSince.toISOString().slice(0, 19).replace("T", " ");
@@ -102,6 +105,7 @@ try {
     sinceLabel: `北京 ${new Date(viSince.getTime() + 8 * 3600_000).toISOString().slice(5, 16).replace("T", " ")}`,
     engagement: eng.map((r) => ({ path: String(r.path), seconds: Number(r.s ?? 0), scroll: Number(r.c ?? 0) })),
     survey: (await rowsOf(`SELECT json_extract(props,'$.action') a, COALESCE(json_extract(props,'$.reason'),'') r, COUNT(*) n FROM events WHERE ${REAL_EV} AND name='exit_survey' AND ts >= ? GROUP BY 1,2 ORDER BY 3 DESC`)).map((r) => ({ action: String(r.a), reason: String(r.r), n: Number(r.n) })),
+    seen: (await rowsOf(`SELECT json_extract(props,'$.element') e, COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='element_seen' AND ts >= ? GROUP BY 1 ORDER BY 2 DESC LIMIT 5`)).map((r) => ({ element: String(r.e), n: Number(r.n) })),
     clicks: (await rowsOf(`SELECT json_extract(props,'$.label') l, COUNT(*) n FROM events WHERE ${REAL_EV} AND name='ui_click' AND ts >= ? GROUP BY 1 ORDER BY 2 DESC LIMIT 5`)).map((r) => ({ label: String(r.l), n: Number(r.n) })),
   });
 } catch (e) {
@@ -111,7 +115,18 @@ writeFileSync(
   new URL("../../../ops/daily.md", import.meta.url).pathname,
   withViBlock(vi, renderDaily({
     ...data,
-    kitOrders7d: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
+    submitFunnel: {
+      page: await sess(`name='page_view' AND path='/submit'`),
+      seen: await sess(`name='element_seen' AND json_extract(props,'$.element')='submit_button'`),
+      clicked: await sess(`name='ui_click' AND json_extract(props,'$.label')='submit-tool'`),
+      done: await sess(`name='submit_done'`),
+    },
+    kitFunnel: {
+      page: await sess(`name='page_view' AND path='/submit-kit'`),
+      seen: await sess(`name='element_seen' AND json_extract(props,'$.element')='kit_buy_button'`),
+      clicked: await sess(`name='ui_click' AND json_extract(props,'$.label')='kit-buy'`),
+      done: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
+    },
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
   })),
 );

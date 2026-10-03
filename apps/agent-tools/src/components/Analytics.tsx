@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { clickLabel, scrollPercent, sourceFromUrl, type EventName } from "@/lib/events";
+import { SEEN_RATIO, clickLabel, firstSighting, scrollPercent, sourceFromUrl, type EventName } from "@/lib/events";
 
 function session(): { sid: string; src: string } {
   try {
@@ -85,6 +85,42 @@ export function Analytics() {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pagehide", flush);
+    };
+  }, [pathname]);
+
+  // element_seen: key buttons marked data-vi-seen="name" that were at least half on screen, once per session per name
+  // (so the funnel can tell "never reached the button" from "saw it and didn't press").
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const name = (e.target as HTMLElement).dataset.viSeen;
+          if (!name || !e.isIntersecting) continue;
+          try {
+            if (firstSighting(name, e.intersectionRatio, sessionStorage)) track("element_seen", location.pathname, { element: name });
+          } catch {
+            /* private mode */
+          }
+          if (e.intersectionRatio >= SEEN_RATIO) io.unobserve(e.target);
+        }
+      },
+      { threshold: [SEEN_RATIO] },
+    );
+    const watched = new WeakSet<Element>();
+    const scan = () =>
+      document.querySelectorAll("[data-vi-seen]").forEach((el) => {
+        if (!watched.has(el)) {
+          watched.add(el);
+          io.observe(el);
+        }
+      });
+    scan();
+    const mo = new MutationObserver(scan);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      mo.disconnect();
+      io.disconnect();
     };
   }, [pathname]);
 

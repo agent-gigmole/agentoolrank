@@ -63,3 +63,10 @@ describe("classifySessions (agentkit 17:03 scoreboard rule)", () => {
     expect(r).toEqual({ visitors: 2, scanners: 1 });
   });
 });
+
+describe("element_seen in the vi block", () => {
+  it("shares the click line so the block keeps its line budget", () => {
+    const lines = viBlock({ days: 1, sinceLabel: "x", engagement: [{ path: "/", seconds: 20, scroll: 50 }], survey: [], clicks: [{ label: "kit-buy", n: 1 }], seen: [{ element: "kit_buy_button", n: 3 }] });
+    expect(lines.at(-1)).toBe("点击最多：kit-buy 1；被看到（会话，露出 ≥50%）：kit_buy_button 3");
+  });
+});

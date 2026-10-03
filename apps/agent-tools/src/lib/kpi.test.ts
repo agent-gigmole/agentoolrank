@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cstDayRange, renderDaily, renderKpi, replaceBlock } from "./kpi";
+import { cstDayRange, funnelLine, renderDaily, renderKpi, replaceBlock } from "./kpi";
 
 describe("cstDayRange", () => {
   it("maps a China-time day to UTC SQLite bounds", () => {
@@ -49,7 +49,8 @@ describe("renderDaily", () => {
     yesterday: { visitors: 14, submitViews: 2, submissions: 1, paid: 0, revenueCents: 0 },
     week: { visitors: 80, submitViews: 9, submissions: 3, paid: 1, revenueCents: 2900 },
     totalRevenueCents: 2900, externalSubmissions: 3, monthRevenueCents: 2900, gscClicks28d: 3, zhVisitors7d: 4,
-    jaVisitors7d: 2, outreachSent: 20, outreachVisitors7d: 5, dirSubmitted: 41, dirLive: 6, kitOrders7d: 1, devtoVisitors7d: 7,
+    jaVisitors7d: 2, outreachSent: 20, outreachVisitors7d: 5, dirSubmitted: 41, dirLive: 6, devtoVisitors7d: 7,
+    submitFunnel: { page: 9, seen: 5, clicked: 2, done: 1 }, kitFunnel: { page: 4, seen: 3, clicked: 1, done: 1 },
   };
   const md = renderDaily(d);
   it("leaves room for the vi block inside the 15 lines agentkit appends", () => {
@@ -58,9 +59,15 @@ describe("renderDaily", () => {
   it("carries the project-specific numbers the scoreboard lacks", () => {
     expect(md).toContain("外联：累计 20 封，近 7 天带来 5 个会话");
     expect(md).toContain("目录站：已提交 41，已确认上线 6");
-    expect(md).toContain("Submit Kit：近 7 天 1 单");
-    expect(md).toContain("工具提交：昨天 1，近 7 天 3（提交页访客 9）");
+    expect(md).toContain("Submit Kit 7 天：进页 4 → 看到按钮 3 → 点了 1 → 完成 1");
+    expect(md).toContain("提交工具 7 天：进页 9 → 看到按钮 5 → 点了 2 → 完成 1；提交记录 7 天 3");
     expect(md).toContain("dev.to 来源 7 天 7");
     expect(md).toContain("Google 点击 28 天 3");
+  });
+});
+
+describe("funnelLine", () => {
+  it("writes page → seen → clicked → done in one line", () => {
+    expect(funnelLine("提交工具", { page: 9, seen: 5, clicked: 2, done: 1 })).toBe("提交工具 7 天：进页 9 → 看到按钮 5 → 点了 2 → 完成 1");
   });
 });

@@ -87,3 +87,18 @@ describe("visitor-insights v3 helpers (agentkit 0cecb30)", () => {
     for (const label of ["#anchor", "mailto", "tel"]) expect(parseEvent({ n: "ui_click", p: "/", r: "", s: "", sid: "a", props: { label } })?.props).toBe(JSON.stringify({ label }));
   });
 });
+
+describe("element_seen (agentkit 8770681)", () => {
+  it("accepts element_seen with a snake_case element name only", () => {
+    expect(parseEvent({ n: "element_seen", p: "/submit", r: "", s: "", sid: "a", props: { element: "submit_button" } })?.props).toBe('{"element":"submit_button"}');
+    expect(parseEvent({ n: "element_seen", p: "/submit", r: "", s: "", sid: "a", props: { element: "Buy Now <b>" } })?.props).toBe("{}");
+  });
+  it("records a sighting once per session and only at ≥50% visible", async () => {
+    const { firstSighting } = await import("./events");
+    const store = new Map<string, string>();
+    const s = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) };
+    expect(firstSighting("kit_buy_button", 0.4, s)).toBe(false);
+    expect(firstSighting("kit_buy_button", 0.6, s)).toBe(true);
+    expect(firstSighting("kit_buy_button", 1, s)).toBe(false);
+  });
+});

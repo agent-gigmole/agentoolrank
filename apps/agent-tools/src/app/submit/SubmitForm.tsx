@@ -173,6 +173,8 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
       {error && <p className="text-sm text-red-600">{error}</p>}
       <button
         type="submit"
+        data-testid="submit-tool"
+        data-vi-seen="submit_button"
         disabled={status === "loading"}
         className="w-full py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-60"
       >

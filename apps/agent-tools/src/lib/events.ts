@@ -4,7 +4,7 @@
 // page_view / engagement / ui_click / exit_survey follow agentkit's visitor-insights spec (same names and privacy rules
 // as the other projects); the rest is our own funnel.
 export const EVENT_NAMES = [
-  "page_view", "engagement", "ui_click", "exit_survey",
+  "page_view", "engagement", "ui_click", "exit_survey", "element_seen",
   "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click", "kit_click",
 ] as const;
 export const SURVEY_REASONS = ["browsing", "later", "price", "unclear", "privacy", "other"] as const;
@@ -34,6 +34,7 @@ export function cleanProps(raw: unknown): Record<string, string | number | boole
   if (typeof r.action === "string" && ["shown", "dismiss", "answer"].includes(r.action)) out.action = r.action;
   if (typeof r.reason === "string" && (SURVEY_REASONS as readonly string[]).includes(r.reason)) out.reason = r.reason;
   if (typeof r.touch === "boolean") out.touch = r.touch;
+  if (typeof r.element === "string" && /^[a-z][a-z0-9_]{0,39}$/.test(r.element)) out.element = r.element;
   return out;
 }
 
@@ -85,6 +86,16 @@ export function clickLabel(testId: string | null, href: string | null, origin: s
   } catch {
     return "";
   }
+}
+
+/** element_seen fires when an element marked data-vi-seen="name" is at least this much on screen, once per session. */
+export const SEEN_RATIO = 0.5;
+export function firstSighting(name: string, ratio: number, store: { getItem(k: string): string | null; setItem(k: string, v: string): void }): boolean {
+  if (ratio < SEEN_RATIO) return false;
+  const key = `at_seen_${name}`;
+  if (store.getItem(key) === "1") return false;
+  store.setItem(key, "1");
+  return true;
 }
 
 export function isBotUserAgent(ua: string): boolean {

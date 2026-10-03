@@ -22,6 +22,7 @@ export function viBlock(o: {
   /** Visitors = sessions that sent an engagement event; page_view-only sessions are likely JS-running scanners. */
   sessions?: { visitors: number; scanners: number };
   survey: { action: string; reason: string; n: number }[]; clicks: { label: string; n: number }[];
+  seen?: { element: string; n: number }[];
 }): string[] {
   const out = [`访客行为（近 ${o.days}×24 小时，${o.sinceLabel} 起；自有 events 表，排除自测，访客=会话${o.note ? `；${o.note}` : ""}）`];
   if (o.sessions) out[0] += `：访客 ${o.sessions.visitors} 个会话 · 疑似扫描器 ${o.sessions.scanners}（只有 page_view，未计入）`;
@@ -40,7 +41,10 @@ export function viBlock(o: {
   const top = [...pages].sort((a, b) => b[1].v - a[1].v).slice(0, 5);
   out.push("各页快速离开率（<10 秒且未滚动）：" + top.map(([p, { v, q }]) => `${p} ${q}/${v}`).join("；"));
   if (o.survey.length) out.push("离开问卷：" + o.survey.map((s) => `${s.action}${s.reason ? `·${s.reason}` : ""} ${s.n}`).join("，"));
-  if (o.clicks.length) out.push("点击最多：" + o.clicks.map((c) => `${c.label} ${c.n}`).join("，"));
+  const tail: string[] = [];
+  if (o.clicks.length) tail.push("点击最多：" + o.clicks.map((c) => `${c.label} ${c.n}`).join("，"));
+  if (o.seen?.length) tail.push("被看到（会话，露出 ≥50%）：" + o.seen.map((x) => `${x.element} ${x.n}`).join("，"));
+  if (tail.length) out.push(tail.join("；"));
   return out;
 }
 

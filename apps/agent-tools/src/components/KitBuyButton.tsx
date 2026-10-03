@@ -21,7 +21,7 @@ export function KitBuyButton({ price }: { price: number }) {
   }
   return (
     <div className="mb-6">
-      <button type="button" onClick={buy} disabled={busy} className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-60">
+      <button type="button" onClick={buy} disabled={busy} data-testid="kit-buy" data-vi-seen="kit_buy_button" className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-60">
         Get the full list · ${price} one-time
       </button>
       {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
