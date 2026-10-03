@@ -55,5 +55,6 @@ export function messageForHuman(name: string, offers: Offer[]): string {
       lines.push(`- $${o.price_usd}: live within ${o.live_within_days} day${o.live_within_days > 1 ? "s" : ""}${extra}. Pay: ${o.checkout_url}`);
     }
   }
+  lines.push("Listing elsewhere too? Your agent can call recommend_directories on https://agentoolrank.com/api/mcp for launch directories worth submitting to, with the steps only a person can do (free top 10).");
   return lines.join("\n");
 }

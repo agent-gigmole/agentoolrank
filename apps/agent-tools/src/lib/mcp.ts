@@ -151,7 +151,7 @@ export async function handleMcp(msg: JsonRpcRequest, deps: McpDeps): Promise<Jso
           capabilities: { tools: {} },
           serverInfo: { name: "agentoolrank", version: "1.0.0" },
           instructions:
-            "Find and compare open-source AI agent tools: start with search_tools, then get_tool or get_alternatives. To list a tool, call submit_tool; it returns all pricing options up front and a status token.",
+            "Find and compare open-source AI agent tools: start with search_tools, then get_tool or get_alternatives. To list a tool, call submit_tool; it returns all pricing options up front and a status token. To pick other launch directories for a product, call recommend_directories.",
         },
       };
     }

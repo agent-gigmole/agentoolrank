@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getToolCount } from "@repo/db/queries";
 
 export const revalidate = 86400;
@@ -52,6 +53,16 @@ GET  https://agentoolrank.com/api/v1/tools/{slug}
 POST https://agentoolrank.com/api/v1/submissions
      {"url": "...", "name": "...", "tagline": "...", "email": "...",
       "github_url": "...", "max_budget_usd": 20, "deadline_days": 3}`}</Code>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Choosing other launch directories</h2>
+        <p className="text-gray-700 mb-2">
+          <code>recommend_directories(product_type)</code> returns launch directories our own products actually went through, tagged
+          auto or manual, with free-tier conditions, the link type we measured, form tips, the confirmation to look for, and one checklist
+          of the steps only a person can do. Free: top 10. With a <Link href="/submit-kit" className="underline">Submit Kit</Link> key: 30
+          sites plus a don&rsquo;t-submit list with reasons. It does not submit for you and never bypasses captchas.
+        </p>
       </section>
 
       <section>
