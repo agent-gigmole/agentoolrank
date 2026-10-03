@@ -27,6 +27,11 @@ Dataset: 101 directory sites where at least one of our three products went throu
 - Keep a log per site (date, result, what blocked you) so you never submit twice and can follow up.
 - Do not expect traffic from directories; most value, if any, is links and discoverability. (We saw very little referral traffic so far; do not quote a number.)
 
+## Extra section: stars vs downloads (added 10-03 after /downloads went live)
+- One short section near the end: "Stars measure attention, downloads measure use." Pull the numbers from https://agentoolrank.com/downloads on the day of writing (do not reuse these): on 10-03 the top five by npm + PyPI downloads (30 days) were OpenAI Python 284.2M, MCP Python SDK 219.0M, LangChain 169.4M, AI SDK 108.0M, LangGraph 43.7M.
+- Say how the numbers are counted: npm downloads API + pypistats; a package only counts if its registry page links back to the tool's own repo; downloads include CI and mirrors, so they are a usage signal, not a user count.
+- Link /downloads once. Keep the section to about 120 words; the article is still about directories.
+
 ## Rules
 - Title: factual, includes "101 directories", no hype. Under 80 characters.
 - Use short sections with headers, a small table is fine. No emojis. No "game changer", "unlock", "in today's world".
