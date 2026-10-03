@@ -1040,3 +1040,10 @@
 - 结果：271 测试通过；rule-check 通过；今晚 10 封 dry-run 预览合理；visitors_7d 72、疑似扫描器 0、24h 访客 34；已 bus-send（含 pixtidy tag 1 封硬退信提醒）；22:00 实发结果未核实
 - 坑：gmail-read 每行一条 JSON {id,subject,from,to,date,body}；hello@ 大量目录站通知必须过滤；外联定时器要 Persistent=false 防 WSL 开机补发 → GOTCHAS#outreach-timer-and-hello-inbox
 - 结果：成功
+
+
+## 2026-10-03 17:05– 外联发前预检 MX + 共用 Brevo blockedContacts（0123eb1）
+- 做法：按 agentkit 17:05（imagehub 实测）lib/outreach.ts 加 preflightSkip(email, mxCount, blockedSet) + 测试；send-outreach.ts 每封发前 resolveMx，Brevo /v3/smtp/blockedContacts 分页全量拉取（失败整批不发），不合格跳过并写 optout.json（dry-run 不写）；推送
+- 结果：272 测试通过；今晚 22:00 批 dry-run 10 封全部通过；已 bus-send；22:00 实发未核实
+- 坑：imagehub 硬退信域名有 MX、人已离职，只查 MX 拦不住，必须同时查共用账户 blockedContacts → GOTCHAS#outreach-timer-and-hello-inbox
+- 结果：成功

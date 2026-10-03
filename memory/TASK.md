@@ -5,6 +5,7 @@
 <!-- rule-check 每天 10:00/16:00/22:00 检查：至少 5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删掉 -->
 - 22:00 后确认 agentoolrank-outreach 成功、10 封送达（`journalctl --user -u agentoolrank-outreach.service` + Brevo 报表；第二批目标 LobeHub、LocalAI、OmniRoute、World Monitor、vLLM、headroom、CC Switch、Browser-Use、Firecrawl、BrowserOS）
 - ✅ 流水线化（老板 16:56 决定 #37，10-05 前）：外联夜间批次改成 systemd 定时器 agentoolrank-outreach 22:00，Brevo 健康闸门（选目标 → 类目/群发地址预审 → 发送 → await 登记等回信），22:00 不再手动跑
+- ✅ 外联发前预检（agentkit 17:05，0123eb1）：每封查 MX + 共用 Brevo blockedContacts，不合格跳过并写 optout.json；今晚 22:00 实发结果未核实
 - 流水线化：目录站上线复查（逐站查 listing 是否在、链接 rel）脚本 + 定时器，结果回写 directory-log
 - ✅ 流水线化：hello@ 回信收集（agentkit bin/gmail-read，并入每小时 feedback collect；回 no 自动 optout）。原需求：可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
 - 流水线化：周报数字段（记分牌、漏斗、外部评测原始反馈）脚本生成，结论用 bin/write 写稿

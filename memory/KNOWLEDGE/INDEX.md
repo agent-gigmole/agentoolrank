@@ -281,6 +281,6 @@
 | 老板号发帖文案检查 / 不能说 AI 写 发 自动生成 定时发布 / aiAuthorshipMatch post-copy.ts / 先文案再 post-gate 退出码 4 / 「每天自动更新」放行 / process.exit(0) 覆盖 exitCode / ce06f78 / bin/post-copy-check 位置参数 无 --help -f / post-log --link 布尔 / channels.json --channel x-main --has-link / posts.jsonl | GOTCHAS.md#owner-account-copy-check |
 | 实盘口径 / 立项以来全部现金 / 上线日 2026-03-28 / 域名 $10.46 未对账 / 早期 LLM 费用未知 / spend-ledger | STATE.md#2026-10-03 16:47– visitor-insights v3 + 实盘口径 |
 | 流程即代码 / ops/pipelines.json / systemd 用户定时器 agentoolrank-hourly daily weekly / cron 不算 / list-timers / set -uo pipefail 退出码累计 fail=1 / { } 块变量 | GOTCHAS.md#pipelines-systemd-timers |
-| 外联定时器 agentoolrank-outreach 22:00 / Persistent=false 不补发 / Brevo 健康闸门 sendingBlocked --require-healthy fail closed / gmail-read JSON 行 {id,subject,from,to,date,body} / hello@ 目录站通知过滤 humanReply / isOptOut 首词 no 自动 optout.json / e47a15a | GOTCHAS.md#outreach-timer-and-hello-inbox |
+| 外联定时器 agentoolrank-outreach 22:00 / Persistent=false 不补发 / Brevo 健康闸门 sendingBlocked --require-healthy fail closed / gmail-read JSON 行 {id,subject,from,to,date,body} / hello@ 目录站通知过滤 humanReply / isOptOut 首词 no 自动 optout.json / e47a15a / 发前预检 无 MX 跳过 resolveMx / Brevo blockedContacts 分页 共用账户 离职硬退信 preflightSkip 0123eb1 | GOTCHAS.md#outreach-timer-and-hello-inbox |
 | visitors_7d 口径 / ENGAGEMENT_SINCE 2026-10-03 08:22 UTC / classifySessions / likely_scanners_7d visitors_definition / 2ab444a | STATE.md#2026-10-03 17:03– 外联与回信收集流水线化 |
 | pipelines.json runner=github-actions / daily-data-update 登记 | STATE.md#2026-10-03 17:03– 外联与回信收集流水线化 |

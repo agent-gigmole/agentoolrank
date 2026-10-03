@@ -1001,3 +1001,11 @@
 - 看板已更新
 - 坑：KNOWLEDGE/GOTCHAS.md#outreach-timer-and-hello-inbox
 - **下一步**：22:00 后确认 agentoolrank-outreach 成功、10 封送达；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章
+
+## 2026-10-03 17:05– 外联发前预检：MX + 共用 Brevo blockedContacts（0123eb1，已推送）
+- 起因：agentkit 17:05 转 imagehub 实测（已写进 agentkit email-delivery）——那封硬退信的域名有 MX、但收件人已离职，只查 MX 拦不住
+- lib/outreach.ts `preflightSkip(email, mxCount, blockedSet)`：无 MX → 跳；在 blockedContacts → 跳（+ 测试，共 272 通过）
+- scripts/send-outreach.ts：每封发前 resolveMx（node:dns/promises）；先分页全量拉 Brevo `GET /v3/smtp/blockedContacts?limit=100&offset=`（共用账户，含其他项目的退信/拦截），**拉取失败整批不发**（fail closed）；不合格自动跳过并写入 data/outreach/optout.json（dry-run 不写）
+- 今晚 22:00 那批 dry-run 10 封全部通过预检；已 bus-send
+- 坑：KNOWLEDGE/GOTCHAS.md#outreach-timer-and-hello-inbox
+- **下一步**：22:00 后确认 agentoolrank-outreach 成功、10 封送达（未核实）；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章

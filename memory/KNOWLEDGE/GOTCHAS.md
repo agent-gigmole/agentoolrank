@@ -917,4 +917,5 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **gmail-read 输出格式**：agentkit bin/gmail-read（只读，走 gmail-secondary MCP）每行一条 JSON `{id,subject,from,to,date,body}`；查询 `to:hello@agentoolrank.com newer_than:3d --max 50`
 - **hello@ 噪音极大**：大量是目录站提交确认/通知、Brevo、Stripe、Google 等系统邮件。lib/feedback.ts humanReply 排除 noreply/notifications/alerts/brevo/stripe/google 等，只保留发过外联的对象和 Re: 开头的人类邮件；不过滤会把通知当用户反馈
 - **退订判断看首词**：isOptOut 首词 no / unsubscribe / remove me / stop；外联对象回 no 自动加 data/outreach/optout.json 并追加 status=answered 结论
+- **每封发前预检 MX + 共用 Brevo blockedContacts（0123eb1）**：imagehub 实测硬退信的域名有 MX、人已离职，只查 MX 拦不住。lib/outreach.ts preflightSkip(email, mxCount, blockedSet)：无 MX 或在 blockedContacts → 跳过并写 optout.json（dry-run 不写）。blockedContacts 是账户级（共用账户里别的项目退过的地址也在），`GET /v3/smtp/blockedContacts?limit=100&offset=` 要分页拉全；拉取失败整批不发（fail closed）
 - 外联查看：`journalctl --user -u agentoolrank-outreach.service`
