@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getCategories, getTools, getToolCount, getLastRefreshTime, getToolBySlug } from "@repo/db/queries";
+import { getCategories, getTools, getToolCount, getLastRefreshTime, getToolBySlug, getDownloadRows } from "@repo/db/queries";
+import { compactCount, rankByDownloads } from "@/lib/downloads";
 import { ToolCard } from "@/components/ToolCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { featuredSlugs } from "@/lib/paid";
@@ -25,6 +26,8 @@ export default async function HomePage() {
   const featured = (await Promise.all((await featuredSlugs()).map((slug) => getToolBySlug(slug)))).filter(
     (t): t is NonNullable<typeof t> => t !== null,
   );
+
+  const mostDownloaded = rankByDownloads(await getDownloadRows()).slice(0, 6);
 
   const refreshAgo = lastRefresh
     ? getTimeAgo(new Date(lastRefresh))
@@ -154,6 +157,25 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {trendingTools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Most downloaded (npm + PyPI) */}
+      {mostDownloaded.length > 0 && (
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">Most downloaded</h2>
+            <Link href="/downloads" className="text-sm text-blue-600 hover:underline">npm + PyPI, last 30 days · see all →</Link>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {mostDownloaded.map((t) => (
+              <Link key={t.id} href={`/tool/${t.id}`} className="p-3 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors">
+                <div className="font-medium text-sm text-gray-900 truncate">{t.name}</div>
+                <div className="text-lg font-semibold text-gray-900">{compactCount(t.total)}</div>
+                <div className="text-xs text-gray-500">downloads / 30d</div>
+              </Link>
             ))}
           </div>
         </section>
