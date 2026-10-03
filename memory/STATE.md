@@ -1023,3 +1023,17 @@
 - 看板已更新（3d7634b），均已 bus-send
 - 坑：KNOWLEDGE/GOTCHAS.md#listing-check-and-safety-rules
 - **下一步**：22:00 后确认外联 10 封送达（未核实）；人工看 conduid.com；每天看 ops/daily.md 两条按钮漏斗；10-07 dev.to 数据文章
+
+## 2026-10-03 18:58– conduid 人工复查 + npm/PyPI 下载量数据源（623ac18、1a316ab，已推送）
+- **conduid 人工复查**（623ac18）：真 Chrome 打开 https://conduid.com/servers/agentoolrank，页面在（信任分 54，Files 类），只链我们 GitHub 仓库 agent-gigmole/agentoolrank（rel=noopener），**没有链 agentoolrank.com**；已 `dirsub add --update` 记录
+  - listing-check.ts findBacklink 新增 target（site | github）：只链我们 GitHub 仓库也算上线，但标注「只链仓库」；check-listings 回写文案区分两种
+- **npm/PyPI 下载量数据层**（1a316ab）：
+  - src/lib/downloads.ts：githubRepo、npmNameFromPackageJson（跳过 private）、pypiNameFromPyproject（[project] / [tool.poetry]）、pypiNameFromSetupPy（只认字面量）、repoMatches、candidateNames（manifest 名、去 -workspace、repo 名、tool id/name；npm 另试 @repo/core、去 js 后缀）+ 测试
+  - scripts/fetch-downloads.ts：Turso 新表 `tool_packages(tool_id, registry npm|pypi, package, downloads_30d, fetched_at)`；**只收 registry 元数据回链同一 GitHub 仓库的包**；npm 用 registry /latest + api.npmjs.org last-month，PyPI 用 /pypi/<pkg>/json + pypistats recent last_month；限速 npm 0.4 秒、PyPI 2 秒
+  - weekly-ops.sh 每周一跑；ops/pipelines.json 备注已更新
+  - 抽查：langchain（PyPI）169,366,312；langchainjs → npm「langchain」12,136,926；crewai（PyPI）2,431,720；mastra（npm）3,093,776
+  - 593 工具全量首跑已在后台进行（18:58 仍在跑，结果未核实）
+- 测试 305 通过；看板已更新
+- TASK 队列「npm/PyPI 下载量」改为：数据层已完成，剩详情页展示 + 数据文章用
+- 坑：KNOWLEDGE/GOTCHAS.md#package-downloads-name-matching
+- **下一步**：核实全量首跑结果（覆盖多少工具）；详情页展示下载量；22:00 后确认外联 10 封送达（未核实）；10-07 dev.to 数据文章

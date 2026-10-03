@@ -1053,3 +1053,9 @@
 - 结果：首跑 41 站确认 6 个有链接、新增上线 4 个（peerpush noopener、smithery/aitoolscapital noopener noreferrer、productwatch 无 rel=dofollow），看板已确认上线 3→7；真 Chrome 验证两按钮 element_seen 已记；测试 298 通过；593 工具 + 待审提交 0 命中
 - 坑：safety 规则只写 "bypass … detection" 会误伤 stealth 浏览器过 bot 检测；目录站多为 JS 渲染，HTML 找不到链接 ≠ 下架，不能自动降级 → GOTCHAS#listing-check-and-safety-rules
 - 结果：成功
+
+## 2026-10-03 18:58– conduid 人工复查 + npm/PyPI 下载量数据源（623ac18、1a316ab）
+- 做法：真 Chrome 看 conduid 页面并 dirsub 回写，listing-check findBacklink 加 target site|github；新建 downloads.ts（包名识别 + 候选名 + 回链校验）+ fetch-downloads.ts（Turso tool_packages 表，npm/PyPI 30 天下载量，限速），weekly-ops 周一跑，pipelines.json 备注更新，TASK 队列改写，看板更新
+- 结果：conduid 页面在，只链 GitHub 仓库 rel=noopener、不链官网；测试 305 通过；抽查 langchain/langchainjs/crewai/mastra 数字正确；593 工具全量首跑后台进行中，结果未核实
+- 坑：monorepo 根 manifest 名常是 xxx-workspace 或 private，要用候选名；同名包多，必须校验 repository/project_urls 回链同一仓库 → GOTCHAS#package-downloads-name-matching
+- 结果：成功（全量首跑未核实）

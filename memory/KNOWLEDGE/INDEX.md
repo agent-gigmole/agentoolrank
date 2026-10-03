@@ -286,3 +286,4 @@
 | pipelines.json runner=github-actions / daily-data-update 登记 | STATE.md#2026-10-03 17:03– 外联与回信收集流水线化 |
 | 目录站上线复查 / check-listings.ts listing-check.ts / daily-ops 21:30 / JS 渲染 HTML 找不到不降级 只 WARN / conduid 人工看 / rel 实测 noopener 不算 nofollow / knownListingUrl candidateUrls / 1.5 秒限速 / baa4aa2 / safety AI 检测规避 学术作弊 / 不能只写 bypass detection 误伤 stealth 浏览器 / 717edd9 | GOTCHAS.md#listing-check-and-safety-rules |
 | element_seen 按钮漏斗 / data-vi-seen submit_button kit_buy_button / SEEN_RATIO 0.5 / funnelLine ops/daily.md 两行 / 10-03 17:40 起有数据 | STATE.md#2026-10-03 17:20– 目录站上线复查 |
+| npm PyPI 下载量 / downloads.ts fetch-downloads.ts / tool_packages 表 / monorepo xxx-workspace private 候选名 / @repo/core 去 js 后缀 langchainjs→langchain / 回链同一 GitHub 仓库 repoMatches / pypistats 2 秒 npm 0.4 秒 / weekly-ops 周一 / 1a316ab / conduid 只链 GitHub 仓库 target=github 623ac18 | GOTCHAS.md#package-downloads-name-matching |

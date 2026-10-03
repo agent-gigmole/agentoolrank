@@ -928,3 +928,11 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 限速：每 1.5 秒一次请求，41 站约 10 分钟，放 21:30 daily-ops 里跑
 - **safety 规则不能只写 "bypass … detection"**：会误伤「stealth 浏览器过 bot 检测」这类正常开发工具。必须限定 AI 检测（bypass/beat/evade + AI detection）或具名检测器（Turnitin/GPTZero/ZeroGPT/originality.ai/copyleaks）；检测器本身、LMS 集成要放行，并为放行样例写测试
 - 加新规则后对全库工具 + 待审提交扫一遍，确认 0 误伤再部署（10-03：593 + 待审 0 命中）
+
+## package-downloads-name-matching
+10-03 npm/PyPI 下载量数据源（1a316ab，src/lib/downloads.ts + scripts/fetch-downloads.ts）。
+- **大项目多是 monorepo**：根 package.json 名常是 `xxx-workspace` 或 `"private": true`，直接拿来查 registry 会查空或查错。要生成候选名：manifest 名、去掉 -workspace、repo 名、工具 id/name；npm 另试 `@repo/core`、去掉 js 后缀（例：langchainjs → npm「langchain」）
+- **同名包很多，必须回链校验**：npm 看 registry `/latest` 的 repository 字段，PyPI 看 `/pypi/<pkg>/json` 的 project_urls / home_page，必须指向同一个 GitHub 仓库（repoMatches 统一大小写、去 .git / git+ 前缀）才收；不校验会把同名别人的包算成我们的
+- pyproject 名在 `[project]` 或 `[tool.poetry]`；setup.py 只认 name= 字面量，变量/函数调用不猜
+- 下载量：npm 用 api.npmjs.org/downloads/point/last-month，PyPI 用 pypistats.org/api/packages/<pkg>/recent 的 last_month；pypistats 限速严，2 秒一次，npm 0.4 秒一次
+- conduid.com 只链 GitHub 仓库（agent-gigmole/agentoolrank，rel=noopener）不链官网：listing-check findBacklink 的 target=github 也算上线，但要在 dirsub 文案里注明「只链仓库」，不能和链官网的混算外链价值

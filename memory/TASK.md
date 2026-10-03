@@ -13,10 +13,10 @@
 - 外联每晚 22:00 由定时器自动发 10 封（会话不再手动发）；回信由每小时 feedback collect 自动收，真人回信 48 小时内写结论
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
-- npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
+- npm/PyPI 下载量接入（数据层已做 1a316ab：每周一自动抓、包名从仓库或候选名取且必须回链同一仓库；全量首跑 10-03 19:10 进行中；剩：详情页展示 + 数据文章用）：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
 - 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
 - ✅ 每天查一次已上线目录站的链接 rel（由 check-listings 每天自动做；conduid 页面是 JS 渲染、HTML 里找不到链接，需人工看一次）
-- 人工看一次 conduid.com 上我们的页面：用真浏览器打开，确认链接是否还在、rel 是什么，结果用 dirsub 回写（脚本只读 HTML，JS 渲染的页面查不到，不会自动降级）
+- ✅ 人工看一次 conduid.com（10-03 18:58：页面在，只链 GitHub 仓库 rel=noopener，不链官网；已记 dirsub；check-listings 改为认 GitHub 仓库链接为「已上线（只链仓库）」）
 - 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
 - ✅ 接入 visitor-insights（10-03 50a649a、8394b65；engagement/ui_click 写自有 events 表 props 列，?internal=1 持久排除，ops/daily.md 顶部 vi 块，隐私草稿 docs/legal/privacy-draft.md）。exit_survey 问卷另记，等 BOSS #35 隐私页批准后再上
 - ✅ 老板号发帖文案检查（10-03 ce06f78）：weekly-post.ts 发 X 前先过 post-copy.ts aiAuthorshipMatch，再过 post-gate；以后新增任何用老板号发帖的脚本也必须先调 aiAuthorshipMatch
