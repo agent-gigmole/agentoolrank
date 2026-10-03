@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { getTools, getCategories, getDownloadRows } from "@repo/db/queries";
+import { getTools, getCategories, getDownloadRows, getToolBySlug } from "@repo/db/queries";
+import { featuredSlugs } from "@/lib/paid";
 import Link from "next/link";
 import { DOWNLOAD_CATEGORY_MIN, rankByDownloads } from "@/lib/downloads";
 import { ToolCard } from "@/components/ToolCard";
@@ -35,6 +36,10 @@ export default async function CategoryPage({ params }: Props) {
   const category = categories.find((c) => c.slug === slug);
   if (!category) notFound();
   const dlCount = rankByDownloads(await getDownloadRows(), slug).length;
+  // Paid featured tools also show at the top of their own category (the $49 slot: homepage + category).
+  const featuredHere = (await Promise.all((await featuredSlugs()).map((id) => getToolBySlug(id)))).filter(
+    (t): t is NonNullable<typeof t> => t !== null && (t.category_tags ?? []).includes(slug),
+  );
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const collectionJsonLd = {
@@ -82,6 +87,20 @@ export default async function CategoryPage({ params }: Props) {
           )}
         </p>
       </div>
+
+      {featuredHere.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Featured in {category.name}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {featuredHere.map((tool) => (
+              <div key={tool.id} className="relative">
+                <span className="absolute -top-2 right-3 z-10 text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Sponsored</span>
+                <ToolCard tool={tool} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {tools.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
