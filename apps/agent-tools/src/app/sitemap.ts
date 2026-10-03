@@ -4,6 +4,7 @@ import { db } from "@repo/db";
 import { getCategories, getComparisonPairs, getDownloadRows, getStacks } from "@repo/db/queries";
 import { downloadCategorySlugs, downloadPairs } from "@/lib/downloads";
 import { pairsFromAlternatives } from "@/lib/alternatives";
+import { WHERE_TYPES } from "@/lib/where-to-submit";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
@@ -18,6 +19,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/submit`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/agents`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/where-to-list`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/submit-kit`, changeFrequency: "weekly", priority: 0.7 },
+    ...WHERE_TYPES.map((w) => ({ url: `${baseUrl}/where-to-submit/${w.slug}`, changeFrequency: "weekly" as const, priority: 0.7 })),
     { url: `${baseUrl}/downloads`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${baseUrl}/api-key`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${baseUrl}/zh/tools`, changeFrequency: "weekly", priority: 0.6 },

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { WHERE_TYPES } from "@/lib/where-to-submit";
 import { KIT_PRICE_USD } from "@/lib/directory-kit";
 import { DIRECTORIES, CHECKED } from "@/lib/directories";
 import { FaqSection } from "@/components/FaqSection";
@@ -109,6 +110,10 @@ export default async function WhereToListPage() {
             ))}
             {" · "}
             <Link href="/submit-kit" className="text-blue-600 hover:underline">See the Submit Kit →</Link>
+            {" "}By type:{" "}
+            {WHERE_TYPES.map((w, i) => (
+              <span key={w.slug}>{i > 0 && " · "}<Link href={`/where-to-submit/${w.slug}`} className="text-blue-600 hover:underline">{w.noun.replace(/^an? /, "")}</Link></span>
+            ))}
           </p>
         </div>
       </section>

@@ -6,6 +6,7 @@ import { db } from "@repo/db";
 import { ourResultLabel } from "@/lib/listing-check";
 import kitData from "@/lib/directory-kit-data.json";
 import { KitBuyButton } from "@/components/KitBuyButton";
+import { WHERE_TYPES } from "@/lib/where-to-submit";
 
 export const metadata: Metadata = {
   title: "Best Directories to Submit an AI Tool or MCP Server (Tested) — Submit Kit",
@@ -100,6 +101,12 @@ recommend_directories({ "product_type": "ai_tool" })   // ai_tool | mcp_server |
       <p className="text-sm text-gray-600">
         The free comparison table is at <Link href="/where-to-list" className="underline">/where-to-list</Link>. Facts come from our own
         submissions and carry a last-verified date; entries older than 30 days are marked stale. Questions: hello@agentoolrank.com.
+      </p>
+      <p className="text-sm text-gray-600 mt-4">
+        By product type:{" "}
+        {WHERE_TYPES.map((w, i) => (
+          <span key={w.slug}>{i > 0 && " · "}<Link href={`/where-to-submit/${w.slug}`} className="underline">where to submit {w.noun}</Link></span>
+        ))}
       </p>
       <FaqSection faq={kitFaq(kitData as KitData, new Date())} />
     </main>
