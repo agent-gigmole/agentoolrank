@@ -6,13 +6,15 @@
  * - data/outreach/category.json ({ slug: category-slug }) pins the category to report when the tool's best-ranking
  *   category isn't its real home (must be one of its stored categories).
  * - Rank / total / name are recomputed from the live DB so the email never states stale numbers.
- * Usage: bun run scripts/send-outreach.ts [--dry-run] [--limit=N] [--test=you@example.com]
+ * Usage: bun run scripts/send-outreach.ts [--dry-run] [--limit=N] [--test=you@example.com] [--require-healthy]
+ *   --require-healthy (nightly timer agentoolrank-outreach): check 7-day Brevo stats first and exit 2 without sending
+ *   if our tag had any bounce/block/spam/invalid, or the shared account any spam report/block (lib/outreach sendingBlocked).
  *   --test sends one sample (first candidate's content) to the given address only and records nothing.
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { outreachEmail, isGroupAddress } from "../src/lib/outreach";
+import { outreachEmail, isGroupAddress, sendingBlocked, type BrevoStats } from "../src/lib/outreach";
 import { cstDayRange } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
@@ -68,6 +70,21 @@ async function send(to: string, subject: string, text: string): Promise<string> 
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(`brevo ${res.status}: ${JSON.stringify(data).slice(0, 200)}`);
   return String(data.messageId ?? "");
+}
+
+if (process.argv.includes("--require-healthy")) {
+  const key = readFileSync(`${process.env.HOME}/.config/secrets/brevo-api-key`, "utf8").trim();
+  const stats = async (tag: string): Promise<BrevoStats> => {
+    const res = await fetch(`https://api.brevo.com/v3/smtp/statistics/aggregatedReport?days=7${tag ? `&tag=${tag}` : ""}`, { headers: { "api-key": key } });
+    if (!res.ok) throw new Error(`brevo stats ${res.status}`); // unknown health = don't send (the service fails and alerts)
+    return res.json();
+  };
+  const why = sendingBlocked(await stats("outreach"), await stats(""));
+  if (why) {
+    console.log(`NOT SENDING: ${why}`);
+    process.exit(2);
+  }
+  console.log("brevo health ok");
 }
 
 const today = cstDayRange(new Date(), 0);

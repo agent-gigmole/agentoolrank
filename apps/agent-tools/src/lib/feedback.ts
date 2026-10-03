@@ -31,3 +31,20 @@ export function overdue(rows: FeedbackRow[], nowSec: number): FeedbackRow[] {
     (r) => r.project === PROJECT && r.status === "new" && nowSec - Number(r.collected_at ?? nowSec) > 48 * 3600,
   );
 }
+
+const addr = (from: string) => (/<([^>]+)>/.exec(from)?.[1] ?? from).trim().toLowerCase();
+const AUTOMATED = /(^|[._-])(no-?reply|notifications?|alerts?|account-alerts|mailer-daemon|postmaster|bounce)([._@-]|$)|@(t\.)?brevo\.com$|@stripe\.com$|@(.+\.)?google\.com$/;
+
+/** A reply worth reading: from someone we emailed, or a human "Re:" — not directory notices, magic links or alerts. */
+export function humanReply(m: { from: string; subject: string }, sentTo: Set<string>): boolean {
+  const a = addr(m.from);
+  if (AUTOMATED.test(a)) return false;
+  return sentTo.has(a) || /^\s*re:/i.test(m.subject);
+}
+
+/** "no" / "unsubscribe" as the first words of a reply: never email them again (promise in every outreach email). */
+export function isOptOut(body: string): boolean {
+  return /^\s*(no\b|unsubscribe\b|remove me\b|stop\b)/i.test(body);
+}
+
+export const senderAddress = addr;

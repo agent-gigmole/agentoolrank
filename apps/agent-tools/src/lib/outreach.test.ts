@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { outreachEmail, badgeMarkdown, isGroupAddress } from "./outreach";
+import { outreachEmail, badgeMarkdown, isGroupAddress, sendingBlocked } from "./outreach";
 
 describe("outreach", () => {
   const e = outreachEmail({ owner: "Jane", name: "FastMCP", slug: "fastmcp", rank: 2, total: 29, category: "MCP Servers" }, "https://agentoolrank.com");
@@ -24,5 +24,21 @@ describe("isGroupAddress", () => {
   });
   it.each(["hello@dify.ai", "ishaan@berri.ai", "support@langchain.dev", "opendatalab@pjlab.org.cn"])("allows %s", (e) => {
     expect(isGroupAddress(e)).toBe(false);
+  });
+});
+
+describe("sendingBlocked (nightly outreach pipeline gate)", () => {
+  const clean = { hardBounces: 0, softBounces: 0, blocked: 0, spamReports: 0, invalid: 0 };
+  it("lets a clean week through", () => {
+    expect(sendingBlocked({ ...clean }, { ...clean })).toBeNull();
+  });
+  it("stops on any bounce, block, spam report or invalid address in our own outreach tag", () => {
+    expect(sendingBlocked({ ...clean, hardBounces: 1 }, clean)).toMatch(/outreach/);
+    expect(sendingBlocked({ ...clean, spamReports: 1 }, clean)).toMatch(/outreach/);
+  });
+  it("stops on spam reports or blocks anywhere on the shared account, but not on another tag's single bounce", () => {
+    expect(sendingBlocked(clean, { ...clean, spamReports: 1 })).toMatch(/account/);
+    expect(sendingBlocked(clean, { ...clean, blocked: 2 })).toMatch(/account/);
+    expect(sendingBlocked(clean, { ...clean, hardBounces: 1 })).toBeNull();
   });
 });

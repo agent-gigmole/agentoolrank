@@ -1,14 +1,16 @@
 /**
  * ai-directory side of the cross-project feedback inbox (~/data/feedback/feedback.jsonl, format in its README.md).
- *   bun run scripts/feedback.ts collect        dev.to comments on our articles + GitHub issues on our repo (hourly cron)
+ *   bun run scripts/feedback.ts collect        dev.to comments, GitHub issues, and human replies to hello@ (agentkit bin/gmail-read,
+ *                                              read-only) — hourly timer. A reply that starts with "no" goes to the outreach opt-out list.
  *   bun run scripts/feedback.ts add --source email --author <a> --url <u> --kind suggestion --text "<original>"
  *                                              (outreach replies / user mail found in the hello@ inbox)
  *   bun run scripts/feedback.ts decide <id> adopted|declined|answered "<decision>" [ticket] --hit "<说中了什么>" --misread "<误解了什么>" --want "<想要而我们没有的>"
  *                                              (boss 10-03 16:11: read every reply as an outside review of the product)
  *   bun run scripts/feedback.ts list           our entries still waiting for a decision (overdue = past 48h)
  */
-import { appendFileSync, existsSync, readFileSync } from "node:fs";
-import { PROJECT, currentById, devtoComments, newFeedback, overdue, type FeedbackRow, type Found } from "../src/lib/feedback";
+import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { PROJECT, currentById, devtoComments, humanReply, isOptOut, newFeedback, overdue, senderAddress, type FeedbackRow, type Found } from "../src/lib/feedback";
 
 const INBOX = `${process.env.HOME}/data/feedback/feedback.jsonl`;
 const UA = { "User-Agent": "agentoolrank-ops/1.0" };
@@ -34,8 +36,28 @@ async function collect() {
   if (Array.isArray(issues))
     for (const i of issues)
       found.push({ id: `github:agentoolrank#${i.number}`, url: i.html_url, author: i.user?.login ?? "", text: `${i.title}\n${i.body ?? ""}`.slice(0, 1000), source: "other", kind: i.pull_request ? "other" : "suggestion" });
+  // hello@ replies (only mail addressed to our own domain).
+  const OUT = new URL("../data/outreach/", import.meta.url).pathname;
+  const sentTo = new Set<string>((existsSync(OUT + "sent.json") ? JSON.parse(readFileSync(OUT + "sent.json", "utf8")) : []).map((x: { email: string }) => x.email.toLowerCase()));
+  const g = spawnSync(`${process.env.HOME}/project/agentkit/bin/gmail-read`, ["find", "to:hello@agentoolrank.com newer_than:3d", "--max", "50"], { encoding: "utf8", timeout: 120_000 });
+  if (g.status !== 0) throw new Error(`gmail-read failed (${g.status}): ${g.stderr.slice(0, 200)}`);
+  const optOuts: string[] = [];
+  for (const line of g.stdout.split("\n").filter(Boolean)) {
+    const m = JSON.parse(line) as { id: string; from: string; subject: string; body?: string };
+    if (!humanReply(m, sentTo)) continue;
+    const who = senderAddress(m.from);
+    found.push({ id: `email:${m.id}`, url: "", author: who, text: `${m.subject}\n${m.body ?? ""}`.slice(0, 1000), source: "email", kind: "other" });
+    if (sentTo.has(who) && isOptOut(m.body ?? "")) optOuts.push(`email:${m.id}`);
+  }
+
   const fresh = newFeedback(new Set(currentById(rows()).keys()), found);
   for (const f of fresh) append({ ...f, project: PROJECT, collected_at: now(), status: "new", decision: "" });
+  // "If you reply no, we'll never email you again": honour it in code, and record that as the decision.
+  for (const f of fresh.filter((x) => optOuts.includes(x.id))) {
+    const list: string[] = existsSync(OUT + "optout.json") ? JSON.parse(readFileSync(OUT + "optout.json", "utf8")) : [];
+    if (!list.includes(f.author)) writeFileSync(OUT + "optout.json", JSON.stringify([...list, f.author], null, 2));
+    append({ ...f, project: PROJECT, collected_at: now(), status: "answered", decision: "回复 no，已自动加入外联 optout，不再发信" });
+  }
   console.log(`feedback collect: ${found.length} seen, ${fresh.length} new`);
 }
 

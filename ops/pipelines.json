@@ -16,5 +16,19 @@
     "entry": "apps/agent-tools/scripts/weekly-ops.sh",
     "timer": "agentoolrank-weekly.timer",
     "notes": "每周一 10:00（SOCIAL_CALENDAR 固定时段）。X 周榜：文案检查（自家 + bin/post-copy-check）→ post-gate --channel x-main → 发帖 → post-log；周报 newsletter 群发"
+  },
+  {
+    "name": "nightly-outreach",
+    "entry": "apps/agent-tools/scripts/outreach-ops.sh",
+    "timer": "agentoolrank-outreach.timer",
+    "notes": "每天 22:00。Brevo 7 天健康闸门（outreach tag 任何退信/拦截/投诉/无效，或整个共用账户有投诉/拦截 → 不发，退出码 2，服务失败报警）→ send-outreach.ts 最多 10 封（每地址一生一封、optout、hold、群发地址、实时排名）。Persistent=false：错过就不补发，不在半夜发信"
+  },
+  {
+    "name": "daily-data-update",
+    "runner": "github-actions",
+    "repo": "agent-gigmole/agentoolrank",
+    "workflow": "daily-update.yml",
+    "entry": ".github/workflows/daily-update.yml（crawl-github --existing + compute-rankings）",
+    "notes": "每天 06:00 UTC。工具数据每日自动刷新（项目规则：每日自动刷新）"
   }
 ]

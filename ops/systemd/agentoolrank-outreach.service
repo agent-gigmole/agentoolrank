@@ -1,0 +1,7 @@
+[Unit]
+Description=AgentoolRank nightly maker outreach (Brevo health gate, then up to 10 emails)
+
+[Service]
+Type=oneshot
+ExecStart=/home/qmt/workspace/ai-directory/apps/agent-tools/scripts/outreach-ops.sh
+TimeoutStartSec=1h

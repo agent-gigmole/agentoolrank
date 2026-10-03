@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentById, devtoComments, newFeedback, overdue } from "./feedback";
+import { currentById, devtoComments, humanReply, isOptOut, newFeedback, overdue } from "./feedback";
 
 describe("currentById", () => {
   it("keeps the last line per id (the inbox is append-only)", () => {
@@ -42,5 +42,23 @@ describe("overdue", () => {
       { id: "d", project: "ai-directory", status: "answered", collected_at: now - 99 * 3600 },
     ];
     expect(overdue(rows, now).map((r) => r.id)).toEqual(["a"]);
+  });
+});
+
+describe("humanReply", () => {
+  const sentTo = new Set(["dev@lobehub.com"]);
+  it("keeps replies from people we emailed and Re: mail from humans", () => {
+    expect(humanReply({ from: "Arvin <dev@lobehub.com>", subject: "Re: LobeHub's current rank" }, sentTo)).toBe(true);
+    expect(humanReply({ from: "Jane <jane@acme.dev>", subject: "Re: your listing" }, sentTo)).toBe(true);
+  });
+  it("drops directory notifications, magic links and service alerts", () => {
+    expect(humanReply({ from: "AI TOOLS RECAP <info@aitoolsrecap.com>", subject: "Your listing is now live" }, sentTo)).toBe(false);
+    expect(humanReply({ from: "Brevo <account-alerts@t.brevo.com>", subject: "Re: alert" }, sentTo)).toBe(false);
+    expect(humanReply({ from: "Foundr AI <hello@foundr.ai>", subject: "Your Foundr Login Link" }, sentTo)).toBe(false);
+  });
+  it("reads a plain no as an opt-out", () => {
+    expect(isOptOut("No thanks.\n\nOn Fri ... wrote:")).toBe(true);
+    expect(isOptOut("unsubscribe")).toBe(true);
+    expect(isOptOut("Nice project! no worries about the badge")).toBe(false);
   });
 });

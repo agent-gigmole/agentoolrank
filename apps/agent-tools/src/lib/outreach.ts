@@ -38,3 +38,17 @@ export function isGroupAddress(email: string): boolean {
   if (/(^|\.)googlegroups\.com$|^lists?\.|^groups\.|\.groups\.io$|^groups\.io$/.test(domain)) return true;
   return /(^|[-_.])(users|dev|devel|discuss|announce|list|no-?reply)($|[-_.])/.test(local);
 }
+
+export interface BrevoStats { hardBounces?: number; softBounces?: number; blocked?: number; spamReports?: number; invalid?: number }
+
+/**
+ * Nightly pipeline gate (7-day Brevo stats): our own tag must be spotless; on the shared account, any spam report or
+ * block stops us too (it hurts everyone's sending reputation). Another project's single bounce does not.
+ */
+export function sendingBlocked(outreach: BrevoStats, account: BrevoStats): string | null {
+  const ours = (outreach.hardBounces ?? 0) + (outreach.softBounces ?? 0) + (outreach.blocked ?? 0) + (outreach.spamReports ?? 0) + (outreach.invalid ?? 0);
+  if (ours > 0) return `outreach tag has ${ours} bounce/block/spam/invalid in 7 days`;
+  const shared = (account.spamReports ?? 0) + (account.blocked ?? 0);
+  if (shared > 0) return `shared Brevo account has ${shared} spam report/block in 7 days`;
+  return null;
+}
