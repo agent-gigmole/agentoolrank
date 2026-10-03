@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { KIT_PRICE_USD } from "@/lib/directory-kit";
 import { DIRECTORIES, CHECKED } from "@/lib/directories";
 import { FaqSection } from "@/components/FaqSection";
 import { TestedDirectoryTable } from "@/components/TestedDirectoryTable";
@@ -73,6 +74,16 @@ export default function WhereToListPage() {
         </p>
         <p className="text-xs text-gray-500 mb-4">Facts come from our own submission notes, not from third-party lists. Rules change; if one is out of date, email hello@agentoolrank.com.</p>
         <TestedDirectoryTable rows={TESTED} />
+        <div className="mt-4 border border-blue-200 rounded-xl p-5 bg-blue-50">
+          <p className="font-semibold text-gray-900 mb-1">Which of these fit your product, and what trips the form?</p>
+          <p className="text-sm text-gray-700 mb-2">
+            The Submit Kit ranks these directories for your product type and adds what the table leaves out: the form gotchas we hit on each site,
+            how to tell a submission went through, the steps only a person can do, and a &quot;don&apos;t submit here&quot; list with reasons.
+            Your AI assistant can call it over MCP. The top 10 are free; the full 30 plus the avoid list is a one-time ${KIT_PRICE_USD}.
+            No traffic or ranking is promised.
+          </p>
+          <Link href="/submit-kit" className="text-sm text-blue-600 hover:underline">See the Submit Kit →</Link>
+        </div>
       </section>
 
       <section className="space-y-3 text-gray-700 mb-10">

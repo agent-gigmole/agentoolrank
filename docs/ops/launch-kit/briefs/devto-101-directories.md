@@ -33,4 +33,5 @@ Dataset: 101 directory sites where at least one of our three products went throu
 - Do not claim SEO results or rankings. Do not say any site is a scam or link farm.
 - Name third-party sites only with the facts above.
 - End with the /where-to-list link and one line inviting corrections ("if a site's rules changed, tell us and we update the data").
+- After that, one plain line about the Submit Kit (https://agentoolrank.com/submit-kit): it ranks these directories for your product type with form gotchas and a don't-submit list; top 10 free over MCP, full list $29 one-time. No traffic or ranking promise.
 - Signed: Jason T.
