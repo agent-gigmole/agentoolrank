@@ -1138,3 +1138,13 @@
 - 坑：KNOWLEDGE/GOTCHAS.md#vercel-og-glyphs-and-width、#mx-verdict-definite-only
 - **TASK 队列**：下载量徽章 ✅、MX 修复 ✅、日报维护者行 ✅；新增「外联信徽章按工具选：下载 ≥10 万给 downloads 徽章」（未做）
 - **下一步**：外联徽章按工具选；22:00 外联第二批实发 + 下载量句核对（未核实）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）
+
+## 2026-10-03 20:5x–21:xx 外联徽章按工具选 + 详情页徽章实时预览 + 提交成功页预览开工（6d6b313、61b5c71 已部署，890a559 看板，27f0189 WIP）
+- **外联徽章按工具选**（6d6b313）：badgeMarkdown 加 metric 参数；outreachEmail 的 downloads 带 n，≥10 万给「this one shows the live monthly downloads」+ ?metric=downloads 徽章，否则星数徽章；send-outreach 传 n
+  - 今晚 22:00 批次 dry-run：OmniRoute、vLLM、headroom、Browser-Use、Firecrawl 给下载量徽章（徽章 URL 均 200），其余 5 封星数徽章；测试 323 通过
+  - **22:00 实际发出内容未核实**
+- **详情页维护者区徽章实时预览**（61b5c71，已部署）：星数 + 有数据时下载量徽章的 <img> 预览；线上已核对两个 img alt
+- 看板已记（890a559）
+- **TASK 队列**：外联徽章选择 ✅、详情页徽章预览 ✅；新增「提交成功页徽章区换实时预览 + 下载量徽章」
+- **进行中**：/submit 成功页徽章区加 <img src=/api/badge/<slug>> 预览（27f0189 WIP，已提交未部署）；下载量徽章部分未做
+- **下一步**：提交成功页预览收尾 + 部署 + 线上核对；22:00 外联第二批实发 + 徽章/下载量句核对（未核实）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）

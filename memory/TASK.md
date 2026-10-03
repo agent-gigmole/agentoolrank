@@ -37,7 +37,9 @@
 - ✅ ops/daily.md 加一行「维护者入口点击 7 天：downloads / alternatives / 详情页 checkout_click」，看付费推荐漏斗（5f0fd7b：渠道行「维护者：入口点击 · 复制徽章 · 首页推荐结账」）
 - ✅ 下载量 README 徽章（/api/badge/<slug>?metric=downloads，维护者区「Copy downloads badge」；顺带修了星数徽章 ★ 显示成方框、长名字被截断，10-03 20:5x 上线核对）
 - ✅ 外联 MX 预检只在 DNS 明确无记录时退订，临时错误重试一次后本轮跳过（agentkit mx-transient）
-- 外联信里的徽章改成按工具选：下载量 ≥10 万的给 downloads 徽章，其余给星数徽章
+- ✅ 外联信里的徽章按工具选（≥10 万下载给 downloads 徽章；今晚批次 5 封带 downloads 徽章，徽章 URL 200）
+- ✅ 详情页维护者区显示徽章实时预览（星数 + 有数据时的下载量徽章，10-03 21:0x 上线核对）
+- 提交成功页（/submit 排队页）的徽章区也换成实时预览 + 下载量徽章（排队插队靠徽章，复制率直接影响付费前漏斗）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
