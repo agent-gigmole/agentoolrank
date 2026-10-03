@@ -88,3 +88,21 @@ describe("badge choice in outreach", () => {
     expect(e.text).toContain(badgeMarkdown("https://agentoolrank.com", "browser-use", "Browser-Use"));
   });
 });
+
+describe("dohMxVerdict (confirm a local 'no MX' with DNS-over-HTTPS before opting out)", () => {
+  it("reads Google DoH JSON", async () => {
+    const { dohMxVerdict } = await import("./outreach");
+    expect(dohMxVerdict({ Status: 0, Answer: [{ type: 15, data: "5 mx2.feishu.cn." }] })).toBe("ok");
+    expect(dohMxVerdict({ Status: 3 })).toBe("none"); // NXDOMAIN
+    expect(dohMxVerdict({ Status: 0 })).toBe("none"); // domain exists, no MX
+    expect(dohMxVerdict({ Status: 2 })).toBe("unknown"); // SERVFAIL
+    expect(dohMxVerdict(null)).toBe("unknown");
+  });
+});
+
+describe("uniqueByEmail", () => {
+  it("keeps the first candidate per address so one run never mails a person twice", async () => {
+    const { uniqueByEmail } = await import("./outreach");
+    expect(uniqueByEmail([{ email: "A@x.com", slug: "a" }, { email: "a@x.com", slug: "b" }, { email: "c@x.com", slug: "c" }]).map((c) => c.slug)).toEqual(["a", "c"]);
+  });
+});

@@ -15,7 +15,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, type BrevoStats } from "../src/lib/outreach";
+import { dohMxVerdict, outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, uniqueByEmail, type BrevoStats } from "../src/lib/outreach";
 import { resolveMx } from "node:dns/promises";
 import { downloadsLine } from "../src/lib/downloads";
 import { cstDayRange } from "../src/lib/kpi";
@@ -93,7 +93,7 @@ if (process.argv.includes("--require-healthy")) {
 const today = cstDayRange(new Date(), 0);
 const sentToday = sent.filter((s) => s.at >= today.from && s.at < today.to).length;
 const already = new Set(sent.map((s) => s.email.toLowerCase()));
-const queue = candidates.filter((c) => !already.has(c.email.toLowerCase()) && !optout.has(c.email.toLowerCase()) && !hold[c.slug] && !isGroupAddress(c.email));
+const queue = uniqueByEmail(candidates).filter((c) => !already.has(c.email.toLowerCase()) && !optout.has(c.email.toLowerCase()) && !hold[c.slug] && !isGroupAddress(c.email));
 const room = test ? 1 : Math.min(DAILY_CAP - sentToday, Number(arg("limit") ?? DAILY_CAP));
 console.log(`candidates=${candidates.length} sent_total=${sent.length} sent_today=${sentToday} queue=${queue.length} room=${room}`);
 
@@ -115,10 +115,16 @@ const blocked = test ? new Set<string>() : await blockedContacts();
 // failures are retried once, then the address is skipped this round only (agentkit 10-03: new_ladar lost hi3d.ai that way).
 async function mxCheck(email: string): Promise<"ok" | "none" | "unknown"> {
   const once = () => resolveMx(email.split("@")[1]).then((r) => mxVerdict({ records: r.length }), (e: NodeJS.ErrnoException) => mxVerdict({ error: e.code }));
-  const v = await once();
-  if (v !== "unknown") return v;
-  await new Promise((r) => setTimeout(r, 2000));
-  return once();
+  let v = await once();
+  if (v === "unknown") {
+    await new Promise((r) => setTimeout(r, 2000));
+    v = await once();
+  }
+  if (v !== "none") return v;
+  // Local "none" is only believed if DNS-over-HTTPS agrees (local resolver has returned empty MX for real domains).
+  const doh = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(email.split("@")[1])}&type=MX`, { signal: AbortSignal.timeout(10000) })
+    .then((r) => r.json(), () => null);
+  return dohMxVerdict(doh);
 }
 const optoutList = load<string[]>("optout.json", []);
 

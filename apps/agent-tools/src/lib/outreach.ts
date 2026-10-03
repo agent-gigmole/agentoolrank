@@ -71,3 +71,22 @@ export function mxVerdict(r: { records?: number; error?: string }): "ok" | "none
   if (r.error) return r.error === "ENOTFOUND" || r.error === "ENODATA" ? "none" : "unknown";
   return (r.records ?? 0) > 0 ? "ok" : "none";
 }
+
+/** Google DNS-over-HTTPS MX answer. Used to confirm a local "no MX" (the WSL resolver has returned empty for domains
+ *  that do have MX, e.g. cherry-ai.com on Feishu), so nobody is opted out on a local resolver glitch. */
+export function dohMxVerdict(j: { Status?: number; Answer?: { type: number; data?: string }[] } | null): "ok" | "none" | "unknown" {
+  if (!j || typeof j.Status !== "number") return "unknown";
+  if (j.Status === 3) return "none";
+  if (j.Status !== 0) return "unknown";
+  return (j.Answer ?? []).some((a) => a.type === 15) ? "ok" : "none";
+}
+
+export function uniqueByEmail<T extends { email: string }>(list: T[]): T[] {
+  const seen = new Set<string>();
+  return list.filter((c) => {
+    const k = c.email.toLowerCase();
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
