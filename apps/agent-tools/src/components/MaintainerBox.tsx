@@ -81,6 +81,11 @@ export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = fals
         )}
       </div>
       {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
+      <p className="text-sm text-gray-600 mt-4">
+        Listing {name} on other directories too?{" "}
+        <a href="/submit-kit?type=ai_tool" data-testid="maintainer-kit" className="text-blue-600 hover:underline">The Submit Kit</a> shows which ones fit an
+        agent tool, the form gotchas, and which to skip (top 10 free).
+      </p>
     </section>
   );
 }
