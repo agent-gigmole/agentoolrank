@@ -9,6 +9,8 @@ log="data/ops-logs/$(date +%F).log"
 {
   echo "== $(date -Is) review"
   bun run scripts/review-submissions.ts --apply --free=3 || fail=1
+  echo "== live emails (the /submit form promises one when the page is live)"
+  bun run scripts/send-live-emails.ts || fail=1
   echo "== funnel (7d)"
   bun run scripts/funnel-report.ts 7 || fail=1
   echo "== indexnow"
