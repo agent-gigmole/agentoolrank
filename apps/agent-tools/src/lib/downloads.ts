@@ -1,0 +1,55 @@
+// npm / PyPI monthly downloads for tools that publish a package (weekly-ops). Package names come from the tool's own
+// repo (package.json / pyproject.toml / setup.py), never typed by hand, and only count if the registry metadata points
+// back at the same GitHub repo, so a same-named package from someone else is never credited.
+export function githubRepo(url: string | null | undefined): { owner: string; repo: string } | null {
+  const m = /github\.com\/([^/\s]+)\/([^/\s#?]+)/i.exec(url ?? "");
+  return m ? { owner: m[1], repo: m[2].replace(/\.git$/, "") } : null;
+}
+
+export function npmNameFromPackageJson(text: string): string | null {
+  try {
+    const j = JSON.parse(text);
+    return !j.private && typeof j.name === "string" && j.name ? j.name : null;
+  } catch {
+    return null;
+  }
+}
+
+export function pypiNameFromPyproject(text: string): string | null {
+  for (const section of ["project", "tool.poetry"]) {
+    const start = text.search(new RegExp(`^\\[${section.replace(".", "\\.")}\\]\\s*$`, "m"));
+    if (start < 0) continue;
+    const body = text.slice(start).split(/\n\[/)[0];
+    const m = /^\s*name\s*=\s*["']([^"']+)["']/m.exec(body);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+export function pypiNameFromSetupPy(text: string): string | null {
+  return /\bname\s*=\s*["']([A-Za-z0-9._-]+)["']/.exec(text)?.[1] ?? null;
+}
+
+export function repoMatches(url: string | undefined, owner: string, repo: string): boolean {
+  const r = githubRepo(url);
+  return !!r && r.owner.toLowerCase() === owner.toLowerCase() && r.repo.toLowerCase() === repo.toLowerCase();
+}
+
+/** Registry names worth trying; each is only kept if its metadata links back to the tool's repo (repoMatches). */
+export function candidateNames(t: { manifest: string | null; repo: string; id: string; name: string }, registry: "npm" | "pypi"): string[] {
+  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
+  const out: string[] = [];
+  const add = (s: string | null | undefined) => {
+    if (s && !out.includes(s)) out.push(s);
+  };
+  add(t.manifest);
+  add(t.manifest?.replace(/-(workspace|monorepo|root)$/i, ""));
+  add(norm(t.repo));
+  add(t.id);
+  add(norm(t.name));
+  if (registry === "npm") {
+    add(`@${norm(t.repo)}/core`);
+    add(norm(t.repo).replace(/-?js$/, "")); // "langchainjs" publishes "langchain"
+  }
+  return out.filter((s) => s.length > 1);
+}

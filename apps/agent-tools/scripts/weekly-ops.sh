@@ -7,4 +7,5 @@ unset GITHUB_TOKEN
 fail=0  # any failed step makes the systemd service fail, so rule-check / agentkit notice
 bun run scripts/weekly-post.ts --post >> "data/ops-logs/weekly-$(date +%F).log" 2>&1 || fail=1
 bun run scripts/weekly-newsletter.ts --send >> "data/ops-logs/weekly-$(date +%F).log" 2>&1 || fail=1
+bun run scripts/fetch-downloads.ts >> "data/ops-logs/weekly-$(date +%F).log" 2>&1 || fail=1  # npm/PyPI monthly downloads → tool_packages
 exit $fail
