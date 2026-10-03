@@ -20,8 +20,17 @@ const TYPES: { id: ProductType; label: string }[] = [
   { id: "saas", label: "SaaS" },
 ];
 
-export default async function SubmitKitPage({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
-  const { type } = await searchParams;
+/** One line that picks up where our email / API reply left off (?ref=live-notify, agent-listed, agent-queued). */
+function kitIntro(ref?: string): string | null {
+  if (ref === "live-notify") return "Your tool just went live on AgentoolRank. These are the next directories worth listing it on, picked for its type.";
+  if (ref === "agent-listed") return "Your tool is already on AgentoolRank. These are the other directories worth listing it on, picked for its type.";
+  if (ref === "agent-queued") return "Your tool is in the AgentoolRank review queue. Meanwhile, these are the other directories worth listing it on.";
+  return null;
+}
+
+export default async function SubmitKitPage({ searchParams }: { searchParams: Promise<{ type?: string; ref?: string }> }) {
+  const { type, ref } = await searchParams;
+  const intro = kitIntro(ref);
   const productType = (TYPES.find((t) => t.id === type)?.id ?? "ai_tool") as ProductType;
   // The same free top 10 an agent gets from recommend_directories without a key, shown to people too.
   const free = recommendDirectories(kitData as KitData, { productType, full: false, now: new Date() });
@@ -35,6 +44,7 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
   return (
     <main className="max-w-2xl mx-auto px-4 py-10 text-gray-800">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(kitProductJsonLd(process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com")) }} />
+      {intro && <p className="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-gray-800" data-testid="kit-intro">{intro}</p>}
       <h1 className="text-3xl font-bold text-gray-900 mb-3">Submit Kit: submit to fewer directories, the right ones</h1>
       <p className="mb-4">
         A tool for your own agent. Call <code>recommend_directories</code> on our MCP server with your product type and it returns launch
