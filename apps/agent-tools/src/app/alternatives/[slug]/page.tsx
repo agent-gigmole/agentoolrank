@@ -191,7 +191,7 @@ export default async function AlternativesPage({ params }: Props) {
         <section className="mt-10 border border-gray-200 rounded-xl p-5 bg-gray-50">
           <h2 className="font-semibold text-gray-900 mb-1">Maintain {tool.name} or one of these alternatives?</h2>
           <p className="text-sm text-gray-600 mb-2">
-            Each tool page has a maintainer box: a README badge with your live rank and stars, or a homepage feature for $49 / 7 days.
+            Each tool page has a maintainer box: a README badge with your live rank and stars, or a homepage + category feature for $49 / 7 days.
           </p>
           <p className="text-sm">
             {[tool, ...alts].slice(0, 6).map((t, i) => (

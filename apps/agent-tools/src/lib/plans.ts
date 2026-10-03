@@ -19,7 +19,7 @@ export const PLANS = {
   featured: {
     amount: 4900,
     name: "AgentoolRank featured listing (7 days)",
-    description: "Fast-track review plus 7 days in the Featured section of the AgentoolRank homepage.",
+    description: "Fast-track review plus 7 days in the Featured section of the AgentoolRank homepage and at the top of your category page.",
     featuredDays: 7,
     reviewHours: 24,
   },

@@ -115,7 +115,7 @@ export default async function DownloadsPage() {
         <h2 className="font-semibold text-gray-900 mb-1">Maintain one of these tools?</h2>
         <p className="text-sm text-gray-600 mb-2">
           Every tool page has a maintainer box: copy a README badge that shows your live rank and stars, or feature your tool on the
-          AgentoolRank homepage for $49 / 7 days. Downloads and stars on the page update on their own.
+          AgentoolRank homepage and its category page for $49 / 7 days. Downloads and stars on the page update on their own.
         </p>
         <p className="text-sm">
           {top.slice(0, 5).map((t, i) => (

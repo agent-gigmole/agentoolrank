@@ -76,7 +76,7 @@ export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = fals
             disabled={busy}
             className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-60"
           >
-            Feature on the homepage · $49 / 7 days
+            Feature on the homepage + your category · $49 / 7 days
           </button>
         )}
       </div>
