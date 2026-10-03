@@ -107,3 +107,8 @@ export function usageVerdict(tools: { name: string; stars: number | null; downlo
   const head = `By package downloads ${used.name} is the most used here (${compact(used.downloads as number)} in the last 30 days)`;
   return starred.name === used.name ? `${head}, and it also has the most GitHub stars.` : `${head}, even though ${starred.name} has the most GitHub stars.`;
 }
+
+/** "Used more than starred": highest downloads per GitHub star, among tools with ≥100k downloads in 30 days. */
+export function usedMoreThanStarred<T extends { total: number; perStar: number | null }>(ranked: T[], limit = 10, floor = 100_000): T[] {
+  return ranked.filter((t) => t.perStar !== null && t.total >= floor).sort((a, b) => (b.perStar as number) - (a.perStar as number)).slice(0, limit);
+}

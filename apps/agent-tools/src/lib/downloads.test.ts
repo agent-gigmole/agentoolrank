@@ -91,3 +91,16 @@ describe("usageVerdict", () => {
     expect(usageVerdict([{ name: "A", stars: 5, downloads: 900 }, { name: "B", stars: 1, downloads: null }])).toBeNull();
   });
 });
+
+describe("usedMoreThanStarred", () => {
+  it("ranks tools by downloads per star, only above a download floor so tiny packages don't win", async () => {
+    const { usedMoreThanStarred } = await import("./downloads");
+    const ranked = [
+      { id: "a", name: "A", stars: 1000, total: 5_000_000, packages: [], perStar: 5000 },
+      { id: "b", name: "B", stars: 10, total: 50_000, packages: [], perStar: 5000 },
+      { id: "c", name: "C", stars: 100_000, total: 10_000_000, packages: [], perStar: 100 },
+      { id: "d", name: "D", stars: null, total: 9_000_000, packages: [], perStar: null },
+    ];
+    expect(usedMoreThanStarred(ranked, 2).map((t) => t.id)).toEqual(["a", "c"]);
+  });
+});
