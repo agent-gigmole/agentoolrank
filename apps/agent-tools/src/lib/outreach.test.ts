@@ -106,3 +106,16 @@ describe("uniqueByEmail", () => {
     expect(uniqueByEmail([{ email: "A@x.com", slug: "a" }, { email: "a@x.com", slug: "b" }, { email: "c@x.com", slug: "c" }]).map((c) => c.slug)).toEqual(["a", "c"]);
   });
 });
+
+describe("dailyCap (bet 1: ramp 10 → 15 from 10-08 → 20 from 10-12, only while the last 7 days are clean)", () => {
+  it("ramps by date when clean", async () => {
+    const { dailyCap } = await import("./outreach");
+    expect(dailyCap("2026-10-07", true)).toBe(10);
+    expect(dailyCap("2026-10-08", true)).toBe(15);
+    expect(dailyCap("2026-10-12", true)).toBe(20);
+  });
+  it("stays at 10 if anything bounced or was reported", async () => {
+    const { dailyCap } = await import("./outreach");
+    expect(dailyCap("2026-10-12", false)).toBe(10);
+  });
+});

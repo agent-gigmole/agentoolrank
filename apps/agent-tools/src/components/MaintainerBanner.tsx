@@ -12,7 +12,7 @@ export function MaintainerBanner({ name }: { name: string }) {
   if (!show) return null;
   return (
     <div className="mb-6 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-gray-800">
-      Maintain {name}? Grab the README badge or feature it on the homepage.{" "}
+      Maintain {name}? Grab the README badge or feature it on the homepage and its category page.{" "}
       <a href="#maintainers" onClick={() => track("maintainer_banner_click", window.location.pathname)} className="font-medium text-blue-700 underline">
         Maintainer options ↓
       </a>

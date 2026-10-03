@@ -90,3 +90,12 @@ export function uniqueByEmail<T extends { email: string }>(list: T[]): T[] {
     return true;
   });
 }
+
+/** Weekly bet 1 (docs/ops/weekly/2026-10-05.md): 10/day → 15 from 10-08 → 20 from 10-12, only while the last 7 days
+ *  had 0 bounces / blocks / spam / invalid on our tag (clean = sendingBlocked(...) === null). China-time day "YYYY-MM-DD". */
+export function dailyCap(day: string, clean: boolean): number {
+  if (!clean) return 10;
+  if (day >= "2026-10-12") return 20;
+  if (day >= "2026-10-08") return 15;
+  return 10;
+}

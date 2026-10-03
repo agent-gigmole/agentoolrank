@@ -1,6 +1,7 @@
 /**
  * Maker outreach (T17): send the outreach email to candidates from data/outreach/candidates.json via Brevo.
- * - Max 10 per China-time day (counted from data/outreach/sent.json), one email per address ever, no follow-ups.
+ * - Daily cap 10, ramping to 15 (10-08) and 20 (10-12) only after a clean 7-day health check (lib/outreach dailyCap,
+ *   weekly bet 1); counted from data/outreach/sent.json; one email per address ever, no follow-ups.
  * - Skips addresses in data/outreach/optout.json (people who replied "no") and mailing-list / no-reply addresses.
  * - Skips slugs in data/outreach/hold.json ({ slug: reason }), e.g. tools whose listing/category is under review.
  * - data/outreach/category.json ({ slug: category-slug }) pins the category to report when the tool's best-ranking
@@ -15,14 +16,13 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dohMxVerdict, outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, uniqueByEmail, type BrevoStats } from "../src/lib/outreach";
+import { dailyCap, dohMxVerdict, outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, uniqueByEmail, type BrevoStats } from "../src/lib/outreach";
 import { resolveMx } from "node:dns/promises";
 import { downloadsLine } from "../src/lib/downloads";
 import { cstDayRange } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
 const BASE = "https://agentoolrank.com";
-const DAILY_CAP = 10;
 const dir = new URL("../data/outreach/", import.meta.url).pathname;
 const arg = (k: string) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split("=")[1];
 const dryRun = process.argv.includes("--dry-run");
@@ -75,6 +75,8 @@ async function send(to: string, subject: string, text: string): Promise<string> 
   return String(data.messageId ?? "");
 }
 
+// Cap ramps with weekly bet 1 only after a clean health check (else stays 10).
+let healthyWeek = false;
 if (process.argv.includes("--require-healthy")) {
   const key = readFileSync(`${process.env.HOME}/.config/secrets/brevo-api-key`, "utf8").trim();
   const stats = async (tag: string): Promise<BrevoStats> => {
@@ -88,9 +90,11 @@ if (process.argv.includes("--require-healthy")) {
     process.exit(2);
   }
   console.log("brevo health ok");
+  healthyWeek = true;
 }
 
 const today = cstDayRange(new Date(), 0);
+const DAILY_CAP = dailyCap(today.day, healthyWeek);
 const sentToday = sent.filter((s) => s.at >= today.from && s.at < today.to).length;
 const already = new Set(sent.map((s) => s.email.toLowerCase()));
 const queue = uniqueByEmail(candidates).filter((c) => !already.has(c.email.toLowerCase()) && !optout.has(c.email.toLowerCase()) && !hold[c.slug] && !isGroupAddress(c.email));
