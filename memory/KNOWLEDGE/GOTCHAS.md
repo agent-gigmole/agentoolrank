@@ -1085,3 +1085,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 做法：src/lib/live-email.ts liveEmail()（48c812e）生成正文；发送接在 review-submissions --apply 通过时，走 Brevo 事务性邮件，标签不要用 outreach（免得混进外联健康统计），记 sent 防重发；补发前先确认提交者留的邮箱
 - 来源：2026-10-04 做 /submit 维护者说明时发现
 - **已修复 e1451cc**：scripts/send-live-emails.ts（Brevo，标签 live-notify，live_emails 表防重发，失败下次重试）并入 daily-ops.sh 紧跟 review-submissions --apply；首跑补发 #3/#5/#6/#7/#8 共 5 封全部送达。91b0ab6 起邮件链接带 ?ref=live-notify（此前 5 封不带）
+
+## api-calls-selftest-src-from-url
+- 现象：线上实测 /api/v1/*（withCallLog 包装）或 /api/mcp，即使走不写业务表的路径（如提交已收录工具），也会在 api_calls 记一行，混进日报「API 调用」统计
+- 原因：kpi.ts 只按 api_calls.src NOT LIKE '%selftest%' 剔除；而 src 在 REST 只取 URL 查询参数 `?src=`（src/lib/api-log.ts），MCP 只取工具参数 args.src —— 写在 POST body 或 header 里的 selftest 标记不会进 api_calls
+- 做法：线上自测 REST 时在 URL 上加 `?src=selftest-<用途>`，MCP 在 arguments 里加 `"src":"selftest-<用途>"`；忘了加就事后按 ts + tool + client(UA) 定位那一行 UPDATE src='selftest-…'
+- 来源：2026-10-04 API/MCP 已收录回复线上 crewAI 实测（6d9078f）

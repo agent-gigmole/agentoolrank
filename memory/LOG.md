@@ -1319,3 +1319,9 @@
 - 做法：await 9b7cd6 收尾（5/5 送达）；kpi.ts 维护者行加 live-notify 会话数与结账点击（src LIKE '%live-notify%'），跑出新行，367 测试全过，TASK 该项 ✅；开工 API/MCP 提交已收录工具回复 $49 推荐位：src/lib/offers.ts listedReply（buy_url ?ref=agent-listed#maintainers、badge_html、message_for_human）+2 测试已提交；已 bus 回复 agentkit
 - 结果：成功（listedReply 未接入 /api/v1/submissions 与 MCP submit_tool）
 - 坑：无新坑
+
+## 2026-10-04 03:52 API/MCP 已收录回复上线（6d9078f 部署）+ 维护者横幅扩来源开工（d69fa55）
+- 做法：/api/v1/submissions 与 MCP submit_tool listed 分支接 listedReply（already_listed + listing_url + badge_html + featured_offer $49/7天 buy_url ?ref=agent-listed#maintainers，无 Stripe key 为 null + message_for_human），369 测试全过，部署；看板已记，TASK ✅；开工 MaintainerBanner 正则扩为 ^(?:outreach|live-notify|agent-listed)，已 push 未部署
+- 结果：线上 crewAI 实测 REST + MCP 返回正确，buy_url 200
+- 坑：线上实测会在 api_calls 记一行；src 只取 URL ?src= / MCP args.src（GOTCHAS#api-calls-selftest-src-from-url）
+- 结果：成功（横幅扩来源未部署）

@@ -1381,3 +1381,9 @@
 - **日报维护者行已加**：ops/daily.md 维护者行新增「上线通知信 N 个会话、结账 N」（src LIKE '%live-notify%' 的 page_view / checkout_click）；kpi.ts 已跑出新行；367 测试全过。TASK 队列该项 ✅
 - **进行中：API/MCP 提交已收录工具时回复里给 $49 推荐位**——回复带 buy_url（/tool/<slug>?ref=agent-listed#maintainers）、badge_html、message_for_human。第一步 ecd98c2：src/lib/offers.ts listedReply 纯函数 + 2 测试已提交；**未接**进 /api/v1/submissions 和 MCP submit_tool（deps.submit 的 listed 分支）。已 bus 回复 agentkit
 - **下一步**：listedReply 接入 /api/v1/submissions + MCP submit_tool → 测试 → 部署 → 线上实测；日报可加 ref=agent-listed 来源；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 03:52 API/MCP 提交已收录工具回复推荐位上线（6d9078f 已部署）+ 详情页维护者横幅扩来源开工（d69fa55 未部署）
+- **已上线（agentoolrank.com）**：/api/v1/submissions 与 MCP submit_tool 的 listed 分支改用 listedReply，返回 status already_listed + listing_url + badge_html + featured_offer（$49、7 天、buy_url=/tool/<slug>?ref=agent-listed#maintainers；无 Stripe key 时 featured_offer 为 null）+ message_for_human；369 测试全过
+- **线上实测**：用 crewAI 打 REST 和 MCP 都返回正确，buy_url 200。已收录路径不写 submissions 表，线上可安全实测；但 /api/v1 有 withCallLog，实测会在 api_calls 记一行（GOTCHAS#api-calls-selftest-src-from-url）。看板已记，TASK 队列该项 ✅
+- **进行中：详情页维护者横幅扩到 ?ref=live-notify / agent-listed**——d69fa55 MaintainerBanner 正则改为 ^(?:outreach|live-notify|agent-listed)，已提交 push，**未部署**
+- **下一步**：横幅部署 + 线上核对（/tool/<slug>?ref=agent-listed 显示横幅）+ 看板；日报可加 ref=agent-listed 来源；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
