@@ -83,7 +83,8 @@
 - ✅ 详情页 <title> 对月下载 ≥100 万的工具加「· NM/mo」（10-04 02:30 上线：LangChain 169M/mo、Pydantic 813M/mo；10-16 GSC 对比 CTR）
 - ✅ 提交表单预填：GitHub 栏移到第一格，贴地址失焦后从 GitHub 公开 API 填官网、简介、名字（只填空格子，长简介按整句/整词截），埋点 prefill（10-04 02:5x 上线，真 Chrome 实测：手填名字保留、官网和简介自动填）
 - ✅ 提交时工具已收录的结果页给维护者入口：「Feature it · $49」按钮 + 徽章代码（10-04 03:0x 上线；真 Chrome 实测 crewAI → 结果页 → 点按钮到 Stripe「featured listing (7 days)」；埋点 checkout_click 路径 /submit-listed#featured 可单独统计）
-- /submit 页顶部给已收录工具的维护者一句直达说明：「已收录？贴 GitHub 地址提交，就能直接买推荐位」，让 596 个已收录工具的维护者知道这条路（进行中）
+- ✅ /submit 页顶部给已收录工具的维护者一句直达说明（10-04 03:4x 上线核对）；顺带已收录工具的 Stripe 推荐位说明去掉「Fast-track review」（真 Chrome 到 Stripe 页核对）
+- 审核通过后发「你的页面已上线」邮件：表单承诺了「We'll email you when your page is live」但从没发过；邮件带页面链接、徽章代码、$49 推荐位链接（提交者自己留的邮箱、事务性邮件，不是外联）；review-submissions --apply 通过时发，记 sent 防重发（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
