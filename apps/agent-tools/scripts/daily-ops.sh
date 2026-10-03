@@ -13,6 +13,7 @@ log="data/ops-logs/$(date +%F).log"
   bun run scripts/funnel-report.ts 7 || fail=1
   echo "== indexnow"
   bun run scripts/indexnow.ts || fail=1
+  python3 scripts/gsc_sitemap.py || fail=1
   echo "== stripe alipay/wechat status (#29)"
   bun run scripts/stripe-pm-status.ts || fail=1
   echo "== brevo health by tag (shared account)"
