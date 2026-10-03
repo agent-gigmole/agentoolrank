@@ -137,6 +137,9 @@ const daily = {
       // "your page is live" emails (send-live-emails.ts) link with ?ref=live-notify
       liveNotifyVisitors: await sess(`name='page_view' AND src LIKE '%live-notify%'`),
       liveNotifyCheckouts: await sess(`name='checkout_click' AND src LIKE '%live-notify%'`),
+      // agents that submitted an already-listed tool (listedReply buy_url ?ref=agent-listed)
+      agentListedVisitors: await sess(`name='page_view' AND src LIKE '%agent-listed%'`),
+      agentListedCheckouts: await sess(`name='checkout_click' AND src LIKE '%agent-listed%'`),
     },
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
   };
