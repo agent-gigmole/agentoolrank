@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { track } from "@/components/Analytics";
 
-/** Maintainers arriving from our outreach email (?ref=outreach) get a pointer to the maintainer box at the top of the page. */
+/** Maintainers arriving from our emails or the submit API (?ref=outreach*, live-notify, agent-listed) get a pointer to the maintainer box at the top of the page. */
 export function MaintainerBanner({ name }: { name: string }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("ref")?.startsWith("outreach")) setShow(true); // outreach, outreach-a, outreach-b
+    if (/^(?:outreach|live-notify|agent-listed)/.test(new URLSearchParams(window.location.search).get("ref") ?? "")) setShow(true); // outreach(-a|-b), live-notify, agent-listed
   }, []);
   if (!show) return null;
   return (
