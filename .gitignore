@@ -60,3 +60,6 @@ yarn-error.log*
 .gstack/
 gsc-service-account.json
 data/
+
+# regenerated hourly by apps/agent-tools/scripts/scoreboard.ts; agentkit reads it locally
+ops/scoreboard.json

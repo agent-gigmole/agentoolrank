@@ -1,0 +1,9 @@
+{
+  "week": "2026-10-05",
+  "source": "docs/ops/weekly/2026-10-05.md",
+  "bets": [
+    { "text": "外联放量：每天 10 → 15（10-08）→ 20 封（10-12），前提 0 退信 0 投诉", "metric": "外联带来的付费单", "target": 1, "due": "2026-10-11", "status": "open" },
+    { "text": "数据文章分发：dev.to /where-to-list（10-03）+ 实测 101 个目录站（10-07）", "metric": "dev.to 来源访客", "target": 50, "due": "2026-10-08", "status": "open" },
+    { "text": "Submit Kit：$29 一次性，0 单则冻结付费部分", "metric": "Submit Kit 陌生人付费单", "target": 3, "due": "2026-10-18", "status": "open" }
+  ]
+}

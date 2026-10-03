@@ -6,4 +6,5 @@ cd "$(dirname "$0")/.."
 export PATH="$HOME/.bun/bin:$PATH"
 unset GITHUB_TOKEN
 bun run scripts/reconcile-payments.ts --days=3 >> "data/ops-logs/reconcile-$(date +%F).log" 2>&1
+bun run scripts/scoreboard.ts >> "data/ops-logs/reconcile-$(date +%F).log" 2>&1  # ops/scoreboard.json for agentkit ranking
 bun run scripts/kpi.ts >> "data/ops-logs/kpi-$(date +%F).log" 2>&1
