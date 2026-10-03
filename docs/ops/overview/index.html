@@ -160,6 +160,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-03 20:02 首页（全站流量最大的页面）在 Trending 下面加了「Most downloaded」一栏：近 30 天 npm + PyPI 下载量前 6 名，依次是 OpenAI Python 2.84 亿、MCP Python SDK 2.19 亿、LangChain 1.69 亿、AI SDK 1.08 亿、LangGraph 4370 万、Playwright MCP 2900 万，点「see all」进入 /downloads。</li>
     <li>2026-10-03 19:52 替代品页（/alternatives/*）的对比表加了「近 30 天下载量」一列，表格上方多了一句结论：谁的下载量最大，是否也是星数最多的。例如 LangChain 替代品页写的是「按下载量 LangChain 用得最多（1.69 亿），星数也最多」，后面链到 /downloads。替代品页是长尾搜索的主力页面之一。</li>
     <li>2026-10-03 19:40 新流水线：dev.to 文章定时发布，挂在每小时任务上。稿件登记在 ops/devto-schedule.json，到点自动发出，发之前必须通过写稿工具的去 AI 味检查；发过的会记下链接，不会重复发。10-07 的数据文章已经用 bin/write 重写，加了「星数衡量关注、下载量衡量使用」一节和 Submit Kit 入口，排在 10-07 21:00（北京时间，美东早上 9 点）自动发布。模拟运行已通过检查，也在 await 登记了「等它发出」。</li>
     <li>2026-10-03 19:32 两两对比页（/compare/*，共 261 个）加了一行「近 30 天下载量（npm + PyPI）」，下载量高的一方标绿。例如 LangChain vs Mastra 是 1.69 亿对 309 万。对比页是长尾搜索的主力页面，这行数据竞品都没有。</li>
