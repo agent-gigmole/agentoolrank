@@ -40,7 +40,11 @@ export function checkoutForm(o: { plan: Plan; submissionId: number; slug: string
   f.set("line_items[0][price_data][unit_amount]", String(p.amount));
   f.set("line_items[0][price_data][product_data][name]", p.name);
   f.set("branding_settings[display_name]", "AgentoolRank"); // brand on the Stripe page, not the shared account name
-  f.set("line_items[0][price_data][product_data][description]", p.description);
+  // submissionId 0 = an already-listed tool (no review), so the featured slot is described without one.
+  const listedFeatured = o.plan === "featured" && o.submissionId === 0;
+  f.set("line_items[0][price_data][product_data][description]", listedFeatured
+    ? "7 days in the Featured section of the AgentoolRank homepage and at the top of your category page."
+    : p.description);
   f.set("payment_intent_data[statement_descriptor_suffix]", "AGENTOOLRANK");
   if (o.email) f.set("customer_email", o.email); // listed-tool upgrades: Stripe asks for the email
   f.set("success_url", `${o.baseUrl}/submit/thanks?session_id={CHECKOUT_SESSION_ID}`);

@@ -29,6 +29,7 @@ describe("checkoutForm", () => {
     expect(f.get("metadata[plan]")).toBe("featured");
     expect(f.get("metadata[src]")).toBe("x/social");
     expect(f.get("customer_email")).toBe("a@b.co");
+    expect(f.get("line_items[0][price_data][product_data][description]")).toMatch(/^Fast-track review/);
   });
   it("returns to a thanks page carrying the session id", () => {
     expect(f.get("success_url")).toBe("https://agentoolrank.com/submit/thanks?session_id={CHECKOUT_SESSION_ID}");
@@ -42,6 +43,11 @@ describe("checkoutForm for an already-listed tool", () => {
     expect(f.has("customer_email")).toBe(false);
     expect(f.get("metadata[slug]")).toBe("dify");
     expect(f.get("metadata[submission_id]")).toBe("0");
+  });
+  it("describes the slot without a review it doesn't need (already listed)", () => {
+    const d = f.get("line_items[0][price_data][product_data][description]") ?? "";
+    expect(d).not.toMatch(/review/i);
+    expect(d).toMatch(/7 days/);
   });
 });
 
