@@ -80,7 +80,8 @@
 - ✅ /submit-kit 加 Product JSON-LD（Free $0 + Full $29，10-04 01:30 上线核对）
 - ✅ /submit 页加 Product JSON-LD（四档 0/9/19/49，10-04 01:50 上线核对）
 - ✅ 对比页补齐：每类目下载量前 6 两两对比进 sitemap（compare URL 712 → 830）并从 /downloads/<类目> 链出（10-04 02:0x 上线核对，sitemap 已重提交 GSC）
-- 详情页 <title> 对月下载 ≥100 万的工具加上下载量（suffix 加「· 169M/mo」，≤70 字符），提高搜索结果点击率；10-16 GSC 复盘时对比 CTR（进行中：3441442 toolTitle(downloads30d) + 测试、generateMetadata 传 totalDownloads 已提交；剩部署 + 线上核对 + 看板）
+- ✅ 详情页 <title> 对月下载 ≥100 万的工具加「· NM/mo」（10-04 02:30 上线：LangChain 169M/mo、Pydantic 813M/mo；10-16 GSC 对比 CTR）
+- 提交表单预填：贴 GitHub 地址自动填工具名、一句话简介、官网（只填空字段，可改）；/api/prefill 服务端调 GitHub 公开 API，限流兜底（进行中：映射函数已提交）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

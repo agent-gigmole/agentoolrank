@@ -1271,3 +1271,9 @@
 - 结果：compare URL 712 → 830，测试 353 全绿；标题加下载量未部署
 - 坑：无新坑
 - 结果：成功（标题加下载量进行中）
+
+## 2026-10-04 02:30 详情页标题加下载量上线 + 提交表单预填开工（3441442 部署、8c5dd14、5802b05）
+- 做法：部署 3441442，线上核对 <title>：LangChain「· 147k★ · 169M/mo」、Pydantic「· 29k★ · 813M/mo」、Dify 未达 1M 不变；看板记一行（8c5dd14）；开工提交表单预填：lib/prefill.ts prefillFromRepo（name / tagline 去 emoji ≤160 / url 无 homepage 回落 repo 页 / github_url）+ 测试（5802b05）
+- 结果：标题加下载量已上线，10-16 GSC 对比 CTR；预填剩 /api/prefill 路由（限流兜底）、SubmitForm 失焦只填空字段、部署核对
+- 坑：无新坑
+- 结果：成功（提交表单预填进行中）
