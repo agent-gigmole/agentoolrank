@@ -1231,3 +1231,8 @@
 - 做法：部署 dee800f，线上核对 /submit-kit 显示「Our own run so far: we submitted agentoolrank.com to 41 of these directories; 7 are live, 4 with a followed link…」（listing_checks 现算，data-testid kit-our-tally），看板记一行；接着在详情页 MaintainerBox 底部加 Submit Kit 链接（/submit-kit?type=ai_tool，data-testid maintainer-kit，ui_click 统计）
 - 结果：实测战绩线上通过；9635973 已提交未部署
 - 结果：成功（维护者区入口进行中）
+
+## 2026-10-04 00:30–00:4x 维护者区 Kit 入口上线 + 外联放量写进代码 + 外联主题 A/B 开工（9635973 部署、6fd3db8、42e3937、3647523）
+- 做法：部署 9635973 并线上核对 maintainer-kit；dailyCap(day, clean) 10→15（10-08）→20（10-12），只有 --require-healthy 通过才放量，否则 10，加测试并部署，dry-run room 正常；MaintainerBanner 文案补类目页；看板记规则；开工主题 A/B：variant + subjectVariant 哈希稳定分组 + 测试（27 通过）
+- 结果：维护者入口与放量规则已上线；A/B 剩 send-outreach 接入 tag/sent.json（3647523 WIP 未部署）
+- 结果：成功（外联主题 A/B 进行中）

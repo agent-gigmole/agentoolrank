@@ -1283,3 +1283,10 @@
 - **详情页维护者区 Submit Kit 入口（进行中，9635973 已提交未部署）**：MaintainerBox 底部加「Listing <工具> on other directories too? The Submit Kit …」链 /submit-kit?type=ai_tool（data-testid maintainer-kit，计入 ui_click）
 - **TASK 队列**：实测战绩 ✅；维护者区入口进行中
 - **下一步**：9635973 部署并线上核对；10-11 重刷第二篇数字；等第二周快照后做 /downloads「上升最快」；07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55
+
+## 2026-10-04 00:30–00:4x 维护者区 Kit 入口上线 + 外联放量写进代码 + 外联主题 A/B 开工（9635973 部署、6fd3db8、42e3937、3647523）
+- **详情页维护者区 Submit Kit 入口已上线**（9635973，00:30 部署）：线上 data-testid maintainer-kit 已核对
+- **押注①外联放量写进代码**（6fd3db8，已部署）：lib/outreach.ts dailyCap(day, clean) — 10，10-08 起 15，10-12 起 20；不干净保持 10；有测试。send-outreach.ts 只有 --require-healthy 健康检查通过才 healthyWeek=true，否则上限 10；今天 dry-run room 正常。MaintainerBanner（?ref=outreach）文案补「and its category page」。看板记外联放量规则（42e3937）
+- **外联主题 A/B（进行中，3647523 WIP 已提交未部署）**：outreachEmail 支持 variant（A 原主题；B「<tool> is #N of M in <category> (data inside)」），subjectVariant(email) 按邮箱哈希稳定分组，测试 27 通过。剩 send-outreach 接入：tags ["outreach","outreach-a|b"]（保留 outreach tag，健康检查照算），sent.json 记 variant；Brevo 按 tag 分看打开率；每组 ≥30 封再下结论
+- **TASK 队列**：维护者 Kit 入口 ✅、外联放量 ✅；新增「外联主题 A/B」（进行中）「10-08 核对放量首日（15 封、Brevo 仍干净）」
+- **下一步**：send-outreach 接 variant + tag + sent.json 并 dry-run 核对；10-08 放量首日核对（未核实）；10-11 重刷第二篇数字；等第二周快照后做 /downloads「上升最快」；07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55

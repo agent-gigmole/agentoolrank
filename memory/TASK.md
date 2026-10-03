@@ -70,7 +70,10 @@
 - ✅ recommend_directories 返回每站 our_listing（我们自己的结果；免费与完整版都带，10-04 00:0x 线上 MCP 调用核对）
 - 10-11 发布前一天：用最新 tool_packages 数字重刷第二篇文章里的下载量（brief 要求发布当天的数），改完再复检
 - ✅ /submit-kit 写出我们自己的实测战绩（10-04 00:10 上线：提交 41、上线 7、可跟随 4，从 listing_checks 现算，每天自动更新）
-- 详情页维护者区加一行「也在别的目录站上架？Submit Kit 告诉你投哪些、哪些别投」链 /submit-kit（data-testid maintainer-kit），维护者正是会去投目录的人 — 进行中：9635973 已提交未部署
+- ✅ 详情页维护者区加 Submit Kit 入口（maintainer-kit，10-04 00:30 上线核对）
+- ✅ 押注①外联放量写进代码：dailyCap 10 → 15（10-08）→ 20（10-12），只在 7 天健康检查干净时放量（6fd3db8）
+- 外联主题 A/B：按邮箱哈希分两组（A 现有「<tool>'s current rank on AgentoolRank」/ B「<tool> is #N in <category> (data inside)」），sent.json 记 variant，Brevo 按 tag 分开看打开率；10-12 前每组 ≥30 封再下结论
+- 10-08 核对放量首日：定时器发了 15 封、Brevo 健康仍干净
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
