@@ -134,7 +134,7 @@
 | 零流量 / 停止堆功能 / 转分发 / 共用个人号错开 Show HN | GOTCHAS.md#zero-traffic-stop-building |
 | SEO 巡检脚本 urllib SSL 超时 / curl 复核 | GOTCHAS.md#seo-audit-script-ssl-timeout |
 | /report 数据报告 / 停更提示 / SEO 巡检 / 对账 / dev.to | LOG.md#2026-10-01 05:00–05:30 |
-| bun 不在 PATH / 非交互 shell / ~/.bun/bin/bun / tsx top-level await cjs 错 | GOTCHAS.md#bun-path-noninteractive-tla |
+| bun 不在 PATH / 非交互 shell / ~/.bun/bin/bun / tsx top-level await cjs 错 / 临时脚本用 .mts | GOTCHAS.md#bun-path-noninteractive-tla |
 | 对比页 / 上架渠道对比 / where-to-list / 竞品事实核对日期 / 自家披露 | GOTCHAS.md#comparison-page-facts-dated |
 | T23 /where-to-list 上线 | LOG.md#2026-10-01 T23 对比内容第一篇 /where-to-list 上线 |
 | 对比页 Short answer / compareVerdict / pricing free≈open-source / star_velocity 取整 / 悬空虚词 / Ecmascript file had an error | GOTCHAS.md#compare-verdict-data-quirks |

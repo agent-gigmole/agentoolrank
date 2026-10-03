@@ -1295,3 +1295,10 @@
 - 结果：真 Chrome（?internal=1）提交 crewAI → 预填 → 结果页 → 点按钮到 checkout.stripe.com，商品「AgentoolRank featured listing (7 days)」；已收录路径不写 submissions 表，线上实测无副作用
 - 坑：Stripe featured 商品描述「Fast-track review plus 7 days…」对已收录工具不准确（GOTCHAS#checkout-listed-tool-featured-only 补一条，未改代码）
 - 结果：成功（/submit 顶部说明进行中）
+
+## 2026-10-04 03:18 提交审核加诈骗模板与冒名拦截（35ba465，已 push）
+- 起因：agentkit 03:15 转 new_ladar「AI 交易/资本平台」诈骗模板站群 + 冒名标题，LLM 判「是不是 AI 工具」会放过
+- 对照：596 已收录 593 来自 GitHub，其余 3 个正常；资本词只命中 3 个真实开源仓库；16 条提交仅 #13 sol-defi-desk 为 IP 主机（sslip.io，待审）
+- 做法：safety.ts scamMatch + holdReasons（IP/sslip/nip/xip 主机、同名不同官网+仓库=疑似冒名）；review-submissions.ts hold → note 'hold: …' 保持 pending；scam 模板 LLM 前后都直接拒（LLM 后查 LLM 简介 + 官网正文前 2000 字）；+5 测试 363 全过，dry run 正常，已 bus 回复 agentkit
+- 坑：npx tsx 跑临时脚本要用 .mts 且放 apps/agent-tools/scripts 下（GOTCHAS#bun-path-noninteractive-tla 补一条）
+- 结果：成功（没做注册日期聚集，提交量个位数）
