@@ -94,7 +94,8 @@
 - ✅ API / MCP 回复带 Submit Kit：已收录回复 submit_kit_url + 说明一句（?ref=agent-listed），排队成功 message_for_human 加网页链接（?ref=agent-queued）（10-04 04:4x 上线，REST 线上核对，自测带 ?src=selftest-kit）
 - ✅ 日报 Submit Kit 漏斗后面加「进页来源：上线通知信 · API 已收录 · API 排队 · 其他」（b2de2c1，kpi 已跑出新行）
 - ✅ Submit Kit 链接按工具类目带 ?type=（上线通知信、API/MCP 已收录回复；10-04 05:0x 上线，线上核对：MCP servers → type=mcp_server，CrewAI → ai_tool）
-- /submit-kit 对带 ref=live-notify / agent-* 来的访客，页顶加一句「刚上线 / 已收录在 AgentoolRank？这些是适合你这类工具的下一批目录站」，把来意接上（进行中）
+- ✅ /submit-kit 对 ref=live-notify / agent-listed / agent-queued 访客页顶加一句接上来意（10-04 05:2x 上线核对：三种 ref 各自文案、无 ref 不显示，canonical 仍为 /submit-kit）
+- Submit Kit 付款可归因：KitBuyButton 现在写死 src=submit-kit-page，改成带上会话来源（utm_src / ?ref=），Stripe metadata 和 payments.src 能看出是哪条入口成交（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
