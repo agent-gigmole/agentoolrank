@@ -123,3 +123,20 @@ export function kitFaq(data: KitData, now: Date): { q: string; a: string }[] {
     },
   ];
 }
+
+/** /submit-kit structured data: the kit as a Product with the free top 10 and the one-time full list as offers. */
+export function kitProductJsonLd(baseUrl: string) {
+  const url = `${baseUrl}/submit-kit`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "AgentoolRank Submit Kit",
+    description: "Which launch directories to submit an AI tool, MCP server, dev tool or SaaS to, and which to skip, ranked from our own submissions.",
+    brand: { "@type": "Brand", name: "AgentoolRank" },
+    url,
+    offers: [
+      { "@type": "Offer", name: "Free top 10", price: "0", priceCurrency: "USD", url },
+      { "@type": "Offer", name: "Full list (30 days of updates)", price: String(KIT_PRICE_USD), priceCurrency: "USD", url, availability: "https://schema.org/InStock" },
+    ],
+  };
+}

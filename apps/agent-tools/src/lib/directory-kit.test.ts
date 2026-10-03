@@ -109,3 +109,13 @@ describe("our_listing in recommendations", () => {
     expect(r.sites[1]?.our_listing ?? null).toBeNull();
   });
 });
+
+describe("kitProductJsonLd", () => {
+  it("is a Product with a free and a paid offer at the real price", async () => {
+    const { kitProductJsonLd, KIT_PRICE_USD } = await import("./directory-kit");
+    const j = kitProductJsonLd("https://agentoolrank.com") as any;
+    expect(j["@type"]).toBe("Product");
+    expect(j.offers.map((o: any) => o.price)).toEqual(["0", String(KIT_PRICE_USD)]);
+    expect(j.offers.every((o: any) => o.priceCurrency === "USD")).toBe(true);
+  });
+});

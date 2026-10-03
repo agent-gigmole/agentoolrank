@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { KIT_PRICE_USD, kitFaq, recommendDirectories, type KitData, type ProductType } from "@/lib/directory-kit";
+import { KIT_PRICE_USD, kitFaq, kitProductJsonLd, recommendDirectories, type KitData, type ProductType } from "@/lib/directory-kit";
 import { FaqSection } from "@/components/FaqSection";
 import { db } from "@repo/db";
 import { ourResultLabel } from "@/lib/listing-check";
@@ -34,6 +34,7 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
     .then((r) => Object.fromEntries(r.rows.map((x) => [String(x.domain), ourResultLabel({ state: "live", rel: x.rel === null ? null : String(x.rel), target: x.target === null ? null : String(x.target) })])), () => ({}));
   return (
     <main className="max-w-2xl mx-auto px-4 py-10 text-gray-800">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(kitProductJsonLd(process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com")) }} />
       <h1 className="text-3xl font-bold text-gray-900 mb-3">Submit Kit: submit to fewer directories, the right ones</h1>
       <p className="mb-4">
         A tool for your own agent. Call <code>recommend_directories</code> on our MCP server with your product type and it returns launch
