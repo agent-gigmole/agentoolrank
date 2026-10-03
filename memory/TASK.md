@@ -9,6 +9,7 @@
 - npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
 - 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
 - 每天查一次已上线目录站的链接 rel，看板"已确认上线"随之更新
+- 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
@@ -220,7 +221,7 @@
 - [x] **第二门语言抽象（共享组件+字典）**（10-02，0fd2ce1）：src/lib/tool-i18n.ts（COPY zh/ja + wan + localToolTitle/localStatus/localToolFaq）+ src/components/LocalizedToolPage.tsx + 薄路由 /zh|/ja/tool/[slug]；hreflang 由 translatedLangs 全互指；sitemap 按语言列表派生；143 测试全绿，/zh/tool/dify 输出不变。原计划条目：i18n 字典 + 语言页登记表 + /[lang]/ 薄路由；hreflang 全互指（含自引用 + x-default）；sitemap 从登记表派生；付款回跳同语言页（白名单）
 - [ ] 译文：模板/界面文案逐条人工核；标语/简介用 LLM + 术语表，前 50 页逐页核，其余抽查 10% 并跑脚本检查（术语、长度、残留英文）；专有名词/数字/日期不译；按 owner-goal #23 加第二模型回译比对（回译与英文原文语义偏差大的条目进人工复核）；审校 prompt 单列「情态方向核对」：逐句列原文/译文的 must / must not / need not / may / should 对照（中文：必须/不得/不必/可以/应当；日语：なければならない/てはいけない/なくてもよい/てもよい/べき），方向不一致即退回（agentkit 10-02，imagehub 意大利语 non devono 事故）
 - [x] **中文读者付款能力已核实（待老板开 Alipay/WeChat）**（10-02）：TENSO LLC 美国账户 card_payments/link active（银联卡走卡通道）；alipay/wechat_pay 在 Default payment_method_configuration 为 off；checkout 用动态支付方式 → 后台开启即可，无需改代码；已报 agentkit 09:30 汇总、看板已记。原要求：核实 Stripe（TENSO LLC 美国账户）能否为大陆用户开通支付宝/微信支付/银联卡，结论写进看板单独跟踪（agentkit 10-02 要求）
-- [ ] **Alipay/WeChat Pay：每日自动检查已上线，available 后做 $9 会话目测**（BOSS #29，10-02）：agentkit 已在 Stripe 后台点启用（acct_1TMYNwH5wuG7WMCf，TENSO LLC，live），状态待审核（数日）；apps/agent-tools/scripts/stripe-pm-status.ts 已挂 daily-ops.sh（21:30），只看 is_default 且 application=null 的自有配置（pmc_1TMYOSH5wuG7WMCfzIzwrkcQ），10-02 结果 alipay=on/pending wechat_pay=on/pending。待办：两项 available=true 后建一个 $9 结账会话，只打开不付款，确认 Alipay 和 WeChat 选项都显示，再回 agentkit（见 GOTCHAS#stripe-pmc-connect-child）
+- [ ] **Alipay/WeChat Pay：每日自动检查已上线，available 后做 $9 会话目测**（BOSS #29，10-02）：**10-03 15:4x：wechat_pay=on/available（已可用），alipay=on/pending；已登记 await 6a511c（7d，两项都 available 即通知，输出含 " error: " 报卡住）**；agentkit 已在 Stripe 后台点启用（acct_1TMYNwH5wuG7WMCf，TENSO LLC，live），状态待审核（数日）；apps/agent-tools/scripts/stripe-pm-status.ts 已挂 daily-ops.sh（21:30），只看 is_default 且 application=null 的自有配置（pmc_1TMYOSH5wuG7WMCfzIzwrkcQ），10-02 结果 alipay=on/pending wechat_pay=on/pending。待办：两项 available=true 后建一个 $9 结账会话，只打开不付款，确认 Alipay 和 WeChat 选项都显示，再回 agentkit（见 GOTCHAS#stripe-pmc-connect-child）
 - [x] 抽象剩余项（本次未涉及，待核）：付款回跳同语言页（白名单）；确认 hreflang 含 x-default（核实：localizedAlternates 已带 x-default，单测覆盖）；回跳：zh/ja 页面的 CTA 指向英文 /submit，结账不经过本地化页面，所以目前没有回跳问题，以后做本地化 /submit 时再加白名单
 - [x] **日语 198/200 上线**（10-02 09:20，原定 10-09 提前约一周）：首轮 approved 168 / failed 32，--retry-failed 再过 15；前 50 逐篇读 level 1，其余 133 抽 14 读 level 2 整批；17 失败中 --override 放行 15（promptfoo 源文确为 "now backed by OpenAI"），退回 2；/ja/tool/langchain、/ja/tool/dify 200，hreflang en/ja/zh/x-default 全互指
 - [x] residualEnglish 加单个常见英文词检测（10-02，84b4918）：src/lib/i18n.ts LEFTOVER_WORDS（the/and/for/with/one…ten/than…）；扫已发布 398 条命中 11，全是正当专有名词（React Three Fiber、Chrome for Testing、Human-in-the-loop）→ 只作人工复核门槛，不硬拦截
@@ -314,7 +315,7 @@
 - [x] 付款后发 key（9c37c17）：fulfillKitSession 按 stripe_session 幂等 + /submit-kit/thanks 只显示一次 + reconcile-payments 关页面时 Brevo 邮件补发；生产库 selftest 假会话端到端验证通过
 - [x] /agents 文档补 recommend_directories（d8ca50d，新增"Choosing other launch directories"一节 + MCP initialize 说明）
 - [x] Smithery 描述更新（10-03 12:41–12:46）：工具数 669→593 + recommend_directories 说明，质量分 69→77；Releases 重新发布 SUCCESS
-- [ ] 明天（10-04）核对 Smithery 公开页：描述 593 + 显示 6 个工具（10-03 13:46 复查仍是旧描述 669，后台已存 593，判断公开页缓存长）
+- [x] 核对 Smithery 公开页（10-03 15:4x 结案）：公开页已显示 593（6 个工具未单独核实）。原：10-03 13:46 复查仍是旧描述 669，后台已存 593，判断公开页缓存长
 - [x] submit-core 的 message_for_human 加 Submit Kit 入口（d8ca50d，末尾一行不带价格，有测试）
 - [ ] 10-18 复盘：≥3 单继续，0 单冻结付费部分
 - [x] new_ladar 意见补充（6091332）：其意见 10-02 23:48 已发，因总线身份问题未收到，经 agentkit 转达补入——不建议清单（普适原因）、三档"自动 / 要人工一步 / 不建议" + 人工步骤清单、链接只标实测值 + "新域名会不会被秒拒"字段、卖点"少投、投对"不承诺 dofollow、跳过记录作初始档案

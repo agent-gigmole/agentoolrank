@@ -845,3 +845,12 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - `$AGENTKIT_ROOT/bin/scoreboard` 每周一 09:25 跨项目排名：利润 → 收入 → 付费单 → 访客；**连续两周零收入且访客不涨 → 标「转向复盘」**
 - 收入口径：Turso payments 排除 selftest，减 Stripe 退款（checkout/sessions/{id}?expand[]=payment_intent.latest_charge 的 amount_refunded；未核实：只确认能读 session 且 expand 不报错——测试 session 的 payment_intent 为空，首笔真实付款时再核对 amount_refunded），全额退款单不计单数；支出 = spend-ledger 明细现金行，跳过「既有余额|Sub2API」
 - **周一复盘别忘更新 ops/bets.json**（新一周押注 + 上周 status），否则记分牌 bets 一直是旧的
+
+## await-watchdog
+- 10-03 15:35 老板规则（经 agentkit 15:37）：**开始等任何外部结果时先登记，不干等**。`$AGENTKIT_ROOT/bin/await add --project ai-directory --what "…" --deadline 30m|2h|7d --done "<完成时退出码 0 的命令>" [--stuck "<卡住时退出码 0 的命令>"]`；`await list` 查看、`await rm <id>` 撤销；数据在 ~/.config/agentkit/await.json
+- 定时器每 15 分钟 `await check --send`：done 命中通知项目「接着干」；超时或 stuck 命中通知项目 + agentkit；另扫 systemd --user failed 单元，按前缀点名（agentoolrank- → ai-directory）
+- **坑 1：命令在项目根目录（/home/qmt/workspace/ai-directory）用 bash -c 跑，限时 60 秒**；apps/agent-tools 下的脚本要先 `cd apps/agent-tools && …`；超时按退出码非 0 处理（等于"未完成"，不会报警）→ 慢命令要保证 60 秒内跑完
+- **坑 2：登记后必须马上手动跑一遍 done/stuck 命令看退出码**（当前应为 1/1），否则命令写错会永远"未完成"直到超时才发现
+- 写法：用 grep -q 判断脚本输出，例如 done = `cd apps/agent-tools && npx tsx scripts/stripe-pm-status.ts | grep -q "alipay=.*/available" && …grep -q "wechat_pay=.*/available"`；stuck = 输出含 `" error: "`；看门狗类用 `--done false`，stuck 判断时间戳超阈值（如 scoreboard.json updated_at 超 3 小时）
+- 命令里不要打印密钥（输出不显示，但别 echo key）
+- 已登记：6a511c Stripe 支付宝/微信支付开通（7d）；5e891f scoreboard.json 每小时刷新（30d 看门狗）；待登记：每晚 22:00 外联发出后等回信

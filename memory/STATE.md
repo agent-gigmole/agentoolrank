@@ -868,3 +868,15 @@
 - **当前数**：收入 $0、0 单、支出 $0、访客 72；rule-check 全部通过；agentkit bin/scoreboard 读取正常；已 bus-send 回复
 - 规则详见 KNOWLEDGE/GOTCHAS.md#rule-check-five-rules（scoreboard 检查 + 排名规则）
 - **下一步**：按队列推进；10-05 周一复盘时更新 ops/bets.json（新一周押注 + 上周 status）并定稿周报
+
+## 2026-10-03 15:37– 接入 await 看门狗 + 微信支付已可用 + Smithery 结案（看板 179bb08，已推送）
+- 老板 15:35（经 agentkit 15:37 转达）：等外部结果先用 `$AGENTKIT_ROOT/bin/await add --project ai-directory --what … --deadline … --done "…" [--stuck "…"]` 登记，不干等；定时器每 15 分钟 check：done 命中通知「接着干」，超时/stuck 命中通知项目 + agentkit；systemd failed 单元按前缀点名（agentoolrank- → ai-directory）
+- **已登记 2 条**（`await list` 可查）：
+  - 6a511c「Stripe 支付宝/微信支付开通」deadline 7d：done = stripe-pm-status.ts 输出同时含 alipay=…/available 和 wechat_pay=…/available；stuck = 输出含 " error: "
+  - 5e891f「scoreboard.json 每小时刷新」30d 看门狗：done=false（永不完成）；stuck = updated_at 超过 3 小时
+  - 登记后自测两条命令当前退出码都是 1（未完成、未卡住，符合预期）
+- **Stripe 实测（15:4x）**：wechat_pay=on/available（新开通），alipay=on/pending → $9 会话目测要等支付宝也 available（await 6a511c 会通知）
+- **Smithery 公开页** https://smithery.ai/servers/admin-avz6/agentoolrank 已显示 593 → 结案（是否显示 6 个工具未单独核实）
+- 规则写入 Claude 自动记忆 await-before-waiting.md（项目 CLAUDE.md 有用户未提交改动，未动）；已 bus-send 回复 agentkit
+- 用法与坑：KNOWLEDGE/GOTCHAS.md#await-watchdog
+- **下一步**：今晚 22:00 外联第二批发出后登记 await 等回信；支付宝 available 后开 $9 会话目测

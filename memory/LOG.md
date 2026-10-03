@@ -970,3 +970,10 @@
 - 结果：233 测试通过；收入 $0 / 0 单 / 支出 $0 / 访客 72；rule-check 全过；agentkit bin/scoreboard 读取正常
 - 坑：rule-check 新增 scoreboard 检查（文件存在、7 字段齐、updated_at 26h 内）；周一 09:25 排名规则；周一复盘要更新 ops/bets.json → GOTCHAS#rule-check-five-rules
 - 结果：成功
+
+
+## 2026-10-03 15:37– 接入 await 看门狗，微信支付已可用（看板 179bb08）
+- 做法：响应 agentkit 15:37 转达老板 15:35「等外部结果要用代码登记」→ await add 登记 6a511c（Stripe 支付宝/微信支付开通，7d，done=两项 available，stuck=输出含 " error: "）和 5e891f（scoreboard.json 每小时刷新，30d 看门狗，done=false，stuck=updated_at 超 3 小时）；登记后自测两条命令退出码均为 1；复查 Smithery 公开页；规则写入自动记忆 await-before-waiting.md；看板加日志并推送 179bb08；bus-send 回复 agentkit
+- 结果：wechat_pay=on/available（新开通），alipay=on/pending；Smithery 公开页已显示 593，结案
+- 坑：await 命令在仓库根目录 bash -c 跑、限时 60 秒，apps/agent-tools 下的脚本要先 cd；登记后必须先手动跑 done/stuck 看退出码 → GOTCHAS#await-watchdog
+- 结果：成功

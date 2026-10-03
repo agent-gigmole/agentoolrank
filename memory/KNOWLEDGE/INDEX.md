@@ -270,3 +270,5 @@
 | rule-check 五条 / 下一步队列 ≥5 未完成 / 周报固定路径 docs/ops/weekly/<周一>.md 周一 12:00 / 看板或 STATE 24h / spend-ledger / 停滞 30 分钟复盘 / 队列行含「已完成」被算完成 | GOTCHAS.md#rule-check-five-rules |
 | 机器可读记分牌 / ops/scoreboard.json 7 字段 26h / ops/bets.json 周一更新 / bin/scoreboard 周一 09:25 排名 利润→收入→单→访客 / 两周零收入转向复盘 / 130f147 | GOTCHAS.md#rule-check-five-rules |
 | rule-check 补齐 / TASK 下一步队列 6 件 / W41-draft → 2026-10-05.md / b478a58 | LOG.md#2026-10-03 15:11– rule-check 补齐 |
+| await 看门狗 / 等外部结果先登记 / await add --done --stuck --deadline / 每 15 分钟 check / systemd failed 前缀点名 / 仓库根 bash -c 60 秒先 cd / 登记后自测退出码 / 6a511c 5e891f | GOTCHAS.md#await-watchdog |
+| 微信支付 available 支付宝 pending（10-03 15:4x）/ Smithery 公开页 593 结案 | LOG.md#2026-10-03 15:37– 接入 await 看门狗 |
