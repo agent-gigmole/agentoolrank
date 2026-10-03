@@ -94,3 +94,31 @@ export function recommendDirectories(
     ],
   };
 }
+
+/** FAQ for /submit-kit (FAQPage JSON-LD). Every number comes from the dataset; no traffic or ranking claims. */
+export function kitFaq(data: KitData, now: Date): { q: string; a: string }[] {
+  const count = (t: ProductType) => recommendDirectories(data, { productType: t, full: true, now }).matching_sites;
+  const auto = data.sites.filter((s) => tierOf(s) === "auto").length;
+  return [
+    {
+      q: "Which directories should I submit an AI tool to?",
+      a: `Start with the ones that fit your product and have a free option without a badge or backlink condition. Of the ${data.sites.length} directories in the Submit Kit, ${count("ai_tool")} fit an AI tool; the top 10 are free on this page and over MCP.`,
+    },
+    {
+      q: "Where should I list an MCP server?",
+      a: `${count("mcp_server")} directories fit an MCP server in our data. Pick "MCP server" above to see the free top 10 with each site's conditions and the steps only a person can do.`,
+    },
+    {
+      q: "Can an AI agent submit to these directories for me?",
+      a: `${auto} of the ${data.sites.length} sites are marked auto: in our runs an agent could finish them alone. The rest need one human step such as an inbox link or a captcha, and the kit lists those steps so you can do them in one sitting. It never solves captchas.`,
+    },
+    {
+      q: "Which directories should I skip?",
+      a: `The full kit has a don't-submit list of ${data.avoid.length} sites with the reason for each: paid only, a badge or backlink required, voting for others, broken forms, or new domains rejected automatically.`,
+    },
+    {
+      q: "Does listing in these directories bring traffic or better rankings?",
+      a: "We don't promise either. The kit saves time and avoids dead ends; the link type shown for each site is what we measured on a live listing, and unknown means we didn't check.",
+    },
+  ];
+}

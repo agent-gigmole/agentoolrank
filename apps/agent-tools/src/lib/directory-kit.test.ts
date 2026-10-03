@@ -88,3 +88,15 @@ describe("shipped data", () => {
     expect((realData as KitData).avoid.length).toBeGreaterThan(10);
   });
 });
+
+describe("kitFaq (Submit Kit page FAQ, numbers from the dataset)", () => {
+  it("states counts taken from the data, not typed", async () => {
+    const { kitFaq } = await import("./directory-kit");
+    const faq = kitFaq(data, now);
+    const all = faq.map((f) => f.q + " " + f.a).join(" ");
+    expect(all).toContain(`${data.sites.length} directories`);
+    expect(all).toContain(`${data.avoid.length}`);
+    expect(faq.find((f) => /MCP server/.test(f.q))?.a).toMatch(/\d+ directories fit an MCP server/);
+    expect(all).not.toMatch(/guarantee|traffic boost|DR \d/i);
+  });
+});

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { KIT_PRICE_USD, recommendDirectories, type KitData, type ProductType } from "@/lib/directory-kit";
+import { KIT_PRICE_USD, kitFaq, recommendDirectories, type KitData, type ProductType } from "@/lib/directory-kit";
+import { FaqSection } from "@/components/FaqSection";
 import kitData from "@/lib/directory-kit-data.json";
 import { KitBuyButton } from "@/components/KitBuyButton";
 
 export const metadata: Metadata = {
-  title: "Submit Kit: which launch directories to submit to, and which to skip",
-  description: `For your agent: recommend_directories returns launch directories we actually submitted to, tagged auto or manual, with free-tier conditions, measured link type, form tips and the steps only a person can do. Free top 10; full list $${KIT_PRICE_USD} one-time.`,
+  title: "Best Directories to Submit an AI Tool or MCP Server (Tested) — Submit Kit",
+  description: `Which directories to submit an AI tool, MCP server, dev tool or SaaS to, and which to skip. Ranked from our own submissions: free-tier conditions, measured link type, form tips, human-only steps. Free top 10; full list $${KIT_PRICE_USD} one-time.`,
   alternates: { canonical: "/submit-kit" },
 };
 
@@ -72,6 +73,7 @@ recommend_directories({ "product_type": "ai_tool" })   // ai_tool | mcp_server |
         The free comparison table is at <Link href="/where-to-list" className="underline">/where-to-list</Link>. Facts come from our own
         submissions and carry a last-verified date; entries older than 30 days are marked stale. Questions: hello@agentoolrank.com.
       </p>
+      <FaqSection faq={kitFaq(kitData as KitData, new Date())} />
     </main>
   );
 }
