@@ -62,9 +62,10 @@
 - ✅ $49 推荐位加量：推荐中的工具同时出现在首页和它所在类目页顶部（标 Sponsored），维护者区、/downloads、替代品页、Stripe 商品说明的文案都改成「首页 + 类目页」（10-03 22:5x 上线，checkout-smoke 重跑通过）
 - ✅ 提交排队页付费选项写出免费排队大约几天（「Don't want to wait about N days?」）、Featured 档补类目页（9a2e10f，10-03 23:00 部署，线上 JS 包核对）
 - dev.to 第二篇《Stars measure attention, downloads measure use》：用 /downloads 和「每星下载」榜的数字写 brief → bin/write → 排进 devto-schedule 10-12，文末链 /downloads 和 /api-key
-- /where-to-list 加「我们自己的结果」一列（进行中，10-03 23:xx 开工，未提交未部署）：每个站我们提交后有没有上线、链接类型（check-listings 实测），每天自动更新，独家数据。已写 listing_checks 表 + ourResultLabel + 测试、check-listings 每天写表、TestedDirectoryTable ours 列、页首说明；剩：后台重跑 check-listings 填满表 → 提交 → 部署 → 线上核对
+- ✅ /where-to-list 加「Our result」列（listing_checks 表，check-listings 每天写；10-03 23:3x 上线：4 个 Live · followed、2 个 nofollow、1 个只链 GitHub，其余 Submitted）
 - 代 new_ladar 改 Smithery（admin-pw59/new-site-radar）：Settings 描述与 apiKey 连接参数描述均已保存并重新发布 SUCCESS；registry 接口仍返回旧描述（缓存），new_ladar 已登记 24h 回查
 - 每周一把 /downloads 前 10 变化（新进、上升最快）写成 X 周榜的第二条素材，脚本生成，人不手填
+- 下载量快照（进行中，8876270 WIP）：fetch-downloads 每周写一行历史（tool_packages_history：tool_id, registry, week=当周周一, downloads_30d），首个快照 week 2026-09-28 共 248 行已写；有两周数据后 /downloads 显示「本周上升最快」并供 X 周榜第二条用
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
@@ -534,6 +535,7 @@
 - [x] X 旧号（2026-10-01）
 - [x] Peerlist 真名 Ethan Tan（2026-10-01）
 - [ ] X 首帖确认
+- [ ] OpenRouter key 用量差额：该 key 累计 usage $6.08（limit $1），我们 10-01 起只记 $0.53，其余 $5.55 来源待老板确认（docs/ops/spend-ledger.md「说明」已注，44176cb；agentkit 写进老板 10-04 汇总）
 - [ ] 确认域名实付和早期 LLM 账单（实盘口径，operator-lab 10-03 16:47）：Cloudflare 账单看 agentoolrank.com 实付（现记约 $10.46/年，选域名时报价，未对账，2027-03 续费）；2026-03 DeepSeek 官方 API 等早期 LLM 费用（日志未记）
 
 ## 备忘（不进下一步队列）

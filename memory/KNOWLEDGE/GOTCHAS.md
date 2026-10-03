@@ -943,6 +943,7 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 做法：只用 `curl -s URL | grep -o '短匹配.\{0,80\}' | head` 抽取需要的片段（如 `grep -o 'Package downloads[^<]\{0,120\}'`），绝不整页输出
 - 另：详情页 revalidate 24h，新字段上线后别的工具页要等缓存过期才出现，核对时挑刚部署后首次渲染的页面或带新数据的页面
 - **新数据源先填表再部署**（10-03 /where-to-list「Our result」列，listing_checks 表）：页面 revalidate 长（24h）时，部署前必须先把新表跑满数据；否则首次渲染把空列缓存住，一整天都显示空
+- **计数要除以 2**（10-03 Our result 列核对）：`curl | grep -o 关键词 | wc -l` 数线上某标签出现几次，同一文本在 HTML 和 RSC 负载里各出现一次，结果翻倍；数完除以 2，或只数 HTML 部分（如匹配带标签的 `>Live · followed link<`）
 - 来源：2026-10-03 详情页下载量核对（df555e8）
 
 ## repo-ui-breadcrumbs-and-ranking-raw-numbers
@@ -1049,3 +1050,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 原因：自托管应用/平台主要经 Docker 镜像、安装器、桌面包分发，npm/PyPI 下载只覆盖一小部分；库/SDK（Pydantic、OpenAI Python、MCP SDK）才是被依赖树反复拉取的，下载会偏高
 - 做法：比较「星 vs 下载」时先按类型分（库/SDK vs 应用/平台），应用类在文中注明「包下载低估实际使用」，不要下「炒作」「虚星」结论
 - 来源：2026-10-03 dev.to 第二篇 brief（docs/ops/launch-kit/briefs/devto-stars-vs-downloads.md）
+
+## openrouter-provisioning-key
+- 现象：想给别的项目（word-factory）在我们的 OpenRouter 账户下建有限额子 key，POST /api/v1/keys 返回 401
+- 原因：只有 provisioning key 能管理（建/删/列）key；普通推理 key 不行。`GET /api/v1/auth/key` 返回 is_provisioning_key=false 即可确认
+- 做法：先查 /api/v1/auth/key 判断；不是 provisioning key 就不能自建子 key，新建 provisioning key 属改凭证，报老板。同一接口还能看该 key 累计 usage 与 limit，用来和自己账本对账（10-03 发现累计 $6.08，我们只记 $0.53）
+- 注意：/api/v1/auth/key 输出的 label 带 key 掩码前后缀，别贴进看板、汇报、对外文本
+- 来源：2026-10-03 word-factory 子 key 请求

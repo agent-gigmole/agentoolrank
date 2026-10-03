@@ -323,3 +323,6 @@
 | 下载量 --missing 76/76 补齐 / Pydantic 812.6M 第一 映射核实 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
 | 星 vs 下载 每星下载 n8n Langflow 高星低下载 Docker 安装器分发 包下载低估 不能读成炒作 | GOTCHAS.md#stars-vs-downloads-distribution-bias |
 | dev.to 第二篇 Stars measure attention downloads measure use brief / 230 工具有包 / 每星下载 Pydantic ~28,000 / 10-12 排期 / bc458d6 | STATE.md#2026-10-03 23:00–23:xx 排队页付费选项文案上线 |
+| curl 计数翻倍 HTML + RSC 各一次 除以 2 / Our result 列 listing_checks 41 站 7 有链接 4 followed 2 nofollow 1 GitHub / 8069724 | GOTCHAS.md#curl-next-rsc-output |
+| OpenRouter provisioning key / 子 key 401 / is_provisioning_key / /api/v1/auth/key usage 对账 $6.08 vs $0.53 / label 带掩码别外贴 / word-factory 方案 B | GOTCHAS.md#openrouter-provisioning-key |
+| 下载量周快照 tool_packages_history week=周一 downloads_30d / 首快照 2026-09-28 248 行 / 上升最快 X 周榜 / 8876270 | STATE.md#2026-10-03 23:3x–23:xx Our result 列上线 + OpenRouter 子 key 不可建 + 下载量周快照开工 |

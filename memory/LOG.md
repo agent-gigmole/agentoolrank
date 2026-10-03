@@ -1209,3 +1209,9 @@
 - 结果：Smithery 后台已保存、发布成功；registry 接口仍旧描述（缓存，未核实何时刷新，new_ladar 登记 24h 回查）；Our result 列测试 342 通过，未提交未部署，后台重跑 check-listings 填表中
 - 坑：Smithery 连接参数描述不在 Settings，要走 Publish via URL 的参数步骤重新发布 → GOTCHAS#directory-form-pitfalls；页面 revalidate 长时新数据源要先填好再部署 → GOTCHAS#curl-next-rsc-output
 - 结果：部分完成（Our result 列进行中）
+
+## 2026-10-03 23:3x–23:xx Our result 列上线 + OpenRouter 子 key + 下载量周快照（8069724、8c473e3、44176cb、8876270）
+- 做法：check-listings 跑满 listing_checks（41 站、7 个有链接）后部署 Our result 列，线上核对，看板记一行；查 OpenRouter key 发现非 provisioning key，子 key 建不了，回 agentkit 走方案 B；核对 key 累计用量，在 spend-ledger 说明里注明 $5.55 来源待老板确认；fetch-downloads 加每周 tool_packages_history 快照并写首个快照
+- 结果：线上 4 followed / 2 nofollow / 1 只链 GitHub / 其余 Submitted；首个快照 week 2026-09-28 共 248 行；$5.55 进「等待用户」；Smithery 回查由 new_ladar 24h 后做（未核实）
+- 坑：curl 线上 Next 页面计数会因 HTML 与 RSC 负载各出现一次而翻倍 → GOTCHAS#curl-next-rsc-output；OpenRouter 普通 key 不能建子 key，/api/v1/auth/key 看 is_provisioning_key，输出 label 带 key 掩码不能外贴 → GOTCHAS#openrouter-provisioning-key
+- 结果：成功（下载量周快照进行中）

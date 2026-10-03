@@ -1255,3 +1255,11 @@
 - **代 new_ladar 改 Smithery**（admin-pw59/new-site-radar）：①Settings 描述末句改为「Listing tools is free; tool calls need an API key (x-api-key header): a free key from newsiteradar.com/mcp (20 calls a day) or a Pro key.」，Save Settings 后刷新核对已保存；②apiKey 连接参数描述走 Releases → Publish → Publish via URL → Continue → `textarea[name="parameters.0.description"]` 改为「Free key (newsiteradar.com/mcp, 20 calls/day) or Pro key, nsr_…. Needed for tool calls.」→ Continue → SUCCESS。registry.smithery.ai 仍返回旧描述（缓存，刷新时长未核实），new_ladar 已用 await 登记 24h 回查
 - **/where-to-list「Our result (agentoolrank.com)」列（进行中，未提交未部署）**：lib/listing-check.ts 加 CREATE_LISTING_CHECKS（Turso 表 listing_checks：domain、state live|submitted、url、rel、target、checked）+ ourResultLabel（Live · followed link / Live · nofollow / Live · links our GitHub / Submitted, not live yet）+ 测试；check-listings.ts 每天写表；TestedDirectoryTable 加 ours 列；页面服务端读表；页首加一句说明。测试 342 通过。后台正在重跑 check-listings 填表，填完再提交部署（页面 revalidate 24h，必须先有数据）
 - **下一步**：等 check-listings 填满 → 提交 → 部署 → 线上核对 ours 列；明早 07:40 checkout-smoke 首跑（未核实）；10-05 公众号稿定稿；dev.to 第二篇出稿排 10-12
+
+## 2026-10-03 23:3x–23:xx Our result 列上线 + OpenRouter 子 key 不可建 + 下载量周快照开工（8069724、8c473e3、44176cb、8876270）
+- **/where-to-list「Our result (agentoolrank.com)」列已上线**（8069724，已部署；看板 8c473e3）：先跑完 check-listings 填满 listing_checks（41 站，7 个找到链接）再部署。线上：4 个 Live · followed link、2 个 Live · nofollow、1 个 Live · links our GitHub，其余 Submitted, not live yet。check-listings 每天自动写表；页面 revalidate 24h
+- **word-factory OpenRouter 子 key**：我们的 key 不是 provisioning key（/api/v1/auth/key 显示 is_provisioning_key=false，/api/v1/keys 401），无法建子 key；已回 agentkit 走方案 B（新建 provisioning key 属改凭证，归老板）
+- **OpenRouter 用量差额**：该 key 累计 usage $6.08（limit $1），我们 10-01 后只记 $0.53；docs/ops/spend-ledger.md「说明」加一行：其余 $5.55 来源待老板确认（44176cb），agentkit 写进老板 10-04 汇总。已列入 TASK「等待用户」
+- **Smithery 代改**：new_ladar 已登记 24h 回查 registry 描述（结果未核实）
+- **下载量周快照（进行中，8876270 WIP）**：fetch-downloads 每周写 tool_packages_history（tool_id, registry, week=当周周一, downloads_30d），首个快照 week 2026-09-28 共 248 行。两周后 /downloads 做「上升最快」，并供 X 周榜第二条素材
+- **下一步**：等第二周快照（10-05 那周）后做 /downloads「上升最快」；dev.to 第二篇出稿排 10-12；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总里确认 $5.55
