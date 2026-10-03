@@ -936,3 +936,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - pyproject 名在 `[project]` 或 `[tool.poetry]`；setup.py 只认 name= 字面量，变量/函数调用不猜
 - 下载量：npm 用 api.npmjs.org/downloads/point/last-month，PyPI 用 pypistats.org/api/packages/<pkg>/recent 的 last_month；pypistats 限速严，2 秒一次，npm 0.4 秒一次
 - conduid.com 只链 GitHub 仓库（agent-gigmole/agentoolrank，rel=noopener）不链官网：listing-check findBacklink 的 target=github 也算上线，但要在 dirsub 文案里注明「只链仓库」，不能和链官网的混算外链价值
+
+## curl-next-rsc-output
+- 现象：`curl https://agentoolrank.com/tool/xxx` 核对线上内容时，Next.js App Router 页面在 HTML 里内联了巨量 RSC 负载（self.__next_f.push），整页输出会刷屏、浪费上下文
+- 做法：只用 `curl -s URL | grep -o '短匹配.\{0,80\}' | head` 抽取需要的片段（如 `grep -o 'Package downloads[^<]\{0,120\}'`），绝不整页输出
+- 另：详情页 revalidate 24h，新字段上线后别的工具页要等缓存过期才出现，核对时挑刚部署后首次渲染的页面或带新数据的页面
+- 来源：2026-10-03 详情页下载量核对（df555e8）

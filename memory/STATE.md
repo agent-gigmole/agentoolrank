@@ -1037,3 +1037,15 @@
 - TASK 队列「npm/PyPI 下载量」改为：数据层已完成，剩详情页展示 + 数据文章用
 - 坑：KNOWLEDGE/GOTCHAS.md#package-downloads-name-matching
 - **下一步**：核实全量首跑结果（覆盖多少工具）；详情页展示下载量；22:00 后确认外联 10 封送达（未核实）；10-07 dev.to 数据文章
+
+## 2026-10-03 19:06– 省电模式插曲 + goal.txt + 详情页下载量（5ca2889、df555e8、40732e4，已部署）
+- **省电模式**：19:06 agentkit 省电（Claude 用量 95%）→ 停 loop、不派子 agent；19:09 老板重置用量，恢复正常
+- **/goal 由 agentkit goal-keeper 维护**：每 30 分钟检查，/goal 掉了就从 docs/ops/goal.txt 第一行自动重设。goal.txt（5ca2889，已推送）第一行是完整单行 /goal（陌生人付款并周环比放大；每回合三条可检查条件；硬指标；流程即代码；护栏）——改目标就改这一行
+- **详情页显示下载量**（df555e8，已部署）：
+  - packages/db/src/queries.ts `getToolPackages(toolId)`：tool_packages 表不存在时返回 []
+  - src/lib/downloads.ts `downloadsLine`：PyPI/npm 标签、紧凑数（169.4M / 12.5K）、链到 pypi.org/project 与 npmjs.com/package，null 不显示 + 测试（共 306 通过）
+  - /tool/[slug] 指标卡下方：「Package downloads, last 30 days: PyPI langchain 169.4M · counts from npm and pypistats, updated weekly」；线上 /tool/langchain 已核对；页面 revalidate 24h（其他工具要等缓存过期后才出现）
+- 全量 fetch-downloads 仍在后台（日志 /tmp/claude-1000/downloads-run.log，19:10 时已找到 110+ 个包；最终覆盖数未核实）
+- TASK 队列「npm/PyPI 下载量」：详情页已上线，剩数据文章用、可选作排名信号；看板已更新（40732e4）
+- 坑：KNOWLEDGE/GOTCHAS.md#curl-next-rsc-output
+- **下一步**：核实全量首跑覆盖数；22:00 后确认外联 10 封送达（未核实）；每天看按钮漏斗；10-07 dev.to 数据文章（可用下载量数据）

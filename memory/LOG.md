@@ -1059,3 +1059,9 @@
 - 结果：conduid 页面在，只链 GitHub 仓库 rel=noopener、不链官网；测试 305 通过；抽查 langchain/langchainjs/crewai/mastra 数字正确；593 工具全量首跑后台进行中，结果未核实
 - 坑：monorepo 根 manifest 名常是 xxx-workspace 或 private，要用候选名；同名包多，必须校验 repository/project_urls 回链同一仓库 → GOTCHAS#package-downloads-name-matching
 - 结果：成功（全量首跑未核实）
+
+## 2026-10-03 19:06– 省电插曲 + goal.txt + 详情页下载量（5ca2889、df555e8、40732e4）
+- 做法：19:06 agentkit 省电（用量 95%）停 loop，19:09 老板重置后恢复；写 docs/ops/goal.txt 第一行单行 /goal 供 goal-keeper 每 30 分钟自动重设；getToolPackages（无表返回 []）+ downloadsLine（紧凑数、registry 链接、null 不显示）+ 测试，/tool/[slug] 指标卡下方显示 30 天下载量；部署，看板与 TASK 队列更新
+- 结果：306 测试通过；线上 /tool/langchain 显示「PyPI langchain 169.4M」已核对；全量 fetch-downloads 后台仍在跑（19:10 已 110+ 包），最终结果未核实
+- 坑：curl 线上 Next 页面会吐巨量 RSC 负载，核对用 grep -o 短匹配 → GOTCHAS#curl-next-rsc-output
+- 结果：成功（全量首跑未核实）
