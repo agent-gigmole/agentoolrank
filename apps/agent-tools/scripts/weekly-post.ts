@@ -4,7 +4,7 @@
  * Usage: bun run scripts/weekly-post.ts [--post]   (without --post: print only)
  *        bun run scripts/weekly-post.ts --post --if-pending   (hourly: retry a post the gate deferred)
  * Every main post on the owner's account first passes a copy check (src/lib/post-copy.ts: no "written by AI" / "auto-posted"),
- * then agentkit bin/post-gate (≥3h since the account's last main post);
+ * then agentkit bin/post-gate --channel x-main (rules in shared/channels.json) and is logged with bin/post-log;
  * exit 3 = too soon → a pending marker is left and the hourly run retries; exit 2 = unknown → don't post.
  */
 import { config } from "dotenv";
@@ -30,7 +30,8 @@ function gatedPost(file: string): boolean {
     process.exitCode = 4;
     return false;
   }
-  const g = spawnSync(`${home}/project/agentkit/bin/post-gate`, ["--platform", "x", "--who", "ai-directory"], { encoding: "utf8" });
+  // Channel rules live in agentkit shared/channels.json (x-main: spacing, fixed slots); the post links to our site.
+  const g = spawnSync(`${home}/project/agentkit/bin/post-gate`, ["--channel", "x-main", "--who", "ai-directory", "--has-link"], { encoding: "utf8" });
   if (g.status !== 0) {
     writeFileSync(PENDING, file);
     console.log(`post-gate ${g.status}: not posting now (${(g.stdout + g.stderr).trim()}); pending ${file}`);
@@ -38,7 +39,13 @@ function gatedPost(file: string): boolean {
   }
   const r = spawnSync(`${home}/workspace/twitter-intel/.venv/bin/python`, [`${home}/.claude/skills/x-post/post_tweet.py`, "-f", file], { encoding: "utf8" });
   console.log(r.stdout, r.stderr);
-  if (r.status === 0) rmSync(PENDING, { force: true });
+  if (r.status === 0) {
+    rmSync(PENDING, { force: true });
+    // Log it so post-gate sees this post without relying on the platform API (~/data/distribution/posts.jsonl).
+    const url = /posted[^:]*: (https:\/\/x\.com\/\S+)/.exec(r.stdout)?.[1] ?? "unknown";
+    const l = spawnSync(`${home}/project/agentkit/bin/post-log`, ["--channel", "x-main", "--who", "ai-directory", "--url", url, "--link", "--kind", "main"], { encoding: "utf8" });
+    console.log(`post-log ${l.status}: ${url}`);
+  }
   return r.status === 0;
 }
 
