@@ -1,6 +1,6 @@
 import { db } from "@repo/db";
 import { recordCall } from "@/lib/api-usage";
-import { NextRequest } from "next/server";
+import { NextRequest, after } from "next/server";
 import { getToolBySlug, searchTools } from "@repo/db/queries";
 import { toPublicTool } from "@/lib/public-api";
 import { handleMcp, type McpDeps } from "@/lib/mcp";
@@ -57,7 +57,9 @@ export async function POST(req: NextRequest) {
         const t0 = Date.now();
         const r = await handleMcp(m, d);
         const args = (m.params?.arguments ?? {}) as Record<string, unknown>;
-        void recordCall((q) => db.execute(q), {
+        // after(): the insert runs once the response is sent, and the platform keeps the function alive for it
+        // (a bare un-awaited promise can be dropped on Vercel — 10-03 a keyed call was lost that way).
+        const call = {
           surface: "mcp",
           tool: String(m.params?.name ?? ""),
           ok: !!r && !("error" in r && r.error) && !(r as { result?: { isError?: boolean } }).result?.isError,
@@ -65,7 +67,8 @@ export async function POST(req: NextRequest) {
           key: (typeof args.key === "string" && args.key) || headerKey || undefined,
           ua,
           src: typeof args.src === "string" ? args.src : "",
-        });
+        } as const;
+        after(() => recordCall((q) => db.execute(q), call));
         return r;
       }),
     )
