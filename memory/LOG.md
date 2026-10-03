@@ -1137,3 +1137,9 @@
 - 结果：线上 ai_tool 前 3 directree.io / pavelzanek.com / agenstry.com，mcp_server 24 个对口（agenstry / glama / mcpmarket）；测试 323 通过；补货结果未核实
 - 坑：outreach-list.ts 整份覆盖 candidates.json → 先备份；sent.json 去重保证不重发 → GOTCHAS#outreach-list-overwrites-candidates
 - 结果：成功（补货进行中）
+
+## 2026-10-03 21:3x–21:5x 外联补货完成 + MX DoH 复核 + 一轮去重 + 夜间自动补货（544831f、97f19d0、4bbf302、d2fae26）
+- 做法：outreach-list.ts --per-category=12 补货（56 人、未发 47，已备份）；22:00 前 dry-run 审批次，发现 WSL 本地 DNS 对 cherry-ai.com resolveMx 返回空 []、DoH 却有飞书 MX → 本地判 none 时加 Google DoH 复核（dohMxVerdict，DoH 失败本轮跳过不退订）；hello@lobehub.com 对两个工具 → uniqueByEmail 一轮去重；outreach-ops.sh 发信前未发 <20 自动备份+补货（per-category 每次 +4，日志 data/ops-logs/）；看板记一行；通知 agentkit
+- 结果：测试 325 通过；dry-run 10 封正常；agentkit 已登记推广 mx-doh 并通知 imagehub、new_ladar；22:00 实发未核实；自动补货实际触发未核实
+- 坑：WSL 本地解析器可能对有 MX 的域名返回空结果不报错，退订类不可逆判断须第二解析源复核 → GOTCHAS#mx-verdict-definite-only；同一邮箱多工具一轮多发 → 同节
+- 结果：成功

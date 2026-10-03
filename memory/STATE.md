@@ -1163,3 +1163,14 @@
 - **TASK 队列**：首页卡片 ✅、/submit-kit 免费前 10 ✅；新增「外联候选补货」（进行中）
 - **进行中：外联候选补货**：apps/agent-tools/data/outreach/candidates.json 只剩 23 人未发（今晚 22:00 发 10 封后剩 13，10-05 前后断货）；已备份 candidates-2026-10-03.json.bak；后台用项目自己的 agent-gigmole 令牌（~/.config/secrets/github-agentoolrank，不用老板 gh 账号 tensam）跑 `outreach-list.ts --per-category=12`，日志 /tmp/claude-1000/outreach-list.log——**结果未核实**（21:24 起仍在跑）
 - **下一步**：补货跑完 → 看新增人数与未发人数 → dry-run 审一遍新增对象 → 把「候选 < 20 自动补货」写进每周定时任务；22:00 外联第二批实发核对（未核实）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）
+
+## 2026-10-03 21:3x–21:5x 外联补货完成 + MX DoH 复核 + 一轮去重 + 夜间自动补货（544831f、97f19d0、4bbf302、d2fae26）
+- **外联候选补货完成**：outreach-list.ts --per-category=12（agent-gigmole 令牌）→ candidates 56 人、未发 47；备份 data/outreach/candidates-2026-10-03.json.bak
+- **22:00 前 dry-run 审批次发现两个问题并修复（544831f）**：
+  - 本机 WSL DNS 对 cherry-ai.com resolveMx 返回空 []（不报错），Google DoH 有 mx2/mx3.feishu.cn → 原规则会永久退订。现在本地判 none 时用 https://dns.google/resolve?name=<域>&type=MX 复核（dohMxVerdict：Status 3，或 Status 0 且无 type 15 才 none，其他 unknown）；DoH 请求失败本轮跳过，不退订
+  - 同一邮箱对应两个工具（hello@lobehub.com）一晚会发两封 → uniqueByEmail 一轮内按邮箱去重
+  - 测试 325 通过；重跑 dry-run 10 封正常（mastra、DeepTutor、LobeHub、cherry-studio、Agent Orchestrator、Superset、DeepEval、iFixAi、phoenix、garak）
+  - 已通知 agentkit；agentkit 已登记推广 mx-doh 并通知 imagehub、new_ladar
+- **夜间自动补货（97f19d0、4bbf302）**：outreach-ops.sh 发信前算未发人数，<20 时先备份 candidates.json 再跑 outreach-list.ts（每次补货 per-category 递增 4），日志 data/ops-logs/outreach-list-<日期>.log；看板已记（d2fae26）。自动补货实际触发未核实（当前未发 47，暂不会触发）
+- **TASK 队列**：外联候选补货 ✅（97f19d0）
+- **下一步**：22:00 外联定时器实发核对（未核实，后台等待任务会提醒）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）

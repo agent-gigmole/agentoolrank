@@ -991,6 +991,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 实现：src/lib/outreach.ts mxVerdict（none/ok/unknown）+ 测试；scripts/send-outreach.ts mxCheck
 - 上线后查 data/outreach/optout.json 有没有之前因临时错误被误加的条目（10-03 文件不存在，无需清理）
 - 来源：agentkit mx-transient（new_ladar 012cb63 首例）→ 本项目 b0efe91
+- **本地空结果不可信（10-03 补）**：WSL 本机解析器对 cherry-ai.com（实有 mx2/mx3.feishu.cn）resolveMx 返回空 [] 且不报错 → 按上面规则会永久退订。改为：本地判 none 时再用 Google DoH `https://dns.google/resolve?name=<域>&type=MX` 复核——dohMxVerdict：Status 3（NXDOMAIN），或 Status 0 且 Answer 中无 type 15 才算 none；其他 Status 或请求失败都算 unknown → 本轮跳过不退订。原则：退订这类不可逆判断要有第二个解析源确认
+- **一轮内按邮箱去重**：同一邮箱可能对应多个工具（hello@lobehub.com 两个仓库）→ sent.json 只防跨轮重发，同一轮会发两封 → 发前 uniqueByEmail（小写）去重
+- 发现方式：22:00 批次前 dry-run 审名单。来源：本项目 544831f（测试 325）；agentkit 已登记推广 mx-doh
 
 ## verify-deploy-via-js-chunk
 - 只在用户动作后才渲染的页面状态（如 /submit 提交成功页、弹窗、结账后视图）curl 页面 HTML 看不到，又不想真提交污染数据 → 从线上页面 HTML 取 `/_next/static/chunks/*.js` 链接，逐个下载 grep 新加的唯一文案（如 alt「AgentoolRank badge preview」），命中即说明新代码已部署
