@@ -1290,3 +1290,9 @@
 - **外联主题 A/B（进行中，3647523 WIP 已提交未部署）**：outreachEmail 支持 variant（A 原主题；B「<tool> is #N of M in <category> (data inside)」），subjectVariant(email) 按邮箱哈希稳定分组，测试 27 通过。剩 send-outreach 接入：tags ["outreach","outreach-a|b"]（保留 outreach tag，健康检查照算），sent.json 记 variant；Brevo 按 tag 分看打开率；每组 ≥30 封再下结论
 - **TASK 队列**：维护者 Kit 入口 ✅、外联放量 ✅；新增「外联主题 A/B」（进行中）「10-08 核对放量首日（15 封、Brevo 仍干净）」
 - **下一步**：send-outreach 接 variant + tag + sent.json 并 dry-run 核对；10-08 放量首日核对（未核实）；10-11 重刷第二篇数字；等第二周快照后做 /downloads「上升最快」；07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55
+
+## 2026-10-04 00:44–01:1x 老板待办改用 boss-todo 库 + 工具页 JSON-LD 带下载量 + 外联主题 A/B 接入发信（0120cbf、e53799a、bbf1e61）
+- **老板待办改用数据库**（老板 00:44）：要老板做/协调的事一律用 `$AGENTKIT_ROOT/bin/boss-todo`（库 ~/data/boss/todo.db；add/note/list/set/close；`--urgent` 立即发 TG，00:30–08:30 静默只登记不发）。agentkit 的 memory/BOSS_QUEUE.md 是 `boss-todo export` 的导出物，不手改。本项目 open：#35 隐私政策/服务条款页、#36 仓库加 MIT 许可证、#37 awesome 清单 fork+PR（与 #36 一起批）；OpenRouter $5.55 差额已 `boss-todo note` 记一条。规则见 KNOWLEDGE/RECIPES.md#boss-todo
+- **工具页 JSON-LD 带下载量**（0120cbf，已部署）：SoftwareApplication 加 interactionStatistic（InteractionCounter / DownloadAction，userInteractionCount = npm+PyPI 近 30 天下载合计 totalDownloads）；线上 /tool/langchain 为 169366312（已核对）；看板已记（e53799a）
+- **外联主题 A/B 接入发信**（bbf1e61）：send() 带 variant，Brevo tags ["outreach","outreach-a|b"]（保留 outreach 供健康闸门统计），sent.json 记 variant；dry-run 10 封约 5/5 分组；测试全过。今晚 22:00 定时批次首次生效（未核实）
+- **下一步**：对比页 /compare/* JSON-LD 带两边下载量；brevo-tag-health 按 a/b 输出打开率；22:00 A/B 首批实发核对（未核实）

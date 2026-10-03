@@ -328,3 +328,6 @@
 | 下载量周快照 tool_packages_history week=周一 downloads_30d / 首快照 2026-09-28 248 行 / 上升最快 X 周榜 / 8876270 | STATE.md#2026-10-03 23:3x–23:xx Our result 列上线 + OpenRouter 子 key 不可建 + 下载量周快照开工 |
 | 定时发布文章数字过期 / 发布前一天重刷 tool_packages 数字再复检 / dev.to 第二篇 10-12 await 136e42 | GOTCHAS.md#scheduled-post-refresh-numbers |
 | recommend_directories our_listing / McpDeps ourListings() / /submit-kit 实测战绩 dee800f | STATE.md#2026-10-04 00:0x recommend_directories 带 our_listing 上线 + dev.to 第二篇排期 + /submit-kit 实测战绩开工（15c4d7a、f9e5853、dee800f） |
+| boss-todo / 老板待办 / 要老板做的事 / BOSS_QUEUE.md 不手改 / --urgent 静默时段 00:30–08:30 / note 汇总 / #35 #36 #37 | RECIPES.md#boss-todo |
+| 工具页 JSON-LD 下载量 / InteractionCounter DownloadAction userInteractionCount / totalDownloads npm+PyPI 30 天 / 0120cbf | STATE.md#2026-10-04 00:44–01:1x 老板待办改用 boss-todo 库 + 工具页 JSON-LD 带下载量 + 外联主题 A/B 接入发信（0120cbf、e53799a、bbf1e61） |
+| 外联主题 A/B / outreach-a outreach-b tag / sent.json variant / subjectVariant 哈希分组 / bbf1e61 | STATE.md#2026-10-04 00:44–01:1x 老板待办改用 boss-todo 库 + 工具页 JSON-LD 带下载量 + 外联主题 A/B 接入发信（0120cbf、e53799a、bbf1e61） |

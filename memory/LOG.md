@@ -1236,3 +1236,8 @@
 - 做法：部署 9635973 并线上核对 maintainer-kit；dailyCap(day, clean) 10→15（10-08）→20（10-12），只有 --require-healthy 通过才放量，否则 10，加测试并部署，dry-run room 正常；MaintainerBanner 文案补类目页；看板记规则；开工主题 A/B：variant + subjectVariant 哈希稳定分组 + 测试（27 通过）
 - 结果：维护者入口与放量规则已上线；A/B 剩 send-outreach 接入 tag/sent.json（3647523 WIP 未部署）
 - 结果：成功（外联主题 A/B 进行中）
+
+## 2026-10-04 00:44–01:1x 老板待办改 boss-todo 库 + JSON-LD 下载量 + 外联 A/B 接入
+- 做了什么：老板指示要老板做的事改用 agentkit bin/boss-todo 数据库（#35/#36/#37 在库，OpenRouter $5.55 记 note，BOSS_QUEUE.md 只作导出物）；工具页 JSON-LD 加 InteractionCounter（DownloadAction，npm+PyPI 30 天下载）部署，线上 /tool/langchain 169366312；外联主题 A/B 接入 send()（tags outreach + outreach-a|b，sent.json 记 variant），dry-run 10 封约 5/5
+- 结果：成功（JSON-LD 线上已核对；A/B 22:00 首批未核实）
+- 坑：无新坑

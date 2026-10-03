@@ -72,8 +72,10 @@
 - ✅ /submit-kit 写出我们自己的实测战绩（10-04 00:10 上线：提交 41、上线 7、可跟随 4，从 listing_checks 现算，每天自动更新）
 - ✅ 详情页维护者区加 Submit Kit 入口（maintainer-kit，10-04 00:30 上线核对）
 - ✅ 押注①外联放量写进代码：dailyCap 10 → 15（10-08）→ 20（10-12），只在 7 天健康检查干净时放量（6fd3db8）
-- 外联主题 A/B：按邮箱哈希分两组（A 现有「<tool>'s current rank on AgentoolRank」/ B「<tool> is #N in <category> (data inside)」），sent.json 记 variant，Brevo 按 tag 分开看打开率；10-12 前每组 ≥30 封再下结论
+- 外联主题 A/B：已接入发信（tags outreach + outreach-a|b，sent.json 记 variant；10-04 22:00 首批生效）；剩 brevo-tag-health 按 a/b 输出打开率、10-12 前每组 ≥30 封再下结论
 - 10-08 核对放量首日：定时器发了 15 封、Brevo 健康仍干净
+- ✅ 工具页结构化数据加近 30 天下载量（InteractionCounter / DownloadAction，10-04 01:0x 上线核对）
+- 对比页 /compare/* 的结构化数据也带两边的下载量（ItemList 里两个 SoftwareApplication 各带 interactionStatistic）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
@@ -534,6 +536,8 @@
 
 ## 等待用户
 
+> 2026-10-04 起要老板做的事以 agentkit boss-todo 库为准（`$AGENTKIT_ROOT/bin/boss-todo list --project ai-directory`），本节只作镜像；见 KNOWLEDGE/RECIPES.md#boss-todo
+
 - [x] Stripe 受限 key（checkout + ops 均已存并验证，10-01）
 - [x] Cloudflare zone token（~/.config/cloudflare/agentoolrank.token，到期 2026-12-29，10-01 验证）
 - [x] Vercel Pro（已是 Pro，10-01 核实）
@@ -543,8 +547,12 @@
 - [x] X 旧号（2026-10-01）
 - [x] Peerlist 真名 Ethan Tan（2026-10-01）
 - [ ] X 首帖确认
-- [ ] OpenRouter key 用量差额：该 key 累计 usage $6.08（limit $1），我们 10-01 起只记 $0.53，其余 $5.55 来源待老板确认（docs/ops/spend-ledger.md「说明」已注，44176cb；agentkit 写进老板 10-04 汇总）
+- [ ] OpenRouter key 用量差额（已 boss-todo note 记一条）：该 key 累计 usage $6.08（limit $1），我们 10-01 起只记 $0.53，其余 $5.55 来源待老板确认（docs/ops/spend-ledger.md「说明」已注，44176cb；agentkit 写进老板 10-04 汇总）
 - [ ] 确认域名实付和早期 LLM 账单（实盘口径，operator-lab 10-03 16:47）：Cloudflare 账单看 agentoolrank.com 实付（现记约 $10.46/年，选域名时报价，未对账，2027-03 续费）；2026-03 DeepSeek 官方 API 等早期 LLM 费用（日志未记）
+
+- [ ] #35 隐私政策 / 服务条款页（boss-todo open）
+- [ ] #36 仓库 agent-gigmole/agentoolrank 加 MIT 许可证（boss-todo open）
+- [ ] #37 用 agent-gigmole fork 提 PR 进 awesome 清单（与 #36 一起批；boss-todo open）
 
 ## 备忘（不进下一步队列）
 
