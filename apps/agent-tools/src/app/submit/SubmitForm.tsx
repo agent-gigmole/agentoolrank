@@ -70,6 +70,19 @@ function PaidOptions({ slug, waitDays, listed = false }: { slug: string; waitDay
   );
 }
 
+function KitBox() {
+  return (
+    <div className="border border-gray-200 rounded-xl p-6">
+      <p className="font-semibold text-gray-900">Listing it on other directories too?</p>
+      <p className="text-sm text-gray-600 mt-1 mb-3">
+        We tested 101 directories by submitting our own products. The Submit Kit tells you which ones fit this tool, the form gotchas on each,
+        and which to skip. Top 10 free; full list $29 one-time.
+      </p>
+      <a href="/submit-kit" onClick={() => track("kit_click")} className="text-sm text-blue-600 hover:underline">See the Submit Kit →</a>
+    </div>
+  );
+}
+
 function BadgeBox({ slug, snippet, copied, onCopy, title, text }: { slug: string; snippet: string; copied: boolean; onCopy: () => void; title: string; text: string }) {
   return (
     <div className="border border-gray-200 rounded-xl p-6">
@@ -163,6 +176,7 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
         <BadgeBox slug={result.slug} snippet={badgeHtml(BASE_URL, result.slug, result.name)} copied={copied} onCopy={() => setCopied(true)}
           title="Maintain it? Add the badge"
           text="Show live GitHub stars on your README or website. It links back to the tool's ranking page." />
+        <KitBox />
       </div>
     );
   }
@@ -181,14 +195,7 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
         <BadgeBox slug={result.slug} snippet={snippet} copied={copied} onCopy={() => setCopied(true)}
           title="Get reviewed first: add the badge"
           text="Submissions whose website shows the AgentoolRank badge are reviewed before everyone else, and the badge shows live GitHub stars." />
-        <div className="border border-gray-200 rounded-xl p-6">
-          <p className="font-semibold text-gray-900">Listing it on other directories too?</p>
-          <p className="text-sm text-gray-600 mt-1 mb-3">
-            We tested 101 directories by submitting our own products. The Submit Kit tells you which ones fit this tool, the form gotchas on each,
-            and which to skip. Top 10 free; full list $29 one-time.
-          </p>
-          <a href="/submit-kit" onClick={() => track("kit_click")} className="text-sm text-blue-600 hover:underline">See the Submit Kit →</a>
-        </div>
+        <KitBox />
       </div>
     );
   }
