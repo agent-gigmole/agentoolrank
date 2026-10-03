@@ -82,7 +82,17 @@ export default function WhereToListPage() {
             Your AI assistant can call it over MCP. The top 10 are free; the full 30 plus the avoid list is a one-time ${KIT_PRICE_USD}.
             No traffic or ranking is promised.
           </p>
-          <Link href="/submit-kit" className="text-sm text-blue-600 hover:underline">See the Submit Kit →</Link>
+          <p className="text-sm">
+            Free top 10 for your product:{" "}
+            {[["ai_tool", "AI tool"], ["mcp_server", "MCP server"], ["dev_tool", "Developer tool"], ["saas", "SaaS"]].map(([id, label], i) => (
+              <span key={id}>
+                {i > 0 && " · "}
+                <Link href={`/submit-kit?type=${id}`} data-testid={`wtl-kit-${id}`} className="text-blue-600 hover:underline">{label}</Link>
+              </span>
+            ))}
+            {" · "}
+            <Link href="/submit-kit" className="text-blue-600 hover:underline">See the Submit Kit →</Link>
+          </p>
         </div>
       </section>
 
