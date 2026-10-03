@@ -418,6 +418,7 @@
 - 非交互 shell（Bash 工具 / cron）PATH 不含 ~/.bun/bin → `bun: command not found`；用 `~/.bun/bin/bun run ...` 或脚本内 `export PATH="$HOME/.bun/bin:$PATH"`（daily/hourly/weekly-ops.sh 已这样做）
 - scripts/indexnow.ts 等用 top-level await 的脚本，在无 "type": "module" 的包里 `npx tsx` 会按 CJS 编译报 top-level await 不支持 → 只能用 bun 跑（不要为此改成 async main 包裹，bun 是项目约定运行时）
 - 临时一次性脚本（查库/核对）没有 bun 时：写成 `.mts` 并放在 apps/agent-tools/scripts/ 下再 `npx tsx xxx.mts` → 按 ESM 编译，top-level await 可用、能解析包内依赖（放 /tmp 或用 .ts 都会失败）；用完删掉，别提交
+- 把现有 .ts 脚本复制成 .mts 用 tsx 跑时，里面的相对 import 要写完整 `.ts` 后缀（ESM 解析不补扩展名），否则 Cannot find module；能用 `~/.bun/bin/bun` 就别绕这条路（2026-10-04 send-live-emails 实测）
 
 ## comparison-page-facts-dated
 - 竞品对比页（/where-to-list）：竞品价格/政策写进 src/lib/directories.ts 并带 CHECKED 日期 + 每行提交页 URL；页面显式披露"这是自家产品"、如实写自家短板（流量小）；竞品外链 rel=nofollow；价格会变，过期要重新核对
@@ -1083,3 +1084,4 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 教训：对外文案（表单提示、结账描述、邮件）里每一句承诺都要能在代码里找到对应实现；上线新文案或回看旧页面时 grep 一遍「email you / we'll / notify」之类承诺词，对照代码
 - 做法：src/lib/live-email.ts liveEmail()（48c812e）生成正文；发送接在 review-submissions --apply 通过时，走 Brevo 事务性邮件，标签不要用 outreach（免得混进外联健康统计），记 sent 防重发；补发前先确认提交者留的邮箱
 - 来源：2026-10-04 做 /submit 维护者说明时发现
+- **已修复 e1451cc**：scripts/send-live-emails.ts（Brevo，标签 live-notify，live_emails 表防重发，失败下次重试）并入 daily-ops.sh 紧跟 review-submissions --apply；首跑补发 #3/#5/#6/#7/#8 共 5 封全部送达。91b0ab6 起邮件链接带 ?ref=live-notify（此前 5 封不带）

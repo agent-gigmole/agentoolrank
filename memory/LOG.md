@@ -1308,3 +1308,9 @@
 - 结果：真 Chrome 实测到 checkout.stripe.com 描述正确；发现表单承诺「We'll email you when your page is live」从未实现
 - 坑：对外文案承诺的通知邮件代码里没有（GOTCHAS#form-promise-not-implemented）；GOTCHAS#checkout-listed-tool-featured-only 描述已修正
 - 结果：成功（上线通知邮件进行中：下一步接 review-submissions --apply + Brevo 事务性发送 + 防重发）
+
+## 2026-10-04 03:39 「你的页面已上线」邮件流水线上线（e1451cc push）+ 落地可测第一步（91b0ab6）
+- 做法：scripts/send-live-emails.ts（approved + 页存在 + 邮箱有效 + 非 selftest + 不在 live_emails → Brevo，hello@agentoolrank.com，tag live-notify；成功写 live_emails 防重发，失败下次重试；--dry-run）；并入 daily-ops.sh 紧跟 review-submissions --apply；首跑补发 #3/#5/#6/#7/#8 共 5 封；await 9b7cd6；看板已记；队尾新增「上线通知落地可测」，91b0ab6 链接加 ?ref=live-notify
+- 结果：Brevo tag=live-notify 5 requests / 5 delivered / 0 bounce / 0 blocked；dry-run 0 待发。已发 5 封链接不带 ref
+- 坑：交互 shell 无 bun 在 PATH（用 ~/.bun/bin/bun）；npx tsx 跑 TLA 脚本要复制成 .mts 且 import 带 .ts 后缀（GOTCHAS#bun-path-noninteractive-tla 已补）；表单承诺的通知邮件此前从未实现，GOTCHAS#form-promise-not-implemented 标已修复
+- 结果：成功（日报 live-notify 维护者行未做）

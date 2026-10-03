@@ -9,7 +9,7 @@
     "name": "daily-ops",
     "entry": "apps/agent-tools/scripts/daily-ops.sh",
     "timer": "agentoolrank-daily.timer",
-    "notes": "每天 21:30。审核提交（付费全审 + 免费 3 个）→ 7 天漏斗 → IndexNow → Stripe 支付宝/微信状态 → Brevo 各 tag 健康 → GSC 28 天。日志 apps/agent-tools/data/ops-logs/<日期>.log；目录站上线复查 check-listings.ts（新上线回写 dirsub）"
+    "notes": "每天 21:30。审核提交（付费全审 + 免费 3 个）→ 上线通知邮件 send-live-emails.ts（Brevo tag live-notify，live_emails 防重发）→ 7 天漏斗 → IndexNow → Stripe 支付宝/微信状态 → Brevo 各 tag 健康 → GSC 28 天。日志 apps/agent-tools/data/ops-logs/<日期>.log；目录站上线复查 check-listings.ts（新上线回写 dirsub）"
   },
   {
     "name": "weekly-ops",

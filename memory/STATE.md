@@ -1368,3 +1368,10 @@
 - **Stripe 描述已修正**：checkoutForm 在 submissionId 0（已收录工具）+ featured 时去掉「Fast-track review」，改为「7 days in the Featured section of the AgentoolRank homepage and at the top of your category page.」+ 测试，364 全过；已部署，真 Chrome 实测到 checkout.stripe.com 描述正确；看板已记（b506a87）
 - **进行中：审核通过后发「你的页面已上线」邮件**——起因：提交表单承诺「We'll email you when your page is live」，但代码里从没发过。第一步 48c812e（已 push，未接发送）：src/lib/live-email.ts liveEmail({name,slug,baseUrl}) → {subject,text}，含页面链接、徽章代码、$49 推荐位链接（/tool/<slug>#maintainers）+3 测试
 - **下一步**：review-submissions --apply 通过时用 Brevo 发（事务性；标签不要用 outreach，免得混进外联健康统计），记 sent 防重发；回补已通过的 #5/#7/#8 前先确认他们留的邮箱；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 03:39 「你的页面已上线」邮件流水线上线（e1451cc 已 push）+ 上线通知落地可测开工（91b0ab6）
+- **流水线**：scripts/send-live-emails.ts 查 approved + 工具页存在 + 邮箱有效 + 非 selftest + 不在 live_emails 表的提交 → Brevo 事务性发送（发件 hello@agentoolrank.com，标签 live-notify，不算外联）→ 成功写 live_emails(submission_id, sent_at, message_id) 防重发，失败下次重试；`--dry-run` 只列。已并入 scripts/daily-ops.sh，紧跟 review-submissions --apply（agentoolrank-daily 21:30 定时器已有）
+- **首跑补发 5 封**：#3 orkas、#5 hourtick、#6 hol-guard-plugin、#7 hol-plugins、#8 claude-resets；Brevo aggregatedReport tag=live-notify：5 requests / 5 delivered / 0 bounce / 0 blocked；再 dry-run 0 待发。await 9b7cd6 已登记（done 立即满足）；看板已记
+- **注意**：已发这 5 封的链接不带 ?ref，无法从站内统计区分它们的落地
+- **进行中：上线通知落地可测**——第一步 91b0ab6（liveEmail 链接带 ?ref=live-notify，测试过）已提交；日报维护者行加 live-notify 会话数与推荐位结账点击未做
+- **下一步**：日报维护者行加 live-notify 会话 + 推荐位结账点击；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

@@ -134,7 +134,7 @@
 | 零流量 / 停止堆功能 / 转分发 / 共用个人号错开 Show HN | GOTCHAS.md#zero-traffic-stop-building |
 | SEO 巡检脚本 urllib SSL 超时 / curl 复核 | GOTCHAS.md#seo-audit-script-ssl-timeout |
 | /report 数据报告 / 停更提示 / SEO 巡检 / 对账 / dev.to | LOG.md#2026-10-01 05:00–05:30 |
-| bun 不在 PATH / 非交互 shell / ~/.bun/bin/bun / tsx top-level await cjs 错 / 临时脚本用 .mts | GOTCHAS.md#bun-path-noninteractive-tla |
+| bun 不在 PATH / 非交互 shell / ~/.bun/bin/bun / tsx top-level await cjs 错 / 临时脚本用 .mts / .mts import 要带 .ts 后缀 | GOTCHAS.md#bun-path-noninteractive-tla |
 | 对比页 / 上架渠道对比 / where-to-list / 竞品事实核对日期 / 自家披露 | GOTCHAS.md#comparison-page-facts-dated |
 | T23 /where-to-list 上线 | LOG.md#2026-10-01 T23 对比内容第一篇 /where-to-list 上线 |
 | 对比页 Short answer / compareVerdict / pricing free≈open-source / star_velocity 取整 / 悬空虚词 / Ecmascript file had an error | GOTCHAS.md#compare-verdict-data-quirks |
@@ -336,4 +336,4 @@
 | /submit-kit Product JSON-LD kitProductJsonLd / Offer Free top 10 $0 Full list $29 USD InStock / Brand AgentoolRank / 5ce3f74 | STATE.md#2026-10-04 01:0x–01:1x 浏览器标签页清理（browser-tidy）+ 替代品页结构化数据上线 + /submit-kit Product JSON-LD 开工（777b4e0、d4bae19、9f0771f、5ce3f74） |
 | 已收录工具买推荐 / /api/checkout 无 submission 只允许 plan=featured / PaidOptions listed 模式 / BadgeBox / alreadyListed 结果页维护者入口 / Stripe featured 商品描述 Fast-track review 对已收录工具不准（8c96c29 已修正）/ 684df92 | GOTCHAS.md#checkout-listed-tool-featured-only |
 | 提交表单预填 / /api/prefill GitHub 公开 API 5s 超时 GITHUB_TOKEN / 失焦只填空字段 / 长简介整句≥40 或整词截 160 / 埋点 prefill EVENT_NAMES / 6028f22 53a9e47 | STATE.md#2026-10-04 02:5x 提交表单预填上线 + 已收录工具提交结果页维护者入口开工（6028f22、53a9e47 部署并 push，034778e，684df92） |
-| 表单承诺「We'll email you when your page is live」从未实现 / 对外文案承诺要对照代码 / live-email.ts liveEmail / Brevo 事务性邮件 标签别用 outreach / 防重发 / 48c812e | GOTCHAS.md#form-promise-not-implemented |
+| 表单承诺「We'll email you when your page is live」从未实现 / 对外文案承诺要对照代码 / live-email.ts liveEmail / Brevo 事务性邮件 标签别用 outreach / 防重发 / 48c812e / 已修复 e1451cc send-live-emails live_emails live-notify | GOTCHAS.md#form-promise-not-implemented |
