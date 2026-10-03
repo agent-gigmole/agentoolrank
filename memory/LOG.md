@@ -1065,3 +1065,9 @@
 - 结果：306 测试通过；线上 /tool/langchain 显示「PyPI langchain 169.4M」已核对；全量 fetch-downloads 后台仍在跑（19:10 已 110+ 包），最终结果未核实
 - 坑：curl 线上 Next 页面会吐巨量 RSC 负载，核对用 grep -o 短匹配 → GOTCHAS#curl-next-rsc-output
 - 结果：成功（全量首跑未核实）
+
+## 2026-10-03 20:0x– /downloads 下载量排行榜（ad85ebe、497fe5a、02ebddb）
+- 做法：/goal 由老板注入（goal.txt 第一行）；新页面 /downloads：getDownloadRows + rankByDownloads（按工具汇总、原始数排序、perStar），前 100，ItemList/Breadcrumb JSON-LD、canonical、sitemap weekly 0.8，详情页下载量行链过去；部署；看板记一行；TASK 队列加「10-07 文章加星数 vs 下载量一节」「/downloads IndexNow + GSC，10-10 看曝光」；devto brief 加 stars vs downloads 一节
+- 结果：307 测试通过；线上前五 OpenAI Python 284.2M、MCP Python SDK 219.0M、LangChain 169.4M、AI SDK 108.0M、LangGraph 43.7M 已核对；fetch-downloads 全量仍在跑（170+ 行），未核实
+- 坑：@repo/ui Breadcrumbs/BreadcrumbJsonLd 项是 { label, href? } 不是 name；JSON-LD baseUrl 取 NEXT_PUBLIC_BASE_URL；排序别解析格式化字符串，保留原始数 → GOTCHAS#repo-ui-breadcrumbs-and-ranking-raw-numbers
+- 结果：成功（全量首跑未核实）

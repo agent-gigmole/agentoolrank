@@ -942,3 +942,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 做法：只用 `curl -s URL | grep -o '短匹配.\{0,80\}' | head` 抽取需要的片段（如 `grep -o 'Package downloads[^<]\{0,120\}'`），绝不整页输出
 - 另：详情页 revalidate 24h，新字段上线后别的工具页要等缓存过期才出现，核对时挑刚部署后首次渲染的页面或带新数据的页面
 - 来源：2026-10-03 详情页下载量核对（df555e8）
+
+## repo-ui-breadcrumbs-and-ranking-raw-numbers
+- **@repo/ui 面包屑**：`Breadcrumbs` 与 `BreadcrumbJsonLd` 的 items 是 `{ label, href? }`，不是 schema.org 习惯的 `name`；写成 name 会渲染空文字/JSON-LD 缺名。BreadcrumbJsonLd 的绝对地址前缀取 `NEXT_PUBLIC_BASE_URL`，本地没设时生成的 URL 不对，核对以线上为准
+- **排行榜排序用原始数**：展示用的紧凑字符串（169.4M、12.5K）只用于渲染，排序、汇总、算比值（每星下载）一律用原始整数；所以 `downloadsLine` 返回结构里带原始数 `n`，`rankByDownloads` 按 n 汇总排序。不要反解析 "169.4M"
+- 新排行页清单：ItemList JSON-LD + BreadcrumbJsonLd + canonical + sitemap 条目 + 从详情页链入（避免孤儿页）
+- 来源：2026-10-03 /downloads 上线（ad85ebe）

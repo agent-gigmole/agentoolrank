@@ -22,6 +22,9 @@
 - ✅ 老板号发帖文案检查（10-03 ce06f78）：weekly-post.ts 发 X 前先过 post-copy.ts aiAuthorshipMatch，再过 post-gate；以后新增任何用老板号发帖的脚本也必须先调 aiAuthorshipMatch
 - ✅ 周帖接共用文案检查 + 渠道登记表（10-03 f872066、c642f03）：aiAuthorshipMatch 与 bin/post-copy-check 双检查 → post-gate --channel x-main --has-link → 发帖 → bin/post-log 记 posts.jsonl
 - Submit Kit 漏斗每天看一次：kit_click → /submit-kit 访问 → 付费，三个数写进 ops/daily.md，断在哪一步就改哪一步
+- ✅ /downloads 下载量排行榜上线（10-03 20:0x，ItemList JSON-LD、sitemap、详情页互链）
+- 10-07 数据文章加「星数 vs 下载量」一节：引用 /downloads 前 5 和每星下载量最高的工具，文末带 Submit Kit 与 /downloads 两个入口（brief 已加节 02ebddb，文章未写）
+- /downloads 提交 IndexNow 并在 GSC 请求编入索引；10-10 看曝光
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

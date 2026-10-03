@@ -288,3 +288,4 @@
 | element_seen 按钮漏斗 / data-vi-seen submit_button kit_buy_button / SEEN_RATIO 0.5 / funnelLine ops/daily.md 两行 / 10-03 17:40 起有数据 | STATE.md#2026-10-03 17:20– 目录站上线复查 |
 | npm PyPI 下载量 / downloads.ts fetch-downloads.ts / tool_packages 表 / monorepo xxx-workspace private 候选名 / @repo/core 去 js 后缀 langchainjs→langchain / 回链同一 GitHub 仓库 repoMatches / pypistats 2 秒 npm 0.4 秒 / weekly-ops 周一 / 1a316ab / conduid 只链 GitHub 仓库 target=github 623ac18 | GOTCHAS.md#package-downloads-name-matching |
 | curl 线上 Next 页面 RSC 负载刷屏 / grep -o 短匹配 / 详情页 revalidate 24h / downloadsLine getToolPackages df555e8 / goal.txt 第一行 goal-keeper 30 分钟 5ca2889 | GOTCHAS.md#curl-next-rsc-output |
+| /downloads 下载量排行榜 / getDownloadRows rankByDownloads perStar 每星下载 / 前 100 / @repo/ui Breadcrumbs BreadcrumbJsonLd { label, href? } 不是 name / NEXT_PUBLIC_BASE_URL / 排序用原始数 n 不解析 169.4M / ItemList JSON-LD sitemap weekly 0.8 / ad85ebe | GOTCHAS.md#repo-ui-breadcrumbs-and-ranking-raw-numbers |

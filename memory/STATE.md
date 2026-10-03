@@ -1049,3 +1049,15 @@
 - TASK 队列「npm/PyPI 下载量」：详情页已上线，剩数据文章用、可选作排名信号；看板已更新（40732e4）
 - 坑：KNOWLEDGE/GOTCHAS.md#curl-next-rsc-output
 - **下一步**：核实全量首跑覆盖数；22:00 后确认外联 10 封送达（未核实）；每天看按钮漏斗；10-07 dev.to 数据文章（可用下载量数据）
+
+## 2026-10-03 20:0x– /downloads 下载量排行榜上线（ad85ebe 已部署，497fe5a 看板，02ebddb brief）
+- **/goal 已由老板注入**（内容即 docs/ops/goal.txt 第一行）
+- **/downloads**（ad85ebe，已部署，线上已核对）：按 npm + PyPI 近 30 天下载量给工具排名（前 100），列「每 GitHub 星下载数」；ItemList JSON-LD + BreadcrumbJsonLd + canonical；sitemap weekly 0.8；详情页下载量行加链到 /downloads
+  - packages/db `getDownloadRows`；src/lib/downloads.ts `rankByDownloads`（按工具汇总、按原始数 n 给包排序、算 perStar）；`downloadsLine` 增加原始数字段 n
+  - 测试 307 通过
+  - 10-03 线上前五：OpenAI Python 284.2M、MCP Python SDK 219.0M、LangChain 169.4M、AI SDK 108.0M、LangGraph 43.7M；≥10 万下载的工具里每星下载最高是 OpenAI Python
+- **TASK 队列**：/downloads 已打 ✅；新增两件：「10-07 数据文章加星数 vs 下载量一节」「/downloads 提交 IndexNow + GSC 请求编入索引，10-10 看曝光」（daily-ops 的 IndexNow 本就提交整个 sitemap）
+- **队首已开工**：docs/ops/launch-kit/briefs/devto-101-directories.md 加「Extra section: stars vs downloads」（02ebddb）；文章本身未写未发
+- 全量 fetch-downloads 仍在后台（已 170+ 行），最终覆盖数**未核实**
+- 坑：KNOWLEDGE/GOTCHAS.md#repo-ui-breadcrumbs-and-ranking-raw-numbers
+- **下一步**：GSC 对 /downloads 请求编入索引（未做）；核实 fetch-downloads 全量结果；22:00 后确认外联 10 封送达（未核实）；10-07 dev.to 数据文章
