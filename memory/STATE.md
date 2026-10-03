@@ -1309,3 +1309,8 @@
 - **替代品页结构化数据**（d4bae19，01:10 已部署）：/alternatives/[slug] 的 ItemList 每项为 softwareAppJsonLd；线上 /alternatives/langchain 有 SoftwareApplication 项与 DownloadAction 计数（已核对）；看板已记（9f0771f）；TASK ✅
 - **/submit-kit Product JSON-LD（进行中，5ce3f74 已提交未部署）**：kitProductJsonLd（Brand AgentoolRank，两个 Offer：Free top 10 $0、Full list $29 USD InStock）+ 测试
 - **下一步**：5ce3f74 部署并线上核对 /submit-kit JSON-LD；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
+
+## 2026-10-04 01:30 /submit-kit Product JSON-LD 上线 + /submit Product JSON-LD 开工（5ce3f74 部署、7eaac9c、eceb186）
+- **/submit-kit Product JSON-LD**（5ce3f74，01:30 已部署；看板 7eaac9c）：线上 Product「AgentoolRank Submit Kit」，Offer price 0 与 29（已核对）；TASK ✅
+- **/submit Product JSON-LD（进行中，eceb186 已提交未部署）**：lib/plans.ts listingProductJsonLd，四档 Offer：Free listing $0 + Priority $9 / Fast-track $19 / Featured $49，名称与价格从 PLANS 读（不硬编码）+ 测试
+- **下一步**：eceb186 部署并线上核对 /submit JSON-LD 四档价格；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字

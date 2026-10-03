@@ -1253,3 +1253,9 @@
 - 结果：标签页清理与替代品页结构化数据已上线；/submit-kit Product JSON-LD 未部署
 - 坑：跨调用复用同一标签页的浏览器流程，清理要保留最新标签页而不是第一个 → GOTCHAS#browser-tidy-keep-newest-tab
 - 结果：成功（/submit-kit Product JSON-LD 进行中）
+
+## 2026-10-04 01:30 /submit-kit Product JSON-LD 上线 + /submit Product JSON-LD 开工（5ce3f74 部署、7eaac9c、eceb186）
+- 做法：部署 5ce3f74，线上核对 /submit-kit 有 Product「AgentoolRank Submit Kit」、price 0 与 29，看板记一行（7eaac9c）；接着 /submit 加 listingProductJsonLd（lib/plans.ts，Free $0 + $9/$19/$49，名称价格从 PLANS 读）+ 测试（eceb186）
+- 结果：Submit Kit 价格结构化数据已上线；/submit Product JSON-LD 未部署
+- 坑：无新坑
+- 结果：成功（/submit Product JSON-LD 进行中）
