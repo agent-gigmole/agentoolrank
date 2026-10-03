@@ -1215,3 +1215,8 @@
 - 结果：线上 4 followed / 2 nofollow / 1 只链 GitHub / 其余 Submitted；首个快照 week 2026-09-28 共 248 行；$5.55 进「等待用户」；Smithery 回查由 new_ladar 24h 后做（未核实）
 - 坑：curl 线上 Next 页面计数会因 HTML 与 RSC 负载各出现一次而翻倍 → GOTCHAS#curl-next-rsc-output；OpenRouter 普通 key 不能建子 key，/api/v1/auth/key 看 is_provisioning_key，输出 label 带 key 掩码不能外贴 → GOTCHAS#openrouter-provisioning-key
 - 结果：成功（下载量周快照进行中）
+
+## 2026-10-03 23:4x–23:xx Submit Kit 实测上线标记上线 + Kit 完整版 our_listing 开工（1eb791f、ccb81a7、fd8ed0b）
+- 做法：/submit-kit 免费清单服务端读 listing_checks（state=live），用 ourResultLabel 标「our own listing: live, followed link / nofollow」，部署后线上核对，看板记一行；接着 recommendDirectories 加可选 ours 参数返回每站 our_listing（WIP）；第二篇 dev.to 稿后台 bin/write 出稿中
+- 结果：线上 AI tool 类型已显示标记（MCP server / dev tool / SaaS 前 10 暂无我们已上线的站）；our_listing 剩 MCP 路由接入与部署；第二篇稿未核实、未排期
+- 结果：成功（Kit 完整版 our_listing 进行中）

@@ -66,6 +66,8 @@
 - 代 new_ladar 改 Smithery（admin-pw59/new-site-radar）：Settings 描述与 apiKey 连接参数描述均已保存并重新发布 SUCCESS；registry 接口仍返回旧描述（缓存），new_ladar 已登记 24h 回查
 - 每周一把 /downloads 前 10 变化（新进、上升最快）写成 X 周榜的第二条素材，脚本生成，人不手填
 - 下载量快照（进行中，8876270 WIP）：fetch-downloads 每周写一行历史（tool_packages_history：tool_id, registry, week=当周周一, downloads_30d），首个快照 week 2026-09-28 共 248 行已写；有两周数据后 /downloads 显示「本周上升最快」并供 X 周榜第二条用
+- ✅ /submit-kit 免费清单标出「我们自己的页面在这里已上线（链接类型）」（listing_checks；10-03 23:4x 上线，AI tool 类型下已显示）
+- Submit Kit 完整版（$29）返回里也带「our_listing」字段：这个站我们自己提交后的实际结果，作为付费内容的一部分（进行中，fd8ed0b WIP：recommendDirectories 已支持可选 ours 参数返回 our_listing；剩 MCP 路由调用时读 listing_checks 传入、部署核对）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

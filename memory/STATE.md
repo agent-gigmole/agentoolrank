@@ -1263,3 +1263,10 @@
 - **Smithery 代改**：new_ladar 已登记 24h 回查 registry 描述（结果未核实）
 - **下载量周快照（进行中，8876270 WIP）**：fetch-downloads 每周写 tool_packages_history（tool_id, registry, week=当周周一, downloads_30d），首个快照 week 2026-09-28 共 248 行。两周后 /downloads 做「上升最快」，并供 X 周榜第二条素材
 - **下一步**：等第二周快照（10-05 那周）后做 /downloads「上升最快」；dev.to 第二篇出稿排 10-12；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总里确认 $5.55
+
+## 2026-10-03 23:4x–23:xx Submit Kit 免费清单实测上线标记上线 + Kit 完整版 our_listing 开工 + dev.to 第二篇出稿中（1eb791f、ccb81a7、fd8ed0b）
+- **/submit-kit 免费清单标出我们自己的上线结果**（1eb791f，已部署；看板 ccb81a7）：页面服务端读 listing_checks（state=live），用 ourResultLabel 显示「our own listing: live, followed link / live, nofollow」。线上 AI tool 类型下已显示；MCP server / dev tool / SaaS 类型的前 10 里暂无我们已上线的站，所以不显示
+- **Kit 完整版（$29）返回带 our_listing（进行中，fd8ed0b WIP）**：recommendDirectories 加可选 ours 参数，给了就每站带 our_listing。剩：MCP 路由调用时读 listing_checks 传入 → 部署 → 线上核对
+- **dev.to 第二篇**：后台 bin/write 出稿中 → docs/ops/launch-kit/drafts/devto-stars-vs-downloads.md（未核实，未复检），之后复检、排进 ops/devto-schedule.json 2026-10-12
+- **TASK 队列**：Submit Kit 实测上线标记 ✅；新增「Kit 完整版返回带 our_listing」（进行中）
+- **下一步**：our_listing 接 MCP 路由并部署核对；第二篇稿复检后排期；等第二周快照后做 /downloads「上升最快」；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55
