@@ -92,3 +92,10 @@ describe("listedReply (agent submits a tool we already list)", () => {
     expect(r.message_for_human).not.toContain("$");
   });
 });
+
+describe("messageForHuman points to the Submit Kit page too", () => {
+  it("adds a browser link with ?ref=agent-queued", () => {
+    const m = messageForHuman("Acme", [{ plan: "free", price_usd: 0, live_within_days: 3, featured_days: 0, what_you_get: "", checkout_url: null }]);
+    expect(m).toContain("https://agentoolrank.com/submit-kit?ref=agent-queued");
+  });
+});
