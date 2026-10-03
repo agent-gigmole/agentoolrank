@@ -58,3 +58,31 @@ export function messageForHuman(name: string, offers: Offer[]): string {
   lines.push("Listing elsewhere too? Your agent can call recommend_directories on https://agentoolrank.com/api/mcp for launch directories worth submitting to, with the steps only a person can do (free top 10).");
   return lines.join("\n");
 }
+
+/**
+ * Response for an agent that submits a tool we already list. Whoever submits a listed tool is usually its maintainer,
+ * the buyer for the featured slot, so the reply carries that offer (no review needed) and the badge, not just a link.
+ */
+export function listedReply(o: { baseUrl: string; slug: string; listingUrl: string; paymentsEnabled: boolean; badgeHtml: string }) {
+  const featured = PLANS.featured;
+  const buyUrl = `${o.baseUrl}/tool/${o.slug}?ref=agent-listed#maintainers`;
+  return {
+    status: "already_listed" as const,
+    slug: o.slug,
+    listing_url: o.listingUrl,
+    badge_html: o.badgeHtml,
+    featured_offer: o.paymentsEnabled
+      ? {
+          price_usd: featured.amount / 100,
+          featured_days: featured.featuredDays,
+          what_you_get: `${featured.featuredDays} days at the top of the AgentoolRank homepage and the tool's category page. One-time payment.`,
+          buy_url: buyUrl,
+        }
+      : null,
+    message_for_human: [
+      `This tool is already listed on AgentoolRank: ${o.listingUrl}`,
+      "Add the badge (badge_html) to the README or website to show live GitHub stars.",
+      ...(o.paymentsEnabled ? [`Optional: feature it for ${featured.featuredDays} days on the homepage and its category page ($${featured.amount / 100}, one-time): ${buyUrl}`] : []),
+    ].join("\n"),
+  };
+}

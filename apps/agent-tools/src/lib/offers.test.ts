@@ -70,3 +70,23 @@ describe("messageForHuman", () => {
     expect(messageForHuman("Orkas", free)).not.toContain("$");
   });
 });
+
+import { listedReply } from "./offers";
+
+describe("listedReply (agent submits a tool we already list)", () => {
+  const base = { baseUrl: "https://agentoolrank.com", slug: "crewai", listingUrl: "https://agentoolrank.com/tool/crewai", badgeHtml: "<a>badge</a>" };
+  it("offers the featured slot with a trackable buy link and the badge", () => {
+    const r = listedReply({ ...base, paymentsEnabled: true });
+    expect(r.status).toBe("already_listed");
+    expect(r.featured_offer?.price_usd).toBe(49);
+    expect(r.featured_offer?.buy_url).toBe("https://agentoolrank.com/tool/crewai?ref=agent-listed#maintainers");
+    expect(r.badge_html).toBe("<a>badge</a>");
+    expect(r.message_for_human).toContain("$49");
+    expect(r.featured_offer?.what_you_get).not.toMatch(/review|refund/i);
+  });
+  it("drops the offer when payments are off", () => {
+    const r = listedReply({ ...base, paymentsEnabled: false });
+    expect(r.featured_offer).toBeNull();
+    expect(r.message_for_human).not.toContain("$");
+  });
+});
