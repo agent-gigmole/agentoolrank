@@ -1362,3 +1362,9 @@
 - **没做**：注册日期聚集检测（我们提交量个位数，不值得）
 - **仍进行中**：/submit 顶部维护者说明（6a5311c 未部署）
 - **下一步**：/submit 顶部说明部署 + 线上核对 + 看板；人工看 #13 sol-defi-desk；考虑已收录工具的 Stripe 商品描述；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 03:3x /submit 维护者说明上线 + 已收录工具 Stripe 描述修正上线 + 「页面已上线」通知邮件开工（6a5311c、8c96c29 部署，b506a87，48c812e）
+- **/submit 顶部维护者说明已上线**：「Already listed? Paste its GitHub link below and submit: you'll get the badge and can feature it…」
+- **Stripe 描述已修正**：checkoutForm 在 submissionId 0（已收录工具）+ featured 时去掉「Fast-track review」，改为「7 days in the Featured section of the AgentoolRank homepage and at the top of your category page.」+ 测试，364 全过；已部署，真 Chrome 实测到 checkout.stripe.com 描述正确；看板已记（b506a87）
+- **进行中：审核通过后发「你的页面已上线」邮件**——起因：提交表单承诺「We'll email you when your page is live」，但代码里从没发过。第一步 48c812e（已 push，未接发送）：src/lib/live-email.ts liveEmail({name,slug,baseUrl}) → {subject,text}，含页面链接、徽章代码、$49 推荐位链接（/tool/<slug>#maintainers）+3 测试
+- **下一步**：review-submissions --apply 通过时用 Brevo 发（事务性；标签不要用 outreach，免得混进外联健康统计），记 sent 防重发；回补已通过的 #5/#7/#8 前先确认他们留的邮箱；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

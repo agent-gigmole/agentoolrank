@@ -1302,3 +1302,9 @@
 - 做法：safety.ts scamMatch + holdReasons（IP/sslip/nip/xip 主机、同名不同官网+仓库=疑似冒名）；review-submissions.ts hold → note 'hold: …' 保持 pending；scam 模板 LLM 前后都直接拒（LLM 后查 LLM 简介 + 官网正文前 2000 字）；+5 测试 363 全过，dry run 正常，已 bus 回复 agentkit
 - 坑：npx tsx 跑临时脚本要用 .mts 且放 apps/agent-tools/scripts 下（GOTCHAS#bun-path-noninteractive-tla 补一条）
 - 结果：成功（没做注册日期聚集，提交量个位数）
+
+## 2026-10-04 03:33 /submit 维护者说明 + 已收录工具 Stripe 描述修正上线，「页面已上线」邮件开工（6a5311c、8c96c29 部署，b506a87，48c812e）
+- 做法：/submit 顶部加已收录工具维护者直达说明；checkoutForm 对 submissionId 0 + featured 去掉「Fast-track review」改为首页 Featured + 类目置顶 7 天描述（+测试，364 全过）；部署，看板记一行；队尾新增「审核通过后发『你的页面已上线』邮件」，第一步 live-email.ts liveEmail()（页面链接 + 徽章代码 + $49 推荐位链接，+3 测试）已提交 push，未接发送
+- 结果：真 Chrome 实测到 checkout.stripe.com 描述正确；发现表单承诺「We'll email you when your page is live」从未实现
+- 坑：对外文案承诺的通知邮件代码里没有（GOTCHAS#form-promise-not-implemented）；GOTCHAS#checkout-listed-tool-featured-only 描述已修正
+- 结果：成功（上线通知邮件进行中：下一步接 review-submissions --apply + Brevo 事务性发送 + 防重发）

@@ -1075,5 +1075,11 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 ## checkout-listed-tool-featured-only
 - /api/checkout 给**已收录工具**（没有 submission 记录）买推荐时，只允许 plan=featured（$49）；fast/priority 等档依赖 submission 审核队列，对已收录工具无意义，会被拒
 - 做法：给已收录工具的付费入口（详情页 #maintainers、/downloads、/alternatives、提交结果页 alreadyListed）只展示 featured；PaidOptions 用 listed 模式（684df92），不要复用提交成功页的全档位列表
-- **商品描述也要分开**（未改）：Stripe featured 商品描述写的是「Fast-track review plus 7 days…」，对已收录工具不准确（已收录不用审核）。结账页文案是按 submission 场景写的；以后给已收录工具单独一段描述（如按有无 submission 选 product_data.description），改前先在真 Chrome 打开结账页看实际显示
+- **商品描述也要分开**（已修正，8c96c29：submissionId 0 + featured 时描述改为「7 days in the Featured section of the AgentoolRank homepage and at the top of your category page.」，真 Chrome 核过）：Stripe featured 商品描述写的是「Fast-track review plus 7 days…」，对已收录工具不准确（已收录不用审核）。结账页文案是按 submission 场景写的；以后给已收录工具单独一段描述（如按有无 submission 选 product_data.description），改前先在真 Chrome 打开结账页看实际显示
 - 来源：2026-10-04 684df92（已收录工具提交结果页维护者入口，部署后真 Chrome 点到 checkout.stripe.com 发现描述问题）
+
+## form-promise-not-implemented
+- 现象：/submit 表单对提交者承诺「We'll email you when your page is live」，但代码里从来没有发这封邮件（审核通过只改状态）。已通过的 #5/#7/#8 都没收到
+- 教训：对外文案（表单提示、结账描述、邮件）里每一句承诺都要能在代码里找到对应实现；上线新文案或回看旧页面时 grep 一遍「email you / we'll / notify」之类承诺词，对照代码
+- 做法：src/lib/live-email.ts liveEmail()（48c812e）生成正文；发送接在 review-submissions --apply 通过时，走 Brevo 事务性邮件，标签不要用 outreach（免得混进外联健康统计），记 sent 防重发；补发前先确认提交者留的邮箱
+- 来源：2026-10-04 做 /submit 维护者说明时发现
