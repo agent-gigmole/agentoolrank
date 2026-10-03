@@ -52,3 +52,11 @@ export function sendingBlocked(outreach: BrevoStats, account: BrevoStats): strin
   if (shared > 0) return `shared Brevo account has ${shared} spam report/block in 7 days`;
   return null;
 }
+
+/** Per-address check before sending: the domain must accept mail (MX), and Brevo must not have blocked the address
+ *  for any project on the shared account (a dead mailbox can still sit on a domain with MX). */
+export function preflightSkip(email: string, mxRecords: number, blocked: Set<string>): string | null {
+  if (mxRecords < 1) return "domain has no MX record";
+  if (blocked.has(email.toLowerCase())) return "address is in the shared Brevo account's blocked contacts";
+  return null;
+}

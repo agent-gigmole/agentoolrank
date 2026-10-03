@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { outreachEmail, badgeMarkdown, isGroupAddress, sendingBlocked } from "./outreach";
+import { outreachEmail, badgeMarkdown, isGroupAddress, sendingBlocked, preflightSkip } from "./outreach";
 
 describe("outreach", () => {
   const e = outreachEmail({ owner: "Jane", name: "FastMCP", slug: "fastmcp", rank: 2, total: 29, category: "MCP Servers" }, "https://agentoolrank.com");
@@ -40,5 +40,13 @@ describe("sendingBlocked (nightly outreach pipeline gate)", () => {
     expect(sendingBlocked(clean, { ...clean, spamReports: 1 })).toMatch(/account/);
     expect(sendingBlocked(clean, { ...clean, blocked: 2 })).toMatch(/account/);
     expect(sendingBlocked(clean, { ...clean, hardBounces: 1 })).toBeNull();
+  });
+});
+
+describe("preflightSkip (shared Brevo account guard, agentkit 17:05)", () => {
+  it("skips domains without MX and addresses Brevo already blocked for any project", () => {
+    expect(preflightSkip("a@nomx.dev", 0, new Set())).toMatch(/MX/);
+    expect(preflightSkip("Gone@Acme.dev", 1, new Set(["gone@acme.dev"]))).toMatch(/blocked/);
+    expect(preflightSkip("ok@acme.dev", 2, new Set(["gone@acme.dev"]))).toBeNull();
   });
 });

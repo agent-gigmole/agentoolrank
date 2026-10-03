@@ -6,6 +6,7 @@
  * - data/outreach/category.json ({ slug: category-slug }) pins the category to report when the tool's best-ranking
  *   category isn't its real home (must be one of its stored categories).
  * - Rank / total / name are recomputed from the live DB so the email never states stale numbers.
+ * - Skips (and opts out) addresses whose domain has no MX, or that the shared Brevo account already blocked.
  * Usage: bun run scripts/send-outreach.ts [--dry-run] [--limit=N] [--test=you@example.com] [--require-healthy]
  *   --require-healthy (nightly timer agentoolrank-outreach): check 7-day Brevo stats first and exit 2 without sending
  *   if our tag had any bounce/block/spam/invalid, or the shared account any spam report/block (lib/outreach sendingBlocked).
@@ -14,7 +15,8 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { outreachEmail, isGroupAddress, sendingBlocked, type BrevoStats } from "../src/lib/outreach";
+import { outreachEmail, isGroupAddress, preflightSkip, sendingBlocked, type BrevoStats } from "../src/lib/outreach";
+import { resolveMx } from "node:dns/promises";
 import { cstDayRange } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
@@ -94,9 +96,35 @@ const queue = candidates.filter((c) => !already.has(c.email.toLowerCase()) && !o
 const room = test ? 1 : Math.min(DAILY_CAP - sentToday, Number(arg("limit") ?? DAILY_CAP));
 console.log(`candidates=${candidates.length} sent_total=${sent.length} sent_today=${sentToday} queue=${queue.length} room=${room}`);
 
+// Shared-account guards (agentkit 10-03 17:05): skip and opt out addresses whose domain has no MX or that Brevo
+// already blocked for any of the projects on this account.
+async function blockedContacts(): Promise<Set<string>> {
+  const key = readFileSync(`${process.env.HOME}/.config/secrets/brevo-api-key`, "utf8").trim();
+  const out = new Set<string>();
+  for (let offset = 0; ; offset += 100) {
+    const res = await fetch(`https://api.brevo.com/v3/smtp/blockedContacts?limit=100&offset=${offset}`, { headers: { "api-key": key } });
+    if (!res.ok) throw new Error(`brevo blockedContacts ${res.status}`); // unknown = don't send
+    const page = ((await res.json()).contacts ?? []) as { email: string }[];
+    for (const c of page) out.add(c.email.toLowerCase());
+    if (page.length < 100) return out;
+  }
+}
+const blocked = test ? new Set<string>() : await blockedContacts();
+const mxCount = async (email: string) => (await resolveMx(email.split("@")[1]).catch(() => [])).length;
+const optoutList = load<string[]>("optout.json", []);
+
 let n = 0;
 for (const c of queue) {
   if (n >= room) break;
+  const why = test ? null : preflightSkip(c.email, await mxCount(c.email), blocked);
+  if (why) {
+    console.log(`skip ${c.slug}: ${why} → optout`);
+    if (!dryRun) {
+      optoutList.push(c.email.toLowerCase());
+      writeFileSync(dir + "optout.json", JSON.stringify(optoutList, null, 2));
+    }
+    continue;
+  }
   const t = await live(c.slug);
   if (!t || t.rank < 1) { console.log(`skip ${c.slug}: not in DB / no category`); continue; }
   const mail = outreachEmail({ owner: c.owner, slug: c.slug, ...t }, BASE);
