@@ -72,10 +72,11 @@
 - ✅ /submit-kit 写出我们自己的实测战绩（10-04 00:10 上线：提交 41、上线 7、可跟随 4，从 listing_checks 现算，每天自动更新）
 - ✅ 详情页维护者区加 Submit Kit 入口（maintainer-kit，10-04 00:30 上线核对）
 - ✅ 押注①外联放量写进代码：dailyCap 10 → 15（10-08）→ 20（10-12），只在 7 天健康检查干净时放量（6fd3db8）
-- 外联主题 A/B：已接入发信（tags outreach + outreach-a|b，sent.json 记 variant；10-04 22:00 首批生效）；剩 brevo-tag-health 按 a/b 输出打开率、10-12 前每组 ≥30 封再下结论；判定以回复数和 ref=outreach 落地访问为准，打开率含 Apple MPP 预取只作参考（email-delivery 已记）；落地链接是否区分 variant 未核实
+- 外联主题 A/B：已接入发信，落地链接带 ref=outreach-a|b（34b2048），判定看各组落地会话数和回复数（Brevo 打开率含 Apple 预取不可信）；10-12 前每组 ≥30 封再下结论，结论写进周报外部评测
 - 10-08 核对放量首日：定时器发了 15 封、Brevo 健康仍干净
 - ✅ 工具页结构化数据加近 30 天下载量（InteractionCounter / DownloadAction，10-04 01:0x 上线核对）
-- 对比页 /compare/* 的结构化数据也带两边的下载量（ItemList 里两个 SoftwareApplication 各带 interactionStatistic）
+- ✅ 对比页 /compare/* 结构化数据：ItemList 两个 SoftwareApplication + 下载量计数（10-04 01:1x 上线核对）
+- 替代品页 ItemList 的每一项也改成 SoftwareApplication 并带下载量计数（复用 compare-jsonld 的 app 构造）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

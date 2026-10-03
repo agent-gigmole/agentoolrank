@@ -1241,3 +1241,9 @@
 - 做了什么：老板指示要老板做的事改用 agentkit bin/boss-todo 数据库（#35/#36/#37 在库，OpenRouter $5.55 记 note，BOSS_QUEUE.md 只作导出物）；工具页 JSON-LD 加 InteractionCounter（DownloadAction，npm+PyPI 30 天下载）部署，线上 /tool/langchain 169366312；外联主题 A/B 接入 send()（tags outreach + outreach-a|b，sent.json 记 variant），dry-run 10 封约 5/5
 - 结果：成功（JSON-LD 线上已核对；A/B 22:00 首批未核实）
 - 坑：无新坑
+
+## 2026-10-04 01:0x–01:2x 外联 A/B 落地分组 + 对比页结构化数据 + 替代品页结构化数据开工
+- 做法：外联落地链接按组带 ?ref=outreach-a|b（34b2048），MaintainerBanner 改 startsWith("outreach")，部署后核对线上 chunk，看板记一行；对比页加 compare-jsonld.ts（ItemList 两个 SoftwareApplication，url 指本站 /tool/<id>，有下载量才加 InteractionCounter）+ 测试，部署后核对 /compare/langchain-vs-mastra（169366312 / 3093776）；接着替代品页 ItemList 每项改用 softwareAppJsonLd（d4bae19 WIP）
+- 结果：A/B 落地分组与对比页 JSON-LD 已上线核对，测试 350 通过；替代品页未部署
+- 坑：无新坑
+- 结果：成功（替代品页结构化数据进行中）

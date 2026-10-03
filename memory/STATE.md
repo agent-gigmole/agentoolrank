@@ -1296,3 +1296,10 @@
 - **工具页 JSON-LD 带下载量**（0120cbf，已部署）：SoftwareApplication 加 interactionStatistic（InteractionCounter / DownloadAction，userInteractionCount = npm+PyPI 近 30 天下载合计 totalDownloads）；线上 /tool/langchain 为 169366312（已核对）；看板已记（e53799a）
 - **外联主题 A/B 接入发信**（bbf1e61）：send() 带 variant，Brevo tags ["outreach","outreach-a|b"]（保留 outreach 供健康闸门统计），sent.json 记 variant；dry-run 10 封约 5/5 分组；测试全过。今晚 22:00 定时批次首次生效（未核实）
 - **下一步**：对比页 /compare/* JSON-LD 带两边下载量；brevo-tag-health 按 a/b 输出打开率；22:00 A/B 首批实发核对（未核实）
+
+## 2026-10-04 01:0x–01:2x 外联 A/B 落地分组上线 + 对比页结构化数据上线 + 替代品页结构化数据开工（34b2048、42bea6b、10c0239、8a36d52、d4bae19）
+- **外联落地链接带组别**（34b2048，已部署；看板 42bea6b）：有 variant 时落地链接为 ?ref=outreach-a|b，无 variant 仍为 ?ref=outreach；MaintainerBanner 改为 ref 以 "outreach" 开头即显示；kpi 外联会话 src LIKE '%outreach%' 不受影响。线上 chunk 含 startsWith("outreach")（已核对）。A/B 判定改看各组落地会话数和回复数（Brevo 打开率含 Apple 预取，只作参考）
+- **对比页结构化数据**（10c0239，已部署；看板 8a36d52）：src/lib/compare-jsonld.ts 的 compareJsonLd + softwareAppJsonLd（SoftwareApplication，url 指本站 /tool/<id>，有下载量才加 InteractionCounter）+ 测试；线上 /compare/langchain-vs-mastra 有 ItemList「LangChain vs Mastra」，计数 169366312 / 3093776（已核对）；测试 350 通过
+- **替代品页结构化数据（进行中，d4bae19 WIP 已提交未部署）**：/alternatives/[slug] 的 ItemList 每项改为 softwareAppJsonLd(alt, dl, baseUrl)
+- **TASK 队列**：对比页 JSON-LD ✅；外联 A/B 改看落地分组；替代品页 JSON-LD 进行中
+- **下一步**：d4bae19 测试+部署并线上核对 /alternatives/*；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
