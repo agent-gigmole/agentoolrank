@@ -1,15 +1,15 @@
 ---
 title: "Where to list an MCP server or AI agent tool: free vs paid (checked Oct 2026)"
-published: false
+published: true
 tags: mcp, ai, opensource, showdev
 canonical_url: https://agentoolrank.com/where-to-list
 ---
 
 <!-- 发布计划：2026-10-03（与 10-01 的数据长文错开，避免同账号同日连发）。canonical 指向 /where-to-list。链接带 ?ref=devto2。 -->
 
-*Disclosure: I build [AgentoolRank](https://agentoolrank.com/?ref=devto2), one of the directories in the table below. Prices and review times were checked on each site's submit page on 2026-10-01; they change, so check the links before you decide. The up-to-date version of this table lives at [agentoolrank.com/where-to-list](https://agentoolrank.com/where-to-list?ref=devto2).*
+*Disclosure: I build [AgentoolRank](https://agentoolrank.com/?ref=devto2), one of the directories in the table below. Prices and review times were checked on each site's submit page on 2026-10-01; they change, so check the links before you decide. The up-to-date version of this table lives at [agentoolrank.com/where-to-list](https://agentoolrank.com/where-to-list?ref=devto2), which now also has a filterable list of 101 general directories our products went through (free options, badge or backlink conditions, login and captcha).*
 
-This week I shipped a public MCP server (`https://agentoolrank.com/api/mcp`, which can search 669 open-source agent tools, pull GitHub stats and alternatives) and went through the places an MCP or agent-tool builder would reasonably list it. I published to the MCP Registry, submitted to mcpservers.org and PeerPush's free queue, and checked the submit pages of the rest. Here's what each asks for and what's free.
+This week I shipped a public MCP server (`https://agentoolrank.com/api/mcp`, which can search 593 open-source agent tools, pull GitHub stats and alternatives) and went through the places an MCP or agent-tool builder would reasonably list it. I published to the MCP Registry, submitted to mcpservers.org and PeerPush's free queue, and checked the submit pages of the rest. Here's what each asks for and what's free.
 
 ## The short version
 
