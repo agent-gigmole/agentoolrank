@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug, getToolPackages } from "@repo/db/queries";
-import { compactCount, totalDownloads } from "@/lib/downloads";
+import { compactCount, totalDownloads, usageVerdict } from "@/lib/downloads";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
@@ -88,6 +88,7 @@ export default async function AlternativesPage({ params }: Props) {
   const verdict = alternativesVerdict(tool, alts, new Date());
   const dl = new Map(await Promise.all([tool, ...alts].map(async (t) => [t.id, totalDownloads(await getToolPackages(t.id))] as const)));
   const showDl = [...dl.values()].some((v) => v !== null);
+  const usage = usageVerdict([tool, ...alts].map((t) => ({ name: t.name, stars: t.github_stars, downloads: dl.get(t.id) ?? null })));
   const intel = parseIntel(tool.intelligence);
   const year = new Date().getFullYear();
   const crumbs = [
@@ -126,6 +127,7 @@ export default async function AlternativesPage({ params }: Props) {
           with live GitHub data so you can see which projects are actively maintained.
         </p>
 
+        {usage && <p className="text-sm text-gray-700 mb-2">{usage} <Link href="/downloads" className="text-blue-600 hover:underline">See all agent tools by downloads</Link>.</p>}
         <div className="overflow-x-auto mb-10 border border-gray-200 rounded-lg">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-gray-500">

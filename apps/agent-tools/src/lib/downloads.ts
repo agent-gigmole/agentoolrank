@@ -97,3 +97,13 @@ export function totalDownloads(rows: { downloads_30d: number | null }[]): number
   const known = rows.filter((r) => typeof r.downloads_30d === "number");
   return known.length ? known.reduce((s, r) => s + (r.downloads_30d as number), 0) : null;
 }
+
+/** One sentence for /alternatives: who is actually used most (downloads) versus who gets the most attention (stars). */
+export function usageVerdict(tools: { name: string; stars: number | null; downloads: number | null }[]): string | null {
+  const counted = tools.filter((t) => typeof t.downloads === "number");
+  if (counted.length < 2) return null;
+  const used = [...counted].sort((a, b) => (b.downloads as number) - (a.downloads as number))[0];
+  const starred = [...tools].sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0))[0];
+  const head = `By package downloads ${used.name} is the most used here (${compact(used.downloads as number)} in the last 30 days)`;
+  return starred.name === used.name ? `${head}, and it also has the most GitHub stars.` : `${head}, even though ${starred.name} has the most GitHub stars.`;
+}

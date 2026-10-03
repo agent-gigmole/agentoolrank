@@ -75,3 +75,19 @@ describe("totalDownloads", () => {
     expect(totalDownloads([])).toBeNull();
   });
 });
+
+describe("usageVerdict", () => {
+  it("names the most-downloaded tool and, if different, the most-starred one", async () => {
+    const { usageVerdict } = await import("./downloads");
+    expect(usageVerdict([
+      { name: "A", stars: 50000, downloads: 1_000_000 },
+      { name: "B", stars: 9000, downloads: 40_000_000 },
+      { name: "C", stars: 100, downloads: null },
+    ])).toBe("By package downloads B is the most used here (40.0M in the last 30 days), even though A has the most GitHub stars.");
+    expect(usageVerdict([{ name: "A", stars: 5, downloads: 900 }, { name: "B", stars: 1, downloads: 10 }])).toBe("By package downloads A is the most used here (900 in the last 30 days), and it also has the most GitHub stars.");
+  });
+  it("says nothing when fewer than two tools have download counts", async () => {
+    const { usageVerdict } = await import("./downloads");
+    expect(usageVerdict([{ name: "A", stars: 5, downloads: 900 }, { name: "B", stars: 1, downloads: null }])).toBeNull();
+  });
+});
