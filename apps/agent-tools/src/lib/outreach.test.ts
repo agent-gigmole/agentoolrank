@@ -62,3 +62,15 @@ describe("outreachEmail with package downloads", () => {
     expect(outreachEmail(base, "https://agentoolrank.com").text).not.toContain("downloads in the last 30 days");
   });
 });
+
+describe("mxVerdict (only a definite DNS answer opts an address out — agentkit 10-03 20:41)", () => {
+  it("treats ENOTFOUND / ENODATA as no MX, other errors as unknown", async () => {
+    const { mxVerdict } = await import("./outreach");
+    expect(mxVerdict({ records: 2 })).toBe("ok");
+    expect(mxVerdict({ records: 0 })).toBe("none");
+    expect(mxVerdict({ error: "ENOTFOUND" })).toBe("none");
+    expect(mxVerdict({ error: "ENODATA" })).toBe("none");
+    expect(mxVerdict({ error: "ETIMEOUT" })).toBe("unknown");
+    expect(mxVerdict({ error: "ESERVFAIL" })).toBe("unknown");
+  });
+});

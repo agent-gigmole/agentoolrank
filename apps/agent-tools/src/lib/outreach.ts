@@ -63,3 +63,9 @@ export function preflightSkip(email: string, mxRecords: number, blocked: Set<str
   if (blocked.has(email.toLowerCase())) return "address is in the shared Brevo account's blocked contacts";
   return null;
 }
+
+/** MX lookup result: only a definite "no such domain / no MX" counts as none; timeouts and server failures are unknown. */
+export function mxVerdict(r: { records?: number; error?: string }): "ok" | "none" | "unknown" {
+  if (r.error) return r.error === "ENOTFOUND" || r.error === "ENODATA" ? "none" : "unknown";
+  return (r.records ?? 0) > 0 ? "ok" : "none";
+}

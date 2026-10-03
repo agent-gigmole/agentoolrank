@@ -15,7 +15,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { outreachEmail, isGroupAddress, preflightSkip, sendingBlocked, type BrevoStats } from "../src/lib/outreach";
+import { outreachEmail, isGroupAddress, mxVerdict, preflightSkip, sendingBlocked, type BrevoStats } from "../src/lib/outreach";
 import { resolveMx } from "node:dns/promises";
 import { downloadsLine } from "../src/lib/downloads";
 import { cstDayRange } from "../src/lib/kpi";
@@ -111,13 +111,26 @@ async function blockedContacts(): Promise<Set<string>> {
   }
 }
 const blocked = test ? new Set<string>() : await blockedContacts();
-const mxCount = async (email: string) => (await resolveMx(email.split("@")[1]).catch(() => [])).length;
+// Only a definite DNS answer (ENOTFOUND / ENODATA / empty) means "no MX" and opts the address out. Timeouts and server
+// failures are retried once, then the address is skipped this round only (agentkit 10-03: new_ladar lost hi3d.ai that way).
+async function mxCheck(email: string): Promise<"ok" | "none" | "unknown"> {
+  const once = () => resolveMx(email.split("@")[1]).then((r) => mxVerdict({ records: r.length }), (e: NodeJS.ErrnoException) => mxVerdict({ error: e.code }));
+  const v = await once();
+  if (v !== "unknown") return v;
+  await new Promise((r) => setTimeout(r, 2000));
+  return once();
+}
 const optoutList = load<string[]>("optout.json", []);
 
 let n = 0;
 for (const c of queue) {
   if (n >= room) break;
-  const why = test ? null : preflightSkip(c.email, await mxCount(c.email), blocked);
+  const mx = test ? "ok" : await mxCheck(c.email);
+  if (mx === "unknown") {
+    console.log(`skip ${c.slug}: MX lookup failed twice (temporary DNS error) — not opted out, retry next run`);
+    continue;
+  }
+  const why = test ? null : preflightSkip(c.email, mx === "ok" ? 1 : 0, blocked);
   if (why) {
     console.log(`skip ${c.slug}: ${why} → optout`);
     if (!dryRun) {
