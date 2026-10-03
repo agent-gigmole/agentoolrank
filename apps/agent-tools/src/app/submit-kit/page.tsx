@@ -69,6 +69,7 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
       <pre className="bg-gray-50 border rounded-lg p-3 text-xs overflow-x-auto mb-4">{`{ "mcpServers": { "agentoolrank": { "url": "https://agentoolrank.com/api/mcp" } } }
 
 recommend_directories({ "product_type": "ai_tool" })   // ai_tool | mcp_server | dev_tool | saas | other`}</pre>
+      <p className="text-sm text-gray-600 mb-4">Optional: a <Link href="/api-key" className="underline">free API key</Link> (one click, no signup) identifies your agent; the free top 10 works without it.</p>
       <p className="text-sm text-gray-600">
         The free comparison table is at <Link href="/where-to-list" className="underline">/where-to-list</Link>. Facts come from our own
         submissions and carry a last-verified date; entries older than 30 days are marked stale. Questions: hello@agentoolrank.com.

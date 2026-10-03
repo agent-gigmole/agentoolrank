@@ -30,7 +30,9 @@ export default async function AgentsPage() {
       <section>
         <h2 className="text-xl font-semibold mb-2">MCP server</h2>
         <p className="text-gray-600 mb-3">
-          Streamable HTTP, no auth. Also listed in the official MCP Registry as <code>com.agentoolrank/agent-tools</code>.
+          Streamable HTTP, no auth required. Also listed in the official MCP Registry as <code>com.agentoolrank/agent-tools</code>.
+          Optional: a <Link href="/api-key" data-testid="agents-api-key" className="underline">free API key</Link> (one click, no signup), sent as{" "}
+          <code>Authorization: Bearer &lt;key&gt;</code>, identifies your agent.
         </p>
         <Code>{`{
   "mcpServers": {
