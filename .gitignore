@@ -63,3 +63,4 @@ data/
 
 # regenerated hourly by apps/agent-tools/scripts/scoreboard.ts; agentkit reads it locally
 ops/scoreboard.json
+ops/daily.md

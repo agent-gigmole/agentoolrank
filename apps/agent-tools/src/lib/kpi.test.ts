@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cstDayRange, renderKpi, replaceBlock } from "./kpi";
+import { cstDayRange, renderDaily, renderKpi, replaceBlock } from "./kpi";
 
 describe("cstDayRange", () => {
   it("maps a China-time day to UTC SQLite bounds", () => {
@@ -40,5 +40,27 @@ describe("replaceBlock", () => {
   });
   it("throws when markers are missing", () => {
     expect(() => replaceBlock("no markers", "x")).toThrow();
+  });
+});
+
+describe("renderDaily", () => {
+  const d = {
+    generated: "2026-10-04 09:00", day: "2026-10-03",
+    yesterday: { visitors: 14, submitViews: 2, submissions: 1, paid: 0, revenueCents: 0 },
+    week: { visitors: 80, submitViews: 9, submissions: 3, paid: 1, revenueCents: 2900 },
+    totalRevenueCents: 2900, externalSubmissions: 3, monthRevenueCents: 2900, gscClicks28d: 3, zhVisitors7d: 4,
+    jaVisitors7d: 2, outreachSent: 20, outreachVisitors7d: 5, dirSubmitted: 41, dirLive: 6, kitOrders7d: 1, devtoVisitors7d: 7,
+  };
+  const md = renderDaily(d);
+  it("fits in the 15 lines agentkit appends to the daily report", () => {
+    expect(md.trimEnd().split("\n").length).toBeLessThanOrEqual(15);
+  });
+  it("carries the project-specific numbers the scoreboard lacks", () => {
+    expect(md).toContain("外联：累计 20 封，近 7 天带来 5 个会话");
+    expect(md).toContain("目录站：已提交 41，已确认上线 6");
+    expect(md).toContain("Submit Kit：近 7 天 1 单");
+    expect(md).toContain("工具提交：昨天 1，近 7 天 3（提交页访客 9）");
+    expect(md).toContain("dev.to 来源 7 天 7");
+    expect(md).toContain("Google 点击 28 天 3");
   });
 });

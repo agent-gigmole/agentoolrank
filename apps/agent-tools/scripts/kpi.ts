@@ -5,7 +5,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-import { cstDayRange, renderKpi, replaceBlock, type Window } from "../src/lib/kpi";
+import { cstDayRange, renderDaily, renderKpi, replaceBlock, type KpiData, type Window } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN });
@@ -60,7 +60,7 @@ const y = cstDayRange(now, -1);
 const wk = cstDayRange(now, -7);
 const today = cstDayRange(now, 0);
 const monthStart = `${today.day.slice(0, 8)}01`;
-const html = renderKpi({
+const data: KpiData = {
   generated: new Date(now.getTime() + 8 * 3600_000).toISOString().slice(0, 16).replace("T", " "),
   day: y.day,
   yesterday: await window(y.from, y.to),
@@ -75,6 +75,15 @@ const html = renderKpi({
   outreachVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND src LIKE '%outreach%' AND ts >= ?`, [wk.from]),
   dirSubmitted: directoryCounts().submitted,
   dirLive: directoryCounts().live,
-});
-writeFileSync(DASH, replaceBlock(readFileSync(DASH, "utf8"), html));
+};
+writeFileSync(DASH, replaceBlock(readFileSync(DASH, "utf8"), renderKpi(data)));
+// ops/daily.md feeds agentkit's 09:00 daily report (bin/daily-report appends its first 15 lines).
+writeFileSync(
+  new URL("../../../ops/daily.md", import.meta.url).pathname,
+  renderDaily({
+    ...data,
+    kitOrders7d: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
+    devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
+  }),
+);
 console.log(`kpi updated for ${y.day}`);
