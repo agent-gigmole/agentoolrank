@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug, getToolPackages } from "@repo/db/queries";
 import { compactCount, totalDownloads, usageVerdict } from "@/lib/downloads";
+import { softwareAppJsonLd } from "@/lib/compare-jsonld";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
 import type { Tool } from "@repo/db/schema";
@@ -64,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function ItemListJsonLd({ tool, alts }: { tool: Tool; alts: Tool[] }) {
+function ItemListJsonLd({ tool, alts, dl }: { tool: Tool; alts: Tool[]; dl?: Map<string, number | null> }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const data = {
     "@context": "https://schema.org",
@@ -73,8 +74,7 @@ function ItemListJsonLd({ tool, alts }: { tool: Tool; alts: Tool[] }) {
     itemListElement: alts.map((a, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${baseUrl}/tool/${a.id}`,
-      name: a.name,
+      item: softwareAppJsonLd(a, dl?.get(a.id) ?? null, baseUrl), // with 30-day downloads where we have a count
     })),
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
@@ -99,7 +99,7 @@ export default async function AlternativesPage({ params }: Props) {
   return (
     <>
       <BreadcrumbJsonLd items={crumbs} />
-      <ItemListJsonLd tool={tool} alts={alts} />
+      <ItemListJsonLd tool={tool} alts={alts} dl={dl} />
       <main className="max-w-5xl mx-auto px-4 py-8">
         <Breadcrumbs items={crumbs} />
         <h1 className="text-3xl font-bold text-gray-900 mb-3">{alternativesTitle(tool.name, alts.length, year)}</h1>

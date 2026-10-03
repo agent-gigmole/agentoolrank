@@ -2,7 +2,7 @@
 // downloads as an InteractionCounter where we have a count (same numbers the page shows).
 interface ToolLike { id: string; name: string; tagline?: string | null; website_url?: string | null; github_url?: string | null }
 
-function app(t: ToolLike, downloads: number | null, baseUrl: string) {
+export function softwareAppJsonLd(t: ToolLike, downloads: number | null, baseUrl: string) {
   const item: Record<string, unknown> = {
     "@type": "SoftwareApplication",
     name: t.name,
@@ -21,6 +21,6 @@ export function compareJsonLd(a: ToolLike, b: ToolLike, dlA: number | null, dlB:
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: `${a.name} vs ${b.name}`,
-    itemListElement: [app(a, dlA, baseUrl), app(b, dlB, baseUrl)].map((item, i) => ({ "@type": "ListItem", position: i + 1, item })),
+    itemListElement: [softwareAppJsonLd(a, dlA, baseUrl), softwareAppJsonLd(b, dlB, baseUrl)].map((item, i) => ({ "@type": "ListItem", position: i + 1, item })),
   };
 }
