@@ -125,6 +125,11 @@ const daily = {
       clicked: await sess(`name='ui_click' AND json_extract(props,'$.label')='kit-buy'`),
       done: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
     },
+    apiCalls: {
+      total: await n(`SELECT COUNT(*) n FROM api_calls WHERE src NOT LIKE '%selftest%' AND ts >= ?`, [wk.from]),
+      withKey: await n(`SELECT COUNT(*) n FROM api_calls WHERE src NOT LIKE '%selftest%' AND key_id != '' AND ts >= ?`, [wk.from]),
+      topTool: await db.execute({ sql: `SELECT tool FROM api_calls WHERE src NOT LIKE '%selftest%' AND ts >= ? GROUP BY tool ORDER BY COUNT(*) DESC LIMIT 1`, args: [wk.from] }).then((r) => String(r.rows[0]?.tool ?? ""), () => ""),
+    },
     maintainer: {
       ctaClicks: await sess(`name='ui_click' AND json_extract(props,'$.label') IN ('downloads-maintainer-cta','alternatives-maintainer-cta')`),
       badgeCopies: await sess(`name='badge_copy'`),

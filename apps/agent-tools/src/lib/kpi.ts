@@ -45,7 +45,7 @@ export function replaceBlock(html: string, block: string): string {
 }
 
 /** ops/daily.md project lines (after the vi block): at most 7, so vi block (≤8) + these fit the 15 lines agentkit attaches. */
-export function renderDaily(d: KpiData & { devtoVisitors7d: number; submitFunnel: Funnel; kitFunnel: Funnel; maintainer: { ctaClicks: number; badgeCopies: number; featuredCheckouts: number } }): string {
+export function renderDaily(d: KpiData & { devtoVisitors7d: number; submitFunnel: Funnel; kitFunnel: Funnel; maintainer: { ctaClicks: number; badgeCopies: number; featuredCheckouts: number }; apiCalls: { total: number; withKey: number; topTool: string } }): string {
   const md = d.day.slice(5);
   return [
     `# AgentoolRank 项目数据（${d.generated} 北京时间自动生成；访客=会话）`,
@@ -54,7 +54,7 @@ export function renderDaily(d: KpiData & { devtoVisitors7d: number; submitFunnel
     `- ${funnelLine("Submit Kit", d.kitFunnel)}（完成=付款，目标 10-18 前 3 单）`,
     `- 外联：累计 ${d.outreachSent} 封，近 7 天带来 ${d.outreachVisitors7d} 个会话；目录站：已提交 ${d.dirSubmitted}，已确认上线 ${d.dirLive}`,
     `- 渠道：dev.to 来源 7 天 ${d.devtoVisitors7d}；中文页 ${d.zhVisitors7d}，日文页 ${d.jaVisitors7d}；维护者：入口点击 ${d.maintainer.ctaClicks} · 复制徽章 ${d.maintainer.badgeCopies} · 首页推荐结账 ${d.maintainer.featuredCheckouts}`,
-    `- SEO：Google 点击 28 天 ${d.gscClicks28d ?? "?"}（年底目标 1000）`,
+    `- SEO：Google 点击 28 天 ${d.gscClicks28d ?? "?"}（年底目标 1000）；MCP 调用 7 天 ${d.apiCalls.total}（带 key ${d.apiCalls.withKey}${d.apiCalls.topTool ? `，最多 ${d.apiCalls.topTool}` : ""}）`,
   ].join("\n") + "\n";
 }
 
