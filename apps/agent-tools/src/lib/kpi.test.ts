@@ -52,8 +52,8 @@ describe("renderDaily", () => {
     jaVisitors7d: 2, outreachSent: 20, outreachVisitors7d: 5, dirSubmitted: 41, dirLive: 6, kitOrders7d: 1, devtoVisitors7d: 7,
   };
   const md = renderDaily(d);
-  it("fits in the 15 lines agentkit appends to the daily report", () => {
-    expect(md.trimEnd().split("\n").length).toBeLessThanOrEqual(15);
+  it("leaves room for the vi block inside the 15 lines agentkit appends", () => {
+    expect(md.trimEnd().split("\n").length).toBeLessThanOrEqual(7);
   });
   it("carries the project-specific numbers the scoreboard lacks", () => {
     expect(md).toContain("外联：累计 20 封，近 7 天带来 5 个会话");

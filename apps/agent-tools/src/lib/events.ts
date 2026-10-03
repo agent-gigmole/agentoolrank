@@ -1,7 +1,13 @@
 // First-party analytics: the browser posts small events to /api/e, stored in our own DB.
 // No third-party script (blocked by ad blockers, and one less vendor).
 
-export const EVENT_NAMES = ["page_view", "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click", "kit_click"] as const;
+// page_view / engagement / ui_click / exit_survey follow agentkit's visitor-insights spec (same names and privacy rules
+// as the other projects); the rest is our own funnel.
+export const EVENT_NAMES = [
+  "page_view", "engagement", "ui_click", "exit_survey",
+  "submit_done", "outbound_click", "badge_copy", "checkout_click", "maintainer_banner_click", "kit_click",
+] as const;
+export const SURVEY_REASONS = ["browsing", "later", "price", "unclear", "privacy", "other"] as const;
 export type EventName = (typeof EVENT_NAMES)[number];
 
 export interface AnalyticsEvent {
@@ -10,6 +16,25 @@ export interface AnalyticsEvent {
   ref: string; // referrer host, "" for direct / internal
   src: string; // utm source/medium/campaign or ?ref=
   sid: string; // random per-session id, not a user id
+  props: string; // JSON of whitelisted, bounded fields only (never typed text or emails)
+}
+
+const int = (v: unknown, max: number) => (typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.min(max, Math.round(v))) : undefined);
+
+/** Keeps only the visitor-insights fields, each bounded: a label is a data-testid, an internal path or "external". */
+export function cleanProps(raw: unknown): Record<string, string | number | boolean> {
+  if (typeof raw !== "object" || raw === null) return {};
+  const r = raw as Record<string, unknown>;
+  const out: Record<string, string | number | boolean> = {};
+  const seconds = int(r.seconds, 86_400);
+  if (seconds !== undefined) out.seconds = seconds;
+  const scroll = int(r.scroll, 100);
+  if (scroll !== undefined) out.scroll = scroll;
+  if (typeof r.label === "string" && /^(external|\/[\w\-./]{0,80}|[a-z0-9][a-z0-9_-]{0,60})$/i.test(r.label)) out.label = r.label;
+  if (typeof r.action === "string" && ["shown", "dismiss", "answer"].includes(r.action)) out.action = r.action;
+  if (typeof r.reason === "string" && (SURVEY_REASONS as readonly string[]).includes(r.reason)) out.reason = r.reason;
+  if (typeof r.touch === "boolean") out.touch = r.touch;
+  return out;
 }
 
 const SITE_HOSTS = ["agentoolrank.com", "www.agentoolrank.com"];
@@ -36,6 +61,7 @@ export function parseEvent(body: unknown): AnalyticsEvent | null {
     ref: refHost(str(b.r, 500) ?? ""),
     src: str(b.s, 120) ?? "",
     sid: str(b.sid, 40) ?? "",
+    props: JSON.stringify(cleanProps(b.props)),
   };
 }
 

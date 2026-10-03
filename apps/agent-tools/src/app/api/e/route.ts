@@ -11,7 +11,8 @@ const CREATE_EVENTS = `CREATE TABLE IF NOT EXISTS events (
   ref TEXT NOT NULL DEFAULT '',
   src TEXT NOT NULL DEFAULT '',
   sid TEXT NOT NULL DEFAULT '',
-  country TEXT NOT NULL DEFAULT ''
+  country TEXT NOT NULL DEFAULT '',
+  props TEXT NOT NULL DEFAULT '{}'
 )`;
 
 let tableReady = false;
@@ -35,8 +36,8 @@ export async function POST(req: NextRequest) {
       tableReady = true;
     }
     await db.execute({
-      sql: "INSERT INTO events (name, path, ref, src, sid, country) VALUES (?, ?, ?, ?, ?, ?)",
-      args: [e.name, e.path, e.ref, e.src, e.sid, req.headers.get("x-vercel-ip-country") ?? ""],
+      sql: "INSERT INTO events (name, path, ref, src, sid, country, props) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      args: [e.name, e.path, e.ref, e.src, e.sid, req.headers.get("x-vercel-ip-country") ?? "", e.props],
     });
   } catch (err) {
     console.error("event insert failed:", err);

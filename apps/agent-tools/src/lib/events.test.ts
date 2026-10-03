@@ -4,7 +4,7 @@ import { parseEvent, isBotUserAgent, sourceFromUrl } from "./events";
 describe("parseEvent", () => {
   it("accepts known events and trims fields", () => {
     const e = parseEvent({ n: "page_view", p: "/tool/dify?x=1", r: "https://google.com/", s: "google/cpc", sid: "abc123" });
-    expect(e).toEqual({ name: "page_view", path: "/tool/dify", ref: "google.com", src: "google/cpc", sid: "abc123" });
+    expect(e).toEqual({ name: "page_view", path: "/tool/dify", ref: "google.com", src: "google/cpc", sid: "abc123", props: "{}" });
   });
 
   it("rejects unknown event names and bad input", () => {
@@ -41,5 +41,22 @@ describe("kit_click", () => {
   it("is an accepted event so the Submit Kit entry on /submit can be measured", async () => {
     const { EVENT_NAMES } = await import("./events");
     expect(EVENT_NAMES).toContain("kit_click");
+  });
+});
+
+describe("visitor-insights props", () => {
+  const base = { p: "/tool/dify", r: "", s: "", sid: "abc" };
+  it("accepts the shared vi events", () => {
+    for (const n of ["engagement", "ui_click", "exit_survey"]) expect(parseEvent({ ...base, n })?.name).toBe(n);
+  });
+  it("keeps only whitelisted, bounded props", () => {
+    expect(parseEvent({ ...base, n: "engagement", props: { seconds: 42.4, scroll: 130, email: "a@b.c" } })?.props).toBe('{"seconds":42,"scroll":100}');
+    expect(parseEvent({ ...base, n: "ui_click", props: { label: "/submit-kit" } })?.props).toBe('{"label":"/submit-kit"}');
+    expect(parseEvent({ ...base, n: "exit_survey", props: { action: "answer", reason: "price" } })?.props).toBe('{"action":"answer","reason":"price"}');
+    expect(parseEvent({ ...base, n: "page_view", props: { touch: true } })?.props).toBe('{"touch":true}');
+  });
+  it("drops free text and unknown survey keys", () => {
+    expect(parseEvent({ ...base, n: "ui_click", props: { label: "Buy now for me@x.com" } })?.props).toBe("{}");
+    expect(parseEvent({ ...base, n: "exit_survey", props: { action: "answer", reason: "too expensive lol" } })?.props).toBe('{"action":"answer"}');
   });
 });

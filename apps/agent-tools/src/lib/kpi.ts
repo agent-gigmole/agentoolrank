@@ -44,18 +44,16 @@ export function replaceBlock(html: string, block: string): string {
   return html.replace(re, `$1${block}$2`);
 }
 
-/** ops/daily.md: project-specific lines agentkit's bin/daily-report appends (first 15 lines, if updated within 36h). */
+/** ops/daily.md project lines (after the vi block): at most 7, so vi block (≤8) + these fit the 15 lines agentkit attaches. */
 export function renderDaily(d: KpiData & { kitOrders7d: number; devtoVisitors7d: number }): string {
   const md = d.day.slice(5);
   return [
-    `# AgentoolRank 项目数据（${d.generated} 北京时间自动生成）`,
-    `- 访客：${md} ${d.yesterday.visitors}，近 7 天 ${d.week.visitors}`,
+    `# AgentoolRank 项目数据（${d.generated} 北京时间自动生成；访客=会话）`,
+    `- 访客：${md} ${d.yesterday.visitors}，近 7 天 ${d.week.visitors}；收入：本月 ${usd(d.monthRevenueCents)}，累计 ${usd(d.totalRevenueCents)}`,
     `- 工具提交：昨天 ${d.yesterday.submissions}，近 7 天 ${d.week.submissions}（提交页访客 ${d.week.submitViews}）；累计外部提交 ${d.externalSubmissions}/20`,
     `- Submit Kit：近 7 天 ${d.kitOrders7d} 单（目标 10-18 前 3 单）`,
-    `- 外联：累计 ${d.outreachSent} 封，近 7 天带来 ${d.outreachVisitors7d} 个会话`,
-    `- 目录站：已提交 ${d.dirSubmitted}，已确认上线 ${d.dirLive}`,
+    `- 外联：累计 ${d.outreachSent} 封，近 7 天带来 ${d.outreachVisitors7d} 个会话；目录站：已提交 ${d.dirSubmitted}，已确认上线 ${d.dirLive}`,
     `- 渠道：dev.to 来源 7 天 ${d.devtoVisitors7d}；中文页访客 7 天 ${d.zhVisitors7d}，日文页 ${d.jaVisitors7d}`,
     `- SEO：Google 点击 28 天 ${d.gscClicks28d ?? "?"}（年底目标 1000）`,
-    `- 收入：本月 ${usd(d.monthRevenueCents)}，累计 ${usd(d.totalRevenueCents)}`,
   ].join("\n") + "\n";
 }

@@ -5,6 +5,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { viBlock, withViBlock } from "../src/lib/vi-summary";
 import { cstDayRange, renderDaily, renderKpi, replaceBlock, type KpiData, type Window } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -78,12 +79,35 @@ const data: KpiData = {
 };
 writeFileSync(DASH, replaceBlock(readFileSync(DASH, "utf8"), renderKpi(data)));
 // ops/daily.md feeds agentkit's 09:00 daily report (bin/daily-report appends its first 15 lines).
+// visitor-insights block (agentkit skills/visitor-insights), last 24h, first in the file.
+const viSince = new Date(now.getTime() - 86400_000);
+const viFrom = viSince.toISOString().slice(0, 19).replace("T", " ");
+async function rowsOf(sql: string) {
+  try {
+    return (await db.execute({ sql, args: [viFrom] })).rows;
+  } catch {
+    return [];
+  }
+}
+let vi: string[];
+try {
+  const eng = (await db.execute({ sql: `SELECT path, CAST(json_extract(props,'$.seconds') AS INTEGER) s, CAST(COALESCE(json_extract(props,'$.scroll'),0) AS INTEGER) c FROM events WHERE ${REAL_EV} AND name='engagement' AND ts >= ?`, args: [viFrom] })).rows;
+  vi = viBlock({
+    days: 1,
+    sinceLabel: `北京 ${new Date(viSince.getTime() + 8 * 3600_000).toISOString().slice(5, 16).replace("T", " ")}`,
+    engagement: eng.map((r) => ({ path: String(r.path), seconds: Number(r.s ?? 0), scroll: Number(r.c ?? 0) })),
+    survey: (await rowsOf(`SELECT json_extract(props,'$.action') a, COALESCE(json_extract(props,'$.reason'),'') r, COUNT(*) n FROM events WHERE ${REAL_EV} AND name='exit_survey' AND ts >= ? GROUP BY 1,2 ORDER BY 3 DESC`)).map((r) => ({ action: String(r.a), reason: String(r.r), n: Number(r.n) })),
+    clicks: (await rowsOf(`SELECT json_extract(props,'$.label') l, COUNT(*) n FROM events WHERE ${REAL_EV} AND name='ui_click' AND ts >= ? GROUP BY 1 ORDER BY 2 DESC LIMIT 5`)).map((r) => ({ label: String(r.l), n: Number(r.n) })),
+  });
+} catch (e) {
+  vi = [`访客行为（近 1×24 小时）：取数失败（${(e as Error).name}），本日数字缺失，不是 0`];
+}
 writeFileSync(
   new URL("../../../ops/daily.md", import.meta.url).pathname,
-  renderDaily({
+  withViBlock(vi, renderDaily({
     ...data,
     kitOrders7d: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
-  }),
+  })),
 );
 console.log(`kpi updated for ${y.day}`);
