@@ -36,9 +36,9 @@
   <p class="muted">更新于 <span id="updated">…</span>（文件修改时间，每 60 秒自动刷新）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
 
   <!-- KPI:START -->
-  <p class="muted">每日 KPI（自动生成 2026-10-03 20:43，每小时刷新）</p>
+  <p class="muted">每日 KPI（自动生成 2026-10-03 21:17，每小时刷新）</p>
   <div class="kpis">
-    <div class="kpi"><b>28</b><span>访客（10-02）· 7 天 74</span></div>
+    <div class="kpi"><b>28</b><span>访客（10-02）· 7 天 75</span></div>
     <div class="kpi"><b>2</b><span>提交（10-02）· 7 天 11 · 提交页访客 4</span></div>
     <div class="kpi"><b>0</b><span>付费单（10-02）· 7 天 0</span></div>
     <div class="kpi"><b>$0</b><span>收入（10-02）</span></div>
@@ -160,6 +160,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-03 21:21 首页加了一张「Launching an agent tool?」卡片，放在 Most downloaded 下面。卡片说明我们实测过 101 个目录站，下面三个链接：免费实测表 /where-to-list、Submit Kit（$29）、在 AgentoolRank 免费上架。之前 /submit-kit 近 7 天没有一次访问，因为全站流量最大的首页上没有入口。三个链接都会计点击。</li>
     <li>2026-10-03 20:53 免费提交成功后的排队页，徽章那一块现在会直接显示徽章的实际样子，放在代码片段上面。插队审核靠在自己网站挂徽章，能看到长什么样，更容易照着放。已部署，线上页面代码里能找到这块。</li>
     <li>2026-10-03 20:49 两处改动，都是为了提高维护者复制徽章的比例：①工具页维护者区现在会直接显示徽章的实际样子，有下载量数据的工具同时显示星数徽章和下载量徽章；②今晚起，外联信里给的徽章按工具选，近 30 天下载 10 万以上的给下载量徽章，其余给星数徽章。今晚 22:00 这批 10 封里有 5 封给下载量徽章：OmniRoute、vLLM、headroom、Browser-Use、Firecrawl，徽章图片都能正常打开。</li>
     <li>2026-10-03 20:42 README 徽章加了「下载量」版本：/api/badge/&lt;工具&gt;?metric=downloads，显示近 30 天 npm + PyPI 下载量，例如 Browser-Use 是 7.4M/mo。工具页的维护者区多了一个「Copy downloads badge」按钮，只在这个工具有下载量数据时出现。顺带修了两个老问题：星数徽章里的 ★ 一直显示成方框，名字长的工具会被截断。另外按 agentkit 的提醒修了外联的 MX 检查：只有 DNS 明确说没有邮件记录才退订，超时这类临时错误重试一次，还不行就本轮跳过。</li>
