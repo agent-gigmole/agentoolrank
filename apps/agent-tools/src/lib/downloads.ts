@@ -69,13 +69,14 @@ export function downloadsLine(rows: { registry: string; package: string; downloa
     }));
 }
 
-export interface DownloadRow { id: string; name: string; stars: number | null; registry: string; package: string; downloads_30d: number | null }
+export interface DownloadRow { id: string; name: string; stars: number | null; registry: string; package: string; downloads_30d: number | null; categories?: string[] }
 
 /** /downloads leaderboard: one row per tool, npm + PyPI summed, plus downloads per GitHub star (usage vs attention). */
-export function rankByDownloads(rows: DownloadRow[]) {
+export function rankByDownloads(rows: DownloadRow[], category?: string) {
   const by = new Map<string, { id: string; name: string; stars: number | null; total: number; packages: ReturnType<typeof downloadsLine> }>();
   for (const r of rows) {
     if (typeof r.downloads_30d !== "number") continue;
+    if (category && !(r.categories ?? []).includes(category)) continue;
     const t = by.get(r.id) ?? { id: r.id, name: r.name, stars: r.stars, total: 0, packages: [] };
     t.total += r.downloads_30d;
     t.packages.push(...downloadsLine([r]));

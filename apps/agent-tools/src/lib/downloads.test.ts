@@ -104,3 +104,15 @@ describe("usedMoreThanStarred", () => {
     expect(usedMoreThanStarred(ranked, 2).map((t) => t.id)).toEqual(["a", "c"]);
   });
 });
+
+describe("rankByDownloads with a category filter", () => {
+  it("keeps only tools tagged with the category", async () => {
+    const { rankByDownloads } = await import("./downloads");
+    const rows = [
+      { id: "a", name: "A", stars: 1, registry: "npm", package: "a", downloads_30d: 10, categories: ["agent-frameworks"] },
+      { id: "b", name: "B", stars: 1, registry: "npm", package: "b", downloads_30d: 20, categories: ["mcp-servers"] },
+    ];
+    expect(rankByDownloads(rows, "mcp-servers").map((t) => t.id)).toEqual(["b"]);
+    expect(rankByDownloads(rows).map((t) => t.id)).toEqual(["b", "a"]);
+  });
+});
