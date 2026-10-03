@@ -1394,3 +1394,9 @@
 - **日报维护者行已加**「API 已收录回复 N 个会话、结账 N」（ref=agent-listed 的 page_view / checkout_click）；3071e49 测试 + 36d7aa1 实现，369 测试全过，kpi 已跑出新行；TASK ✅
 - **进行中：上线通知信加一句 Submit Kit**（/submit-kit?ref=live-notify）——126bbee 已改 liveEmail + 测试并 push；send-live-emails 从仓库读，下次 daily-ops（21:30）发信即生效
 - **下一步**：`send-live-emails --dry-run` 确认后 TASK 打 ✅；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 04:3x 上线通知信 Submit Kit 核对 ✅ + 网页提交已收录结果页加 Submit Kit 上线（1177ca6 已部署）+ API/MCP 已收录回复带 Submit Kit 开工（7ec7de2 未部署）
+- **上线通知信 Submit Kit 一句已核对**：liveEmail 文本含 /submit-kit?ref=live-notify，TASK 该项 ✅
+- **已上线**：/submit 提交已收录工具的结果页加 Submit Kit 框——SubmitForm 抽出 KitBox 共用组件；已部署，真 Chrome 实测 crewAI 结果页「Feature it / Copy badge HTML / See the Submit Kit」三块都在；看板已记
+- **进行中：API/MCP 已收录回复也带 Submit Kit**——7ec7de2 listedReply 加 submit_kit_url（/submit-kit?ref=agent-listed）+ message_for_human 一句，测试过，已 push **未部署**
+- **下一步**：submit_tool 排队成功的 message_for_human 里 recommend_directories 那句加网页链接 → 测试 → 部署 → 线上实测 REST/MCP（自测 src 标 selftest）；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

@@ -1330,3 +1330,8 @@
 - 做法：自测 api_calls 行 src 改 selftest-listed-reply；横幅正则 ^(?:outreach|live-notify|agent-listed) 部署，真 Chrome（?internal=1）核对两种 ref 显示、无 ref 不显示，看板已记；kpi 维护者行加「API 已收录回复 N 个会话、结账 N」，369 测试全过、kpi 跑出新行；队尾新增并开工「上线通知信加 Submit Kit 一句」，126bbee liveEmail + 测试已 push
 - 结果：成功（Submit Kit 一句待下次 daily-ops 发信生效，先 --dry-run 确认再打 ✅）
 - 坑：无新坑
+
+## 2026-10-04 04:31 已收录结果页加 Submit Kit 上线（1177ca6 部署）+ API/MCP 已收录回复带 Kit 开工（7ec7de2）
+- 做法：核对 liveEmail 文本含 /submit-kit?ref=live-notify，TASK ✅；SubmitForm 抽出 KitBox，已收录结果页共用，部署后真 Chrome 实测 crewAI 结果页三块都在，看板已记；队尾新增并开工 listedReply 加 submit_kit_url（?ref=agent-listed）+ message_for_human 一句，测试过，7ec7de2 push 未部署
+- 结果：成功（还差 submit_tool 排队成功回复里 recommend_directories 句加网页链接，再部署）
+- 坑：无新坑
