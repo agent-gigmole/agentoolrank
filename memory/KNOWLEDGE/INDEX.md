@@ -311,3 +311,8 @@
 | 积分模式评估 / 先记录调用→免费 key→触发条件再上积分包 / 10-18 key≥10 或带 key 调用≥200 / $9/500 $29/2000 | STATE.md#2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空 |
 | api_calls 调用记录 / src/lib/api-usage.ts recordCall / key 只存 sha256 前 12 位 不存 IP / 可移植 new_ladar / ops/daily.md MCP 调用 7 天 | STATE.md#2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空 |
 | Columbus 数据不用于排序（老板：卖结论不卖原数据；agentkit 22:18 照旧不用） | STATE.md#2026-10-03 22:1x–22:4x 积分模式评估 + MCP 调用记录 + 下载量补空 |
+| 免费 API key / api-keys.ts newApiKey hashApiKey keyId sha256 前 12 issueApiKey / POST /api/keys IP 内存限流 / /api-key 一键领取 只显示一次 无邮箱 / 可移植 new_ladar / 4799991 | STATE.md#2026-10-03 22:4x–23:xx 免费 API key 上线 |
+| Vercel 响应后写库 after() next/server / void promise 丢写入 / waitUntil / f8cf93e | GOTCHAS.md#vercel-after-for-post-response-writes |
+| checkout-smoke 付款路径每日自查 / checkout_smoke.py iPhone 13 ?internal=1 / Submit Kit $29 featured $49 Stripe 商品名断言 / ops/smoke/ 截图 test-sessions.txt / systemd 07:40 Persistent / SMOKE_NO_ALERT / pipelines.json 第 7 条 / 4b855d9 | STATE.md#2026-10-03 22:4x–23:xx 免费 API key 上线 |
+| Playwright 严格模式 重复 data-testid kit-buy .first | GOTCHAS.md#playwright-duplicate-testid-first |
+| 共用积分扣费 api-credits.ts decideCharge 当日免费额度优先 再扣余额 short / 未列工具默认 1 分 / CREATE_API_CREDITS / WIP 不接收费 / cf25b58 | STATE.md#2026-10-03 22:4x–23:xx 免费 API key 上线 |

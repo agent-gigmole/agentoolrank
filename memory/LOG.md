@@ -1173,3 +1173,9 @@
 - 结果：线上 sitemap 11 条、mcp-servers 类目页链接已核对；api_calls 线上已有 selftest 行；测试 332 通过；--missing 补回数未核实；/api/v1 尚未接入
 - 坑：程序化页门槛只定义一处；批量请求 pypistats 会 429，失败不能存成空值 → GOTCHAS#pypistats-429-backoff、#programmatic-subpage-min-threshold（更新）
 - 结果：成功
+
+## 2026-10-03 22:4x–23:xx 免费 API key 上线 + after() 修复 + checkout-smoke 每日自查 + 共用积分模块开工（4799991、f8cf93e、130881f、4b855d9、cf25b58）
+- 做法：api-keys.ts + POST /api/keys（IP 内存限流）+ /api-key 一键领取页（无注册无邮箱、只存哈希、sitemap）并部署；发现带 key 的调用没写库，/api/mcp 的 void recordCall 改 after()；按 agentkit 推广写 checkout_smoke.py（iPhone 13 走 Submit Kit $29 与 featured $49 到 Stripe，断言商品名+金额，截图，失败告警），systemd 每天 07:40 enable、pipelines.json 第 7 条、rule-check 过；开工 api-credits.ts decideCharge（当日免费额度优先，再扣余额）+ 测试
+- 结果：线上 3 次带 key 调用 3 条同 key_id；smoke systemd 手动跑通，两条付款路径到 Stripe 名称金额正确；cf25b58 WIP 未接收费；07:40 定时首跑未核实
+- 坑：Vercel 路由响应后的写库要用 after()，void promise 会丢 → GOTCHAS#vercel-after-for-post-response-writes；Playwright 严格模式遇重复 data-testid 报错，用 .first → GOTCHAS#playwright-duplicate-testid-first
+- 结果：成功（共用积分模块进行中）

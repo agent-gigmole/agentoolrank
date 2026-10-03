@@ -53,7 +53,10 @@
 - ✅ 类目页顶部加「N by npm / PyPI downloads →」链 /downloads/<slug>（10-03 22:3x 上线核对；门槛统一为 downloadCategorySlugs，页面/sitemap/链接同一规则）
 - 78 个包下载数为空：原因已查明是 pypistats 批量 429（c4627f1 加退避 + --missing）；剩核对后台 --missing 补回多少（/tmp/claude-1000/dl-missing.log），仍空的逐个看
 - 积分模式第 1 步：MCP 工具调用已记入 api_calls（10-03 22:17 上线核对，src/lib/api-usage.ts 可移植给 new_ladar）；ops/daily.md「MCP 调用 7 天」行已加（4f71928）；剩 /api/v1 也接上 recordCall
-- 积分模式第 2 步：免费 API key（填邮箱当场发，无账户），key 放宽限流并计数（10-05–06）；第 3 步积分包按周报触发条件再定
+- ✅ 积分模式第 2 步：免费 API key 上线（/api-key 一键领取、无账户无邮箱、只存哈希；带 key 的 MCP 调用已能按 key 计数，线上 3 次调用核对；10-03 22:3x）
+- ✅ 付款路径每日自查 checkout-smoke（定时器 07:40 已 enabled、systemd 手动跑通；Submit Kit $29.00、首页推荐 $49.00 都到 Stripe 且商品名对；截图 ops/smoke/）
+- 共用积分扣费模块（agentkit 22:20 分工：我做共用版，new_ladar 复用；只一套扣费代码，两边定价可以不同）：api-credits.ts 余额表 + 扣费函数 + 每日免费额度，先写好带测试但不接收费，等 10-18 触发条件
+- /api-key 入口：/agents 页、/submit-kit 的 MCP 用法段、MCP initialize 说明里各加一句「可选：免费 key」
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

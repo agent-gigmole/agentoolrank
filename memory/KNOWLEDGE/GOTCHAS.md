@@ -1023,3 +1023,14 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 10-03 22:13 起后台跑 --missing（日志 /tmp/claude-1000/dl-missing.log），补回多少未核实
 - 来源：2026-10-03 下载量补空
 
+
+## vercel-after-for-post-response-writes
+- 现象：/api/mcp 里 `void recordCall(...)` 不 await，本地看似正常，Vercel 上响应发出后函数被冻结/回收，写库没完成 —— 带 key 的那次调用在 api_calls 里丢了
+- 做法（f8cf93e）：Next.js 路由里「响应后再做」的写库/上报一律用 `import { after } from 'next/server'`，`after(() => recordCall(...))`；改后线上 3/3 记录
+- 通则：Serverless（Vercel/Lambda）里不要 fire-and-forget promise；要么 await，要么用平台提供的 after()/waitUntil
+- 来源：2026-10-03 免费 API key 线上核对
+
+## playwright-duplicate-testid-first
+- 现象：/submit-kit 页上有两个 data-testid=kit-buy 购买按钮，Playwright locator 严格模式直接报错（resolved to 2 elements）
+- 做法：checkout_smoke.py 里用 `.first`；自查脚本只需证明一条路径能走通
+- 来源：2026-10-03 checkout-smoke

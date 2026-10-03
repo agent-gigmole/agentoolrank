@@ -1210,3 +1210,11 @@
 - **Columbus**：老板 22:16 口径「卖数据得出的结论（咨询式）不违规，不卖原数据」；问能否只做内部排序信号 → agentkit 22:18 照旧不用（不改 Columbus 规则、条款未读到、订阅到期会让排序悄悄变）。已确认，排序只用自测字段
 - 看板已记两行（a1fbb56 等）
 - **下一步**：/api/v1 接 recordCall；--missing 结果核对（未核实）；积分第 2 步免费 API key（10-05–06）；10-05 两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
+
+## 2026-10-03 22:4x–23:xx 免费 API key 上线 + 调用记录 after() 修复 + 付款路径每日自查 + 共用积分模块开工（4799991、f8cf93e、130881f、4b855d9、cf25b58）
+- **积分第 2 步：免费 API key**（4799991，已部署）：src/lib/api-keys.ts（CREATE_API_KEYS、newApiKey(prefix)、hashApiKey、keyId=sha256 前 12 位、issueApiKey；无项目专属字段，new_ladar 可直接复用）+ 测试；POST /api/keys（按 IP 内存限流，src 可选）；/api-key 页一键领取，key 只显示一次，无注册、无邮箱，只存哈希；sitemap 已加。线上核对：领 key → 带 Authorization: Bearer 调 MCP 3 次 → api_calls 3 条同 key_id；测试 key 已标 src=selftest。看板已记（130881f）
+- **调用记录丢失修复**（f8cf93e）：/api/mcp 原来 `void recordCall(...)`（响应后未 await），Vercel 上带 key 那次调用没写进库；改用 next/server 的 after() 后 3/3 记录 → GOTCHAS#vercel-after-for-post-response-writes
+- **付款路径每日自查 checkout-smoke**（4b855d9；agentkit 推广，imagehub d9d18f6 为范例，本项目第二例）：apps/agent-tools/scripts/checkout_smoke.py（Python Playwright，iPhone 13，?internal=1）——首页 home-submit-kit → /submit-kit 断言 $29 + kit-buy（页上两个购买按钮，用 .first）→ POST /api/kit-checkout src=smoke → Stripe 断言「AgentoolRank Submit Kit (30 days)」+ $29.00；/tool/langchain 断言 $49 → POST /api/checkout featured src=smoke → Stripe 断言「AgentoolRank featured listing (7 days)」+ $49.00。截图 ops/smoke/（已 gitignore），session id 记 ops/smoke/test-sessions.txt；失败 exit 1 + bus-send agentkit（SMOKE_NO_ALERT=1 可关）。systemd agentoolrank-checkout-smoke 每天 07:40（Persistent），已 enable，systemd 手动跑通；pipelines.json 第 7 条；rule-check 通过；已回复 agentkit。观察：Stripe 页按访客地区给 USD/EUR 选择，微信支付可见
+- **共用积分扣费模块（WIP，未接收费）**（cf25b58）：src/lib/api-credits.ts decideCharge（先扣当日免费额度、再扣余额，不够返回 short；单价由调用方传，未列工具默认 1 分）+ CREATE_API_CREDITS + 测试。agentkit 22:20 分工：我们写共用版，new_ladar 复用，两边定价可不同。等 10-18 触发条件再接收费
+- **TASK 队列**：免费 key ✅、付款自查 ✅；新增「共用积分扣费模块」（进行中）、「/api-key 入口三处（/agents、/submit-kit MCP 用法段、MCP initialize 说明）」
+- **下一步**：共用积分模块收尾（余额表读写，不接收费）；/api-key 入口三处；/api/v1 接 recordCall；--missing 补回数核对（未核实）；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
