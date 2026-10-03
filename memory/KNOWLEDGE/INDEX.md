@@ -304,3 +304,5 @@
 | 用户动作后才出现的页面状态 提交成功页 部署核对 / grep 线上 _next/static/chunks JS 文案 / 只证明已部署不证明交互 / 27f0189 / 首页 Launching an agent tool 卡片 home-where-to-list home-submit-kit home-submit 73fcd44 未部署 | GOTCHAS.md#verify-deploy-via-js-chunk |
 | /submit-kit 网页免费前 10 / ?type= ai_tool mcp_server dev_tool saas / recommendDirectories full:false 同无 key MCP / kit-type-* / N directories fit 购买按钮 / cc22758 | STATE.md#2026-10-03 21:2x 首页 Launching 卡片部署核对 + /submit-kit 网页免费前 10 上线 + 外联候选补货开工 |
 | 外联候选补货 outreach-list.ts 整份覆盖 candidates.json 先备份 .bak / sent.json 去重不重发 / --per-category=12 / agent-gigmole 令牌 github-agentoolrank | GOTCHAS.md#outreach-list-overwrites-candidates |
+| 程序化 SEO 子页最低内容门槛 ≥3 个工具 / 薄内容 / sitemap 与 generateStaticParams 同一规则 / /downloads/<category> 11 个类目 / d753262 | GOTCHAS.md#programmatic-subpage-min-threshold |
+| 外联第二批 10 封 Brevo 28/28 送达 0 退信 / await 752be9 48h / 累计 20 封 / 10-05 两批比较 | STATE.md#2026-10-03 22:0x–22:2x 外联第二批送达 + /downloads 类目子页上线 |

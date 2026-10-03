@@ -1194,3 +1194,10 @@
 - **/downloads/[category] 开工（WIP）**：5c2be31 rankByDownloads 加可选 category 过滤 + 测试；剩：查询带类目、/downloads/[category] 页面（独立标题 + ItemList）、sitemap、部署
 - **22:00 外联批次**：22:01 日志已发 4 封（deeptutor、lobe-chat、cherry-studio、agent-orchestrator；cherry-ai.com 经 DoH 复核放行）；整批结果与送达未核实（后台等待任务会提醒）
 - **下一步**：/downloads/[category] 完成并部署；22:00 外联整批核对（未核实）；10-05 周榜首发核对（未核实）；futurepedia 价格（未核实）；10-07 dev.to 数据文章（未核实）
+
+## 2026-10-03 22:0x–22:2x 外联第二批送达 + /downloads 类目子页上线 + 类目页互链开工（d753262、985d721、d38eb26、227c9c5）
+- **外联第二批**：22:00 定时器 agentoolrank-outreach 成功（inactive，非 failed），10 封全部发出（mastra、deeptutor、lobe-chat、cherry-studio、agent-orchestrator、superset、deepeval、ifixai、phoenix、garak）；Brevo 7 天 outreach requests 28 / delivered 28，0 退信 0 拦截 0 投诉。本批首次带「npm/PyPI 下载量」一句 + 下载量徽章。累计外联 20 封。await 752be9 登记等回信（48h，done = 反馈收件箱出现 ai-directory 的 email 反馈；登记后自测退出码 1，符合预期）。看板已记（d38eb26）。回信结果未核实
+- **/downloads/[category] 已上线**（d753262，已部署）：packages/db getDownloadRows 带 categories（解析 category_tags）；rankByDownloads(rows, category)；页面仅对 ≥3 个有数工具的类目出页，generateStaticParams / generateMetadata / sitemap 用同一规则；ItemList + Breadcrumb JSON-LD，canonical；/downloads 顶部列类目链接与数量；sitemap +11。线上 11 个类目：agent-frameworks 46、memory-knowledge 22、observability-evaluation 19、coding-agents 15、tool-integration 15、no-code-agent-builders 11、browser-web-agents 11、mcp-servers 10、sandboxes-execution 5、voice-agents 3、agent-protocols 3。测试 329 通过。看板已记（985d721）
+- **类目页互链（进行中）**：227c9c5 已提交未部署 —— /category/[slug] 头部在有下载子页时显示「N by npm / PyPI downloads →」链到 /downloads/<slug>
+- **TASK 队列**：外联第二批核对 ✅、await 登记 ✅、/downloads 类目子页 ✅；新增「10-05 比较两批外联（打开率、?ref=outreach 会话、回信）定下一批文案」「类目页链 /downloads/<slug>」（后者进行中）
+- **下一步**：227c9c5 部署并线上核对；10-05 两批外联比较（未核实）；10-05 周榜首发核对（未核实）；futurepedia 价格（未核实）；10-07 dev.to 数据文章（未核实）

@@ -1161,3 +1161,9 @@
 - 结果：线上 title、FAQPage、「24 directories fit an MCP server」已核对；/downloads/[category] 剩查询、页面、sitemap、部署；22:00 外联 22:01 已发 4 封（deeptutor、lobe-chat、cherry-studio、agent-orchestrator），整批结果未核实
 - 坑：无新坑
 - 结果：成功（/downloads 类目子页进行中）
+
+## 2026-10-03 22:0x–22:2x 外联第二批送达 + /downloads 类目子页上线 + 类目页互链开工（d753262、985d721、d38eb26、227c9c5）
+- 做法：核对 22:00 外联定时器与 Brevo 报表，await 752be9 登记等回信（48h）；/downloads/[category]：getDownloadRows 带 categories、rankByDownloads 按类目过滤、≥3 个有数工具才出页（generateStaticParams / sitemap 同规则）、ItemList + Breadcrumb JSON-LD、canonical、/downloads 顶部类目链接，部署；看板两行；TASK 打勾并补两项；开工类目页头部链下载子页（227c9c5）
+- 结果：外联 10/10 发出，Brevo 7 天 28/28 送达、0 退信 0 拦截 0 投诉，累计 20 封；线上 11 个类目子页、sitemap +11；测试 329 通过；227c9c5 未部署；回信未核实
+- 坑：程序化 SEO 子页要设最低内容门槛（≥3 个工具）避免薄内容，sitemap 与 generateStaticParams 必须用同一规则 → GOTCHAS#programmatic-subpage-min-threshold
+- 结果：成功（类目页互链进行中）

@@ -3,7 +3,7 @@
 ## 下一步队列
 
 <!-- rule-check 每天 10:00/16:00/22:00 检查：至少 5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删掉 -->
-- 22:00 后确认 agentoolrank-outreach 成功、10 封送达（`journalctl --user -u agentoolrank-outreach.service` + Brevo 报表；第二批目标 LobeHub、LocalAI、OmniRoute、World Monitor、vLLM、headroom、CC Switch、Browser-Use、Firecrawl、BrowserOS）
+- ✅ 22:00 外联第二批：定时器成功、10 封全部发出，Brevo 7 天 outreach 送达 28/28、0 退信 0 拦截 0 投诉（10-03 22:05）
 - ✅ 流水线化（老板 16:56 决定 #37，10-05 前）：外联夜间批次改成 systemd 定时器 agentoolrank-outreach 22:00，Brevo 健康闸门（选目标 → 类目/群发地址预审 → 发送 → await 登记等回信），22:00 不再手动跑
 - ✅ 外联发前预检（agentkit 17:05，0123eb1）：每封查 MX + 共用 Brevo blockedContacts，不合格跳过并写 optout.json；今晚 22:00 实发结果未核实
 - ✅ 流水线化：目录站上线复查（check-listings.ts 并入 daily-ops 21:30，baa4aa2；首跑 41 站确认 6 个有链接、新增 4 个上线，回写 dirsub）
@@ -17,7 +17,7 @@
 - 竞品三家补价格：TAAFT $49/$437、toolify $99（10-03 已写进周报）；futurepedia 需登录才见价格，周一前用专用 Chrome 登录查（不注册新账号的话记「未核实」）
 - ✅ 每天查一次已上线目录站的链接 rel（由 check-listings 每天自动做；conduid 页面是 JS 渲染、HTML 里找不到链接，需人工看一次）
 - ✅ 人工看一次 conduid.com（10-03 18:58：页面在，只链 GitHub 仓库 rel=noopener，不链官网；已记 dirsub；check-listings 改为认 GitHub 仓库链接为「已上线（只链仓库）」）
-- 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
+- ✅ 外联第二批回信已登记 await（48h，done = 反馈收件箱出现 ai-directory 的邮件反馈）
 - ✅ 接入 visitor-insights（10-03 50a649a、8394b65；engagement/ui_click 写自有 events 表 props 列，?internal=1 持久排除，ops/daily.md 顶部 vi 块，隐私草稿 docs/legal/privacy-draft.md）。exit_survey 问卷另记，等 BOSS #35 隐私页批准后再上
 - ✅ 老板号发帖文案检查（10-03 ce06f78）：weekly-post.ts 发 X 前先过 post-copy.ts aiAuthorshipMatch，再过 post-gate；以后新增任何用老板号发帖的脚本也必须先调 aiAuthorshipMatch
 - ✅ 周帖接共用文案检查 + 渠道登记表（10-03 f872066、c642f03）：aiAuthorshipMatch 与 bin/post-copy-check 双检查 → post-gate --channel x-main --has-link → 发帖 → bin/post-log 记 posts.jsonl
@@ -48,7 +48,9 @@
 - ✅ X 周榜文案加一行「近 30 天下载最多」（16d990f，10-05 10:00 首发；当前会是 OpenAI Python 284.2M，过共用文案检查）
 - 详情页「Maintain X?」框对下载量 ≥10 万的工具，首页推荐按钮文案改为强调「被 N 个下载/月 的开发者看到」？——先查首页推荐的点击数据再定，避免没依据改文案
 - ✅ /submit-kit 标题/描述改搜索意图词 + FAQ（FAQPage JSON-LD，数字从数据集算；10-03 22:0x 上线核对）
-- /downloads 按类目拆分子页（/downloads/agent-frameworks 等），每页独立标题和 ItemList，作为「most downloaded <category>」长尾入口
+- ✅ /downloads 按类目拆分子页（11 个类目 ≥3 个有数工具，10-03 22:1x 上线，sitemap 11 条，标题如「Most-Downloaded MCP Servers (npm & PyPI, Last 30 Days)」）
+- 外联两批合计 20 封：10-05 按 Brevo 打开率 / ?ref=outreach 会话 / 回信 三个数比较第一批（排名开头）和第二批（排名 + 下载量 + 下载徽章），定下一批文案
+- 类目页 /category/<slug> 顶部加「按下载量看」链到 /downloads/<slug>（有子页的 11 个类目），互链帮收录
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

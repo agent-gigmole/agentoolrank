@@ -1007,3 +1007,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 跑 GitHub API 用项目自己的 agent-gigmole 令牌（~/.config/secrets/github-agentoolrank，以 GITHUB_TOKEN 环境变量传入），不用老板 gh 账号
 - 补货后先 dry-run 审新增对象再进定时批次
 - 来源：2026-10-03 候选只剩 23 人时补货（--per-category=12）
+
+## programmatic-subpage-min-threshold
+- 程序化 SEO 子页（如 /downloads/<category>）要设最低内容门槛：本项目取「≥3 个有下载量数据的工具」才出页，低于门槛不生成页面、不进 sitemap、上级页不链，避免 1–2 条的薄内容页拖累整站质量
+- 门槛规则写成一个函数，generateStaticParams、sitemap、上级页链接列表、动态路由 notFound 判断全部调用它，不各写一份（否则会出现 sitemap 有链接但页面 404，或页面存在但没进 sitemap）
+- 现状（10-03 查代码）：门槛 3 在 downloads/[category]/page.tsx 是常量 MIN_TOOLS，但 downloads/page.tsx 和 sitemap.ts 各写了字面量 `>= 3`，category/[slug]/page.tsx 的链接判断也要同步 —— 改门槛时这几处要一起改，最好抽到 lib/downloads.ts 一个导出常量/函数
+- 本次上线 11 个类目（最少的 voice-agents、agent-protocols 各 3 个）
+- 来源：2026-10-03 /downloads 类目子页（d753262）
