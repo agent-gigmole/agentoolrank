@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCategories, getTools, getToolCount, getLastRefreshTime, getToolBySlug, getDownloadRows } from "@repo/db/queries";
 import { compactCount, rankByDownloads } from "@/lib/downloads";
+import { KIT_PRICE_USD } from "@/lib/directory-kit";
 import { ToolCard } from "@/components/ToolCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { featuredSlugs } from "@/lib/paid";
@@ -180,6 +181,21 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* For makers: where to list + Submit Kit (the paid side product had no entry from the busiest page) */}
+      <section className="mb-12 p-5 border border-blue-200 rounded-xl bg-blue-50">
+        <h2 className="font-semibold text-gray-900 mb-1">Launching an agent tool?</h2>
+        <p className="text-sm text-gray-700 mb-3">
+          We submitted our own products to 101 directories and wrote down what each one asks for: free or paid, badge or backlink,
+          captcha, and whether the link turned out nofollow. The table is free; the Submit Kit ranks the directories for your product type
+          and adds the form gotchas and a don&apos;t-submit list (top 10 free over MCP, full list ${KIT_PRICE_USD} one-time).
+        </p>
+        <div className="flex flex-wrap gap-4 text-sm">
+          <Link href="/where-to-list" data-testid="home-where-to-list" className="text-blue-700 hover:underline">Where to list an agent tool (free table) →</Link>
+          <Link href="/submit-kit" data-testid="home-submit-kit" className="text-blue-700 hover:underline">Submit Kit →</Link>
+          <Link href="/submit" data-testid="home-submit" className="text-blue-700 hover:underline">List it on AgentoolRank, free →</Link>
+        </div>
+      </section>
 
       {/* Open Source Dataset */}
       <section className="mb-12 flex items-center justify-between p-4 border border-gray-200 rounded-lg">
