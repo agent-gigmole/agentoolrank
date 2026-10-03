@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(tool.name)}&icon=🔧&tools=${tool.github_stars || 0}`;
 
   return {
-    title: toolTitle(tool.name, tool.tagline, tool.github_stars),
+    title: toolTitle(tool.name, tool.tagline, tool.github_stars, totalDownloads(await getToolPackages(tool.id))),
     description: desc,
     alternates: localizedAlternates(`/tool/${tool.id}`, await translatedLangs(tool.id), "en"),
     openGraph: {

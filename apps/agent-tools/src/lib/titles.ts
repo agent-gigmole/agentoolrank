@@ -25,9 +25,11 @@ function withoutLeadingName(name: string, tagline: string): string {
   return t === tagline ? t : t.charAt(0).toUpperCase() + t.slice(1);
 }
 
-export function toolTitle(name: string, tagline: string, githubStars: number | null): string {
+export function toolTitle(name: string, tagline: string, githubStars: number | null, downloads30d?: number | null): string {
   tagline = withoutLeadingName(name, tagline);
-  const suffix = githubStars ? ` · ${stars(githubStars)}` : "";
+  // Big libraries also show monthly npm + PyPI downloads (searchers compare usage); ≥1M only, so small numbers don't read as weak.
+  const dl = downloads30d && downloads30d >= 1_000_000 ? ` · ${Math.round(downloads30d / 1e6)}M/mo` : "";
+  const suffix = (githubStars ? ` · ${stars(githubStars)}` : "") + dl;
   const room = 70 - name.length - 2 - suffix.length;
   let desc = tagline && room > 15 ? shortTagline(tagline, room) : "";
   while (DANGLING.test(desc)) desc = desc.replace(DANGLING, "");

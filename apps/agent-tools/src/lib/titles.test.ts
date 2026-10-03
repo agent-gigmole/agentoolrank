@@ -50,3 +50,14 @@ describe("shortTagline truncation", () => {
     expect(shortTagline("an extensible agent that can install, execute, edit, and test with any LLM", 66)).toBe("an extensible agent that can install, execute, edit, and test");
   });
 });
+
+describe("toolTitle with downloads", () => {
+  it("adds monthly downloads for tools with ≥1M a month, keeping the title within 70 chars", () => {
+    const t = toolTitle("LangChain", "The platform for reliable agents.", 147400, 169366312);
+    expect(t).toContain("147k★ · 169M/mo");
+    expect(t.length).toBeLessThanOrEqual(70);
+  });
+  it("leaves smaller tools unchanged", () => {
+    expect(toolTitle("Dify", "Platform for agentic workflow development.", 132400, 5000)).toBe("Dify: Platform for agentic workflow development · 132k★");
+  });
+});
