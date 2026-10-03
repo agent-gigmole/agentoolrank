@@ -4,7 +4,7 @@
  */
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { cstDayRange, renderKpi, replaceBlock, type Window } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -42,6 +42,19 @@ function latestGscClicks(): number | null {
   return null;
 }
 
+/** Our latest status per directory domain from the shared submission log (~/data/backlinks/directory-log.csv). */
+function directoryCounts(): { submitted: number; live: number } {
+  const f = `${process.env.HOME}/data/backlinks/directory-log.csv`;
+  if (!existsSync(f)) return { submitted: 0, live: 0 };
+  const last = new Map<string, string[]>();
+  for (const line of readFileSync(f, "utf8").split("\n").slice(1)) {
+    const cols = line.match(/("([^"]|"")*"|[^,]*)(,|$)/g)?.map((c) => c.replace(/,$/, "").replace(/^"|"$/g, "")) ?? [];
+    if (cols[2] === "ai-directory") last.set(cols[0], cols);
+  }
+  const rows = [...last.values()].filter((c) => c[3] === "submitted");
+  return { submitted: rows.length, live: rows.filter((c) => /已上线|is live|已发布/.test(c.slice(4).join(","))).length };
+}
+
 const now = new Date();
 const y = cstDayRange(now, -1);
 const wk = cstDayRange(now, -7);
@@ -57,6 +70,11 @@ const html = renderKpi({
   monthRevenueCents: await n(`SELECT COALESCE(SUM(amount_cents),0) n FROM payments WHERE ${REAL_PAY} AND created_at >= ?`, [cstDayRange(new Date(`${monthStart}T12:00:00+08:00`), 0).from]),
   gscClicks28d: latestGscClicks(),
   zhVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND path LIKE '/zh%' AND ts >= ?`, [wk.from]),
+  jaVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND path LIKE '/ja%' AND ts >= ?`, [wk.from]),
+  outreachSent: existsSync(new URL("../data/outreach/sent.json", import.meta.url)) ? JSON.parse(readFileSync(new URL("../data/outreach/sent.json", import.meta.url), "utf8")).length : 0,
+  outreachVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND src LIKE '%outreach%' AND ts >= ?`, [wk.from]),
+  dirSubmitted: directoryCounts().submitted,
+  dirLive: directoryCounts().live,
 });
 writeFileSync(DASH, replaceBlock(readFileSync(DASH, "utf8"), html));
 console.log(`kpi updated for ${y.day}`);

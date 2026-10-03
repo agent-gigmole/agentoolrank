@@ -14,11 +14,17 @@ describe("renderKpi", () => {
     yesterday: { visitors: 14, submitViews: 2, submissions: 0, paid: 0, revenueCents: 0 },
     week: { visitors: 80, submitViews: 9, submissions: 1, paid: 1, revenueCents: 900 },
     totalRevenueCents: 900, externalSubmissions: 3, monthRevenueCents: 900, gscClicks28d: 3, zhVisitors7d: 4,
+    jaVisitors7d: 2, outreachSent: 10, outreachVisitors7d: 4, dirSubmitted: 41, dirLive: 6,
   });
   it("shows the four daily KPIs", () => {
     expect(html).toContain("<b>14</b><span>访客（10-01）");
     expect(html).toContain("<b>0</b><span>提交（10-01）");
     expect(html).toContain("<b>$9</b><span>近 7 天收入 · 1 单");
+  });
+  it("shows the standing metrics the owner asked about", () => {
+    expect(html).toContain("外联：累计发出 10 封 · 近 7 天带来 4 个会话");
+    expect(html).toContain("目录站：已提交 41 · 已确认上线 6");
+    expect(html).toContain("中文页访客 7 天 4 · 日文页 2");
   });
   it("shows goal progress against G2-G4", () => {
     expect(html).toContain("G2 外部提交 3/20");

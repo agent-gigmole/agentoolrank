@@ -3,6 +3,7 @@ export interface Window { visitors: number; submitViews: number; submissions: nu
 export interface KpiData {
   generated: string; day: string; yesterday: Window; week: Window;
   totalRevenueCents: number; externalSubmissions: number; monthRevenueCents: number; gscClicks28d: number | null; zhVisitors7d: number;
+  jaVisitors7d: number; outreachSent: number; outreachVisitors7d: number; dirSubmitted: number; dirLive: number;
 }
 
 const CST_MS = 8 * 3600_000;
@@ -32,7 +33,8 @@ export function renderKpi(d: KpiData): string {
     ${kpi(usd(w.revenueCents), `近 7 天收入 · ${w.paid} 单`)}
     ${kpi(usd(d.totalRevenueCents), "累计收入")}
   </div>
-  <p class="muted">目标进度：G2 外部提交 ${d.externalSubmissions}/20（10-21）${done(d.externalSubmissions >= 20)} · G3 首笔陌生人付款${d.totalRevenueCents > 0 ? " ✅" : " 0/1（10-31）"} · G4 月收入 ${usd(d.monthRevenueCents)}/$300、Google 点击 ${d.gscClicks28d ?? "?"}/1000（28 天，12-31）· 中文页访客 7 天 ${d.zhVisitors7d}（大陆付款方式待核，见 T24）</p>
+  <p class="muted">目标进度：G2 外部提交 ${d.externalSubmissions}/20（10-21）${done(d.externalSubmissions >= 20)} · G3 首笔陌生人付款${d.totalRevenueCents > 0 ? " ✅" : " 0/1（10-31）"} · G4 月收入 ${usd(d.monthRevenueCents)}/$300、Google 点击 ${d.gscClicks28d ?? "?"}/1000（28 天，12-31）</p>
+  <p class="muted">固定指标：外联：累计发出 ${d.outreachSent} 封 · 近 7 天带来 ${d.outreachVisitors7d} 个会话 ｜ 目录站：已提交 ${d.dirSubmitted} · 已确认上线 ${d.dirLive} ｜ 中文页访客 7 天 ${d.zhVisitors7d} · 日文页 ${d.jaVisitors7d}</p>
   `;
 }
 
