@@ -19,8 +19,13 @@ export function candidateUrls(domain: string, known: string | null): string[] {
   return known ? [known] : PATHS.map((p) => `https://${domain}/${p}/${SLUG}`);
 }
 
-/** Our backlink on a page: an <a> whose href host is agentoolrank.com. rel "dofollow" means the anchor had no rel. */
-export function findBacklink(html: string): { found: boolean; rel: string | null } {
+/**
+ * Our backlink on a page: an <a> to agentoolrank.com (target "site"), or else to our GitHub repo (target "github":
+ * MCP registries such as conduid link the repo only — the listing is live, but it is not a link to the site).
+ * rel "dofollow" means the anchor had no rel.
+ */
+export function findBacklink(html: string): { found: boolean; rel: string | null; target: "site" | "github" | null } {
+  let repo: { found: boolean; rel: string | null; target: "github" } | null = null;
   for (const m of html.matchAll(/<a\b[^>]*>/gi)) {
     const tag = m[0];
     const href = /\bhref\s*=\s*["']([^"']+)["']/i.exec(tag)?.[1];
@@ -31,9 +36,9 @@ export function findBacklink(html: string): { found: boolean; rel: string | null
     } catch {
       continue;
     }
-    if (host !== "agentoolrank.com") continue;
-    const rel = /\brel\s*=\s*["']([^"']*)["']/i.exec(tag)?.[1]?.trim();
-    return { found: true, rel: rel || "dofollow" };
+    const rel = /\brel\s*=\s*["']([^"']*)["']/i.exec(tag)?.[1]?.trim() || "dofollow";
+    if (host === "agentoolrank.com") return { found: true, rel, target: "site" };
+    if (!repo && host === "github.com" && /^https?:\/\/(www\.)?github\.com\/agent-gigmole\/agentoolrank\/?(#.*)?$/i.test(href)) repo = { found: true, rel, target: "github" };
   }
-  return { found: false, rel: null };
+  return repo ?? { found: false, rel: null, target: null };
 }

@@ -33,23 +33,23 @@ async function page(url: string): Promise<string | null> {
   }
 }
 
-const status: Record<string, { checked: string; url: string | null; found: boolean; rel: string | null }> = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
+const status: Record<string, { checked: string; url: string | null; found: boolean; rel: string | null; target?: string | null }> = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 let confirmed = 0, newlyLive = 0, unconfirmed = 0;
 for (const [domain, , , , detail] of targets) {
   const wasLive = detail.startsWith("【已上线】");
-  let hit: { url: string; rel: string | null } | null = null;
+  let hit: { url: string; rel: string | null; target: string | null } | null = null;
   for (const url of candidateUrls(domain, knownListingUrl(domain, detail))) {
     const html = await page(url);
     await new Promise((r) => setTimeout(r, 1500)); // one request every 1.5 s, sites are small
-    const b = html ? findBacklink(html) : { found: false, rel: null };
-    if (b.found) { hit = { url, rel: b.rel }; break; }
+    const b = html ? findBacklink(html) : { found: false, rel: null, target: null };
+    if (b.found) { hit = { url, rel: b.rel, target: b.target }; break; }
   }
-  status[domain] = { checked: today, url: hit?.url ?? null, found: !!hit, rel: hit?.rel ?? null };
+  status[domain] = { checked: today, url: hit?.url ?? null, found: !!hit, rel: hit?.rel ?? null, target: hit?.target ?? null };
   if (hit) {
     confirmed++;
     if (!wasLive) {
       newlyLive++;
-      const msg = `【已上线】${hit.url}（${today} 自动复查：页面上有指向 agentoolrank.com 的链接，rel=${hit.rel}）`;
+      const msg = `【已上线】${hit.url}（${today} 自动复查：${hit.target === "github" ? "页面只链到我们的 GitHub 仓库，没有链到 agentoolrank.com" : "页面上有指向 agentoolrank.com 的链接"}，rel=${hit.rel}）`;
       console.log(`NEW LIVE ${domain}: ${msg}`);
       if (!dryRun) {
         const r = spawnSync("python3", [DIRSUB, "add", domain, "--project", "ai-directory", "--result", "submitted", "--detail", msg, "--update"], { encoding: "utf8" });
