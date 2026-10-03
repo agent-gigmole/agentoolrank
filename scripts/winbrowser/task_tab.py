@@ -26,7 +26,7 @@ import sys
 
 from playwright.async_api import async_playwright
 
-from browser import ensure_chrome
+from browser import ensure_chrome, stamp, stamp_of
 
 FIELDS = """() => [...document.querySelectorAll('input,textarea,select,button')].filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&e.type!=='hidden'}).map(e=>{
  let lab=''; if(e.id){const l=document.querySelector('label[for="'+e.id+'"]'); if(l) lab=l.innerText}
@@ -39,11 +39,13 @@ LEAF = """(t)=>{const els=[...document.querySelectorAll('a,button,span,div,label
 KW = re.compile(r"(?i)(captcha|turnstile|recaptcha|hcaptcha|\$\d+(?:\.\d+)?|free|pricing|log ?in|sign in|sign up|dofollow|nofollow|backlink|badge|embed|tweet|verify)")
 
 
-def pick(ctx, sub):
+async def pick(ctx, sub):
     m = [x for x in ctx.pages if sub in x.url]
     if not m:
         sys.exit(f"no tab matches {sub!r}; open tabs: {[x.url[:80] for x in ctx.pages]}")
-    return m[-1]
+    # page list order is not creation order over a fresh CDP connection: prefer the most recently stamped match
+    marks = [await stamp_of(x) for x in m]
+    return m[marks.index(max(marks))] if max(marks) >= 0 else m[-1]
 
 
 async def main(a):
@@ -68,6 +70,7 @@ async def main(a):
             pg = await ctx.new_page()
             await pg.goto(a[1], wait_until="domcontentloaded", timeout=45000)
             await pg.wait_for_timeout(2500)
+            await stamp(pg)
             print(pg.url)
             print((await pg.evaluate("document.body.innerText"))[:1500])
             return
@@ -87,7 +90,9 @@ async def main(a):
                 finally:
                     await pg.close()
             return
-        pg = pick(ctx, a[1])
+        pg = await pick(ctx, a[1])
+        if cmd != "close":
+            await stamp(pg)
         if cmd == "text":
             t = (await pg.evaluate("document.body.innerText")).replace("\n", " | ")
             i = t.find(a[2]) if len(a) > 2 and a[2] else 0
@@ -125,6 +130,7 @@ async def main(a):
         elif cmd == "goto":
             await pg.goto(a[2], wait_until="domcontentloaded", timeout=45000)
             await pg.wait_for_timeout(2500)
+            await stamp(pg)  # navigation may clear window.name
             print(pg.url)
             print((await pg.evaluate("document.body.innerText"))[:1500])
         elif cmd == "shot":

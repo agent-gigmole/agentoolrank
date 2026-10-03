@@ -11,7 +11,7 @@ Prints a compact state summary after the steps.
 """
 import asyncio, json, sys
 from playwright.async_api import async_playwright
-from browser import ensure_chrome
+from browser import ensure_chrome, stamp
 
 SUMMARY_JS = """() => {
   const t = el => (el.type === 'password' ? '<hidden>' : (el.innerText || el.value || el.getAttribute('aria-label') || el.placeholder || '')).trim().replace(/\\s+/g,' ').slice(0,70);
@@ -88,6 +88,7 @@ async def main(path):
                 await page.wait_for_load_state("domcontentloaded")
                 print("-> switched to popup:", page.url[:80])
         await page.wait_for_timeout(spec.get("settle", 1500))
+        await stamp(page)  # task_tidy keeps this tab (the next run.sh call continues on it)
         print("URL:", redact(page.url)[:150])
         print("TITLE:", redact(await page.title()))
         for k, v in (await page.evaluate(SUMMARY_JS)).items():

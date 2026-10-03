@@ -25,6 +25,26 @@ def ws_url(timeout=5):
     raise last
 
 
+KEEP = "ar_keep:"  # window.name stamp on the tab a task last worked on (task_tidy keeps the newest stamp)
+
+
+async def stamp(pg):
+    """Mark pg as the working tab. A fresh CDP connection does NOT list pages in creation order (new_ladar 10-04 02:40:
+    "keep the last listed" closed the live Google sign-in popup), so task_tidy keeps the tab with the newest stamp."""
+    try:
+        await pg.evaluate("k => { window.name = k + Date.now(); }", KEEP)
+    except Exception:
+        pass
+
+
+async def stamp_of(pg):
+    try:
+        n = await pg.evaluate("() => window.name || ''")
+        return int(n[len(KEEP):]) if n.startswith(KEEP) else -1
+    except Exception:
+        return -1
+
+
 def ensure_chrome():
     try:
         return ws_url(2)
