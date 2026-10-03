@@ -1229,3 +1229,10 @@
 - 看板已记两行
 - **TASK 队列**：/api-key 入口 ✅；新增「/api/v1 也接 recordCall」「operator-lab 公众号素材 10-05 定稿」
 - **下一步**：/api/v1 接 recordCall；共用积分模块收尾（不接收费）；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿、两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
+
+## 2026-10-03 22:5x–23:xx REST 调用记录 + $49 推荐位加量开工（277efd2、3f8a8a9、80fe36a）
+- **REST /api/v1 调用记录**（277efd2，已部署）：src/lib/api-log.ts `withCallLog(tool, handler)`，handler 跑完在 finally 里 `after(recordCall)`；key 取 Bearer / x-api-key / ?key=，src 取 ?src=。list_tools、get_tool、submit_tool、get_submission_status、submission_checkout 五个端点导出时用它包装。线上 curl 两次（src=selftest）后 api_calls 有两条 surface=api。测试 340 通过。看板已记（3f8a8a9）
+- **$49 推荐位加量（进行中）**：推荐中的工具也出现在所在类目页顶部，标 Sponsored（80fe36a WIP，已提交未部署）。剩：/downloads 顶部同样展示；推荐说明与 MaintainerBox 文案改为「首页 + 类目页 + 下载榜」；部署后线上核对
+- **operator-lab**：22:39 确认以「目录站带来访客 0」作为公众号文章主线；10-05 用 --to=2026-10-05 重跑定稿后通知（await 65ac86）
+- **TASK 队列**：/api/v1 接调用记录 ✅；新增「$49 推荐位加量」（进行中）
+- **下一步**：推荐位加量收尾（/downloads 顶部、文案、部署核对）；共用积分模块收尾（不接收费）；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿、两批外联比较、周榜首发核对（未核实）；10-18 积分复盘

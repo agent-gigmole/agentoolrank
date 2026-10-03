@@ -57,8 +57,9 @@
 - ✅ 付款路径每日自查 checkout-smoke（定时器 07:40 已 enabled、systemd 手动跑通；Submit Kit $29.00、首页推荐 $49.00 都到 Stripe 且商品名对；截图 ops/smoke/）
 - 共用积分扣费模块（agentkit 22:20 分工：我做共用版，new_ladar 复用；只一套扣费代码，两边定价可以不同）：api-credits.ts 余额表 + 扣费函数 + 每日免费额度，先写好带测试但不接收费，等 10-18 触发条件
 - ✅ /api-key 入口：MCP initialize 说明、/agents、/submit-kit 用法段各加一句（10-03 22:4x 上线核对）
-- /api/v1 REST 接口也接上 recordCall（surface=api），日报的调用数才包含 API 用户
+- ✅ /api/v1 REST 接口也接上调用记录（withCallLog + after()，5 个端点，10-03 22:5x 线上核对 list_tools/get_tool）
 - operator-lab 公众号素材（截止 10-05 20:00）：生成脚本 handoff-wechat.ts 已写好，草稿已放 ~/data/handoff/ai-directory/wechat-directories.md（窗口截至 10-03）；10-05 用 --to=2026-10-05 重跑定稿并通知 operator-lab（await 已登记）
+- $49 推荐位加量（进行中）：推荐中的工具同时出现在 /downloads 顶部和它所在类目页顶部（标 Sponsored），推荐说明和 MaintainerBox 文案同步改成「首页 + 类目页 + 下载榜」。类目页顶部已写（80fe36a，未部署）；剩 /downloads 顶部、文案、部署核对
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

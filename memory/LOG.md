@@ -1185,3 +1185,9 @@
 - 结果：smoke 通过；hourly 恢复；下载量 76/76 补齐，Pydantic 812.6M 第一；事实稿已交付草稿并通知 operator-lab；明早 07:40 smoke 定时首跑未核实
 - 坑：聚合定时任务里单个外部来源超时会让整个 systemd 服务 failed 并报警 → 每个来源各自超时 + 一次重试 + WARN → GOTCHAS#aggregate-job-per-source-isolation
 - 结果：成功
+
+## 2026-10-03 22:5x–23:xx REST 调用记录上线 + $49 推荐位加量开工（277efd2、3f8a8a9、80fe36a）
+- 做法：写 api-log.ts withCallLog（finally 里 after(recordCall)，key 取 Bearer/x-api-key/?key=，src 取 ?src=），/api/v1 五个端点包装导出，部署；线上 curl 两次 src=selftest；看板记一行；TASK 打勾并新增「$49 推荐位加量」，开工类目页顶部展示推荐工具（标 Sponsored，80fe36a WIP）
+- 结果：api_calls 线上两条 surface=api；测试 340 通过；80fe36a 未部署，/downloads 顶部与文案未做；operator-lab 22:39 确认「带来访客 0」为文章主线，10-05 定稿后通知
+- 坑：无新坑
+- 结果：成功（推荐位加量进行中）
