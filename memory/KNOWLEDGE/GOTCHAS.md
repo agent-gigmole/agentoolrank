@@ -919,3 +919,12 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **退订判断看首词**：isOptOut 首词 no / unsubscribe / remove me / stop；外联对象回 no 自动加 data/outreach/optout.json 并追加 status=answered 结论
 - **每封发前预检 MX + 共用 Brevo blockedContacts（0123eb1）**：imagehub 实测硬退信的域名有 MX、人已离职，只查 MX 拦不住。lib/outreach.ts preflightSkip(email, mxCount, blockedSet)：无 MX 或在 blockedContacts → 跳过并写 optout.json（dry-run 不写）。blockedContacts 是账户级（共用账户里别的项目退过的地址也在），`GET /v3/smtp/blockedContacts?limit=100&offset=` 要分页拉全；拉取失败整批不发（fail closed）
 - 外联查看：`journalctl --user -u agentoolrank-outreach.service`
+
+## listing-check-and-safety-rules
+10-03 目录站上线复查（baa4aa2）与安全过滤扩展（717edd9）。
+- **HTML 里找不到链接 ≠ 下架**：很多目录站页面是 JS 渲染，curl/fetch 拿到的 HTML 没有我们的 <a>。check-listings.ts 只做「升级」（新确认上线 → dirsub 回写），找不到一律不降级，只对已标上线的打 WARN 交人工用真浏览器看（例：conduid.com）
+- **rel 要实测**：首跑结果 peerpush noopener、smithery/aitoolscapital noopener noreferrer、productwatch 无 rel；noopener/noreferrer 不影响 dofollow，只有 nofollow/ugc/sponsored 才算 nofollow。没有 rel 属性记 dofollow
+- 找页面：先用 log detail 里记过的本站 URL（knownListingUrl），没有再试 /tool|tools|product|products|p|project|listing|ai/agentoolrank；匹配 href 主机为 agentoolrank.com，不要匹配纯文本
+- 限速：每 1.5 秒一次请求，41 站约 10 分钟，放 21:30 daily-ops 里跑
+- **safety 规则不能只写 "bypass … detection"**：会误伤「stealth 浏览器过 bot 检测」这类正常开发工具。必须限定 AI 检测（bypass/beat/evade + AI detection）或具名检测器（Turnitin/GPTZero/ZeroGPT/originality.ai/copyleaks）；检测器本身、LMS 集成要放行，并为放行样例写测试
+- 加新规则后对全库工具 + 待审提交扫一遍，确认 0 误伤再部署（10-03：593 + 待审 0 命中）

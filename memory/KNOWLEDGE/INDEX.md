@@ -284,3 +284,5 @@
 | 外联定时器 agentoolrank-outreach 22:00 / Persistent=false 不补发 / Brevo 健康闸门 sendingBlocked --require-healthy fail closed / gmail-read JSON 行 {id,subject,from,to,date,body} / hello@ 目录站通知过滤 humanReply / isOptOut 首词 no 自动 optout.json / e47a15a / 发前预检 无 MX 跳过 resolveMx / Brevo blockedContacts 分页 共用账户 离职硬退信 preflightSkip 0123eb1 | GOTCHAS.md#outreach-timer-and-hello-inbox |
 | visitors_7d 口径 / ENGAGEMENT_SINCE 2026-10-03 08:22 UTC / classifySessions / likely_scanners_7d visitors_definition / 2ab444a | STATE.md#2026-10-03 17:03– 外联与回信收集流水线化 |
 | pipelines.json runner=github-actions / daily-data-update 登记 | STATE.md#2026-10-03 17:03– 外联与回信收集流水线化 |
+| 目录站上线复查 / check-listings.ts listing-check.ts / daily-ops 21:30 / JS 渲染 HTML 找不到不降级 只 WARN / conduid 人工看 / rel 实测 noopener 不算 nofollow / knownListingUrl candidateUrls / 1.5 秒限速 / baa4aa2 / safety AI 检测规避 学术作弊 / 不能只写 bypass detection 误伤 stealth 浏览器 / 717edd9 | GOTCHAS.md#listing-check-and-safety-rules |
+| element_seen 按钮漏斗 / data-vi-seen submit_button kit_buy_button / SEEN_RATIO 0.5 / funnelLine ops/daily.md 两行 / 10-03 17:40 起有数据 | STATE.md#2026-10-03 17:20– 目录站上线复查 |

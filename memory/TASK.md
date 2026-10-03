@@ -6,7 +6,7 @@
 - 22:00 后确认 agentoolrank-outreach 成功、10 封送达（`journalctl --user -u agentoolrank-outreach.service` + Brevo 报表；第二批目标 LobeHub、LocalAI、OmniRoute、World Monitor、vLLM、headroom、CC Switch、Browser-Use、Firecrawl、BrowserOS）
 - ✅ 流水线化（老板 16:56 决定 #37，10-05 前）：外联夜间批次改成 systemd 定时器 agentoolrank-outreach 22:00，Brevo 健康闸门（选目标 → 类目/群发地址预审 → 发送 → await 登记等回信），22:00 不再手动跑
 - ✅ 外联发前预检（agentkit 17:05，0123eb1）：每封查 MX + 共用 Brevo blockedContacts，不合格跳过并写 optout.json；今晚 22:00 实发结果未核实
-- 流水线化：目录站上线复查（逐站查 listing 是否在、链接 rel）脚本 + 定时器，结果回写 directory-log
+- ✅ 流水线化：目录站上线复查（check-listings.ts 并入 daily-ops 21:30，baa4aa2；首跑 41 站确认 6 个有链接、新增 4 个上线，回写 dirsub）
 - ✅ 流水线化：hello@ 回信收集（agentkit bin/gmail-read，并入每小时 feedback collect；回 no 自动 optout）。原需求：可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
 - 流水线化：周报数字段（记分牌、漏斗、外部评测原始反馈）脚本生成，结论用 bin/write 写稿
 - 流水线化：dev.to 文章定时发布（稿件就绪后按日期发，发后登记 post-log 与 await）
@@ -15,7 +15,8 @@
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
 - npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
 - 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
-- 每天查一次已上线目录站的链接 rel，看板"已确认上线"随之更新
+- ✅ 每天查一次已上线目录站的链接 rel（由 check-listings 每天自动做；conduid 页面是 JS 渲染、HTML 里找不到链接，需人工看一次）
+- 人工看一次 conduid.com 上我们的页面：用真浏览器打开，确认链接是否还在、rel 是什么，结果用 dirsub 回写（脚本只读 HTML，JS 渲染的页面查不到，不会自动降级）
 - 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
 - ✅ 接入 visitor-insights（10-03 50a649a、8394b65；engagement/ui_click 写自有 events 表 props 列，?internal=1 持久排除，ops/daily.md 顶部 vi 块，隐私草稿 docs/legal/privacy-draft.md）。exit_survey 问卷另记，等 BOSS #35 隐私页批准后再上
 - ✅ 老板号发帖文案检查（10-03 ce06f78）：weekly-post.ts 发 X 前先过 post-copy.ts aiAuthorshipMatch，再过 post-gate；以后新增任何用老板号发帖的脚本也必须先调 aiAuthorshipMatch

@@ -1009,3 +1009,17 @@
 - 今晚 22:00 那批 dry-run 10 封全部通过预检；已 bus-send
 - 坑：KNOWLEDGE/GOTCHAS.md#outreach-timer-and-hello-inbox
 - **下一步**：22:00 后确认 agentoolrank-outreach 成功、10 封送达（未核实）；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章
+
+## 2026-10-03 17:20– 目录站上线复查 + 按钮漏斗 + 安全过滤（baa4aa2、717edd9、3d7634b，已部署）
+- **目录站上线复查自动化**（baa4aa2）：src/lib/listing-check.ts（knownListingUrl 从 log detail 取本站 URL；无已知 URL 时 candidateUrls 试 /tool|tools|product|products|p|project|listing|ai/agentoolrank；findBacklink 找 href 主机为 agentoolrank.com 的 <a>，无 rel 记 dofollow）+ 测试；scripts/check-listings.ts 每 1.5 秒一次请求、约 10 分钟；新确认上线 → `dirsub add --result submitted --detail「【已上线】URL（日期 自动复查…rel=…）」--update`；**找不到不降级**，只对已标上线的打 WARN；并入 daily-ops.sh（21:30 定时器）
+  - 首跑：41 站中 6 个确认有链接；新增上线 4 个：peerpush.com（rel=noopener）、smithery.ai（noopener noreferrer）、aitoolscapital.com（noopener noreferrer）、productwatch.io（无 rel，即 dofollow）
+  - conduid.com 已标上线但 HTML 里找不到链接（JS 渲染），需人工看（下一步队列）
+  - 看板「已确认上线」3 → 7
+- **element_seen 漏斗**（按 agentkit 17:32 8770681；baa4aa2 部署）：events.ts 加 element_seen、cleanProps 只放行 snake_case element、firstSighting / SEEN_RATIO=0.5；Analytics.tsx IntersectionObserver + MutationObserver；/submit 提交按钮 data-testid=submit-tool data-vi-seen=submit_button，Submit Kit 购买 data-testid=kit-buy data-vi-seen=kit_buy_button；kpi.ts funnelLine 向 ops/daily.md 写两行（提交工具：进页→看到→点了→submit_done；Submit Kit：进页→看到→点了→付款）；vi 块点击行带「被看到」
+  - 真 Chrome 验证两按钮 element_seen 已记录；测试会话 nzegy95irf 标 selftest；?internal=1 已恢复
+  - 「看到 / 点了」从 10-03 17:40 才开始有数据
+- **安全过滤**（按 agentkit 17:43；717edd9）：unsafeMatch 新增 AI 检测规避 / 学术作弊（bypass/beat/evade… AI detection、Turnitin/GPTZero/ZeroGPT/originality.ai/copyleaks、undetectable AI、humanize AI text、AI humanizer、lower AI detection score、turnitin+数字、write my essay、essay writing service、cheat on exams、降 AI 率 / 规避检测 / 代写论文 / 绕过查重）；检测器本身、LMS 集成、「stealth 浏览器过 bot 检测」放行；测试 298 通过；593 个工具 + 待审提交扫描 0 命中
+- agentkit 17:50 post-gate 每项目每天 ≤1 主帖：我们每周 1 条，发帖后已 post-log --kind main，不受影响
+- 看板已更新（3d7634b），均已 bus-send
+- 坑：KNOWLEDGE/GOTCHAS.md#listing-check-and-safety-rules
+- **下一步**：22:00 后确认外联 10 封送达（未核实）；人工看 conduid.com；每天看 ops/daily.md 两条按钮漏斗；10-07 dev.to 数据文章

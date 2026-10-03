@@ -1047,3 +1047,9 @@
 - 结果：272 测试通过；今晚 22:00 批 dry-run 10 封全部通过；已 bus-send；22:00 实发未核实
 - 坑：imagehub 硬退信域名有 MX、人已离职，只查 MX 拦不住，必须同时查共用账户 blockedContacts → GOTCHAS#outreach-timer-and-hello-inbox
 - 结果：成功
+
+## 2026-10-03 17:20– 目录站上线复查 + 按钮漏斗 + 安全过滤（baa4aa2、717edd9、3d7634b）
+- 做法：listing-check.ts + check-listings.ts 并入 daily-ops 21:30，限速 1.5 秒/次，新确认上线经 dirsub 回写、找不到不降级；按 agentkit 17:32 加 element_seen 漏斗（两个按钮 data-vi-seen，funnelLine 写 ops/daily.md 两行）；按 agentkit 17:43 safety 加 AI 检测规避/学术作弊规则；核对 17:50 post-gate 每日 ≤1 主帖不影响我们；TASK 两项打 ✅，加「人工看 conduid.com」；看板更新，bus-send
+- 结果：首跑 41 站确认 6 个有链接、新增上线 4 个（peerpush noopener、smithery/aitoolscapital noopener noreferrer、productwatch 无 rel=dofollow），看板已确认上线 3→7；真 Chrome 验证两按钮 element_seen 已记；测试 298 通过；593 工具 + 待审提交 0 命中
+- 坑：safety 规则只写 "bypass … detection" 会误伤 stealth 浏览器过 bot 检测；目录站多为 JS 渲染，HTML 找不到链接 ≠ 下架，不能自动降级 → GOTCHAS#listing-check-and-safety-rules
+- 结果：成功
