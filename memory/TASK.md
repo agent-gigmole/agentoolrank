@@ -1,5 +1,15 @@
 # TASK.md — 当前任务
 
+## 下一步队列
+
+<!-- rule-check 每天 10:00/16:00/22:00 检查：至少 5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删掉 -->
+- 每晚 22:00 发外联 10 封（第二批 10-03），有回复 24 小时内回，回 no 的进 optout
+- Submit Kit 首单路径：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
+- 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
+- npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
+- 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
+- 每天查一次已上线目录站的链接 rel，看板"已确认上线"随之更新
+
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
 - **GOAL**：G1+G2 里能自主完成的部分全部上线，漏斗可测、AI 可查询、提交可审核。
@@ -319,7 +329,8 @@
 - 状态: in_progress（2026-10-03 01:45 起，老板 10-03 01:44 要求主动经营，不等点题）
 - 要求：每周一交一页「本周经营」= 记分牌（收入、付费单数、利润、漏斗，对比上周和目标）+ 竞品扫描（对标站 + ≥3 个同类站）+ 新数据源 1 个 + 新渠道 1 个 + 副产品变现 + 下周 3 个押注（带数字和截止日期）+ 上周押注复盘；老板问过一次的问题变成看板固定指标；资源随业绩分配
 - [x] 草案 docs/ops/weekly/2026-W41-draft.md（c1dcfc2，已推送）：7 天漏斗 会话 51（约 7/天 < 10/天阈值）、/submit 访问 1、提交 2、付费 0；来源 direct 43 / outreach 4 / devto 2。押注 ①外联放量 10→15→20 封/天（截止 10-11）②数据文章分发 dev.to /where-to-list（10-03）+「实测 100 个目录站」（10-07），≥50 访问 ③Submit Kit 预售 ≥3 单（截止 10-18）
-- [ ] **10-05（周一）交第一份**
+- [ ] **10-05（周一）交第一份**（固定路径 docs/ops/weekly/2026-10-05.md，周一 12:00 前定稿；rule-check 自动查）
+- [x] rule-check 补齐（10-03 15:11，b478a58）：TASK 顶部「下一步队列」6 件 + 草案 git mv 到 docs/ops/weekly/2026-10-05.md，rule-check 全部通过
 - [ ] 草案补洞察（10-03 06:30）：付费档卖的是曝光，但流量不足——10-02 晚 10 封外联带来 4 个会话（cognee、langchain、hermes-agent），全是 page_view，0 次维护者横幅点击 / 徽章复制 / checkout；约 8.5 小时无回信。首页每天个位数访客，$49 首页推荐作者不会买。推论：Submit Kit 卖数据和配方，本身有价值、不依赖我们的流量，作为周一摘要要点 + Submit Kit 论据
 - [ ] 周一摘要加「收录覆盖率」指标（10-03 07:34）：GSC 28 天 393 次展示全部来自 33 个英文页，zh/ja 为 0；sitemap 提交 2467、indexed 0；URL Inspection 抽查 zh/ja 页为 unknown 或 Discovered-not-indexed → 瓶颈在 Google 收录（新站抓取预算低）
 - [x] 看板固定指标（自动出数，10-03 09:40，99c23fe）：看板 KPI 新增「固定指标」行，每小时刷新——外联累计发出（data/outreach/sent.json）+ 近 7 天会话（events.src 含 outreach）；目录站已提交 / 已上线（~/data/backlinks/directory-log.csv 取 ai-directory 每域名最新一条，detail 含「已上线 / is live / 已发布」算上线）；中文页、日文页近 7 天访客。kpi.test.ts 先写，212 测试通过。当前：外联 10 封 / 4 会话；目录站 41 / 3（launchboosts、conduid、aitoolsrecap）；zh 访客 3、ja 0

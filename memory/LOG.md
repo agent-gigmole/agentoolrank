@@ -956,3 +956,10 @@
 - 结果：新数据源 = npm/PyPI 下载量（langchain npm 1214 万/月、PyPI 1.69 亿/月，crewai PyPI 243 万/月；免费免 key；按需限速，包名自动识别，排在 Submit Kit 后）；新渠道 = awesome 清单 PR（awesome-mcp-servers 约 9.2 万星、awesome-ai-agents），fork 权限待 agentkit 答复
 - 坑：pypistats 不带 UA 会被拒 → GOTCHAS#pypistats-needs-ua
 - 结果：成功
+
+
+## 2026-10-03 15:11– rule-check 补齐（下一步队列 + 周报固定路径，b478a58）
+- 做法：响应 agentkit 15:11 rule-check 点名 → TASK.md 顶部插入「## 下一步队列」6 件；周报草案 git mv 为 docs/ops/weekly/2026-10-05.md 并改标题「本周经营 · 2026-10-05（周一）｜草案，周一 12:00 前定稿」；看板加日志；提交推送 b478a58；bus-send 回复 agentkit
+- 结果：重跑 $AGENTKIT_ROOT/bin/rule-check，ai-directory 全部通过
+- 坑：rule-check 的五条硬规则（队列 ≥5 / 周报固定路径 / 看板或 STATE 24h / spend-ledger / 停滞 30 分钟复盘）及解析细节 → GOTCHAS#rule-check-five-rules
+- 结果：成功

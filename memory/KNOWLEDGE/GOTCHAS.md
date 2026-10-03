@@ -830,3 +830,14 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 10-03 实测：pypistats.org/api/packages/<pkg>/recent 必须带 User-Agent（如 `curl -A "agentoolrank/1.0 (+https://agentoolrank.com)"`），不带会被拒；api.npmjs.org/downloads/point/last-month/<pkg> 不需要
 - 两者都免费免 key。pypistats 条款：大批量请走 BigQuery（pypi 公共数据集）→ 只能按需单包调用 + 限速，不要全库循环抓
 - 包名映射：从工具仓库的 package.json（name）/ pyproject.toml（[project].name）自动识别，不要手写映射表（项目规则禁止手写工具数据）
+
+## rule-check-five-rules
+- 10-03 15:11 起 agentkit 用 `$AGENTKIT_ROOT/bin/rule-check` 每天 10:00/16:00/22:00 自动检查（agentkit-rule-check.timer），不合格经总线点名。自查：`$AGENTKIT_ROOT/bin/rule-check`（可 `--only queue,weekly`）
+- 五条规矩：
+  1. **queue**：memory/TASK.md 顶部常驻「下一步队列」一节，≥5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删
+  2. **weekly**：本周经营固定路径 `docs/ops/weekly/<本周一日期>.md`（如 2026-10-05.md），周一 12:00 前必须存在；不要用 W41-draft 之类的名字
+  3. **board**：看板（docs/ops/ 下 .json/.html/.md）或 memory/STATE.md/LOG.md 24 小时内有更新（按 mtime）
+  4. **ledger**：docs/ops/spend-ledger.md 存在
+  5. **停滞复盘**：被标记停滞后 30 分钟内在 memory/LOG.md 写【停滞复盘】（截至 10-03 15:11 脚本里只有前 4 条函数，这条仍靠自觉 / agentkit 人工查）
+- 解析细节（脚本里的正则）：队列节从标题「下一步队列」到下一个 `#`~`###` 标题为止；只数 `-`/`*`/`1.` 开头的行；行内含 `✅`、`[x]`、`~~`、或字样「已完成」都算已完成 → **未完成项的描述里别写「已完成」四个字**，否则会被少算
+- board 看 mtime，只 touch 不算真更新；看板要写实际进展
