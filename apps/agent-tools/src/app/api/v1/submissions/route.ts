@@ -1,6 +1,8 @@
 import { withCallLog } from "@/lib/api-log";
 import { NextRequest } from "next/server";
 import { createSubmission } from "@/lib/submit-core";
+import { listedReply } from "@/lib/offers";
+import { badgeHtml } from "@/lib/submissions";
 
 // Agent-friendly submission API. POST JSON:
 // { url, name, tagline, email, github_url?, max_budget_usd?, deadline_days?, want_featured? }
@@ -31,7 +33,10 @@ async function handlePOST(req: NextRequest) {
     );
     if (r.kind === "invalid") return Response.json({ error: "invalid_submission", details: r.errors }, { status: 400, headers: CORS });
     if (r.kind === "spam") return Response.json({ error: "invalid_submission" }, { status: 400, headers: CORS });
-    if (r.kind === "listed") return Response.json({ status: "already_listed", slug: r.slug, listing_url: r.url }, { headers: CORS });
+    if (r.kind === "listed") {
+      const base = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
+      return Response.json(listedReply({ baseUrl: base, slug: r.slug, listingUrl: r.url, paymentsEnabled: Boolean(process.env.STRIPE_SECRET_KEY), badgeHtml: badgeHtml(base, r.slug, typeof b.name === "string" ? b.name : r.slug) }), { headers: CORS });
+    }
     return Response.json(
       {
         status: "queued",
