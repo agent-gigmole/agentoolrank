@@ -66,6 +66,9 @@ describe("visitor-insights v3 helpers (agentkit 0cecb30)", () => {
     const { scrollPercent } = await import("./events");
     expect(scrollPercent(0, 800, 900)).toBe(100);
     expect(scrollPercent(0, 2000, 1000)).toBe(0);
+    expect(scrollPercent(0, 594, 585)).toBe(100); // 9 px taller than the screen: everything was visible
+    expect(scrollPercent(0, 870, 800)).toBe(100); // within max(48 px, 10% of the viewport)
+    expect(scrollPercent(0, 900, 800)).toBe(0);
     expect(scrollPercent(500, 2000, 1000)).toBe(50);
     expect(scrollPercent(5000, 2000, 1000)).toBe(100);
   });

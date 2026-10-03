@@ -36,8 +36,16 @@ describe("withViBlock", () => {
 
 describe("viNote", () => {
   it("flags windows that include data from before the v3 scroll fix", () => {
-    expect(viNote(new Date("2026-10-03T08:00:00+08:00"))).toBe("含 10-03 17:00 前数据，滚动口径偏低");
+    expect(viNote(new Date("2026-10-03T08:00:00+08:00"))).toBe("含 10-03 17:00 前数据：停留统计 10-03 16:30 才上线，之前的会话都落在疑似扫描器里，滚动口径也偏低");
     expect(viNote(new Date("2026-10-05T09:00:00+08:00"))).toBeUndefined();
     expect(viBlock({ days: 1, sinceLabel: "x", engagement: [], survey: [], clicks: [], note: "n" })[0]).toContain("访客=会话；n）");
+  });
+});
+
+describe("visitors vs likely scanners (agentkit 7e90501)", () => {
+  it("states both counts in the header without adding a line", () => {
+    const lines = viBlock({ days: 1, sinceLabel: "x", engagement: [{ path: "/", seconds: 20, scroll: 50 }], survey: [], clicks: [], sessions: { visitors: 9, scanners: 6 } });
+    expect(lines[0]).toContain("：访客 9 个会话 · 疑似扫描器 6（只有 page_view，未计入）");
+    expect(lines.length).toBe(4);
   });
 });

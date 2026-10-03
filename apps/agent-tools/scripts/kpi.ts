@@ -95,6 +95,10 @@ try {
   vi = viBlock({
     days: 1,
     note: viNote(viSince),
+    sessions: await (async () => {
+      const r = (await rowsOf(`SELECT SUM(e > 0) v, SUM(e = 0 AND pv > 0) s FROM (SELECT sid, SUM(name='engagement') e, SUM(name='page_view') pv FROM events WHERE ${REAL_EV} AND ts >= ? GROUP BY sid)`))[0];
+      return { visitors: Number(r?.v ?? 0), scanners: Number(r?.s ?? 0) };
+    })(),
     sinceLabel: `北京 ${new Date(viSince.getTime() + 8 * 3600_000).toISOString().slice(5, 16).replace("T", " ")}`,
     engagement: eng.map((r) => ({ path: String(r.path), seconds: Number(r.s ?? 0), scroll: Number(r.c ?? 0) })),
     survey: (await rowsOf(`SELECT json_extract(props,'$.action') a, COALESCE(json_extract(props,'$.reason'),'') r, COUNT(*) n FROM events WHERE ${REAL_EV} AND name='exit_survey' AND ts >= ? GROUP BY 1,2 ORDER BY 3 DESC`)).map((r) => ({ action: String(r.a), reason: String(r.r), n: Number(r.n) })),

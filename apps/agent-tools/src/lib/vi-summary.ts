@@ -19,9 +19,12 @@ export function scrollBuckets(scrolls: number[]) {
 
 export function viBlock(o: {
   days: number; sinceLabel: string; engagement: Engagement[]; note?: string;
+  /** Visitors = sessions that sent an engagement event; page_view-only sessions are likely JS-running scanners. */
+  sessions?: { visitors: number; scanners: number };
   survey: { action: string; reason: string; n: number }[]; clicks: { label: string; n: number }[];
 }): string[] {
   const out = [`访客行为（近 ${o.days}×24 小时，${o.sinceLabel} 起；自有 events 表，排除自测，访客=会话${o.note ? `；${o.note}` : ""}）`];
+  if (o.sessions) out[0] += `：访客 ${o.sessions.visitors} 个会话 · 疑似扫描器 ${o.sessions.scanners}（只有 page_view，未计入）`;
   const e = o.engagement;
   if (!e.length) return [...out, "停留：无 engagement 事件"];
   const short = e.filter((x) => x.seconds < 10).length;
@@ -48,4 +51,4 @@ export function withViBlock(lines: string[], rest: string): string {
 
 /** Data before the v3 fix (short pages counted 0% scrolled) overlaps the window: the report must say so. */
 export const VI_V3_SINCE = new Date("2026-10-03T17:00:00+08:00");
-export const viNote = (since: Date) => (since < VI_V3_SINCE ? "含 10-03 17:00 前数据，滚动口径偏低" : undefined);
+export const viNote = (since: Date) => (since < VI_V3_SINCE ? "含 10-03 17:00 前数据：停留统计 10-03 16:30 才上线，之前的会话都落在疑似扫描器里，滚动口径也偏低" : undefined);

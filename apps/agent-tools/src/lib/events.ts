@@ -68,7 +68,8 @@ export function parseEvent(body: unknown): AnalyticsEvent | null {
 /** Scroll depth in %; a page that fits on screen counts as 100% (visitor-insights rule shared by every project). */
 export function scrollPercent(scrollY: number, scrollHeight: number, viewportHeight: number): number {
   const h = scrollHeight - viewportHeight;
-  return h <= 0 ? 100 : Math.min(100, Math.max(0, Math.round((scrollY / h) * 100)));
+  // Tolerance: a page at most max(48 px, 10% of the screen) taller than the viewport was seen in full without scrolling.
+  return h <= Math.max(48, viewportHeight * 0.1) ? 100 : Math.min(100, Math.max(0, Math.round((scrollY / h) * 100)));
 }
 
 /** ui_click label: data-testid, else same-origin path, "#anchor", "mailto", "tel" or "external" — never link text. */
