@@ -1139,7 +1139,7 @@
 - **TASK 队列**：下载量徽章 ✅、MX 修复 ✅、日报维护者行 ✅；新增「外联信徽章按工具选：下载 ≥10 万给 downloads 徽章」（未做）
 - **下一步**：外联徽章按工具选；22:00 外联第二批实发 + 下载量句核对（未核实）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）
 
-## 2026-10-03 20:5x–21:xx 外联徽章按工具选 + 详情页徽章实时预览 + 提交成功页预览开工（6d6b313、61b5c71 已部署，890a559 看板，27f0189 WIP）
+## 2026-10-03 20:4x–20:50 外联徽章按工具选 + 详情页徽章实时预览 + 提交成功页预览开工（6d6b313、61b5c71 已部署，890a559 看板，27f0189 WIP）
 - **外联徽章按工具选**（6d6b313）：badgeMarkdown 加 metric 参数；outreachEmail 的 downloads 带 n，≥10 万给「this one shows the live monthly downloads」+ ?metric=downloads 徽章，否则星数徽章；send-outreach 传 n
   - 今晚 22:00 批次 dry-run：OmniRoute、vLLM、headroom、Browser-Use、Firecrawl 给下载量徽章（徽章 URL 均 200），其余 5 封星数徽章；测试 323 通过
   - **22:00 实际发出内容未核实**

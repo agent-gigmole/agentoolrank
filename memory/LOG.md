@@ -1120,7 +1120,7 @@
 - 坑：@vercel/og 默认字体缺 ★、固定宽度截断动态文字 → GOTCHAS#vercel-og-glyphs-and-width；dns resolveMx 只有 ENOTFOUND/ENODATA 是确定无 MX → GOTCHAS#mx-verdict-definite-only
 - 结果：成功
 
-## 2026-10-03 20:5x–21:xx 外联徽章按工具选 + 详情页徽章预览 + 提交成功页预览开工（6d6b313、61b5c71、890a559、27f0189）
+## 2026-10-03 20:4x–20:50 外联徽章按工具选 + 详情页徽章预览 + 提交成功页预览开工（6d6b313、61b5c71、890a559、27f0189）
 - 做法：badgeMarkdown 加 metric；外联信下载 ≥10 万给 ?metric=downloads 徽章，否则星数徽章，send-outreach 传 n；详情页维护者区加徽章实时预览 <img> 并部署；看板记一行；TASK 补提交成功页预览项；开工 /submit 成功页徽章预览（27f0189 WIP）
 - 结果：323 测试通过；22:00 批次 dry-run 5 封下载量徽章（OmniRoute、vLLM、headroom、Browser-Use、Firecrawl，URL 均 200）、5 封星数徽章；详情页线上两个 img alt 已核对；提交成功页未部署；22:00 实发未核实
 - 坑：无新坑
