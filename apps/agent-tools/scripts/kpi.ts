@@ -5,7 +5,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-import { viBlock, withViBlock } from "../src/lib/vi-summary";
+import { viBlock, viNote, withViBlock } from "../src/lib/vi-summary";
 import { cstDayRange, renderDaily, renderKpi, replaceBlock, type KpiData, type Window } from "../src/lib/kpi";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
@@ -94,6 +94,7 @@ try {
   const eng = (await db.execute({ sql: `SELECT path, CAST(json_extract(props,'$.seconds') AS INTEGER) s, CAST(COALESCE(json_extract(props,'$.scroll'),0) AS INTEGER) c FROM events WHERE ${REAL_EV} AND name='engagement' AND ts >= ?`, args: [viFrom] })).rows;
   vi = viBlock({
     days: 1,
+    note: viNote(viSince),
     sinceLabel: `北京 ${new Date(viSince.getTime() + 8 * 3600_000).toISOString().slice(5, 16).replace("T", " ")}`,
     engagement: eng.map((r) => ({ path: String(r.path), seconds: Number(r.s ?? 0), scroll: Number(r.c ?? 0) })),
     survey: (await rowsOf(`SELECT json_extract(props,'$.action') a, COALESCE(json_extract(props,'$.reason'),'') r, COUNT(*) n FROM events WHERE ${REAL_EV} AND name='exit_survey' AND ts >= ? GROUP BY 1,2 ORDER BY 3 DESC`)).map((r) => ({ action: String(r.a), reason: String(r.r), n: Number(r.n) })),

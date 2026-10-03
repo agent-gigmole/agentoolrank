@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scrollBuckets, viBlock, withViBlock } from "./vi-summary";
+import { scrollBuckets, viBlock, viNote, withViBlock } from "./vi-summary";
 
 describe("scrollBuckets", () => {
   it("uses the shared bucket edges", () => {
@@ -31,5 +31,13 @@ describe("withViBlock", () => {
   it("puts the block first and keeps it to the markers", () => {
     const md = withViBlock(["a", "b"], "# own\n- x\n");
     expect(md).toBe("<!-- vi:start -->\na\nb\n<!-- vi:end -->\n# own\n- x\n");
+  });
+});
+
+describe("viNote", () => {
+  it("flags windows that include data from before the v3 scroll fix", () => {
+    expect(viNote(new Date("2026-10-03T08:00:00+08:00"))).toBe("含 10-03 17:00 前数据，滚动口径偏低");
+    expect(viNote(new Date("2026-10-05T09:00:00+08:00"))).toBeUndefined();
+    expect(viBlock({ days: 1, sinceLabel: "x", engagement: [], survey: [], clicks: [], note: "n" })[0]).toContain("访客=会话；n）");
   });
 });

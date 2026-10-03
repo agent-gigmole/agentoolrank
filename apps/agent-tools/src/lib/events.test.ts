@@ -60,3 +60,27 @@ describe("visitor-insights props", () => {
     expect(parseEvent({ ...base, n: "exit_survey", props: { action: "answer", reason: "too expensive lol" } })?.props).toBe('{"action":"answer"}');
   });
 });
+
+describe("visitor-insights v3 helpers (agentkit 0cecb30)", () => {
+  it("counts a page that fits on screen as 100% scrolled", async () => {
+    const { scrollPercent } = await import("./events");
+    expect(scrollPercent(0, 800, 900)).toBe(100);
+    expect(scrollPercent(0, 2000, 1000)).toBe(0);
+    expect(scrollPercent(500, 2000, 1000)).toBe(50);
+    expect(scrollPercent(5000, 2000, 1000)).toBe(100);
+  });
+  it("labels clicks by test id, same-origin path, anchor, mailto, tel or external", async () => {
+    const { clickLabel } = await import("./events");
+    const o = "https://agentoolrank.com";
+    expect(clickLabel("buy-kit", "/x", o)).toBe("buy-kit");
+    expect(clickLabel(null, "/submit-kit?ref=a", o)).toBe("/submit-kit");
+    expect(clickLabel(null, "https://agentoolrank.com/tool/dify", o)).toBe("/tool/dify");
+    expect(clickLabel(null, "#faq", o)).toBe("#anchor");
+    expect(clickLabel(null, "mailto:hello@agentoolrank.com", o)).toBe("mailto");
+    expect(clickLabel(null, "https://github.com/x", o)).toBe("external");
+    expect(clickLabel(null, null, o)).toBe("");
+  });
+  it("accepts the new fixed labels server-side", () => {
+    for (const label of ["#anchor", "mailto", "tel"]) expect(parseEvent({ n: "ui_click", p: "/", r: "", s: "", sid: "a", props: { label } })?.props).toBe(JSON.stringify({ label }));
+  });
+});

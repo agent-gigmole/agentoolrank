@@ -30,7 +30,7 @@ export function cleanProps(raw: unknown): Record<string, string | number | boole
   if (seconds !== undefined) out.seconds = seconds;
   const scroll = int(r.scroll, 100);
   if (scroll !== undefined) out.scroll = scroll;
-  if (typeof r.label === "string" && /^(external|\/[\w\-./]{0,80}|[a-z0-9][a-z0-9_-]{0,60})$/i.test(r.label)) out.label = r.label;
+  if (typeof r.label === "string" && /^(external|#anchor|mailto|tel|\/[\w\-./]{0,80}|[a-z0-9][a-z0-9_-]{0,60})$/i.test(r.label)) out.label = r.label;
   if (typeof r.action === "string" && ["shown", "dismiss", "answer"].includes(r.action)) out.action = r.action;
   if (typeof r.reason === "string" && (SURVEY_REASONS as readonly string[]).includes(r.reason)) out.reason = r.reason;
   if (typeof r.touch === "boolean") out.touch = r.touch;
@@ -63,6 +63,27 @@ export function parseEvent(body: unknown): AnalyticsEvent | null {
     sid: str(b.sid, 40) ?? "",
     props: JSON.stringify(cleanProps(b.props)),
   };
+}
+
+/** Scroll depth in %; a page that fits on screen counts as 100% (visitor-insights rule shared by every project). */
+export function scrollPercent(scrollY: number, scrollHeight: number, viewportHeight: number): number {
+  const h = scrollHeight - viewportHeight;
+  return h <= 0 ? 100 : Math.min(100, Math.max(0, Math.round((scrollY / h) * 100)));
+}
+
+/** ui_click label: data-testid, else same-origin path, "#anchor", "mailto", "tel" or "external" — never link text. */
+export function clickLabel(testId: string | null, href: string | null, origin: string): string {
+  if (testId) return testId;
+  if (!href) return "";
+  if (href.startsWith("#")) return "#anchor";
+  if (/^mailto:/i.test(href)) return "mailto";
+  if (/^tel:/i.test(href)) return "tel";
+  try {
+    const u = new URL(href, origin);
+    return u.origin === origin ? u.pathname : "external";
+  } catch {
+    return "";
+  }
 }
 
 export function isBotUserAgent(ua: string): boolean {

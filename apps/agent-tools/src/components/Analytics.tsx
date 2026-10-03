@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { sourceFromUrl, type EventName } from "@/lib/events";
+import { clickLabel, scrollPercent, sourceFromUrl, type EventName } from "@/lib/events";
 
 function session(): { sid: string; src: string } {
   try {
@@ -66,9 +66,10 @@ export function Analytics() {
     let maxScroll = 0;
     let sent = false;
     const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      maxScroll = Math.max(maxScroll, Math.min(100, h > 0 ? Math.round((window.scrollY / h) * 100) : 100));
+      maxScroll = Math.max(maxScroll, scrollPercent(window.scrollY, document.documentElement.scrollHeight, window.innerHeight));
     };
+    // Measure once after layout: a page that fits on screen never fires scroll and counts as 100%.
+    const firstMeasure = requestAnimationFrame(onScroll);
     const flush = () => {
       if (sent) return;
       sent = true;
@@ -79,7 +80,8 @@ export function Analytics() {
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pagehide", flush);
     return () => {
-      flush();
+      cancelAnimationFrame(firstMeasure);
+      flush(); // tagged with this effect's pathname, so a client-side route change never credits the next page
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pagehide", flush);
@@ -92,9 +94,7 @@ export function Analytics() {
       if (a && a.host && a.host !== location.host) track("outbound_click", `${location.pathname} -> ${a.hostname}`);
       const el = (ev.target as HTMLElement | null)?.closest?.("a,button") as HTMLElement | null;
       if (el) {
-        const id = el.getAttribute("data-testid");
-        const href = el.getAttribute("href");
-        const label = id || (href?.startsWith("/") ? href.split(/[?#]/)[0] : href ? "external" : "");
+        const label = clickLabel(el.getAttribute("data-testid"), el.getAttribute("href"), location.origin);
         if (label) track("ui_click", location.pathname, { label });
       }
     }
