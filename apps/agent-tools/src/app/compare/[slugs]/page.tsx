@@ -2,6 +2,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { getToolBySlug, getToolPackages } from "@repo/db/queries";
 import { compactCount, totalDownloads } from "@/lib/downloads";
+import { compareJsonLd } from "@/lib/compare-jsonld";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Tool } from "@repo/db/schema";
 import type { Metadata } from "next";
@@ -107,6 +108,7 @@ export default async function ComparePage({ params }: Props) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(compareJsonLd(toolA, toolB, dlA, dlB, process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com")) }} />
       <BreadcrumbJsonLd items={[
         { label: "Compare", href: "/compare" },
         { label: `${toolA.name} vs ${toolB.name}` },
