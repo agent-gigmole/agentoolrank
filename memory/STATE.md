@@ -1095,3 +1095,19 @@
 - **周报数字段流水线化（进行中）**：src/lib/weekly-numbers.ts `scoreboardTable`（收入、陌生人付费单、现金支出、利润、真实访客 + 疑似扫描器、提交工具漏斗、Submit Kit 漏斗、外联、目录站已上线、GSC 28 天）+ 测试，6b82a3a（WIP，未接数据、未上定时器）
   - 剩：脚本从 ops/scoreboard.json + kpi 数据取数 → 周一 09:00 前替换 docs/ops/weekly/<周一>.md「记分牌」节 → systemd 定时器 + 登记 pipelines.json
 - **下一步**：完成周报数字段脚本 + 定时器；/downloads 每星下载榜；futurepedia 价格（未核实）；周报写入价格对比；22:00 外联第二批送达核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）
+
+## 2026-10-03 20:12 周报数字段流水线 + 花费库接入 + 每星下载榜开工（9e98f75、69a8210 已提交推送，a14bda6 WIP）
+- **花费库**（agentkit 20:10 下发）：`$AGENTKIT_ROOT/bin/spend`，库 ~/data/spend/spend.db；Airwallex 每 6h 自动入库，按 shared/spend-map.json 归属项目；非 Airwallex 付款当天记 `bin/spend add --date --usd --project ai-directory --merchant --pay --what`；`bin/spend --json` 含 last_7d_by_project
+  - scripts/scoreboard.ts 的 spend_usd_7d 改取 last_7d_by_project["ai-directory"]；取不到回退 docs/ops/spend-ledger.md 并写 warnings；sources.spend 写明来源
+  - 当前：近 7 天 $0；累计 $10.46（03-28 域名，报价，未对账）；已回复 agentkit（对方回「接得好」）
+- **周报数字段流水线**（9e98f75；渲染 6b82a3a）：
+  - kpi.ts 每日对象另写 apps/agent-tools/data/kpi-latest.json（gitignore）
+  - src/lib/weekly-numbers.ts：scoreboardTable、replaceScoreboard（只替换「## 记分牌」节，没有就插在 H1 后）、reviewMonday（北京时间，当天或之后最近的周一）+ 测试
+  - scripts/weekly-numbers.ts：写 docs/ops/weekly/<周一>.md，只 add/commit/push 该文件，报错不打印带 token 的 URL
+  - systemd --user agentoolrank-weekly-numbers（周一 08:50，Persistent=true，单元里显式 WorkingDirectory + PATH），已 enable；手动 start 跑通；ops/pipelines.json 第 6 条；rule-check 通过
+  - 10-05 周报记分牌已自动生成并推送（69a8210）
+- 测试 317 通过；看板已记
+- **TASK 队列**：周报数字段 ✅；新增「周一 09:30 前更新 ops/bets.json + 周报押注节」
+- **进行中**：/downloads「每星下载最高」榜：lib/downloads.ts usedMoreThanStarred（≥10 万下载门槛）+ 测试（a14bda6 WIP）；剩页面展示 + 部署
+- 坑：KNOWLEDGE/GOTCHAS.md#systemd-bun-unit-and-token-push
+- **下一步**：每星下载榜页面 + 部署；futurepedia 价格（未核实）；22:00 外联第二批送达核对（未核实）；10-05 周一 08:50 定时器首次自动运行核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）

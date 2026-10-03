@@ -294,3 +294,5 @@
 | fetch-downloads 全量 592 工具 npm 74 PyPI 174 / 78 个空 pypistats 未返回 周一重跑 / 数据文章 10-07 21:00 北京 await 08eaba / 替代品页 Downloads 30d 列 8afbc0d WIP | STATE.md#2026-10-03 19:3x–19:41 fetch-downloads 全量 + 数据文章重写 + dev.to 定时发布 |
 | vitest --root 从仓库根跑少算测试 311 vs 313 / 在 apps/agent-tools 里 npm test / 替代品页 usageVerdict Downloads 30d 列 66d37b1 | GOTCHAS.md#vitest-run-from-app-dir |
 | 竞品上架价格 TAAFT Basic $49 Maximum Exposure $437 无免费档 / toolify $99 6 个 dofollow / futurepedia 需登录未核实 / 我们 $9–$49 不要求徽章 / 43ae771 | STATE.md#2026-10-03 20:3x– 替代品页下载量上线 + 竞品上架价格 |
+| 周报数字段 weekly-numbers.ts / replaceScoreboard 只换「## 记分牌」节 无则插 H1 后 / reviewMonday 北京时间 / kpi-latest.json / agentoolrank-weekly-numbers 周一 08:50 / systemd ExecStart bun 显式 WorkingDirectory PATH / 带 token URL push 报错不打印 URL / 只 add 自己生成的文件 / 9e98f75 | GOTCHAS.md#systemd-bun-unit-and-token-push |
+| 花费库 agentkit bin/spend spend.db / Airwallex 每 6h 入库 spend-map.json / 非 Airwallex 当天 bin/spend add / --json last_7d_by_project / scoreboard spend_usd_7d 失败回退 spend-ledger warnings / 累计 $10.46 未对账 | STATE.md#2026-10-03 20:12 周报数字段流水线 + 花费库接入 + 每星下载榜开工 |

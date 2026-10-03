@@ -1095,3 +1095,9 @@
 - 结果：线上首页前 6 为 OpenAI Python 284.2M / MCP Python SDK 219.0M / LangChain 169.4M / AI SDK 108.0M / LangGraph 43.7M / Playwright MCP server 29.0M；周报数字段取数脚本、写入周报、定时器均未做
 - 坑：无新坑
 - 结果：成功（周报数字段进行中）
+
+## 2026-10-03 20:12 周报数字段流水线 + 花费库接入（6b82a3a、9e98f75、69a8210、a14bda6）
+- 做法：按 agentkit 20:10 通知把 scoreboard 支出改取 bin/spend --json 的 last_7d_by_project（失败回退 spend-ledger + warnings）；kpi.ts 写 data/kpi-latest.json；weekly-numbers.ts 渲染并替换周报「记分牌」节、只提交推送该文件；systemd agentoolrank-weekly-numbers 周一 08:50 enable 并手动跑通；pipelines.json 第 6 条，rule-check 通过；10-05 周报记分牌自动生成；TASK 补押注更新项；开工 /downloads 每星下载最高榜（usedMoreThanStarred，≥10 万门槛）
+- 结果：317 测试通过；近 7 天支出 $0、累计 $10.46（未对账）；每星下载榜页面未做未部署；定时器周一自动触发未核实
+- 坑：systemd ExecStart 直接 bun 要显式 WorkingDirectory + PATH；脚本内用带 token 的 URL push 时错误信息不能打印 URL → GOTCHAS#systemd-bun-unit-and-token-push
+- 结果：成功（每星下载榜进行中）

@@ -844,7 +844,7 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - board 看 mtime，只 touch 不算真更新；看板要写实际进展
 - **第 6 条 scoreboard**（10-03 15:22 新增）：`ops/scoreboard.json` 必须存在、7 字段齐（updated_at、revenue_usd_7d、paid_orders_7d、spend_usd_7d、profit_usd_7d、visitors_7d、bets）、updated_at 在 26 小时内 → 由 hourly-ops.sh 每小时生成（scripts/scoreboard.ts），文件 gitignore，agentkit 读本地
 - `$AGENTKIT_ROOT/bin/scoreboard` 每周一 09:25 跨项目排名：利润 → 收入 → 付费单 → 访客；**连续两周零收入且访客不涨 → 标「转向复盘」**
-- 收入口径：Turso payments 排除 selftest，减 Stripe 退款（checkout/sessions/{id}?expand[]=payment_intent.latest_charge 的 amount_refunded；未核实：只确认能读 session 且 expand 不报错——测试 session 的 payment_intent 为空，首笔真实付款时再核对 amount_refunded），全额退款单不计单数；支出 = spend-ledger 明细现金行，跳过「既有余额|Sub2API」
+- 收入口径：Turso payments 排除 selftest，减 Stripe 退款（checkout/sessions/{id}?expand[]=payment_intent.latest_charge 的 amount_refunded；未核实：只确认能读 session 且 expand 不报错——测试 session 的 payment_intent 为空，首笔真实付款时再核对 amount_refunded），全额退款单不计单数；支出 = spend-ledger 明细现金行，跳过「既有余额|Sub2API」（10-03 20:12 起改取 agentkit `bin/spend --json` last_7d_by_project["ai-directory"]，失败才回退 spend-ledger 并写 warnings）
 - **周一复盘别忘更新 ops/bets.json**（新一周押注 + 上周 status），否则记分牌 bets 一直是旧的
 
 ## await-watchdog
@@ -966,3 +966,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **做法**：一律 `cd apps/agent-tools && npm test`（= vitest run）再看通过数；报告测试数以这个为准
 - 原因未深查（推测是 --root 下配置/include 解析不同），未核实
 - 来源：2026-10-03 替代品页下载量（66d37b1）
+
+## systemd-bun-unit-and-token-push
+10-03 周报数字段定时器 agentoolrank-weekly-numbers（9e98f75）。
+- **systemd 单元直接 ExecStart=bun 时**：要显式写 `WorkingDirectory=/home/qmt/workspace/ai-directory/apps/agent-tools`（脚本里相对路径、.env 加载都依赖 cwd）和 `Environment=PATH=/home/qmt/.bun/bin:/usr/local/bin:/usr/bin:/bin`（用户服务不读 ~/.bashrc，脚本里调用的 git/bun 子进程找不到）；ExecStart 写 bun 绝对路径。单元文件放 ops/systemd/，软链接到 ~/.config/systemd/user，enable 后用 `systemctl --user start` 手动跑一次看 status/journalctl
+- **脚本内用带 token 的 URL push**：git 报错信息会带上完整 URL（含 token），catch 后只打印脱敏信息（不打印命令行/URL/原始 stderr），日志进 journalctl 也算回显
+- 定时脚本只 add/commit 自己生成的那个文件，不要 `git add -A`（工作区常有别人的未提交改动）
+- 来源：2026-10-03 周报数字段流水线（9e98f75）
