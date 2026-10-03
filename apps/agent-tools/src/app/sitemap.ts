@@ -2,7 +2,7 @@ import { translatedTools } from "@/lib/i18n-data";
 import type { MetadataRoute } from "next";
 import { db } from "@repo/db";
 import { getCategories, getComparisonPairs, getDownloadRows, getStacks } from "@repo/db/queries";
-import { downloadCategorySlugs } from "@/lib/downloads";
+import { downloadCategorySlugs, downloadPairs } from "@/lib/downloads";
 import { pairsFromAlternatives } from "@/lib/alternatives";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -74,7 +74,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
     3,
   );
-  const compareSlugs = [...new Set([...comparePairs.map((p) => `${p.slugA}-vs-${p.slugB}`), ...altPairs])];
+  // Most-downloaded tools per category, compared pairwise (only tools still listed).
+  const dlPairs = downloadPairs(await getDownloadRows(), (await getCategories()).map((c) => c.slug), 6).filter((slug) =>
+    slug.split("-vs-").every((id) => listed.has(id)),
+  );
+  const compareSlugs = [...new Set([...comparePairs.map((p) => `${p.slugA}-vs-${p.slugB}`), ...altPairs, ...dlPairs])];
   const comparePages: MetadataRoute.Sitemap = compareSlugs.map((slug) => ({
     url: `${baseUrl}/compare/${slug}`,
     lastModified: new Date(),

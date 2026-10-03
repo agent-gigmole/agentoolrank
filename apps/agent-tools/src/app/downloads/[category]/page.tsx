@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getCategories, getDownloadRows } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { compactCount, DOWNLOAD_CATEGORY_MIN, downloadCategorySlugs, rankByDownloads } from "@/lib/downloads";
+import { compareSlug } from "@/lib/alternatives";
 
 export const revalidate = 86400;
 const BASE = "https://agentoolrank.com";
@@ -86,6 +87,17 @@ export default async function DownloadsCategoryPage({ params }: { params: Promis
           </tbody>
         </table>
       </div>
+      {ranked.length >= 2 && (
+        <section className="mt-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">Compare the most-downloaded {cat.name}</h2>
+          <p className="text-sm flex flex-wrap gap-x-3 gap-y-1">
+            {ranked.slice(0, 6).flatMap((a, i, top) => top.slice(i + 1).map((b) => (
+              <Link key={`${a.id}-${b.id}`} href={`/compare/${compareSlug(a.id, b.id)}`} className="text-blue-600 hover:underline">{a.name} vs {b.name}</Link>
+            )))}
+          </p>
+        </section>
+      )}
+
       <p className="text-sm text-gray-600 mt-6">
         <Link href="/downloads" className="text-blue-600 hover:underline">All agent tools by downloads</Link> ·{" "}
         <Link href={`/category/${cat.slug}`} className="text-blue-600 hover:underline">{cat.name} ranked by GitHub activity</Link>
