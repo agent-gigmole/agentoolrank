@@ -302,3 +302,5 @@
 | MX 预检 dns resolveMx ENOTFOUND ENODATA 空记录才退订 / 临时错误 ETIMEOUT ESERVFAIL 重试一次本轮跳过 / mxVerdict mxCheck / optout.json 误伤清理 / mx-transient new_ladar b0efe91 | GOTCHAS.md#mx-verdict-definite-only |
 | ops/daily.md 维护者漏斗 入口点击 复制徽章 首页推荐结账 7 天 / kpi.ts maintainer / 5f0fd7b | STATE.md#2026-10-03 20:36–20:43 下载量 README 徽章 + MX 临时错误修复 + 日报维护者漏斗 |
 | 用户动作后才出现的页面状态 提交成功页 部署核对 / grep 线上 _next/static/chunks JS 文案 / 只证明已部署不证明交互 / 27f0189 / 首页 Launching an agent tool 卡片 home-where-to-list home-submit-kit home-submit 73fcd44 未部署 | GOTCHAS.md#verify-deploy-via-js-chunk |
+| /submit-kit 网页免费前 10 / ?type= ai_tool mcp_server dev_tool saas / recommendDirectories full:false 同无 key MCP / kit-type-* / N directories fit 购买按钮 / cc22758 | STATE.md#2026-10-03 21:2x 首页 Launching 卡片部署核对 + /submit-kit 网页免费前 10 上线 + 外联候选补货开工 |
+| 外联候选补货 outreach-list.ts 整份覆盖 candidates.json 先备份 .bak / sent.json 去重不重发 / --per-category=12 / agent-gigmole 令牌 github-agentoolrank | GOTCHAS.md#outreach-list-overwrites-candidates |

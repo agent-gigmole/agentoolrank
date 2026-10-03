@@ -997,3 +997,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 只证明代码已上线，不证明交互能跑通；交互本身仍需真浏览器或测试覆盖（未跑的写「未核实」）
 - grep 用 -o 短匹配，避免 minified 整行刷屏（同 GOTCHAS#curl-next-rsc-output）
 - 来源：2026-10-03 提交成功页徽章预览（27f0189）
+
+## outreach-list-overwrites-candidates
+- apps/agent-tools/scripts/outreach-list.ts 会**整份覆盖** data/outreach/candidates.json（不是追加）→ 跑之前先 `cp candidates.json candidates-<日期>.json.bak`，跑完对比新旧人数，手工审过的字段（hold、类目改报等）如有丢失从备份找回
+- 重复发送由 send-outreach 的 sent.json 去重兜底（按 email 小写），所以覆盖不会导致老对象被再发一次；统计「未发」= candidates 中 email 不在 sent.json 的人数
+- 跑 GitHub API 用项目自己的 agent-gigmole 令牌（~/.config/secrets/github-agentoolrank，以 GITHUB_TOKEN 环境变量传入），不用老板 gh 账号
+- 补货后先 dry-run 审新增对象再进定时批次
+- 来源：2026-10-03 候选只剩 23 人时补货（--per-category=12）

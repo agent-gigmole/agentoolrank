@@ -40,7 +40,9 @@
 - ✅ 外联信里的徽章按工具选（≥10 万下载给 downloads 徽章；今晚批次 5 封带 downloads 徽章，徽章 URL 200）
 - ✅ 详情页维护者区显示徽章实时预览（星数 + 有数据时的下载量徽章，10-03 20:4x 上线核对）
 - ✅ 提交成功页徽章区加实时预览（10-03 20:52 部署，线上 JS 包已含）
-- 首页加「Launching an agent tool?」卡片：链 /where-to-list（免费实测表）和 /submit-kit（$29），/submit-kit 近 7 天 0 访问，先补入口
+- ✅ 首页加「Launching an agent tool?」卡片（链 /where-to-list、/submit-kit、/submit，10-03 21:21 部署核对）
+- ✅ /submit-kit 网页直接展示免费前 10 个站（?type= 切换 AI tool / MCP server / Dev tool / SaaS，10-03 21:2x 上线核对：MCP server 24 个对口站，前 3 agenstry、glama、mcpmarket）
+- 外联候选补货：candidates.json 只剩 23 人（今晚发 10 后剩 13，10-05 就断）；跑 outreach-list.ts 扩到每类 12 个，并把补货写成每周定时任务（候选 < 20 时自动跑）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

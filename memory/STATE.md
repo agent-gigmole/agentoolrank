@@ -1154,3 +1154,12 @@
 - 结果：成功页预览线上 JS 包已含；首页卡片 73fcd44 已提交未部署；22:00 外联批次由定时器发送，后台等待任务发完后提醒核实（未核实）
 - 坑：只在用户动作后出现的页面状态（提交成功页）无法 curl HTML 核对 → grep 线上 JS chunk 里的文案 → GOTCHAS#verify-deploy-via-js-chunk
 - 结果：成功（首页卡片进行中）
+
+## 2026-10-03 21:2x 首页 Launching 卡片部署核对 + /submit-kit 网页免费前 10 上线 + 外联候选补货开工（73fcd44、cc22758、16c8b6c）
+- **首页「Launching an agent tool?」卡片**（73fcd44）：21:21 部署并线上核对
+- **/submit-kit 网页免费前 10**（cc22758，已部署）：页面读 ?type=（ai_tool / mcp_server / dev_tool / saas，默认 ai_tool），调 recommendDirectories(kitData, full:false)——与无 key 的 MCP 结果相同；每站显示 tier（agent 能做完 / 需真人一步）、实测链接类型、核实日期、真人步骤、第一条提示；列表后「N directories fit」+ 购买按钮；类型标签 data-testid kit-type-*
+  - 线上：ai_tool 前 3 directree.io、pavelzanek.com、agenstry.com；mcp_server 24 个对口，前 3 agenstry.com、glama.ai、mcpmarket.com
+  - 测试 323 通过；看板已记（16c8b6c）
+- **TASK 队列**：首页卡片 ✅、/submit-kit 免费前 10 ✅；新增「外联候选补货」（进行中）
+- **进行中：外联候选补货**：apps/agent-tools/data/outreach/candidates.json 只剩 23 人未发（今晚 22:00 发 10 封后剩 13，10-05 前后断货）；已备份 candidates-2026-10-03.json.bak；后台用项目自己的 agent-gigmole 令牌（~/.config/secrets/github-agentoolrank，不用老板 gh 账号 tensam）跑 `outreach-list.ts --per-category=12`，日志 /tmp/claude-1000/outreach-list.log——**结果未核实**（21:24 起仍在跑）
+- **下一步**：补货跑完 → 看新增人数与未发人数 → dry-run 审一遍新增对象 → 把「候选 < 20 自动补货」写进每周定时任务；22:00 外联第二批实发核对（未核实）；futurepedia 价格（未核实）；10-05 周报数字定时器首跑（未核实）；10-07 dev.to 数据文章（未核实）

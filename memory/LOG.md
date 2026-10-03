@@ -1131,3 +1131,9 @@
 - 结果：成功页预览线上 JS 包已含；首页卡片 73fcd44 已提交未部署；22:00 外联批次由定时器发送，后台等待任务发完后提醒核实（未核实）
 - 坑：只在用户动作后出现的页面状态（提交成功页）无法 curl HTML 核对 → grep 线上 JS chunk 里的文案 → GOTCHAS#verify-deploy-via-js-chunk
 - 结果：成功（首页卡片进行中）
+
+## 2026-10-03 21:21–21:2x 首页卡片部署核对 + /submit-kit 网页免费前 10 + 外联候选补货开工（73fcd44、cc22758、16c8b6c）
+- 做法：首页 Launching 卡片 21:21 部署核对；/submit-kit 按 ?type= 直接展示免费前 10（recommendDirectories full:false，同无 key MCP），每站 tier / 链接类型 / 核实日期 / 真人步骤 / 首条提示，列表后「N directories fit」+ 购买按钮，部署；看板记一行；TASK 两项打勾并补「外联候选补货」；开工补货：备份 candidates.json，用 agent-gigmole 令牌后台跑 outreach-list.ts --per-category=12
+- 结果：线上 ai_tool 前 3 directree.io / pavelzanek.com / agenstry.com，mcp_server 24 个对口（agenstry / glama / mcpmarket）；测试 323 通过；补货结果未核实
+- 坑：outreach-list.ts 整份覆盖 candidates.json → 先备份；sent.json 去重保证不重发 → GOTCHAS#outreach-list-overwrites-candidates
+- 结果：成功（补货进行中）
