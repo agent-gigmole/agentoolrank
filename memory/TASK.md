@@ -4,12 +4,13 @@
 
 <!-- rule-check 每天 10:00/16:00/22:00 检查：至少 5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删掉 -->
 - 每晚 22:00 发外联 10 封（第二批 10-03），发前复核文案：开头讲免费收录和数据，不提付费（外部评测第 1 条）；回信用 feedback.ts add 登记，48 小时内写结论
-- Submit Kit 首单路径：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
+- ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
 - npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
 - 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
 - 每天查一次已上线目录站的链接 rel，看板"已确认上线"随之更新
 - 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
+- 接入 visitor-insights（$AGENTKIT_ROOT/skills/visitor-insights/SKILL.md；engagement/ui_click/exit_survey 写进自有 events 表，?internal=1 排除，隐私页写清，汇总写 ops/daily.md vi 块），10-06 前
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

@@ -199,7 +199,7 @@
 | 首个外部提交 Orkas / src=api / agent 读 /agents 文档自动提交 / G2 1/20 / override 写回 source_hash 已修 | LOG.md#2026-10-02 11:05–11:55 override 写回 source_hash + 第一个外部提交 Orkas（G2 1/20） |
 | 模板文字单复数 / about 1 days / n=1 边界用例 / message_for_human | GOTCHAS.md#human-text-pluralization |
 | message_for_human / API 返回可转给人的说明 / llms.txt list a tool (free) / MCP submit_tool for free | LOG.md#2026-10-02 11:55–12:25 提交返回 message_for_human + 文档写明免费入口 |
-| 埋点事件名白名单 EVENT_NAMES / src/lib/events.ts / 新事件 TS 报错 / maintainer_banner_click | GOTCHAS.md#event-names-whitelist |
+| 埋点事件名白名单 EVENT_NAMES / src/lib/events.ts / 新事件 TS 报错 / maintainer_banner_click / kit_click | GOTCHAS.md#event-names-whitelist |
 | ISR 页按 query 参数个性化 / ?ref=outreach / client 组件读 window.location / 不用 searchParams 否则整页动态渲染 | GOTCHAS.md#isr-query-personalize-client |
 | 外联落地页维护者横幅 / MaintainerBanner / #maintainers 锚点 / scroll-mt-20 | LOG.md#2026-10-02 12:50–13:10 T17 外联落地页维护者横幅 |
 | 本地化页只靠 sitemap/hreflang 不够 / 站内入口 / 语言索引页 /zh/tools /ja / 页脚 hrefLang / 面包屑指本语言索引 | GOTCHAS.md#localized-pages-need-internal-links |
@@ -274,3 +274,5 @@
 | 微信支付 available 支付宝 pending（10-03 15:4x）/ Smithery 公开页 593 结案 | LOG.md#2026-10-03 15:37– 接入 await 看门狗 |
 | 日报 daily-report / 每天 09:00 发项目 topic / ops/daily.md 前 15 行 36 小时内 / renderDaily kpi.ts / 项目不自己发日报 / dbb1c7c | GOTCHAS.md#daily-report-ops-daily |
 | 反馈收件箱 / ~/data/feedback/feedback.jsonl 只追加 同 id 最后一行 / 48 小时 status new→adopted declined answered / feedback.ts collect add decide list / hello@ 回信 Gmail 搜法 / 外部评测三问 --hit --misread --want / 周报四节 记分牌 竞品 外部评测 押注 / 769e0c6 5207740 | GOTCHAS.md#feedback-inbox |
+| React SSR 文本节点 `$<!-- -->29` / curl grep 线上文案找不到 / 先 sed 去 <!-- --> | GOTCHAS.md#react-text-node-split-grep |
+| Submit Kit 首单路径 / /where-to-list 说明框 54cb18e / /submit 成功页入口 kit_click d92e6fb / devto brief 文末一行 | LOG.md#2026-10-03 16:35– Submit Kit 入口补齐 |

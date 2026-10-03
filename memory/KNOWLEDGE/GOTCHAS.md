@@ -607,6 +607,7 @@ review-translations 状态机坑（10-02 promptfoo ja）：`--reject` 会把该�
 
 ## event-names-whitelist
 本项目埋点事件名有白名单：src/lib/events.ts 的 `EVENT_NAMES`（类型由它推出）。新增事件（如 10-02 的 `maintainer_banner_click`）必须同步加进 EVENT_NAMES，否则 track 调用处 TS 报错（或被服务端丢弃）。加新埋点时先 grep EVENT_NAMES。
+- 10-03 新增 `kit_click`（/submit 成功页 → /submit-kit，d92e6fb）同理：先加 EVENT_NAMES + events.test.ts，再在组件里 track，否则 build 类型错误。
 
 ## isr-query-personalize-client
 想按 query 参数（如 `?ref=outreach`）给 ISR 页加个性化内容：**用 client 组件在浏览器里读 `window.location.search`（或 useSearchParams 并包 Suspense）**，不要在 page.tsx 里读 `searchParams` prop——读了整页会变成动态渲染，失去 ISR / revalidate 缓存。10-02 MaintainerBanner 就是这样做的：服务端照常 ISR 出页，横幅在客户端判断后才显示。
@@ -871,3 +872,6 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **邮箱要人工查**：每轮 loop 查一次 hello@，Gmail 搜 `to:hello@agentoolrank.com newer_than:Nd subject:(Re) -from:me`；hello@ 里大量是目录站验证 / 魔法链接 / 欢迎信（Foundr、AIToolsRecap、Product Watch 等），不算反馈，只登记真人回信
 - **外部评测三问**（老板 10-03 16:11）：每条反馈问 说中了什么问题 / 误解了什么（= 文案或定位没讲清）/ 想要什么我们没有；没有文字反馈时读行为数据（点开、访问、点付费），误解与想要写"无法判断，不猜"
 - **周报四节**：每周一 docs/ops/weekly/<周一>.md 必须含 记分牌、竞品、外部评测、押注 四节（rule-check 查）；外部评测一节 1–3 条结论，每条对应一个改动或不改理由
+
+## react-text-node-split-grep
+线上核对页面文案时注意：React 把相邻的文本和表达式渲染成分开的文本节点，SSR HTML 里会插注释分隔，如 JSX `${price}` / `$29` 混写可能输出 `$<!-- -->29`。直接 `curl | grep '\$29'` 会找不到 → 误判没上线。做法：grep 去掉注释后的文本（`curl -s URL | sed 's/<!-- -->//g' | grep …`），或 grep 不含数字的独特短语。10-03 核对 /where-to-list Submit Kit 说明框时遇到。

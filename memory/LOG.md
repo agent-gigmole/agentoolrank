@@ -991,3 +991,10 @@
 - 结果：239 测试通过；本周陌生人文字反馈 0 条（dev.to 2 篇 0 评论、GitHub 0 issue、hello@ 无真人回信）；结论：卖曝光不成立 → 卖数据，第二批外联开头讲免费收录和数据；rule-check 全过
 - 坑：Gmail 搜回信用 `to:hello@agentoolrank.com newer_than:Nd subject:(Re) -from:me`；hello@ 大量是目录站验证 / 欢迎信，不算反馈 → GOTCHAS#feedback-inbox
 - 结果：成功
+
+
+## 2026-10-03 16:35– Submit Kit 入口补齐（54cb18e、d92e6fb）
+- 做法：下一步队列第 2 项 → /where-to-list 实测表下方加 Submit Kit 说明框（多给什么 + 前 10 免费 / 完整 $29 一次性 / 不承诺流量）；devto-101-directories brief 规则加文末一行 Submit Kit；/submit 成功页加「Listing it on other directories too?」→ /submit-kit，track kit_click（EVENT_NAMES 新增 + 测试）；两次部署，线上核对
+- 结果：/where-to-list 说明框线上可见，/submit 200；TASK 队列第 2 项 ✅；新增队列项「接入 visitor-insights，10-06 前」（agentkit 16:18 要求）
+- 坑：新埋点先加 EVENT_NAMES 否则 build 类型错 → GOTCHAS#event-names-whitelist；React SSR 把 "$29" 输出成 `$<!-- -->29`，grep 线上要先去注释 → GOTCHAS#react-text-node-split-grep
+- 结果：成功

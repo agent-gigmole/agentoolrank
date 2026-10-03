@@ -900,3 +900,11 @@
 - rule-check 全部通过；看板已更新；两条都已 bus-send 回复
 - 用法与坑：KNOWLEDGE/GOTCHAS.md#feedback-inbox
 - **下一步**：每轮 loop 查一次 hello@ 邮箱，真人回信用 feedback.ts add 登记；22:00 外联第二批按新文案发；10-05 周报定稿含四节
+
+## 2026-10-03 16:35– Submit Kit 首单路径补齐（54cb18e、d92e6fb，已部署）
+- **/where-to-list**：实测目录表下方加 Submit Kit 说明框（多给：表单坑、成功信号、需真人的步骤、不建议清单；前 10 免费，完整 $29 一次性，不承诺流量），线上已核对
+- **docs/ops/launch-kit/briefs/devto-101-directories.md**：规则加「文末一行 Submit Kit」（10-07 数据文章用）
+- **/submit 成功页**：加「Listing it on other directories too?」→ /submit-kit，点击记 `kit_click`（events.ts EVENT_NAMES 新增 + events.test.ts 测试）；已部署，/submit 200
+- TASK 下一步队列第 2 项已 ✅；看板已加日志
+- kit_click 实际点击数据：未核实（刚上线）
+- **下一步**：10-06 前接入 visitor-insights（agentkit 16:18 要求，已排进队列）；22:00 外联第二批；10-07 dev.to 数据文章
