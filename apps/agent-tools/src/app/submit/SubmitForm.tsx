@@ -6,17 +6,17 @@ import { track } from "@/components/Analytics";
 
 type Result =
   | { kind: "queued"; slug: string; position: number; waitDays: number; name: string }
-  | { kind: "listed"; slug: string };
+  | { kind: "listed"; slug: string; name: string };
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
 
-function PaidOptions({ slug, waitDays }: { slug: string; waitDays?: number }) {
+function PaidOptions({ slug, waitDays, listed = false }: { slug: string; waitDays?: number; listed?: boolean }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState("");
   async function buy(plan: "priority" | "fast" | "featured") {
     setBusy(plan);
     setErr("");
-    track("checkout_click", `/submit#${plan}`);
+    track("checkout_click", `/submit${listed ? "-listed" : ""}#${plan}`);
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -37,8 +37,15 @@ function PaidOptions({ slug, waitDays }: { slug: string; waitDays?: number }) {
   return (
     <div className="border border-gray-200 rounded-xl p-6">
       <p className="font-semibold text-gray-900 mb-3">
-        Don&apos;t want to wait{waitDays && waitDays > 3 ? ` about ${waitDays} days` : ""}?
+        {listed ? "Want more developers to see it?" : <>Don&apos;t want to wait{waitDays && waitDays > 3 ? ` about ${waitDays} days` : ""}?</>}
       </p>
+      {listed ? (
+        <button type="button" onClick={() => buy("featured")} disabled={busy !== null}
+          className="w-full text-left border-2 border-blue-500 rounded-lg p-4 hover:bg-blue-50 disabled:opacity-60">
+          <div className="font-semibold">Feature it · $49</div>
+          <div className="text-sm text-gray-600">7 days at the top of the homepage and its category page.</div>
+        </button>
+      ) : (
       <div className="grid sm:grid-cols-3 gap-3">
         <button type="button" onClick={() => buy("priority")} disabled={busy !== null}
           className="text-left border border-gray-300 rounded-lg p-4 hover:border-blue-500 disabled:opacity-60">
@@ -56,8 +63,31 @@ function PaidOptions({ slug, waitDays }: { slug: string; waitDays?: number }) {
           <div className="text-sm text-gray-600">Fast-track + 7 days featured on the homepage and your category page.</div>
         </button>
       </div>
-      <p className="text-xs text-gray-500 mt-3">One-time payment. Not approved in review? Full refund.</p>
+      )}
+      <p className="text-xs text-gray-500 mt-3">One-time payment.{listed ? "" : " Not approved in review? Full refund."}</p>
       {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
+    </div>
+  );
+}
+
+function BadgeBox({ slug, snippet, copied, onCopy, title, text }: { slug: string; snippet: string; copied: boolean; onCopy: () => void; title: string; text: string }) {
+  return (
+    <div className="border border-gray-200 rounded-xl p-6">
+      <p className="font-semibold text-gray-900">{title}</p>
+      <p className="text-sm text-gray-600 mt-1 mb-3">{text}</p>
+      {/* eslint-disable-next-line @next/next/no-img-element -- live badge image, same URL as the snippet */}
+      <img src={`/api/badge/${slug}`} alt="AgentoolRank badge preview" height={32} className="h-8 w-auto mb-3" />
+      <pre className="bg-gray-50 text-xs p-3 rounded-lg overflow-x-auto whitespace-pre-wrap break-all">{snippet}</pre>
+      <button
+        type="button"
+        onClick={() => {
+          navigator.clipboard.writeText(snippet).then(onCopy, () => {});
+          track("badge_copy");
+        }}
+        className="mt-3 px-4 py-2 text-sm bg-gray-900 text-white rounded-lg hover:bg-gray-700"
+      >
+        {copied ? "Copied" : "Copy badge HTML"}
+      </button>
     </div>
   );
 }
@@ -111,7 +141,7 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
       if (!res.ok) {
         setError(data.error ?? "Something went wrong.");
       } else if (data.alreadyListed) {
-        setResult({ kind: "listed", slug: data.slug });
+        setResult({ kind: "listed", slug: data.slug, name: form.name });
       } else {
         setResult({ kind: "queued", slug: data.slug, position: data.position, waitDays: data.waitDays, name: form.name });
         track("submit_done");
@@ -124,9 +154,15 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
 
   if (result?.kind === "listed") {
     return (
-      <div className="bg-blue-50 rounded-xl p-6">
-        <p className="font-medium text-blue-900">Good news: this tool is already listed.</p>
-        <a href={`/tool/${result.slug}`} className="text-blue-700 underline">See its page →</a>
+      <div className="space-y-6">
+        <div className="bg-blue-50 rounded-xl p-6">
+          <p className="font-medium text-blue-900">Good news: this tool is already listed.</p>
+          <a href={`/tool/${result.slug}`} className="text-blue-700 underline">See its page →</a>
+        </div>
+        {paymentsEnabled && <PaidOptions slug={result.slug} listed />}
+        <BadgeBox slug={result.slug} snippet={badgeHtml(BASE_URL, result.slug, result.name)} copied={copied} onCopy={() => setCopied(true)}
+          title="Maintain it? Add the badge"
+          text="Show live GitHub stars on your README or website. It links back to the tool's ranking page." />
       </div>
     );
   }
@@ -142,25 +178,9 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
           </p>
         </div>
         {paymentsEnabled && <PaidOptions slug={result.slug} waitDays={result.waitDays} />}
-        <div className="border border-gray-200 rounded-xl p-6">
-          <p className="font-semibold text-gray-900">Get reviewed first: add the badge</p>
-          <p className="text-sm text-gray-600 mt-1 mb-3">
-            Submissions whose website shows the AgentoolRank badge are reviewed before everyone else, and the badge shows live GitHub stars.
-          </p>
-          {/* eslint-disable-next-line @next/next/no-img-element -- live badge image, same URL as the snippet */}
-          <img src={`/api/badge/${result.slug}`} alt="AgentoolRank badge preview" height={32} className="h-8 w-auto mb-3" />
-          <pre className="bg-gray-50 text-xs p-3 rounded-lg overflow-x-auto whitespace-pre-wrap break-all">{snippet}</pre>
-          <button
-            type="button"
-            onClick={() => {
-              navigator.clipboard.writeText(snippet).then(() => setCopied(true), () => {});
-              track("badge_copy");
-            }}
-            className="mt-3 px-4 py-2 text-sm bg-gray-900 text-white rounded-lg hover:bg-gray-700"
-          >
-            {copied ? "Copied" : "Copy badge HTML"}
-          </button>
-        </div>
+        <BadgeBox slug={result.slug} snippet={snippet} copied={copied} onCopy={() => setCopied(true)}
+          title="Get reviewed first: add the badge"
+          text="Submissions whose website shows the AgentoolRank badge are reviewed before everyone else, and the badge shows live GitHub stars." />
         <div className="border border-gray-200 rounded-xl p-6">
           <p className="font-semibold text-gray-900">Listing it on other directories too?</p>
           <p className="text-sm text-gray-600 mt-1 mb-3">
