@@ -909,3 +909,12 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - daily-ops.sh 用 `{ ...; } >> log` 块：花括号在当前 shell 执行，块内 fail=1 在块外仍有效（换成 `( )` 子 shell 就丢了）
 - 手动 `systemctl --user start` 不更新 list-timers 的 LAST 列，验证看 `systemctl --user status <svc>` / journalctl
 - GitHub Actions（daily-update.yml）不是 systemd，暂不能登记，已问 agentkit 支持 runner=github-actions
+
+## outreach-timer-and-hello-inbox
+10-03 外联与 hello@ 回信收集流水线化（e47a15a）。
+- **对外发送类定时器用 Persistent=false**：hourly/daily/weekly 用 Persistent=true 补跑没问题，但外联邮件若 WSL 关机错过 22:00，开机补发会在半夜/白天错误时段群发。错过就跳过，第二天再发
+- **发送前过健康闸门，查不到也不发**：send-outreach.ts --require-healthy 读 Brevo aggregatedReport；lib/outreach.ts sendingBlocked：outreach tag 7 天任何 hard/soft bounce、blocked、spam、invalid → 拦；共用账户 spam/blocked → 拦；别的项目 tag 单封退信不拦（共用 Brevo 账户，避免互相误伤）。报表取不到时按「不健康」处理（fail closed）
+- **gmail-read 输出格式**：agentkit bin/gmail-read（只读，走 gmail-secondary MCP）每行一条 JSON `{id,subject,from,to,date,body}`；查询 `to:hello@agentoolrank.com newer_than:3d --max 50`
+- **hello@ 噪音极大**：大量是目录站提交确认/通知、Brevo、Stripe、Google 等系统邮件。lib/feedback.ts humanReply 排除 noreply/notifications/alerts/brevo/stripe/google 等，只保留发过外联的对象和 Re: 开头的人类邮件；不过滤会把通知当用户反馈
+- **退订判断看首词**：isOptOut 首词 no / unsubscribe / remove me / stop；外联对象回 no 自动加 data/outreach/optout.json 并追加 status=answered 结论
+- 外联查看：`journalctl --user -u agentoolrank-outreach.service`

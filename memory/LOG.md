@@ -1033,3 +1033,10 @@
 - 结果：264 测试通过；手动 start hourly 成功；rule-check 通过；vi 当前访客 0、疑似扫描器 34；GitHub Actions daily-update 未登记，等 agentkit 答复 runner=github-actions
 - 坑：rule-check pipelines 只认 systemd 用户定时器；`set -uo pipefail` 不带 -e 时退出码只看最后一条 → GOTCHAS#pipelines-systemd-timers
 - 结果：成功
+
+
+## 2026-10-03 17:03– 外联与回信收集流水线化 + visitors 口径（e47a15a、2ab444a）
+- 做法：按决定 #37 把夜间外联做成 systemd 定时器 agentoolrank-outreach 22:00（Persistent=false），send-outreach.ts --require-healthy 先过 Brevo 健康闸门 sendingBlocked（outreach tag 7 天任何退信/拦截/投诉 → 停发，查不到报表也停）；hello@ 回信经 agentkit bin/gmail-read 并入每小时 feedback collect，humanReply 过滤目录站/系统通知，isOptOut 回 no 自动退订；GitHub Actions daily-update 以 runner=github-actions 登记，pipelines.json 共 5 条；按 agentkit 17:03 把 visitors_7d 改为 engagement 口径（上线前的 page_view 会话计入访客），scoreboard 加 likely_scanners_7d、visitors_definition
+- 结果：271 测试通过；rule-check 通过；今晚 10 封 dry-run 预览合理；visitors_7d 72、疑似扫描器 0、24h 访客 34；已 bus-send（含 pixtidy tag 1 封硬退信提醒）；22:00 实发结果未核实
+- 坑：gmail-read 每行一条 JSON {id,subject,from,to,date,body}；hello@ 大量目录站通知必须过滤；外联定时器要 Persistent=false 防 WSL 开机补发 → GOTCHAS#outreach-timer-and-hello-inbox
+- 结果：成功

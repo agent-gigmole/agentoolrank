@@ -3,12 +3,13 @@
 ## 下一步队列
 
 <!-- rule-check 每天 10:00/16:00/22:00 检查：至少 5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删掉 -->
-- 流水线化（老板 16:56 决定 #37，10-05 前）：外联夜间批次改成 systemd 定时器（选目标 → 类目/群发地址预审 → 发送 → await 登记等回信），22:00 不再手动跑
+- 22:00 后确认 agentoolrank-outreach 成功、10 封送达（`journalctl --user -u agentoolrank-outreach.service` + Brevo 报表；第二批目标 LobeHub、LocalAI、OmniRoute、World Monitor、vLLM、headroom、CC Switch、Browser-Use、Firecrawl、BrowserOS）
+- ✅ 流水线化（老板 16:56 决定 #37，10-05 前）：外联夜间批次改成 systemd 定时器 agentoolrank-outreach 22:00，Brevo 健康闸门（选目标 → 类目/群发地址预审 → 发送 → await 登记等回信），22:00 不再手动跑
 - 流水线化：目录站上线复查（逐站查 listing 是否在、链接 rel）脚本 + 定时器，结果回写 directory-log
-- 流水线化：hello@ 回信收集，需要可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
+- ✅ 流水线化：hello@ 回信收集（agentkit bin/gmail-read，并入每小时 feedback collect；回 no 自动 optout）。原需求：可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
 - 流水线化：周报数字段（记分牌、漏斗、外部评测原始反馈）脚本生成，结论用 bin/write 写稿
 - 流水线化：dev.to 文章定时发布（稿件就绪后按日期发，发后登记 post-log 与 await）
-- 每晚 22:00 发外联 10 封（第二批 10-03），发前复核文案：开头讲免费收录和数据，不提付费（外部评测第 1 条）；回信用 feedback.ts add 登记，48 小时内写结论
+- 外联每晚 22:00 由定时器自动发 10 封（会话不再手动发）；回信由每小时 feedback collect 自动收，真人回信 48 小时内写结论
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
 - npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材

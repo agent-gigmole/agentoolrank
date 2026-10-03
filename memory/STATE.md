@@ -982,3 +982,22 @@
 - 看板已更新
 - 坑：KNOWLEDGE/GOTCHAS.md#pipelines-systemd-timers
 - **下一步**：22:00 外联第二批（流水线化前仍手动）；10-05 前把外联夜间批次做成定时器；10-07 dev.to 数据文章
+
+## 2026-10-03 17:03– 外联与回信收集流水线化 + visitors 口径对齐（e47a15a、2ab444a，已推送）
+- **夜间外联已由定时器自动发，会话不再手动发**：
+  - systemd 用户定时器 agentoolrank-outreach（每天 22:00，**Persistent=false**：WSL 关机错过就不补发，防半夜补发外联），已 enable；单元文件 ops/systemd/agentoolrank-outreach.{service,timer}
+  - 流程 scripts/outreach-ops.sh → send-outreach.ts --require-healthy：先查 Brevo aggregatedReport，查不到也不发
+  - 健康闸门 lib/outreach.ts sendingBlocked(outreachStats, accountStats)：outreach tag 7 天内任何 hard/soft bounce、blocked、spam、invalid → 拦；共用账户 spam/blocked → 拦；其他 tag 单封退信不拦（+ 测试）
+  - **查看**：`journalctl --user -u agentoolrank-outreach.service`；`systemctl --user list-timers 'agentoolrank-*'`
+  - 今晚 10 封已人工 dry-run 预览一次：LobeHub、LocalAI、OmniRoute、World Monitor、vLLM、headroom、CC Switch、Browser-Use、Firecrawl、BrowserOS（career-ops 不在库跳过），排名/类目合理；文案以排名和数据开头、不提付费（外部评测第 1 条已满足）
+  - 22:00 实际发送结果**未核实**（下一步队列第 1 项）
+- **hello@ 回信收集自动化**：agentkit bin/gmail-read（只读，经 gmail-secondary MCP）并入 scripts/feedback.ts collect（每小时，hourly 定时器）
+  - 查询 `to:hello@agentoolrank.com newer_than:3d`，--max 50
+  - lib/feedback.ts humanReply：排除 noreply/notifications/alerts/brevo/stripe/google 等系统发件人，保留发过外联的对象和 Re: 人类邮件；isOptOut：首词 no / unsubscribe / remove me / stop
+  - 外联对象回 no → 自动加入 data/outreach/optout.json，并追加 status=answered 的处理结论
+- **ops/pipelines.json 共 5 条**：agentoolrank-hourly、daily、weekly、nightly-outreach（systemd），daily-data-update（runner=github-actions，repo agent-gigmole/agentoolrank，workflow daily-update.yml）；rule-check 通过
+- **visitors_7d 口径对齐 agentkit 17:03**（2ab444a）：lib/vi-summary.ts ENGAGEMENT_SINCE='2026-10-03 08:22:00'（UTC，即 50a649a 部署时刻）、VISITORS_DEFINITION、classifySessions（有 engagement 或首次出现早于上线时间 → 访客；否则疑似扫描器）；scoreboard.ts 写 visitors_7d / likely_scanners_7d / visitors_definition；kpi.ts vi 块共用同一函数；viNote 改为「停留统计 10-03 16:22 才上线，之前的会话按 page_view 计入访客…」
+  - 当前 visitors_7d 72、likely_scanners_7d 0；24h 访客 34；测试 271 通过；已 bus-send，并提醒 pixtidy tag 7 天 1 封硬退信
+- 看板已更新
+- 坑：KNOWLEDGE/GOTCHAS.md#outreach-timer-and-hello-inbox
+- **下一步**：22:00 后确认 agentoolrank-outreach 成功、10 封送达；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章
