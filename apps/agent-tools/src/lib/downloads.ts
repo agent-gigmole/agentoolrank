@@ -113,3 +113,16 @@ export function usageVerdict(tools: { name: string; stars: number | null; downlo
 export function usedMoreThanStarred<T extends { total: number; perStar: number | null }>(ranked: T[], limit = 10, floor = 100_000): T[] {
   return ranked.filter((t) => t.perStar !== null && t.total >= floor).sort((a, b) => (b.perStar as number) - (a.perStar as number)).slice(0, limit);
 }
+
+/** A /downloads/<category> page exists only with at least this many counted tools (thin-content floor). */
+export const DOWNLOAD_CATEGORY_MIN = 3;
+
+/** Category slug → counted tools, for every category that gets a page. Page, sitemap and links all use this. */
+export function downloadCategorySlugs(rows: DownloadRow[], slugs: string[]): Map<string, number> {
+  const out = new Map<string, number>();
+  for (const s of slugs) {
+    const n = rankByDownloads(rows, s).length;
+    if (n >= DOWNLOAD_CATEGORY_MIN) out.set(s, n);
+  }
+  return out;
+}

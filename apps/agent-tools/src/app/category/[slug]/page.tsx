@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTools, getCategories, getDownloadRows } from "@repo/db/queries";
 import Link from "next/link";
-import { rankByDownloads } from "@/lib/downloads";
+import { DOWNLOAD_CATEGORY_MIN, rankByDownloads } from "@/lib/downloads";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
@@ -74,7 +74,7 @@ export default async function CategoryPage({ params }: Props) {
         )}
         <p className="text-sm text-gray-400 mt-1">
           {tools.length} tools
-          {dlCount >= 3 && (
+          {dlCount >= DOWNLOAD_CATEGORY_MIN && (
             <>
               {" · "}
               <Link href={`/downloads/${category.slug}`} className="text-blue-600 hover:underline">{dlCount} by npm / PyPI downloads →</Link>

@@ -3,23 +3,22 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCategories, getDownloadRows } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
-import { compactCount, rankByDownloads } from "@/lib/downloads";
+import { compactCount, DOWNLOAD_CATEGORY_MIN, downloadCategorySlugs, rankByDownloads } from "@/lib/downloads";
 
 export const revalidate = 86400;
 const BASE = "https://agentoolrank.com";
-const MIN_TOOLS = 3; // a "most downloaded" page needs at least this many tools with counts, else it is thin content
 
 async function load(slug: string) {
   const cat = (await getCategories()).find((c) => c.slug === slug);
   if (!cat) return null;
   const ranked = rankByDownloads(await getDownloadRows(), slug);
-  return ranked.length >= MIN_TOOLS ? { cat, ranked } : null;
+  return ranked.length >= DOWNLOAD_CATEGORY_MIN ? { cat, ranked } : null;
 }
 
 export async function generateStaticParams() {
   const rows = await getDownloadRows();
   const cats = await getCategories();
-  return cats.filter((c) => rankByDownloads(rows, c.slug).length >= MIN_TOOLS).map((c) => ({ category: c.slug }));
+  return [...downloadCategorySlugs(rows, cats.map((c) => c.slug)).keys()].map((category) => ({ category }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {

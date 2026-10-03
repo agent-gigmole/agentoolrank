@@ -116,3 +116,14 @@ describe("rankByDownloads with a category filter", () => {
     expect(rankByDownloads(rows).map((t) => t.id)).toEqual(["b", "a"]);
   });
 });
+
+describe("downloadCategorySlugs (one rule for page, sitemap and links)", () => {
+  it("returns categories with at least DOWNLOAD_CATEGORY_MIN counted tools", async () => {
+    const { downloadCategorySlugs, DOWNLOAD_CATEGORY_MIN } = await import("./downloads");
+    const row = (id: string, cat: string) => ({ id, name: id, stars: 1, registry: "npm", package: id, downloads_30d: 5, categories: [cat] });
+    const rows = [row("a", "x"), row("b", "x"), row("c", "x"), row("d", "y")];
+    expect(DOWNLOAD_CATEGORY_MIN).toBe(3);
+    expect([...downloadCategorySlugs(rows, ["x", "y"]).keys()]).toEqual(["x"]);
+    expect(downloadCategorySlugs(rows, ["x", "y"]).get("x")).toBe(3);
+  });
+});

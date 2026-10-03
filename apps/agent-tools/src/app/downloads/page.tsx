@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getCategories, getDownloadRows } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
-import { compactCount, rankByDownloads, usedMoreThanStarred } from "@/lib/downloads";
+import { compactCount, downloadCategorySlugs, rankByDownloads, usedMoreThanStarred } from "@/lib/downloads";
 
 export const revalidate = 86400; // counts refresh weekly; a daily rebuild is plenty
 
@@ -18,7 +18,9 @@ const BASE = "https://agentoolrank.com";
 export default async function DownloadsPage() {
   const rows = await getDownloadRows();
   const ranked = rankByDownloads(rows);
-  const byCategory = (await getCategories()).map((c) => ({ c, n: rankByDownloads(rows, c.slug).length })).filter((x) => x.n >= 3);
+  const cats = await getCategories();
+  const counts = downloadCategorySlugs(rows, cats.map((c) => c.slug));
+  const byCategory = cats.filter((c) => counts.has(c.slug)).map((c) => ({ c, n: counts.get(c.slug) as number }));
   const top = ranked.slice(0, 100);
   const itemList = {
     "@context": "https://schema.org",
