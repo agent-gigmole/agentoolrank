@@ -14,6 +14,8 @@ export interface McpDeps {
   ) => Promise<unknown>;
   status: (id: number, token: string) => Promise<unknown | null>;
   kitKeyValid: (key: string) => Promise<boolean>;
+  /** Our own listing result per directory domain (listing_checks), e.g. "Live · followed link". Optional. */
+  ourListings?: () => Promise<Record<string, string>>;
 }
 
 type JsonRpcRequest = { jsonrpc: "2.0"; id?: string | number | null; method: string; params?: Record<string, unknown> };
@@ -130,7 +132,8 @@ async function callTool(name: string, args: Record<string, unknown>, deps: McpDe
       const full = key ? await deps.kitKeyValid(key) : false;
       if (key && !full) return text("Unknown or expired Submit Kit key. Omit `key` for the free top 10.", true);
       const languages = Array.isArray(args.languages) ? args.languages.filter((l): l is string => typeof l === "string").slice(0, 5) : undefined;
-      return text(recommendDirectories(kitData as KitData, { productType, full, now: new Date(), languages, openSource: args.open_source === true }));
+      const ours = deps.ourListings ? await deps.ourListings().catch(() => ({})) : {};
+      return text(recommendDirectories(kitData as KitData, { productType, full, now: new Date(), languages, openSource: args.open_source === true, ours }));
     }
     default:
       return text(`Unknown tool: ${name}`, true);

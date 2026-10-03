@@ -6,6 +6,7 @@ import { toPublicTool } from "@/lib/public-api";
 import { handleMcp, type McpDeps } from "@/lib/mcp";
 import { createSubmission, submissionStatus } from "@/lib/submit-core";
 import { kitKeyValid } from "@/lib/kit-keys";
+import { ourResultLabel } from "@/lib/listing-check";
 
 // MCP endpoint (Streamable HTTP, stateless, JSON responses only — no SSE stream).
 // Add to a client as: { "url": "https://agentoolrank.com/api/mcp" }
@@ -35,6 +36,10 @@ function deps(): McpDeps {
     },
     status: (id, token) => submissionStatus(id, token),
     kitKeyValid,
+    ourListings: async () => {
+      const r = await db.execute("SELECT domain, state, rel, target FROM listing_checks");
+      return Object.fromEntries(r.rows.map((x) => [String(x.domain), ourResultLabel({ state: String(x.state), rel: x.rel === null ? null : String(x.rel), target: x.target === null ? null : String(x.target) })]));
+    },
   };
 }
 
