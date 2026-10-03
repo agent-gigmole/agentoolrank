@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
-import { getTools, getCategories } from "@repo/db/queries";
+import { getTools, getCategories, getDownloadRows } from "@repo/db/queries";
+import Link from "next/link";
+import { rankByDownloads } from "@/lib/downloads";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import type { Metadata } from "next";
@@ -32,6 +34,7 @@ export default async function CategoryPage({ params }: Props) {
 
   const category = categories.find((c) => c.slug === slug);
   if (!category) notFound();
+  const dlCount = rankByDownloads(await getDownloadRows(), slug).length;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
   const collectionJsonLd = {
@@ -69,7 +72,15 @@ export default async function CategoryPage({ params }: Props) {
             live GitHub activity (stars, 30-day star growth, commits and releases), refreshed daily.
           </p>
         )}
-        <p className="text-sm text-gray-400 mt-1">{tools.length} tools</p>
+        <p className="text-sm text-gray-400 mt-1">
+          {tools.length} tools
+          {dlCount >= 3 && (
+            <>
+              {" · "}
+              <Link href={`/downloads/${category.slug}`} className="text-blue-600 hover:underline">{dlCount} by npm / PyPI downloads →</Link>
+            </>
+          )}
+        </p>
       </div>
 
       {tools.length > 0 ? (
