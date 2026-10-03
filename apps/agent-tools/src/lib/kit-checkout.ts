@@ -11,6 +11,8 @@ export function kitCheckoutForm(o: { src: string; baseUrl: string }): URLSearchP
   f.set("line_items[0][price_data][currency]", "usd");
   f.set("line_items[0][price_data][unit_amount]", String(KIT_AMOUNT_CENTS));
   f.set("line_items[0][price_data][product_data][name]", "AgentoolRank Submit Kit (30 days)");
+  // Top of the Stripe page shows our brand instead of the shared account name (agentkit checkout-brand; receipts unchanged).
+  f.set("branding_settings[display_name]", "AgentoolRank");
   f.set("line_items[0][price_data][product_data][description]", "Full recommend_directories list: 30 directories plus the don't-submit list with reasons, updated for 30 days.");
   f.set("payment_intent_data[statement_descriptor_suffix]", "AGENTOOLRANK");
   f.set("success_url", `${o.baseUrl}/submit-kit/thanks?session_id={CHECKOUT_SESSION_ID}`);

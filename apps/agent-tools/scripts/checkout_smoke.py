@@ -32,6 +32,9 @@ def stripe_check(pg, url, name, amount, shot, day):
         problems.append(f"product name '{name}' missing")
     if amount not in text:
         problems.append(f"page quoted {amount} but Stripe does not show it")
+    # Brand at the top (branding_settings.display_name), above the product line — not the shared account name.
+    if "AgentoolRank" not in text.split(name)[0]:
+        problems.append("Stripe page header does not show AgentoolRank")
     if problems:
         raise AssertionError("; ".join(problems))
 

@@ -39,6 +39,7 @@ export function checkoutForm(o: { plan: Plan; submissionId: number; slug: string
   f.set("line_items[0][price_data][currency]", "usd");
   f.set("line_items[0][price_data][unit_amount]", String(p.amount));
   f.set("line_items[0][price_data][product_data][name]", p.name);
+  f.set("branding_settings[display_name]", "AgentoolRank"); // brand on the Stripe page, not the shared account name
   f.set("line_items[0][price_data][product_data][description]", p.description);
   f.set("payment_intent_data[statement_descriptor_suffix]", "AGENTOOLRANK");
   if (o.email) f.set("customer_email", o.email); // listed-tool upgrades: Stripe asks for the email

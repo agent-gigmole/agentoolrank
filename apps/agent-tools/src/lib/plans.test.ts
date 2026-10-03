@@ -44,3 +44,10 @@ describe("checkoutForm for an already-listed tool", () => {
     expect(f.get("metadata[submission_id]")).toBe("0");
   });
 });
+
+describe("listing checkout branding (agentkit checkout-brand)", () => {
+  it("shows AgentoolRank at the top of the Stripe page", () => {
+    const f = checkoutForm({ plan: "featured", submissionId: 1, slug: "x", email: "", src: "", baseUrl: "https://agentoolrank.com" });
+    expect(f.get("branding_settings[display_name]")).toBe("AgentoolRank");
+  });
+});

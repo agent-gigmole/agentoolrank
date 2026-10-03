@@ -29,3 +29,9 @@ describe("isPaidKitSession", () => {
     expect(isPaidKitSession({ id: "cs_4", payment_status: "paid", metadata: { site: "agentoolrank", plan: "fast" } })).toBe(false);
   });
 });
+
+describe("checkout branding (agentkit checkout-brand)", () => {
+  it("shows AgentoolRank at the top of the Stripe page instead of the shared account name", () => {
+    expect(kitCheckoutForm({ src: "x", baseUrl: "https://agentoolrank.com" }).get("branding_settings[display_name]")).toBe("AgentoolRank");
+  });
+});
