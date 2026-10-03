@@ -4,10 +4,12 @@ import { useState } from "react";
 import { track } from "@/components/Analytics";
 
 /** Shown on every tool page: maintainers can feature their tool or grab the README badge. */
-export function MaintainerBox({ slug, name, paymentsEnabled }: { slug: string; name: string; paymentsEnabled: boolean }) {
+export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = false }: { slug: string; name: string; paymentsEnabled: boolean; hasDownloads?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const badge = `[![${name} on AgentoolRank](https://agentoolrank.com/api/badge/${slug})](https://agentoolrank.com/tool/${slug})`;
+  const dlBadge = `[![${name} downloads on AgentoolRank](https://agentoolrank.com/api/badge/${slug}?metric=downloads)](https://agentoolrank.com/tool/${slug})`;
+  const [dlCopied, setDlCopied] = useState(false);
   const [copied, setCopied] = useState(false);
 
   async function feature() {
@@ -49,6 +51,19 @@ export function MaintainerBox({ slug, name, paymentsEnabled }: { slug: string; n
         >
           {copied ? "Badge Markdown copied" : "Copy README badge"}
         </button>
+        {hasDownloads && (
+          <button
+            type="button"
+            data-testid="badge-downloads-copy"
+            onClick={() => {
+              navigator.clipboard.writeText(dlBadge).then(() => setDlCopied(true), () => {});
+              track("badge_copy", `/tool/${slug}?metric=downloads`);
+            }}
+            className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:border-gray-500 bg-white"
+          >
+            {dlCopied ? "Downloads badge copied" : "Copy downloads badge"}
+          </button>
+        )}
         {paymentsEnabled && (
           <button
             type="button"

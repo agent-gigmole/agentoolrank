@@ -562,7 +562,7 @@ export default async function ToolPage({ params }: Props) {
             </div>
           </Section>
         )}
-              <MaintainerBox slug={tool.id} name={tool.name} paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} />
+              <MaintainerBox slug={tool.id} name={tool.name} paymentsEnabled={Boolean(process.env.STRIPE_SECRET_KEY)} hasDownloads={downloads.length > 0} />
       </main>
     </>
   );

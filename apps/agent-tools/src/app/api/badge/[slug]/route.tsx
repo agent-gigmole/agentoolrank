@@ -9,6 +9,8 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  // ?metric=downloads: show npm + PyPI downloads (30 days) instead of stars, for libraries used far more than starred.
+  const wantDownloads = req.nextUrl.searchParams.get("metric") === "downloads";
 
   // Fetch tool data
   let name = slug;
@@ -28,6 +30,14 @@ export async function GET(
       }
     }
   } catch {}
+  let downloads = "";
+  if (wantDownloads) {
+    try {
+      const d = await db.execute({ sql: "SELECT SUM(downloads_30d) n FROM tool_packages WHERE tool_id = ?", args: [slug] });
+      const n = Number(d.rows[0]?.n ?? 0);
+      if (n > 0) downloads = n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}K` : String(n);
+    } catch {}
+  }
 
   return new ImageResponse(
     (
@@ -72,8 +82,10 @@ export async function GET(
           }}
         >
           <span>Featured: {name}</span>
-          {stars && (
-            <span style={{ fontSize: "11px", opacity: 0.85 }}>★ {stars}</span>
+          {downloads ? (
+            <span style={{ fontSize: "11px", opacity: 0.85 }}>⬇ {downloads}/mo</span>
+          ) : (
+            stars && <span style={{ fontSize: "11px", opacity: 0.85 }}>★ {stars}</span>
           )}
         </div>
       </div>
