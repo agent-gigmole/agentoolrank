@@ -1155,3 +1155,9 @@
 - 结果：线上 4 个直达已核对；测试 327 通过；周榜当前预览 OpenAI Python 284.2M；10-05 10:00 首发未核实；22:00 外联批次未核实
 - 坑：无新坑
 - 结果：成功
+
+## 2026-10-03 22:0x /submit-kit 搜索意图 SEO + FAQ 上线 + /downloads 类目子页开工（36ae034、75be96c、5c2be31）
+- 做法：/submit-kit 标题/描述改搜索意图词；kitFaq(data, now) 5 问，数字由数据集现算（总站数、各类型对口数、auto 站数、avoid 数）+ 单测；FaqSection 输出 FAQPage JSON-LD；部署；看板记一行；TASK 打勾并补「/downloads 按类目子页」；开工 rankByDownloads 可选 category 过滤 + 测试（5c2be31 WIP）
+- 结果：线上 title、FAQPage、「24 directories fit an MCP server」已核对；/downloads/[category] 剩查询、页面、sitemap、部署；22:00 外联 22:01 已发 4 封（deeptutor、lobe-chat、cherry-studio、agent-orchestrator），整批结果未核实
+- 坑：无新坑
+- 结果：成功（/downloads 类目子页进行中）

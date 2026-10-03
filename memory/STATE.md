@@ -1187,3 +1187,10 @@
   - 10-05 周一 10:00 首发（未核实）
 - **TASK 队列**：/where-to-list 类型直达 ✅、X 周榜下载量 ✅；新增「/submit-kit 标题描述改搜索意图词 + FAQ JSON-LD」
 - **下一步**：22:00 外联批次实发核对（未核实）；/submit-kit 搜索意图标题 + FAQ JSON-LD；10-05 周榜首发核对（未核实）；futurepedia 价格（未核实）；10-07 dev.to 数据文章（未核实）
+
+## 2026-10-03 22:0x /submit-kit 搜索意图 SEO + FAQ 上线 + /downloads 类目子页开工（36ae034、75be96c、5c2be31）
+- **/submit-kit SEO**（36ae034，已部署核对）：标题「Best Directories to Submit an AI Tool or MCP Server (Tested) — Submit Kit」，描述改为搜索意图；lib/directory-kit.ts 新增 kitFaq(data, now) 5 问，数字全部由数据集计算（总站数、各类型对口数、auto 站数、avoid 数），不承诺流量/排名，带单测；页面 FaqSection 输出 FAQPage JSON-LD。线上 title、FAQPage、「24 directories fit an MCP server」已核对；看板已记（75be96c）
+- **TASK 队列**：/submit-kit SEO ✅；新增「/downloads 按类目拆分子页」
+- **/downloads/[category] 开工（WIP）**：5c2be31 rankByDownloads 加可选 category 过滤 + 测试；剩：查询带类目、/downloads/[category] 页面（独立标题 + ItemList）、sitemap、部署
+- **22:00 外联批次**：22:01 日志已发 4 封（deeptutor、lobe-chat、cherry-studio、agent-orchestrator；cherry-ai.com 经 DoH 复核放行）；整批结果与送达未核实（后台等待任务会提醒）
+- **下一步**：/downloads/[category] 完成并部署；22:00 外联整批核对（未核实）；10-05 周榜首发核对（未核实）；futurepedia 价格（未核实）；10-07 dev.to 数据文章（未核实）

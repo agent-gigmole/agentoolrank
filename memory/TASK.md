@@ -47,7 +47,8 @@
 - ✅ /where-to-list 的 Submit Kit 框按产品类型给 4 个直达链接（c7b8014，10-03 21:51 部署核对）
 - ✅ X 周榜文案加一行「近 30 天下载最多」（16d990f，10-05 10:00 首发；当前会是 OpenAI Python 284.2M，过共用文案检查）
 - 详情页「Maintain X?」框对下载量 ≥10 万的工具，首页推荐按钮文案改为强调「被 N 个下载/月 的开发者看到」？——先查首页推荐的点击数据再定，避免没依据改文案
-- /submit-kit 页标题和描述改为搜索意图词（"best directories to submit an AI tool / MCP server"），并加 FAQ JSON-LD，作为长尾入口
+- ✅ /submit-kit 标题/描述改搜索意图词 + FAQ（FAQPage JSON-LD，数字从数据集算；10-03 22:0x 上线核对）
+- /downloads 按类目拆分子页（/downloads/agent-frameworks 等），每页独立标题和 ItemList，作为「most downloaded <category>」长尾入口
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
