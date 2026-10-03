@@ -814,3 +814,13 @@
 - **线上实测**：ai_tool 匹配 60 → 返回 10，全部 auto，带提交要点 + upgrade 文案；坏 key 返回 isError；/submit-kit 200。已回报 agentkit，看板已记录
 - **明天 10-04**：Stripe $29 价格；付款后发 key（复用 reconcile 或 checkout 成功页，Brevo 邮件送达）；/agents 文档；Smithery 描述；submit-core 的 message_for_human 加入口
 - 坑：GOTCHAS#submit-kit-tier-first-sort
+
+
+## 2026-10-03 11:48–11:55 T27 Submit Kit 收费上线（9c37c17、d8ca50d、36b04ef；比原定 10-04 提前）
+- **结账**：src/lib/kit-checkout.ts 的 kitCheckoutForm（$29 一次性付款，USD；metadata 为 site=agentoolrank、product=submit_kit、src；success 跳 /submit-kit/thanks，cancel 跳 /submit-kit?canceled=1）+ isPaidKitSession，4 条测试；/api/kit-checkout 路由；/submit-kit 页上的 KitBuyButton（没有 STRIPE_SECRET_KEY 时不显示）
+- **发 key**：src/lib/kit-keys.ts 的 fulfillKitSession，按 stripe_session 幂等，同一会话只发一次；同时写 payments(submission_id=0, plan='submit_kit')，看板收入会统计进去。/submit-kit/thanks 只显示一次明文 key；已发过的提示"已发放"，未确认的提示"一小时内邮件发送"
+- **兜底**：scripts/reconcile-payments.ts 在对账时给"没看到感谢页就关了"的买家补发 key，经 Brevo 邮件发出（tag kit-key）。邮件放在本机发，因为 Vercel 上没有 Brevo key，给 Vercel 加 env 属于改凭证，需要老板批
+- **入口**：message_for_human 末尾加一行（不带价格，有测试）、MCP initialize 说明、/agents 页新增"Choosing other launch directories"一节
+- **验证**：线上建结账会话，金额 2900 USD、payment 模式、metadata 正确、状态 unpaid（没有付款）；在生产库用 selftest 假会话跑 fulfillKitSession，首次发出的 key 有效、第二次返回 alreadyIssued、伪造 key 无效，测试数据已删；227 测试通过，已部署推送，已回报 agentkit，看板已记录
+- **T27 剩余**：Smithery 描述更新（需要网页操作）；10-18 复盘（≥3 单继续，0 单冻结付费部分）
+- 坑：GOTCHAS#submit-kit-paid-fulfillment

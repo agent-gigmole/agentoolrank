@@ -294,16 +294,17 @@
 - 闸: auto
 
 ### T27 目录提交套件（Submit Kit）评估
-- 状态: in_progress（2026-10-02 23:45 起，老板产品想法经 agentkit 转达；10-03 10:32 agentkit 批准定稿；11:15 MVP 工具部分已上线，10-04 上线收费）
+- 状态: in_progress（2026-10-02 23:45 起，老板产品想法经 agentkit 转达；10-03 10:32 agentkit 批准定稿；11:15 MVP 工具部分已上线；11:55 收费上线，比原定 10-04 提前）
 - [x] 一页评估初稿 docs/ops/product/directory-submit-kit.md（8eb540a，已推送，摘要已发 agentkit）
 - [x] 10-03 10:00 前收齐 imagehub / new_ladar / domain-invest 建议（各 ≤8 行；new_ladar 经 agentkit 转达补收）
 - [x] **10-03 12:00 前交定稿**：吸收三方建议 + agentkit 建议（先做 1 个 MCP 工具：按产品类型返回 30 站 + 提交要点，免费 10 个、完整版收费；暂不做全自动提交），写明采纳/未采纳及原因
 - [x] 定稿已交 agentkit（10-03 10:32，05bc3f3）：1 个 MCP 工具 recommend_directories(product_type, limit)，免费前 10 / 有效 key 完整 30；$29 一次性含 30 天更新；不做自动提交；未采纳 imagehub「等 GSC 数据」（预售验证付费意愿，与外链效果无关，可并行）
 - [x] MVP 开发（工具部分，10-03 10:40–11:15，9f657f0）：recommend_directories（免费 10 / 带 key 30 + avoid 清单 + 人工步骤清单）、tierOf 三档、kit_keys（sha256、30 天）、/submit-kit 说明页；222 测试通过，已上线
-- [ ] 10-04 Stripe $29 一次性价格
-- [ ] 10-04 付款后发 key（复用 reconcile 或 checkout 成功页 → issueKitKey → Brevo 邮件送达）
-- [ ] 10-04 /agents 文档补 recommend_directories + Smithery 描述更新
-- [ ] 10-04 submit-core 的 message_for_human 加 Submit Kit 入口
+- [x] Stripe $29 一次性付款（10-03 11:48 提前上线，9c37c17）：kit-checkout.ts + /api/kit-checkout + KitBuyButton
+- [x] 付款后发 key（9c37c17）：fulfillKitSession 按 stripe_session 幂等 + /submit-kit/thanks 只显示一次 + reconcile-payments 关页面时 Brevo 邮件补发；生产库 selftest 假会话端到端验证通过
+- [x] /agents 文档补 recommend_directories（d8ca50d，新增"Choosing other launch directories"一节 + MCP initialize 说明）
+- [ ] Smithery 描述更新（需要网页操作）
+- [x] submit-core 的 message_for_human 加 Submit Kit 入口（d8ca50d，末尾一行不带价格，有测试）
 - [ ] 10-18 复盘：≥3 单继续，0 单冻结付费部分
 - [x] new_ladar 意见补充（6091332）：其意见 10-02 23:48 已发，因总线身份问题未收到，经 agentkit 转达补入——不建议清单（普适原因）、三档"自动 / 要人工一步 / 不建议" + 人工步骤清单、链接只标实测值 + "新域名会不会被秒拒"字段、卖点"少投、投对"不承诺 dofollow、跳过记录作初始档案
 - [x] columbus 字段自查测试（agentkit 要求，上线前；directory-kit.test.ts 断言导出数据不含 DR/visits/columbus）：产品输出一律不含 columbus 字段（DR、月访问量、columbus 的 dofollow 标注）

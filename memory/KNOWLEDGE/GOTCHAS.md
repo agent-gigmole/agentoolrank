@@ -811,3 +811,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 推荐目录站的排序**档位优先**：auto 全部排在 manual 前面，avoid 不进推荐列表（单独给不建议清单）；对口度只作第二层，其后才是实测 dofollow、有无成功信号。理由：用户先把能自动完成的一口气做完，再集中处理需要真人的步骤；若对口度优先，auto/manual 交错，用户每隔几个站就要停下来人工操作。
 - "不建议"清单只收对谁都成立的原因（badge/backlink、仅付费、表单坏、投票门槛、要凭证、新域名秒拒、页面被劫持）；我们自己投成功过的站不进此清单，避免自相矛盾。
 - 产品数据导出时加测试断言不含 DR / visits / columbus 字段（agentkit 硬要求）。
+
+## submit-kit-paid-fulfillment
+- **明文 key 只有一次机会**：kit_keys 只存 sha256，/submit-kit/thanks 是买家唯一能看到明文 key 的地方。买家付完款没等跳转就关页面 → 只能靠 scripts/reconcile-payments.ts 对账时重新发一个 key，经 Brevo 邮件补发（tag kit-key）。邮件放本机发，因为 Vercel 上没有 Brevo key，给 Vercel 加 env 属于改凭证，要老板批。所以感谢页对"未确认"的会话要写"一小时内邮件发送"，而不是报错。
+- **发货必须幂等**：fulfillKitSession 按 stripe_session 判断，感谢页刷新和对账脚本都可能对同一会话调用，同一会话只发一次 key（第二次返回 alreadyIssued，感谢页提示"已发放"）。同时写 payments(submission_id=0, plan='submit_kit')，看板收入才统计得到。
+- **不付钱也能端到端验证发货**：线上建一个真结账会话只检查金额 / 模式 / metadata（状态 unpaid，不付款）；发货逻辑在生产库用 selftest 假会话直接跑 fulfillKitSession：首次 key 有效、第二次 alreadyIssued、伪造 key 无效，跑完删掉测试数据。
+- **build 坑**：给 /agents 页加 `<Link>` 忘了 `import Link from "next/link"` → `Type error: Cannot find name 'Link'`，本地测试不报，只在 next build 时暴露；改页面 JSX 后部署前跑一次 build。
+

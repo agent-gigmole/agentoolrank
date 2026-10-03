@@ -927,3 +927,11 @@
 - 结果：222 测试 + build 通过，已部署推送；线上 ai_tool 匹配 60 返回 10 全 auto，坏 key isError，/submit-kit 200；今天不收钱，10-04 接 Stripe $29 + 发 key + 文档 + 入口
 - 坑：GOTCHAS#submit-kit-tier-first-sort
 - 结果：成功
+
+
+## 2026-10-03 11:48–11:55 T27 Submit Kit 收费上线
+- 做法：kit-checkout.ts（kitCheckoutForm $29 一次性、metadata、success/cancel 跳转 + isPaidKitSession，4 测试）→ kit-keys.ts 的 fulfillKitSession（按 stripe_session 幂等，写 payments submission_id=0 plan=submit_kit）→ /api/kit-checkout + /submit-kit/thanks（只显示一次 key）+ KitBuyButton → reconcile-payments.ts 补发 key（本机经 Brevo 发，tag kit-key）→ 入口：message_for_human 末行（不带价格）、MCP initialize 说明、/agents 新增一节（9c37c17、d8ca50d、36b04ef）
+- 结果：线上结账会话 2900 USD、payment 模式、unpaid；生产库 selftest 假会话端到端验证：首次 key 有效、第二次 alreadyIssued、伪造 key 无效，测试数据已删；227 测试通过，已部署推送，已回报 agentkit，看板已记录。比原定 10-04 提前一天
+- 坑：/agents 加 Link 忘了 import，build 失败；感谢页是唯一能看到明文 key 的地方（库里只存哈希），关页面只能靠对账邮件兜底 → GOTCHAS#submit-kit-paid-fulfillment
+- 待办：Smithery 描述更新（网页操作）；10-18 复盘
+- 结果：成功

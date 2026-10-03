@@ -264,3 +264,4 @@
 | dev.to API 发文 / key 属哪个账号 / devto-api-key-agentoolrank / Forbidden Bots 403 / details textContent / 稿件内部注释外泄 | GOTCHAS.md#devto-api-publish |
 | dirsub 无 live 枚举 / 已上线记法 submitted+detail【已上线】/ 看板目录站已上线统计关键词 / Brevo opened 被 Apple MPP 虚增、以 ref=outreach 会话为准 | GOTCHAS.md#dirsub-live-convention |
 | Submit Kit 推荐排序 档位优先 auto 先于 manual / 对口度第二层 / 不建议清单只收普适原因 / 导出数据无 columbus 字段断言 | GOTCHAS.md#submit-kit-tier-first-sort |
+| Submit Kit 收费发货 / 明文 key 只在感谢页显示一次（只存哈希）/ 关页面靠 reconcile 对账 Brevo 邮件补发 / fulfillKitSession 按 stripe_session 幂等 / selftest 假会话生产库端到端验证 / 加 Link 忘 import build 失败 | GOTCHAS.md#submit-kit-paid-fulfillment |
