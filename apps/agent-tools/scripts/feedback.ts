@@ -23,32 +23,53 @@ const flag = (name: string) => {
   return i > 0 ? process.argv[i + 1] : undefined;
 };
 
+/** Run one source; a network hiccup (timeout etc.) gets one retry, then a WARN line — it must not fail the hourly service. */
+async function source(name: string, fn: () => Promise<void>) {
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      await fn();
+      return;
+    } catch (e) {
+      if (attempt === 2) console.log(`WARN feedback source ${name} failed twice: ${(e as Error).name}: ${(e as Error).message}`);
+      else await new Promise((r) => setTimeout(r, 5000));
+    }
+  }
+}
+
 async function collect() {
   const found: (Found & { source: string; kind: string })[] = [];
-  const key = readFileSync(`${process.env.HOME}/.config/secrets/devto-api-key-agentoolrank`, "utf8").trim();
-  const articles = await (await fetch("https://dev.to/api/articles/me/all?per_page=100", { headers: { ...UA, "api-key": key } })).json();
-  for (const a of articles) {
-    if (!a.comments_count) continue;
-    const comments = await (await fetch(`https://dev.to/api/comments?a_id=${a.id}`, { headers: UA })).json();
-    found.push(...devtoComments(a.id, a.url, comments).map((c) => ({ ...c, source: "other", kind: "other" })));
-  }
-  const issues = await (await fetch("https://api.github.com/repos/agent-gigmole/agentoolrank/issues?state=all&per_page=100", { headers: UA })).json();
-  if (Array.isArray(issues))
-    for (const i of issues)
-      found.push({ id: `github:agentoolrank#${i.number}`, url: i.html_url, author: i.user?.login ?? "", text: `${i.title}\n${i.body ?? ""}`.slice(0, 1000), source: "other", kind: i.pull_request ? "other" : "suggestion" });
+  const T = () => AbortSignal.timeout(20000);
+  await source("dev.to", async () => {
+    const key = readFileSync(`${process.env.HOME}/.config/secrets/devto-api-key-agentoolrank`, "utf8").trim();
+    const articles = await (await fetch("https://dev.to/api/articles/me/all?per_page=100", { headers: { ...UA, "api-key": key }, signal: T() })).json();
+    for (const a of articles) {
+      if (!a.comments_count) continue;
+      const comments = await (await fetch(`https://dev.to/api/comments?a_id=${a.id}`, { headers: UA, signal: T() })).json();
+      found.push(...devtoComments(a.id, a.url, comments).map((c) => ({ ...c, source: "other", kind: "other" })));
+    }
+  });
+  await source("github", async () => {
+    const issues = await (await fetch("https://api.github.com/repos/agent-gigmole/agentoolrank/issues?state=all&per_page=100", { headers: UA, signal: T() })).json();
+    if (Array.isArray(issues))
+      for (const i of issues)
+        found.push({ id: `github:agentoolrank#${i.number}`, url: i.html_url, author: i.user?.login ?? "", text: `${i.title}\n${i.body ?? ""}`.slice(0, 1000), source: "other", kind: i.pull_request ? "other" : "suggestion" });
+  });
   // hello@ replies (only mail addressed to our own domain).
   const OUT = new URL("../data/outreach/", import.meta.url).pathname;
   const sentTo = new Set<string>((existsSync(OUT + "sent.json") ? JSON.parse(readFileSync(OUT + "sent.json", "utf8")) : []).map((x: { email: string }) => x.email.toLowerCase()));
-  const g = spawnSync(`${process.env.HOME}/project/agentkit/bin/gmail-read`, ["find", "to:hello@agentoolrank.com newer_than:3d", "--max", "50"], { encoding: "utf8", timeout: 120_000 });
-  if (g.status !== 0) throw new Error(`gmail-read failed (${g.status}): ${g.stderr.slice(0, 200)}`);
   const optOuts: string[] = [];
-  for (const line of g.stdout.split("\n").filter(Boolean)) {
-    const m = JSON.parse(line) as { id: string; from: string; subject: string; body?: string };
-    if (!humanReply(m, sentTo)) continue;
-    const who = senderAddress(m.from);
-    found.push({ id: `email:${m.id}`, url: "", author: who, text: `${m.subject}\n${m.body ?? ""}`.slice(0, 1000), source: "email", kind: "other" });
-    if (sentTo.has(who) && isOptOut(m.body ?? "")) optOuts.push(`email:${m.id}`);
-  }
+  await source("hello@ inbox", async () => {
+    const g = spawnSync(`${process.env.HOME}/project/agentkit/bin/gmail-read`, ["find", "to:hello@agentoolrank.com newer_than:3d", "--max", "50"], { encoding: "utf8", timeout: 120_000 });
+    if (g.status !== 0) throw new Error(`gmail-read failed (${g.status}): ${g.stderr.slice(0, 200)}`);
+    for (const line of g.stdout.split("\n").filter(Boolean)) {
+      const m = JSON.parse(line) as { id: string; from: string; subject: string; body?: string };
+      if (!humanReply(m, sentTo)) continue;
+      const who = senderAddress(m.from);
+      if (found.some((f) => f.id === `email:${m.id}`)) continue; // a retry must not add the same mail twice
+      found.push({ id: `email:${m.id}`, url: "", author: who, text: `${m.subject}\n${m.body ?? ""}`.slice(0, 1000), source: "email", kind: "other" });
+      if (sentTo.has(who) && isOptOut(m.body ?? "")) optOuts.push(`email:${m.id}`);
+    }
+  });
 
   const fresh = newFeedback(new Set(currentById(rows()).keys()), found);
   for (const f of fresh) append({ ...f, project: PROJECT, collected_at: now(), status: "new", decision: "" });
