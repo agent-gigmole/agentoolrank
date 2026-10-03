@@ -14,7 +14,7 @@
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
 - npm/PyPI 下载量接入（数据层已做 1a316ab：每周一自动抓、包名从仓库或候选名取且必须回链同一仓库；全量首跑 10-03 19:10 进行中；详情页展示已上线 10-03 19:20；剩：数据文章用、可选作排名信号）：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
-- 竞品三家（TAAFT、toolify、futurepedia）用浏览器补价格，10-05 12:00 前交 docs/ops/weekly/2026-10-05.md
+- 竞品三家补价格：TAAFT $49/$437、toolify $99（10-03 已写进周报）；futurepedia 需登录才见价格，周一前用专用 Chrome 登录查（不注册新账号的话记「未核实」）
 - ✅ 每天查一次已上线目录站的链接 rel（由 check-listings 每天自动做；conduid 页面是 JS 渲染、HTML 里找不到链接，需人工看一次）
 - ✅ 人工看一次 conduid.com（10-03 18:58：页面在，只链 GitHub 仓库 rel=noopener，不链官网；已记 dirsub；check-listings 改为认 GitHub 仓库链接为「已上线（只链仓库）」）
 - 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
@@ -27,8 +27,9 @@
 - ✅ /downloads 提交搜索引擎（IndexNow 每日整站；GSC sitemap 重提交 204，已写成 gsc_sitemap.py 并入 daily-ops）
 - 10-10 看 /downloads 在 GSC 的曝光和收录，没收录就查原因
 - ✅ 对比页加下载量一行（10-03 20:1x，/compare/* 显示 npm + PyPI 30 天下载量，高者标绿）
-- 替代品页 /alternatives/* 每个候选加下载量，并按「星数 / 下载量」给出谁用得更多的一句话结论（进行中：表格 Downloads / 30d 列 8afbc0d 已提交未部署；一句话结论未写）
+- ✅ 替代品页 /alternatives/* 加下载量列 + 一句话结论（10-03 20:3x 上线，线上 /alternatives/langchain 已核对）
 - 10-07 21:00 后确认数据文章已自动发出（data/devto-published.json 有 URL），把 URL 写进看板并在 /where-to-list 页底加「读完整数据文章」链接
+- 首页加「Most downloaded」入口卡片链到 /downloads（首页是流量最大的页，现在没有入口）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

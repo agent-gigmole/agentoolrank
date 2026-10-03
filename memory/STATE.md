@@ -1076,3 +1076,15 @@
 - 结果：fetch-downloads 592 工具、npm 74 / PyPI 174 个包，78 个包下载数为空（pypistats 未返回，每周一 weekly-ops 重跑补）；dry-run --pretend-due 通过（检查 clean）；311 测试通过；真实发布要到 10-07 21:00 才发生，未核实；替代品页下载量列未部署、一句话结论未写
 - 坑：bin/write 自身已带 write 子命令，再写 `bin/write write …` 报 unrecognized arguments；writer 报告的「推断出的规则」要逐句改掉再发，check 子命令只查 AI 味、不重做事实核查 → GOTCHAS#bin-write-usage-and-inferred-claims
 - 结果：成功（替代品页下载量列进行中；10-07 实际发布未核实）
+
+## 2026-10-03 20:3x– 替代品页下载量上线 + 竞品上架价格（8afbc0d、66d37b1 已部署，26b039d 看板，43ae771 周报）
+- **替代品页下载量**（66d37b1，已部署，线上已核对）：/alternatives/[slug] 表格加「Downloads / 30d」列（任一候选有数据才显示）；表格上方一句 usageVerdict（下载最多的是谁、是否也是星数最多），链 /downloads；lib/downloads.ts `usageVerdict` + 测试，313 通过
+  - 线上 /alternatives/langchain：「By package downloads LangChain is the most used here (169.4M in the last 30 days), and it also has the most GitHub stars.」
+- **竞品上架价格**（43ae771，写进 docs/ops/weekly/2026-10-05.md 竞品表）：专用 Chrome 实看
+  - TAAFT /submit→/launch：无免费档，Basic $49（页面标 Low traffic）、Maximum Exposure $437，有预付码、代理商批量
+  - toolify /submit：只见 $99（卖点「至少 6 个 dofollow 链接」）
+  - futurepedia /submit-tool：要登录才看到表单和价格，**未核实**
+  - 洞察：大站上架价 $49–$99，我们付费档 $9–$49 更便宜且不要求徽章，可写进周报「我们更好」（尚未写进）
+- **TASK 队列**：替代品页 ✅；新增「首页加 Most downloaded 入口卡片链 /downloads」；竞品项改写为只剩 futurepedia
+- 坑：KNOWLEDGE/GOTCHAS.md#vitest-run-from-app-dir
+- **下一步**：futurepedia 价格（登录后查，不注册新账号则记未核实）；首页 Most downloaded 卡片；周报写入价格对比；22:00 外联第二批登记 await；10-07 dev.to 数据文章发出核对

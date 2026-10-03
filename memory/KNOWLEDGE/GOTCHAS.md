@@ -960,3 +960,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **check 只查 AI 味**：`python3 $AGENTKIT_ROOT/skills/content-writing/writer.py check --lang en --format longform <file>` clean 只代表没有 AI 写作痕迹，不会重新做事实核查；推断句要靠上一步人工改
 - dev.to 定时发布（scripts/devto-publish.ts）发前强制跑 check，不 clean 就抛错让 hourly 服务失败；已发记录在 apps/agent-tools/data/devto-published.json，防重发
 - 来源：2026-10-03 数据文章重写（c4d79a3）+ dev.to 定时发布（20bcb96）
+
+## vitest-run-from-app-dir
+- **现象**：从仓库根用 `npx vitest run --root apps/agent-tools` 跑，测试数比在应用目录里跑少（10-03：311 vs 313），容易误以为新测试没被收集或被删
+- **做法**：一律 `cd apps/agent-tools && npm test`（= vitest run）再看通过数；报告测试数以这个为准
+- 原因未深查（推测是 --root 下配置/include 解析不同），未核实
+- 来源：2026-10-03 替代品页下载量（66d37b1）

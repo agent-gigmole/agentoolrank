@@ -1083,3 +1083,9 @@
 - 结果：fetch-downloads 592 工具、npm 74 / PyPI 174 个包，78 个包下载数为空（pypistats 未返回，每周一 weekly-ops 重跑补）；dry-run --pretend-due 通过（检查 clean）；311 测试通过；真实发布要到 10-07 21:00 才发生，未核实；替代品页下载量列未部署、一句话结论未写
 - 坑：bin/write 自身已带 write 子命令，再写 `bin/write write …` 报 unrecognized arguments；writer 报告的「推断出的规则」要逐句改掉再发，check 子命令只查 AI 味、不重做事实核查 → GOTCHAS#bin-write-usage-and-inferred-claims
 - 结果：成功（替代品页下载量列进行中；10-07 实际发布未核实）
+
+## 2026-10-03 20:3x– 替代品页下载量 + 竞品上架价格（8afbc0d、66d37b1、26b039d、43ae771）
+- 做法：/alternatives/[slug] 表格加 Downloads / 30d 列 + usageVerdict 一句话结论（链 /downloads）+ 测试，部署；看板记一行；TASK 替代品项 ✅，补「首页 Most downloaded 入口卡片」；接着用专用 Chrome 实看竞品上架页：TAAFT Basic $49 / Maximum Exposure $437（无免费档）、toolify $99、futurepedia 需登录未见价格，写进 10-05 周报竞品表
+- 结果：313 测试通过；线上 /alternatives/langchain 结论句已核对；futurepedia 价格未核实；「我们 $9–$49 比大站 $49–$99 便宜且不要求徽章」尚未写进周报
+- 坑：vitest 用 --root 从仓库根跑会少算测试（311 vs 313），要在 apps/agent-tools 目录里跑 → GOTCHAS#vitest-run-from-app-dir
+- 结果：成功（futurepedia 价格未核实）
