@@ -121,6 +121,8 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
           <p className="text-sm text-gray-600 mt-1 mb-3">
             Submissions whose website shows the AgentoolRank badge are reviewed before everyone else, and the badge shows live GitHub stars.
           </p>
+          {/* eslint-disable-next-line @next/next/no-img-element -- live badge image, same URL as the snippet */}
+          <img src={`/api/badge/${result.slug}`} alt="AgentoolRank badge preview" height={32} className="h-8 w-auto mb-3" />
           <pre className="bg-gray-50 text-xs p-3 rounded-lg overflow-x-auto whitespace-pre-wrap break-all">{snippet}</pre>
           <button
             type="button"
