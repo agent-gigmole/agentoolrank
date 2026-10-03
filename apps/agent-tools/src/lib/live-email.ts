@@ -4,19 +4,20 @@ import { badgeHtml } from "./submissions";
 // once per approved submission to the address they gave us; it carries the badge and the featured-slot link.
 export function liveEmail(o: { name: string; slug: string; baseUrl: string }): { subject: string; text: string } {
   const page = `${o.baseUrl}/tool/${o.slug}`;
+  const tracked = `${page}?ref=live-notify`; // landing sessions from this email show up as src=live-notify
   return {
     subject: `${o.name} is live on AgentoolRank`,
     text: [
       "Hi,",
       "",
-      `${o.name} passed review and its page is live: ${page}`,
+      `${o.name} passed review and its page is live: ${tracked}`,
       "",
       "It shows live GitHub stars, growth and release activity, refreshed daily, and it is in our llms.txt and MCP server, so AI assistants can find it.",
       "",
       "Add the badge to your README or website (it links back to the page):",
       badgeHtml(o.baseUrl, o.slug, o.name),
       "",
-      `Want more developers to see it? Feature it for 7 days at the top of the homepage and its category page ($49, one-time): ${page}#maintainers`,
+      `Want more developers to see it? Feature it for 7 days at the top of the homepage and its category page ($49, one-time): ${tracked}#maintainers`,
       "",
       "Thanks for submitting,",
       "Jason T., AgentoolRank",
