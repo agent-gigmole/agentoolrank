@@ -119,3 +119,16 @@ describe("dailyCap (bet 1: ramp 10 → 15 from 10-08 → 20 from 10-12, only whi
     expect(dailyCap("2026-10-12", false)).toBe(10);
   });
 });
+
+describe("subject A/B", () => {
+  const t = { owner: "Jane", name: "FastMCP", slug: "fastmcp", rank: 2, total: 29, category: "MCP Servers" };
+  it("assigns a stable variant per address", async () => {
+    const { subjectVariant } = await import("./outreach");
+    expect(subjectVariant("a@x.com")).toBe(subjectVariant("A@X.com"));
+    expect(["A", "B"]).toContain(subjectVariant("a@x.com"));
+  });
+  it("B states the rank in the subject; A keeps the original", () => {
+    expect(outreachEmail(t, "https://agentoolrank.com").subject).toBe("FastMCP's current rank on AgentoolRank");
+    expect(outreachEmail({ ...t, variant: "B" }, "https://agentoolrank.com").subject).toBe("FastMCP is #2 of 29 in MCP Servers (data inside)");
+  });
+});

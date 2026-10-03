@@ -7,11 +7,11 @@ export function badgeMarkdown(baseUrl: string, slug: string, name: string, metri
 
 // Wording from the content-writing skill (docs/ops/launch-kit/drafts/outreach-maker-v2.md, brief in briefs/outreach-maker.md).
 export function outreachEmail(
-  t: { owner: string; name: string; slug: string; rank: number; total: number; category: string; downloads?: { label: string; pkg: string; value: string; n?: number } },
+  t: { owner: string; name: string; slug: string; rank: number; total: number; category: string; downloads?: { label: string; pkg: string; value: string; n?: number }; variant?: "A" | "B" },
   baseUrl: string,
 ): { subject: string; text: string } {
   return {
-    subject: `${t.name}'s current rank on AgentoolRank`,
+    subject: t.variant === "B" ? `${t.name} is #${t.rank} of ${t.total} in ${t.category} (data inside)` : `${t.name}'s current rank on AgentoolRank`,
     text: [
       `Hi ${t.owner},`,
       "",
@@ -98,4 +98,11 @@ export function dailyCap(day: string, clean: boolean): number {
   if (day >= "2026-10-12") return 20;
   if (day >= "2026-10-08") return 15;
   return 10;
+}
+
+/** Subject A/B: a stable half of addresses (by hash) gets variant B. Results are read per Brevo tag (outreach-a / outreach-b). */
+export function subjectVariant(email: string): "A" | "B" {
+  let h = 0;
+  for (const ch of email.toLowerCase()) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return h % 2 === 0 ? "A" : "B";
 }
