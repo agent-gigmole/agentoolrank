@@ -99,6 +99,23 @@ export default async function DownloadsPage() {
         </section>
       )}
 
+      <section className="mt-10 border border-gray-200 rounded-xl p-5 bg-gray-50">
+        <h2 className="font-semibold text-gray-900 mb-1">Maintain one of these tools?</h2>
+        <p className="text-sm text-gray-600 mb-2">
+          Every tool page has a maintainer box: copy a README badge that shows your live rank and stars, or feature your tool on the
+          AgentoolRank homepage for $49 / 7 days. Downloads and stars on the page update on their own.
+        </p>
+        <p className="text-sm">
+          {top.slice(0, 5).map((t, i) => (
+            <span key={t.id}>
+              {i > 0 && " · "}
+              <Link href={`/tool/${t.id}#maintainers`} data-testid="downloads-maintainer-cta" className="text-blue-600 hover:underline">{t.name}</Link>
+            </span>
+          ))}
+          {" "}· or find yours in the table above.
+        </p>
+      </section>
+
       <p className="text-sm text-gray-600 mt-6">
         Missing a tool? Only tools that publish an npm or PyPI package from their own repo appear here. <Link href="/submit" className="text-blue-600 hover:underline">Submit an agent tool</Link>{" "}
         or see the <Link href="/weekly" className="text-blue-600 hover:underline">fastest-growing tools this week</Link>.
