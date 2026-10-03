@@ -1077,3 +1077,9 @@
 - 结果：sitemap 手动跑 204；308 测试通过；线上 /compare/langchain-vs-mastra 169.4M vs 3.1M 已核对；文章新稿与 fetch-downloads 全量均未核实
 - 坑：gsc_report.py/gsc_sitemap.py 的 ROOT 是 dirname×4 = 仓库根 ai-directory（不是 workspace）；sitemap 提交要 webmasters 非 readonly → GOTCHAS#gsc-scripts-repo-root-and-scope
 - 结果：成功（文章与全量抓取未核实）
+
+## 2026-10-03 19:3x–19:41 fetch-downloads 全量 + 数据文章重写 + dev.to 定时发布（c4d79a3、20bcb96、8afbc0d）
+- 做法：fetch-downloads 全量跑完；10-07 数据文章用 `bin/write --brief … --format longform --lang en --out …` 重写（含「Stars measure attention, downloads measure use」节 + 文末 Submit Kit 一行），writer 报告的 5 条推断句（如 "I would choose by product fit…"）逐句改成有依据的说法，`writer.py check --lang en --format longform` clean；新建 dev.to 定时发布：src/lib/devto-schedule.ts（splitTitle 取首行 H1、dueEntries）+ 测试，scripts/devto-publish.ts（读 ops/devto-schedule.json，到点 POST /api/articles published=true；发前 writer.py check 不 clean 就抛错让服务失败；已发 URL 记 apps/agent-tools/data/devto-published.json 防重发；--dry-run / --pretend-due），并入 hourly-ops.sh，pipelines.json hourly 备注更新；数据文章排 2026-10-07T21:00+08:00（美东 9 点），tags ai/opensource/startup/seo；await 08eaba 已登记（100h；done=devto-published.json 含该文件；stuck=devto 日志出现 not clean 或 dev.to 4xx/5xx）；看板已记；开始 /alternatives/* 表格加「Downloads / 30d」列（8afbc0d WIP，已提交未部署）
+- 结果：fetch-downloads 592 工具、npm 74 / PyPI 174 个包，78 个包下载数为空（pypistats 未返回，每周一 weekly-ops 重跑补）；dry-run --pretend-due 通过（检查 clean）；311 测试通过；真实发布要到 10-07 21:00 才发生，未核实；替代品页下载量列未部署、一句话结论未写
+- 坑：bin/write 自身已带 write 子命令，再写 `bin/write write …` 报 unrecognized arguments；writer 报告的「推断出的规则」要逐句改掉再发，check 子命令只查 AI 味、不重做事实核查 → GOTCHAS#bin-write-usage-and-inferred-claims
+- 结果：成功（替代品页下载量列进行中；10-07 实际发布未核实）

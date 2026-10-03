@@ -9,7 +9,7 @@
 - ✅ 流水线化：目录站上线复查（check-listings.ts 并入 daily-ops 21:30，baa4aa2；首跑 41 站确认 6 个有链接、新增 4 个上线，回写 dirsub）
 - ✅ 流水线化：hello@ 回信收集（agentkit bin/gmail-read，并入每小时 feedback collect；回 no 自动 optout）。原需求：可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
 - 流水线化：周报数字段（记分牌、漏斗、外部评测原始反馈）脚本生成，结论用 bin/write 写稿
-- 流水线化：dev.to 文章定时发布（稿件就绪后按日期发，发后登记 post-log 与 await）
+- ✅ 流水线化：dev.to 文章定时发布（devto-publish.ts 并入 hourly，ops/devto-schedule.json；数据文章排在 10-07 21:00 北京，dry-run 通过）
 - 外联每晚 22:00 由定时器自动发 10 封（会话不再手动发）；回信由每小时 feedback collect 自动收，真人回信 48 小时内写结论
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
@@ -23,11 +23,12 @@
 - ✅ 周帖接共用文案检查 + 渠道登记表（10-03 f872066、c642f03）：aiAuthorshipMatch 与 bin/post-copy-check 双检查 → post-gate --channel x-main --has-link → 发帖 → bin/post-log 记 posts.jsonl
 - Submit Kit 漏斗每天看一次：kit_click → /submit-kit 访问 → 付费，三个数写进 ops/daily.md，断在哪一步就改哪一步
 - ✅ /downloads 下载量排行榜上线（10-03 20:0x，ItemList JSON-LD、sitemap、详情页互链）
-- 10-07 数据文章加「星数 vs 下载量」一节：引用 /downloads 前 5 和每星下载量最高的工具，文末带 Submit Kit 与 /downloads 两个入口（brief 已加节 02ebddb，文章未写）
+- ✅ 10-07 数据文章加「星数 vs 下载量」一节（10-03 20:4x 用 bin/write 重写稿件：含下载量节 + Submit Kit 入口；推断句 5 条已改为有依据的说法，去 AI 味复检 clean）
 - ✅ /downloads 提交搜索引擎（IndexNow 每日整站；GSC sitemap 重提交 204，已写成 gsc_sitemap.py 并入 daily-ops）
 - 10-10 看 /downloads 在 GSC 的曝光和收录，没收录就查原因
 - ✅ 对比页加下载量一行（10-03 20:1x，/compare/* 显示 npm + PyPI 30 天下载量，高者标绿）
-- 替代品页 /alternatives/* 每个候选加下载量，并按「星数 / 下载量」给出谁用得更多的一句话结论
+- 替代品页 /alternatives/* 每个候选加下载量，并按「星数 / 下载量」给出谁用得更多的一句话结论（进行中：表格 Downloads / 30d 列 8afbc0d 已提交未部署；一句话结论未写）
+- 10-07 21:00 后确认数据文章已自动发出（data/devto-published.json 有 URL），把 URL 写进看板并在 /where-to-list 页底加「读完整数据文章」链接
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

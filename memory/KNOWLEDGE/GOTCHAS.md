@@ -953,3 +953,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - apps/agent-tools/scripts/ 下的 gsc_report.py / gsc_sitemap.py 用 `dirname` 套 4 层得到 ROOT = 仓库根（/home/qmt/workspace/ai-directory），service account 文件是仓库根的 gsc-service-account.json —— 不是 workspace 目录，也不是 apps/agent-tools。新写 GSC 脚本照抄这个层数，别想当然多套一层
 - 只读报表用 webmasters.readonly；sitemap 重提交（PUT sitemaps）必须 webmasters 全权限，成功返回 204（另见 #google-sitemap-resubmit-service-account）
 - 每日管线里的脚本失败要 exit 1，daily-ops 才会标红；gsc_sitemap.py 放在 IndexNow 之后
+
+## bin-write-usage-and-inferred-claims
+- **bin/write 用法**：`bin/write --brief <brief.md> --format longform --lang en --out <draft.md>`。bin/write 本身已经封装了 writer.py 的 write 子命令，再写成 `bin/write write …` 会报 unrecognized arguments
+- **推断句必须改完再发**：writer 输出报告里列出的「推断出的规则 / inferred claims」（10-07 数据文章有 5 条，如 "I would choose by product fit…"）是没有数据依据的句子，要逐句改成有依据的说法或删掉，不能原样发
+- **check 只查 AI 味**：`python3 $AGENTKIT_ROOT/skills/content-writing/writer.py check --lang en --format longform <file>` clean 只代表没有 AI 写作痕迹，不会重新做事实核查；推断句要靠上一步人工改
+- dev.to 定时发布（scripts/devto-publish.ts）发前强制跑 check，不 clean 就抛错让 hourly 服务失败；已发记录在 apps/agent-tools/data/devto-published.json，防重发
+- 来源：2026-10-03 数据文章重写（c4d79a3）+ dev.to 定时发布（20bcb96）
