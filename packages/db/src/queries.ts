@@ -263,3 +263,13 @@ export async function searchStacks(query: string, limit: number = 10): Promise<S
     return { ...r, layers: JSON.parse(r.layers) };
   });
 }
+
+/** npm / PyPI monthly downloads for a tool (table filled weekly by apps/agent-tools/scripts/fetch-downloads.ts). */
+export async function getToolPackages(toolId: string): Promise<{ registry: string; package: string; downloads_30d: number | null; fetched_at: string }[]> {
+  try {
+    const r = await db.execute({ sql: "SELECT registry, package, downloads_30d, fetched_at FROM tool_packages WHERE tool_id = ? ORDER BY downloads_30d DESC", args: [toolId] });
+    return r.rows.map((x) => ({ registry: String(x.registry), package: String(x.package), downloads_30d: x.downloads_30d === null ? null : Number(x.downloads_30d), fetched_at: String(x.fetched_at) }));
+  } catch {
+    return []; // table not created yet
+  }
+}

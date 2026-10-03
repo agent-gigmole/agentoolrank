@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getToolBySlug, getTools, getToolSnapshots } from "@repo/db/queries";
+import { getToolBySlug, getToolPackages, getTools, getToolSnapshots } from "@repo/db/queries";
+import { downloadsLine } from "@/lib/downloads";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { StarChart } from "@repo/ui/StarChart";
 import type { Metadata } from "next";
@@ -285,6 +286,7 @@ export default async function ToolPage({ params }: Props) {
 
   // Get star history for chart
   const snapshots = await getToolSnapshots(tool.id);
+  const downloads = downloadsLine(await getToolPackages(tool.id));
 
   // Get alternatives
   const alternativeTools: Tool[] = [];
@@ -393,6 +395,22 @@ export default async function ToolPage({ params }: Props) {
             <MetricCard label="Commits (90d)" value={tool.commit_count_90d?.toString() ?? null} />
             <MetricCard label="Releases (6m)" value={tool.release_count_6m?.toString() ?? null} />
           </div>
+        )}
+
+        {downloads.length > 0 && (
+          <p className="-mt-5 mb-8 text-sm text-gray-600">
+            Package downloads, last 30 days:{" "}
+            {downloads.map((d, i) => (
+              <span key={d.label}>
+                {i > 0 && " · "}
+                <a href={d.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  {d.label} <code className="text-xs">{d.pkg}</code>
+                </a>{" "}
+                <b className="text-gray-900">{d.value}</b>
+              </span>
+            ))}
+            <span className="text-gray-400"> · counts from npm and pypistats, updated weekly</span>
+          </p>
         )}
 
         {/* Star Growth Chart */}

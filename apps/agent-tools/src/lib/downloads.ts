@@ -53,3 +53,17 @@ export function candidateNames(t: { manifest: string | null; repo: string; id: s
   }
   return out.filter((s) => s.length > 1);
 }
+
+const compact = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}K` : String(n));
+
+/** Detail-page rows for "monthly downloads" (only packages with a number; links go to the registry page). */
+export function downloadsLine(rows: { registry: string; package: string; downloads_30d: number | null }[]) {
+  return rows
+    .filter((r) => typeof r.downloads_30d === "number")
+    .map((r) => ({
+      label: r.registry === "pypi" ? "PyPI" : "npm",
+      pkg: r.package,
+      value: compact(r.downloads_30d as number),
+      url: r.registry === "pypi" ? `https://pypi.org/project/${r.package}/` : `https://www.npmjs.com/package/${r.package}`,
+    }));
+}

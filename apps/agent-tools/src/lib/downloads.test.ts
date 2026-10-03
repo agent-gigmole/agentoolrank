@@ -38,3 +38,16 @@ describe("candidateNames", () => {
     expect(candidateNames({ manifest: null, repo: "langchainjs", id: "langchainjs", name: "LangChain.js" }, "npm")).toEqual(["langchainjs", "langchain.js", "@langchainjs/core", "langchain"]);
   });
 });
+
+describe("downloadsLine", () => {
+  it("renders registry, package and a compact monthly count", async () => {
+    const { downloadsLine } = await import("./downloads");
+    expect(downloadsLine([{ registry: "pypi", package: "langchain", downloads_30d: 169366312 }, { registry: "npm", package: "@mastra/core", downloads_30d: 3093776 }])).toEqual([
+      { label: "PyPI", pkg: "langchain", value: "169.4M", url: "https://pypi.org/project/langchain/" },
+      { label: "npm", pkg: "@mastra/core", value: "3.1M", url: "https://www.npmjs.com/package/@mastra/core" },
+    ]);
+    expect(downloadsLine([{ registry: "npm", package: "x", downloads_30d: 950 }])[0].value).toBe("950");
+    expect(downloadsLine([{ registry: "npm", package: "x", downloads_30d: 12500 }])[0].value).toBe("12.5K");
+    expect(downloadsLine([{ registry: "npm", package: "x", downloads_30d: null }])).toEqual([]);
+  });
+});
