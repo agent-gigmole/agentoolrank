@@ -23,3 +23,21 @@ describe("scoreboardTable (weekly review 记分牌, generated not typed)", () =>
     expect(md).toContain("| 目录站已确认上线 | 7 |");
   });
 });
+
+describe("replaceScoreboard / reviewMonday", () => {
+  it("replaces only the 记分牌 section and keeps the rest", async () => {
+    const { replaceScoreboard } = await import("./weekly-numbers");
+    const doc = "# 本周经营\n\n## 记分牌（旧）\n| a |\n\n## 外部评测\nkeep\n";
+    expect(replaceScoreboard(doc, "## 记分牌（新）\n| b |")).toBe("# 本周经营\n\n## 记分牌（新）\n| b |\n\n## 外部评测\nkeep\n");
+  });
+  it("inserts the section after the title when missing", async () => {
+    const { replaceScoreboard } = await import("./weekly-numbers");
+    expect(replaceScoreboard("# T\n\n## 押注\nx\n", "## 记分牌\n| b |")).toBe("# T\n\n## 记分牌\n| b |\n\n## 押注\nx\n");
+  });
+  it("reviews belong to the coming Monday (or today if it is Monday), China time", async () => {
+    const { reviewMonday } = await import("./weekly-numbers");
+    expect(reviewMonday(new Date("2026-10-03T12:00:00+08:00"))).toBe("2026-10-05");
+    expect(reviewMonday(new Date("2026-10-05T08:50:00+08:00"))).toBe("2026-10-05");
+    expect(reviewMonday(new Date("2026-10-05T23:59:00+08:00"))).toBe("2026-10-05");
+  });
+});

@@ -32,3 +32,23 @@ export function scoreboardTable(w: WeeklyNumbers): string {
     row("Google 点击（28 天）", w.gscClicks28d ?? "?"),
   ].join("\n");
 }
+
+/** Swap the "## 记分牌…" section for a freshly generated one; insert it after the H1 if the file has none. */
+export function replaceScoreboard(doc: string, section: string): string {
+  const start = doc.search(/^## 记分牌/m);
+  if (start < 0) {
+    const h1 = doc.indexOf("\n\n");
+    return h1 < 0 ? `${doc}\n\n${section}\n` : `${doc.slice(0, h1)}\n\n${section}${doc.slice(h1)}`;
+  }
+  const next = doc.slice(start + 1).search(/^## /m);
+  const end = next < 0 ? doc.length : start + 1 + next;
+  return doc.slice(0, start) + section + "\n\n" + doc.slice(end);
+}
+
+/** docs/ops/weekly/<this date>.md: the Monday the review is due (today when it is Monday), in China time. */
+export function reviewMonday(now: Date): string {
+  const cst = new Date(now.getTime() + 8 * 3600_000);
+  const dow = cst.getUTCDay(); // 0 Sun … 1 Mon
+  const add = (8 - dow) % 7;
+  return new Date(cst.getTime() + add * 86400_000).toISOString().slice(0, 10);
+}

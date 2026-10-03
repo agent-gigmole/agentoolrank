@@ -111,9 +111,7 @@ try {
 } catch (e) {
   vi = [`访客行为（近 1×24 小时）：取数失败（${(e as Error).name}），本日数字缺失，不是 0`];
 }
-writeFileSync(
-  new URL("../../../ops/daily.md", import.meta.url).pathname,
-  withViBlock(vi, renderDaily({
+const daily = {
     ...data,
     submitFunnel: {
       page: await sess(`name='page_view' AND path='/submit'`),
@@ -128,6 +126,8 @@ writeFileSync(
       done: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
     },
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
-  })),
-);
+  };
+writeFileSync(new URL("../../../ops/daily.md", import.meta.url).pathname, withViBlock(vi, renderDaily(daily)));
+// Same numbers, machine-readable, for the Monday weekly review (scripts/weekly-numbers.ts).
+writeFileSync(new URL("../data/kpi-latest.json", import.meta.url).pathname, JSON.stringify(daily, null, 2));
 console.log(`kpi updated for ${y.day}`);

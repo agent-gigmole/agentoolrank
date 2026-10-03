@@ -1,0 +1,9 @@
+[Unit]
+Description=AgentoolRank weekly review numbers (Monday 08:50, before the 09:25 scoreboard ranking)
+
+[Timer]
+OnCalendar=Mon *-*-* 08:50:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

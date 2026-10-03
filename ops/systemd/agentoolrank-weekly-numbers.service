@@ -1,0 +1,9 @@
+[Unit]
+Description=AgentoolRank weekly review numbers (regenerate 记分牌 in docs/ops/weekly/<monday>.md, commit, push)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/qmt/workspace/ai-directory/apps/agent-tools
+Environment=PATH=/home/qmt/.bun/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/qmt/.bun/bin/bun run scripts/weekly-numbers.ts
+TimeoutStartSec=10min

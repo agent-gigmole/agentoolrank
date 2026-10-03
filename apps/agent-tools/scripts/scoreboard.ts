@@ -7,6 +7,7 @@
 import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { buildScoreboard, ledgerCashUsd, type PaidOrder } from "../src/lib/scoreboard";
 import { ENGAGEMENT_SINCE, VISITORS_DEFINITION, classifySessions } from "../src/lib/vi-summary";
 
@@ -48,12 +49,23 @@ const split = classifySessions(
   ENGAGEMENT_SINCE,
 );
 const visitors = split.visitors;
-const spendUsd = ledgerCashUsd(readFileSync(`${ROOT}docs/ops/spend-ledger.md`, "utf8"), day(since), day(now));
+// Spend: agentkit's spend database (bin/spend, Airwallex synced every 6h + manual entries; boss 10-03 20:08).
+// If it can't be read, fall back to our own ledger and say so in warnings.
+const spendDb = spawnSync(`${process.env.HOME}/project/agentkit/bin/spend`, ["--json"], { encoding: "utf8", timeout: 60_000 });
+let spendUsd: number;
+let spendSource = "agentkit bin/spend（~/data/spend/spend.db）近 7 天 ai-directory";
+try {
+  spendUsd = Number(JSON.parse(spendDb.stdout).last_7d_by_project?.["ai-directory"] ?? 0);
+} catch {
+  spendUsd = ledgerCashUsd(readFileSync(`${ROOT}docs/ops/spend-ledger.md`, "utf8"), day(since), day(now));
+  spendSource = "docs/ops/spend-ledger.md（bin/spend 读取失败时的后备）";
+  warnings.push(`bin/spend 读取失败（exit ${spendDb.status}），支出改用台账`);
+}
 const { bets } = JSON.parse(readFileSync(`${ROOT}ops/bets.json`, "utf8"));
 
 const board = { ...buildScoreboard({ now, payments, spendUsd, visitors, bets }), likely_scanners_7d: split.scanners, visitors_definition: VISITORS_DEFINITION, sources: {
   revenue: "Turso payments（排除 selftest）减 Stripe 退款，滚动 7 天",
-  spend: "docs/ops/spend-ledger.md 明细，只计现金（不含 OpenRouter 既有余额、本机 Sub2API）",
+  spend: spendSource,
   visitors: "Turso events，见 visitors_definition，滚动 7 天",
   bets: "ops/bets.json（周报 docs/ops/weekly/ 的押注）",
 }, warnings };

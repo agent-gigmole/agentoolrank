@@ -30,5 +30,11 @@
     "workflow": "daily-update.yml",
     "entry": ".github/workflows/daily-update.yml（crawl-github --existing + compute-rankings）",
     "notes": "每天 06:00 UTC。工具数据每日自动刷新（项目规则：每日自动刷新）"
+  },
+  {
+    "name": "weekly-numbers",
+    "entry": "apps/agent-tools/scripts/weekly-numbers.ts",
+    "timer": "agentoolrank-weekly-numbers.timer",
+    "notes": "每周一 08:50（09:25 agentkit 排名前）。用 ops/scoreboard.json + data/kpi-latest.json 重写 docs/ops/weekly/<周一>.md 的「## 记分牌」节（收入、陌生人付费单、现金支出、利润、真实访客、两条漏斗、外联、目录站上线、GSC），只提交并推送这一个文件；结论/竞品/押注仍人工或 bin/write"
   }
 ]
