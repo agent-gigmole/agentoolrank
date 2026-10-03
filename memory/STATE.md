@@ -1320,3 +1320,9 @@
 - **对比页补齐（进行中，4fb4d95 WIP 已提交未部署）**：lib/downloads.ts 新增 downloadPairs(rows, categories, topN=6)，取每个类目下载量前 N 的工具两两配对，用 alternatives.compareSlug 生成 slug + 测试。/compare/[slug] 本身已能渲染任意两个已收录工具，缺的只是 sitemap 收录与站内链接
 - **剩余**：sitemap 加这些 compare URL（与已有对比 URL 去重）；/downloads/<category> 页底加「Compare the top tools」链接；测试 + 部署 + 线上核对
 - **下一步**：完成上述剩余项；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字
+
+## 2026-10-04 02:0x 对比页补齐上线 + 详情页标题加下载量开工（e918658 部署、0ec5dd3、3441442）
+- **对比页补齐**（e918658 已部署；看板 0ec5dd3）：sitemap 加 downloadPairs（每类目下载量前 6 两两、只含仍收录工具），compare URL 712 → 830；/downloads/<category> 页底「Compare the most-downloaded …」链接；线上 /compare/langchain-vs-pydantic 200；gsc_sitemap.py 重提交 204；测试 353；TASK ✅
+- **详情页标题加下载量（进行中，3441442 WIP 已提交未部署）**：toolTitle 新增 downloads30d 参数，≥1M/月时 suffix 加「· 169M/mo」（总长 ≤70 字符）+ 测试；详情页 generateMetadata 传 totalDownloads
+- **剩余**：部署 + 线上核对 <title> + 看板记一行；10-16 GSC 复盘对比 CTR
+- **下一步**：完成上述剩余项；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字

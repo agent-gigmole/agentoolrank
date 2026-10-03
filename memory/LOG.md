@@ -1265,3 +1265,9 @@
 - 结果：上架价格结构化数据已上线；对比页补齐剩 sitemap（去重）、/downloads/<category> 页底链接、部署核对
 - 坑：无新坑
 - 结果：成功（对比页补齐进行中）
+
+## 2026-10-04 02:0x 对比页补齐上线 + 详情页标题加下载量开工（e918658 部署、0ec5dd3、3441442）
+- 做法：sitemap 收录 downloadPairs（每类目下载量前 6 两两，只含仍收录工具），/downloads/<category> 页底加对比链接（e918658），部署后核对 /compare/langchain-vs-pydantic 200，gsc_sitemap.py 重提交 204，看板记一行（0ec5dd3）；开工 toolTitle(downloads30d) ≥1M/月加「· 169M/mo」+ 详情页 generateMetadata 传 totalDownloads（3441442）
+- 结果：compare URL 712 → 830，测试 353 全绿；标题加下载量未部署
+- 坑：无新坑
+- 结果：成功（标题加下载量进行中）

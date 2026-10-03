@@ -79,7 +79,8 @@
 - ✅ 替代品页 ItemList 每项改为 SoftwareApplication + 下载量计数（10-04 01:10 上线核对）
 - ✅ /submit-kit 加 Product JSON-LD（Free $0 + Full $29，10-04 01:30 上线核对）
 - ✅ /submit 页加 Product JSON-LD（四档 0/9/19/49，10-04 01:50 上线核对）
-- 对比页补齐：同类目里下载量前列、但还没有 /compare 页的工具对（如 Pydantic vs OpenAI Python 这类高搜索量组合），按数据自动生成候选并上线（进行中：4fb4d95 downloadPairs + 测试已提交；剩 sitemap 去重收录、/downloads/<category> 页底链接、部署核对）
+- ✅ 对比页补齐：每类目下载量前 6 两两对比进 sitemap（compare URL 712 → 830）并从 /downloads/<类目> 链出（10-04 02:0x 上线核对，sitemap 已重提交 GSC）
+- 详情页 <title> 对月下载 ≥100 万的工具加上下载量（suffix 加「· 169M/mo」，≤70 字符），提高搜索结果点击率；10-16 GSC 复盘时对比 CTR（进行中：3441442 toolTitle(downloads30d) + 测试、generateMetadata 传 totalDownloads 已提交；剩部署 + 线上核对 + 看板）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
