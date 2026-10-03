@@ -49,7 +49,7 @@ const avoidReason = (s: KitSite): KitAvoid => ({
 
 export function recommendDirectories(
   data: KitData,
-  o: { productType: ProductType; full: boolean; now: Date; languages?: string[]; openSource?: boolean },
+  o: { productType: ProductType; full: boolean; now: Date; languages?: string[]; openSource?: boolean; ours?: Record<string, string> },
 ) {
   const langs = o.languages ?? ["en"];
   const fits = FITS[o.productType] ?? FITS.other;
@@ -76,6 +76,7 @@ export function recommendDirectories(
     success_signal: s.success,
     last_verified: s.verified,
     stale: (o.now.getTime() - Date.parse(s.verified)) / 86400_000 > STALE_DAYS,
+    our_listing: o.ours?.[s.domain] ?? null, // what happened to our own listing there (live + link kind), checked daily
   }));
   const checklist = new Map<string, string[]>();
   for (const p of picked) for (const h of p.human_steps) checklist.set(h, [...(checklist.get(h) ?? []), p.domain]);

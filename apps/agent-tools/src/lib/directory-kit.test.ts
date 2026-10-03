@@ -100,3 +100,12 @@ describe("kitFaq (Submit Kit page FAQ, numbers from the dataset)", () => {
     expect(all).not.toMatch(/guarantee|traffic boost|DR \d/i);
   });
 });
+
+describe("our_listing in recommendations", () => {
+  it("adds what happened to our own listing on each site when known", () => {
+    const first = recommendDirectories(data, { productType: "ai_tool", full: true, now }).sites[0];
+    const r = recommendDirectories(data, { productType: "ai_tool", full: true, now, ours: { [first.domain]: "Live · followed link" } });
+    expect(r.sites[0].our_listing).toBe("Live · followed link");
+    expect(r.sites[1]?.our_listing ?? null).toBeNull();
+  });
+});
