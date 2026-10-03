@@ -2,6 +2,8 @@ import { withCallLog } from "@/lib/api-log";
 import { NextRequest } from "next/server";
 import { createSubmission } from "@/lib/submit-core";
 import { listedReply } from "@/lib/offers";
+import { kitTypeForCategories } from "@/lib/directory-kit";
+import { getToolBySlug } from "@repo/db/queries";
 import { badgeHtml } from "@/lib/submissions";
 
 // Agent-friendly submission API. POST JSON:
@@ -35,7 +37,7 @@ async function handlePOST(req: NextRequest) {
     if (r.kind === "spam") return Response.json({ error: "invalid_submission" }, { status: 400, headers: CORS });
     if (r.kind === "listed") {
       const base = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
-      return Response.json(listedReply({ baseUrl: base, slug: r.slug, listingUrl: r.url, paymentsEnabled: Boolean(process.env.STRIPE_SECRET_KEY), badgeHtml: badgeHtml(base, r.slug, typeof b.name === "string" ? b.name : r.slug) }), { headers: CORS });
+      return Response.json(listedReply({ baseUrl: base, slug: r.slug, listingUrl: r.url, paymentsEnabled: Boolean(process.env.STRIPE_SECRET_KEY), kitType: kitTypeForCategories((await getToolBySlug(r.slug))?.category_tags), badgeHtml: badgeHtml(base, r.slug, typeof b.name === "string" ? b.name : r.slug) }), { headers: CORS });
     }
     return Response.json(
       {

@@ -17,3 +17,11 @@ describe("liveEmail (the /submit form promises 'we'll email you when your page i
     expect(e.text).not.toMatch(/\bAI[- ](?:written|generated)|written by (?:an )?AI|automated message/i);
   });
 });
+
+describe("liveEmail Submit Kit link preselects the tool's list", () => {
+  it("adds ?type= when given", () => {
+    expect(liveEmail({ name: "M", slug: "m", baseUrl: "https://agentoolrank.com", kitType: "mcp_server" }).text).toContain(
+      "https://agentoolrank.com/submit-kit?type=mcp_server&ref=live-notify",
+    );
+  });
+});

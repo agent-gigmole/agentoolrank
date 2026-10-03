@@ -99,3 +99,10 @@ describe("messageForHuman points to the Submit Kit page too", () => {
     expect(m).toContain("https://agentoolrank.com/submit-kit?ref=agent-queued");
   });
 });
+
+describe("listedReply kit link preselects the tool's list", () => {
+  it("adds ?type= when given", () => {
+    const r = listedReply({ baseUrl: "https://agentoolrank.com", slug: "m", listingUrl: "x", paymentsEnabled: true, badgeHtml: "", kitType: "mcp_server" });
+    expect(r.submit_kit_url).toBe("https://agentoolrank.com/submit-kit?type=mcp_server&ref=agent-listed");
+  });
+});

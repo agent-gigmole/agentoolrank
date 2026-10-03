@@ -8,6 +8,7 @@ import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { readFileSync } from "node:fs";
 import { liveEmail } from "../src/lib/live-email";
+import { kitTypeForCategories } from "../src/lib/directory-kit";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
 const dry = process.argv.includes("--dry-run");
@@ -19,14 +20,22 @@ await db.execute(`CREATE TABLE IF NOT EXISTS live_emails (
   sent_at TEXT NOT NULL DEFAULT (datetime('now')),
   message_id TEXT NOT NULL DEFAULT ''
 )`);
-const rows = (await db.execute(`SELECT s.id, s.slug, s.email, t.name FROM submissions s JOIN tools t ON t.id = s.slug
+const rows = (await db.execute(`SELECT s.id, s.slug, s.email, t.name, t.category_tags FROM submissions s JOIN tools t ON t.id = s.slug
   WHERE s.status = 'approved' AND s.email LIKE '%@%' AND s.src NOT LIKE '%selftest%' AND s.note NOT LIKE '%selftest%'
-    AND s.id NOT IN (SELECT submission_id FROM live_emails) ORDER BY s.id`)).rows as unknown as Array<{ id: number; slug: string; email: string; name: string }>;
+    AND s.id NOT IN (SELECT submission_id FROM live_emails) ORDER BY s.id`)).rows as unknown as Array<{ id: number; slug: string; email: string; name: string; category_tags: string | null }>;
 console.log(`live emails due: ${rows.length}${dry ? " (dry run)" : ""}`);
 
+const tags = (v: string | null): string[] => {
+  try {
+    const j = JSON.parse(v ?? "[]");
+    return Array.isArray(j) ? j.map(String) : [];
+  } catch {
+    return String(v ?? "").split(",");
+  }
+};
 const key = readFileSync(`${process.env.HOME}/.config/secrets/brevo-api-key`, "utf8").trim();
 for (const r of rows) {
-  const { subject, text } = liveEmail({ name: r.name, slug: r.slug, baseUrl: BASE });
+  const { subject, text } = liveEmail({ name: r.name, slug: r.slug, baseUrl: BASE, kitType: kitTypeForCategories(tags(r.category_tags)) });
   const masked = r.email.replace(/^(.).*@/, "$1***@");
   if (dry) {
     console.log(`#${r.id} ${r.slug} -> ${masked}: ${subject}`);

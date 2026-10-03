@@ -6,6 +6,7 @@ import { toPublicTool } from "@/lib/public-api";
 import { handleMcp, type McpDeps } from "@/lib/mcp";
 import { createSubmission, submissionStatus } from "@/lib/submit-core";
 import { listedReply } from "@/lib/offers";
+import { kitTypeForCategories } from "@/lib/directory-kit";
 import { badgeHtml } from "@/lib/submissions";
 import { kitKeyValid } from "@/lib/kit-keys";
 import { ourResultLabel } from "@/lib/listing-check";
@@ -32,7 +33,7 @@ function deps(): McpDeps {
       const r = await createSubmission(input, opts);
       if (r.kind === "invalid") return { status: "invalid", errors: r.errors };
       if (r.kind === "spam") return { status: "invalid" };
-      if (r.kind === "listed") return listedReply({ baseUrl: baseUrl, slug: r.slug, listingUrl: r.url, paymentsEnabled: Boolean(process.env.STRIPE_SECRET_KEY), badgeHtml: badgeHtml(baseUrl, r.slug, typeof input.name === "string" ? input.name : r.slug) });
+      if (r.kind === "listed") return listedReply({ baseUrl: baseUrl, slug: r.slug, listingUrl: r.url, paymentsEnabled: Boolean(process.env.STRIPE_SECRET_KEY), kitType: kitTypeForCategories((await getToolBySlug(r.slug))?.category_tags), badgeHtml: badgeHtml(baseUrl, r.slug, typeof input.name === "string" ? input.name : r.slug) });
       const { kind: _kind, ...rest } = r;
       return { status: "queued", ...rest };
     },

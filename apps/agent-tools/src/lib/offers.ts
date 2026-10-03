@@ -63,15 +63,16 @@ export function messageForHuman(name: string, offers: Offer[]): string {
  * Response for an agent that submits a tool we already list. Whoever submits a listed tool is usually its maintainer,
  * the buyer for the featured slot, so the reply carries that offer (no review needed) and the badge, not just a link.
  */
-export function listedReply(o: { baseUrl: string; slug: string; listingUrl: string; paymentsEnabled: boolean; badgeHtml: string }) {
+export function listedReply(o: { baseUrl: string; slug: string; listingUrl: string; paymentsEnabled: boolean; badgeHtml: string; kitType?: string }) {
   const featured = PLANS.featured;
   const buyUrl = `${o.baseUrl}/tool/${o.slug}?ref=agent-listed#maintainers`;
+  const kitUrl = `${o.baseUrl}/submit-kit?${o.kitType ? `type=${o.kitType}&` : ""}ref=agent-listed`;
   return {
     status: "already_listed" as const,
     slug: o.slug,
     listing_url: o.listingUrl,
     badge_html: o.badgeHtml,
-    submit_kit_url: `${o.baseUrl}/submit-kit?ref=agent-listed`,
+    submit_kit_url: kitUrl,
     featured_offer: o.paymentsEnabled
       ? {
           price_usd: featured.amount / 100,
@@ -83,7 +84,7 @@ export function listedReply(o: { baseUrl: string; slug: string; listingUrl: stri
     message_for_human: [
       `This tool is already listed on AgentoolRank: ${o.listingUrl}`,
       "Add the badge (badge_html) to the README or website to show live GitHub stars.",
-      `Listing it on other launch directories too? Which ones fit, tested by submitting our own products (top 10 free): ${o.baseUrl}/submit-kit?ref=agent-listed`,
+      `Listing it on other launch directories too? Which ones fit, tested by submitting our own products (top 10 free): ${kitUrl}`,
       ...(o.paymentsEnabled ? [`Optional: feature it for ${featured.featuredDays} days on the homepage and its category page ($${featured.amount / 100}, one-time): ${buyUrl}`] : []),
     ].join("\n"),
   };
