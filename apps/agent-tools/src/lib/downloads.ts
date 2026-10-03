@@ -1,3 +1,4 @@
+import { compareSlug } from "./alternatives";
 // npm / PyPI monthly downloads for tools that publish a package (weekly-ops). Package names come from the tool's own
 // repo (package.json / pyproject.toml / setup.py), never typed by hand, and only count if the registry metadata points
 // back at the same GitHub repo, so a same-named package from someone else is never credited.
@@ -125,4 +126,14 @@ export function downloadCategorySlugs(rows: DownloadRow[], slugs: string[]): Map
     if (n >= DOWNLOAD_CATEGORY_MIN) out.set(s, n);
   }
   return out;
+}
+
+/** Compare-page slugs ("a-vs-b", slugs sorted) for the top-N most-downloaded tools within each category. */
+export function downloadPairs(rows: DownloadRow[], categories: string[], topN = 6): string[] {
+  const out = new Set<string>();
+  for (const c of categories) {
+    const top = rankByDownloads(rows, c).slice(0, topN).map((t) => t.id);
+    for (let i = 0; i < top.length; i++) for (let j = i + 1; j < top.length; j++) out.add(compareSlug(top[i], top[j]));
+  }
+  return [...out];
 }

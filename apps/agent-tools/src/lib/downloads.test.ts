@@ -127,3 +127,12 @@ describe("downloadCategorySlugs (one rule for page, sitemap and links)", () => {
     expect(downloadCategorySlugs(rows, ["x", "y"]).get("x")).toBe(3);
   });
 });
+
+describe("downloadPairs", () => {
+  it("pairs the top-N downloaded tools inside each category, slug-sorted and deduped", async () => {
+    const { downloadPairs } = await import("./downloads");
+    const row = (id: string, dl: number, cats: string[]) => ({ id, name: id, stars: 1, registry: "pypi", package: id, downloads_30d: dl, categories: cats });
+    const rows = [row("b", 300, ["x"]), row("a", 200, ["x", "y"]), row("c", 100, ["x"]), row("d", 50, ["y"])];
+    expect(downloadPairs(rows, ["x", "y"], 2).sort()).toEqual(["a-vs-b", "a-vs-d"]);
+  });
+});
