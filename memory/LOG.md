@@ -1026,3 +1026,10 @@
 - 结果：263 测试通过；真 Chrome 跨 3 页客户端跳转，engagement 各记在本页（9s/91%、3s/0%、7s/100%）；测试会话改 src='selftest-vicheck'，Chrome 已重打 ?internal=1；已 bus-send 回 agentkit；待老板确认域名实付与早期 LLM 账单
 - 坑：Playwright click 会先把元素滚进视口，抬高 scroll；?internal=0 验证后必须重打 ?internal=1 → GOTCHAS#visitor-insights-own-events
 - 结果：成功
+
+
+## 2026-10-03 16:56– 定时任务迁 systemd + visitor-insights v4（3572830、80419ba）
+- 做法：按 agentkit 7e90501 做 vi v4（滚动容差 max(48px,视口10%)；访客=有 engagement 的会话，只有 page_view 的列疑似扫描器，写在 vi 块第一行；viNote 改为说明 16:30 前会话都落在疑似扫描器）；按老板 16:56 决定 #37 把 crontab 中我们 3 行迁成 systemd 用户定时器 agentoolrank-hourly/daily/weekly（ops/systemd 软链接、enable --now、Persistent=true），三个 ops 脚本每步 `|| fail=1` 结尾 exit $fail，ops/pipelines.json 登记 3 条；TASK 加 5 项待流水线化；看板更新，bus-send
+- 结果：264 测试通过；手动 start hourly 成功；rule-check 通过；vi 当前访客 0、疑似扫描器 34；GitHub Actions daily-update 未登记，等 agentkit 答复 runner=github-actions
+- 坑：rule-check pipelines 只认 systemd 用户定时器；`set -uo pipefail` 不带 -e 时退出码只看最后一条 → GOTCHAS#pipelines-systemd-timers
+- 结果：成功

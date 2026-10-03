@@ -884,6 +884,7 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **排除自己**：?internal=1 同时写 sessionStorage 和 localStorage 的 at_internal（只存 "1"），?internal=0 清除；agent 打开自家网址一律带 ?internal=1
 - **验证要用真 Chrome**：Playwright 自带浏览器 navigator.webdriver=true，会被埋点当机器人排除，看起来像"没上报"；用 CDP 连 Windows 专用 Chrome（webdriver=false）
 - **查验证事件按 sid/src 精确查**：Turso ts 是 UTC，用 `datetime('now','-N seconds')` 会混入真实访客的行；验证完把测试 sid 的 src 改成 selftest-* 免得污染统计
+- **v4（80419ba，对齐 agentkit 7e90501）**：scrollPercent 容差 max(48px, 视口10%)；访客 = 有 engagement 的会话，只有 page_view 的列「疑似扫描器」，写在 vi 块第一行；16:30 前的会话没有 engagement，全落在疑似扫描器里（10-03 显示 0/34 不代表 34 个扫描器）
 - vi 块：src/lib/vi-summary.ts 与 agentkit vi_summary.py 同格式，withViBlock 放 ops/daily.md 最前；取数失败写「不是 0」，不要写 0
 - exit_survey 问卷要等隐私页（BOSS #35）批准再上
 - **v3（cf46fe0，对齐 agentkit 0cecb30）**：scrollPercent 一屏放得下的页面算 100%（否则短页永远 0%）；clickLabel 优先级 data-testid > 同源路径 > #anchor/mailto/tel > external，cleanProps 要同步放行 #anchor/mailto/tel；首测滚动用 requestAnimationFrame，effect cleanup 里 cancel；engagement 用 effect 闭包的 pathname 打标签，客户端切页不会记到下一页。vi 块窗口含 10-03 17:00 前数据时标题注「滚动口径偏低」
@@ -899,3 +900,12 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **双检查**（f872066）：同时跑自家 aiAuthorshipMatch 和 `$AGENTKIT_ROOT/bin/post-copy-check <文件>`，任一命中或共用脚本出错（非 0/4）都拒发，防规则漂移
 - **共用脚本用法坑**：post-copy-check 只接位置参数 `<文件>`（退出 0 通过、4 命中），**不支持 --help / -f**；`bin/post-log` 的 `--link` 是布尔开关（不带值），链接用 `--url`
 - **渠道登记表**（c642f03，agentkit shared/channels.json）：post-gate 用 `--channel x-main --who ai-directory --has-link`；发帖成功后从 post_tweet.py 输出「posted…: https://x.com/…」提取链接，`post-log --channel x-main --who ai-directory --url <链接> --link --kind main` 写 ~/data/distribution/posts.jsonl。顺序：文案检查 → post-gate → 发帖 → post-log
+
+## pipelines-systemd-timers
+10-03 老板决定 #37「流程即代码」（FRAMEWORK §0）：定时流程必须登记在 ops/pipelines.json，rule-check 10-06 起逐条查 systemd 定时器 enabled、服务最近一次不是 failed。
+- **只认 systemd 用户定时器，cron 不算**：crontab 里的任务对 rule-check 不可见。ai-directory 3 条已迁：agentoolrank-hourly/daily/weekly（3572830），单元文件放仓库 ops/systemd/，软链接到 ~/.config/systemd/user，`systemctl --user daemon-reload && enable --now`；Persistent=true 补跑错过的时段。查看 `systemctl --user list-timers 'agentoolrank-*'`
+- 迁移时 crontab 只删自己的行（先备份 `crontab -l > 备份`，注意 crontab 有明文 token，见 #crontab-plaintext-secrets，别回显）
+- **退出码要显式累计**：`set -uo pipefail` 不带 -e 时脚本退出码只等于最后一条命令的，中间步骤失败会被吞，服务显示成功。每步写 `cmd || fail=1`，结尾 `exit $fail`
+- daily-ops.sh 用 `{ ...; } >> log` 块：花括号在当前 shell 执行，块内 fail=1 在块外仍有效（换成 `( )` 子 shell 就丢了）
+- 手动 `systemctl --user start` 不更新 list-timers 的 LAST 列，验证看 `systemctl --user status <svc>` / journalctl
+- GitHub Actions（daily-update.yml）不是 systemd，暂不能登记，已问 agentkit 支持 runner=github-actions

@@ -110,7 +110,7 @@
 - **T8 related_tools**：src/lib/related.ts buildRelated（integrations 名称双向匹配，排除 alternatives，上限 8）+ scripts/fill-related.ts → **247/464**（验收 ≥400 未达，其余无集成数据，不硬凑）；详情页 "Works with {name}" 区块
 - **T7 并入 T6**
 - **T6 审核**：src/lib/review.ts（parseReview 未知类目强制 reject、pricing 兜底 freemium；toolRowFromReview source='manual'；hasBacklink；reviewOrder 付费 > 挂徽章 > 先到）+ scripts/review-submissions.ts（抓官网文本 + README → deepseek-v3.2 只依据证据判定；--apply 入库并跑 generate-alternatives / fill-related；--try 单站测试）；实测 browser-use.com approve、canva.com reject
-- **每日运营 cron**：apps/agent-tools/scripts/daily-ops.sh（unset GITHUB_TOKEN；审核 --apply --free=3 + 7 天漏斗 → data/ops-logs/，已 gitignore）；WSL crontab `30 21 * * *`（系统时区 CST = 北京 21:30）
+- **每日运营 cron**：apps/agent-tools/scripts/daily-ops.sh（unset GITHUB_TOKEN；审核 --apply --free=3 + 7 天漏斗 → data/ops-logs/，已 gitignore）；WSL crontab `30 21 * * *`（系统时区 CST = 北京 21:30）→ **10-03 已迁 systemd 定时器 agentoolrank-daily**
 - vitest 9 文件 49 测试全绿；turbo build 过；线上 / /submit /alternatives/claude-code /llms.txt /api/mcp 均 200
 - commits：b305fe2、fdcc869、88ebdf4、fdddf75（均已 push）
 
@@ -184,7 +184,7 @@
 - **首页主视觉三入口**：提交 / Best MCP servers / For AI agents
 - **停更提示**：src/lib/staleness.ts（≥180 天无提交）→ 工具页顶部 "No commits in N months — may not be actively maintained" + 链到替代品页
 - **技术 SEO 巡检**（scratchpad 脚本抽 17 页查 h1/title/description/canonical/robots/JSON-LD）→ 修复：工具页 canonical + toolDescription（星数/90 天提交/前三替代品，clampDescription ≤160）；/new /compare /weekly canonical；类目/报告/blueprint/stack 描述截断；首页 WebSite+SearchAction+Organization JSON-LD；写死的"463 个工具"改 600+
-- **Stripe 每小时对账**（收入保护，commit 24cb514）：src/lib/paid.ts 抽出 recordPaidSession（thanks 页与对账共用、幂等）；src/lib/reconcile.ts paidAgentoolrankSessions；scripts/reconcile-payments.ts 用**只读 ops key** 列最近 3 天 Checkout Sessions；scripts/hourly-ops.sh + crontab `17 * * * *`。不用 webhook（需新建签名密钥 = 凭证闸）
+- **Stripe 每小时对账**（收入保护，commit 24cb514）：src/lib/paid.ts 抽出 recordPaidSession（thanks 页与对账共用、幂等）；src/lib/reconcile.ts paidAgentoolrankSessions；scripts/reconcile-payments.ts 用**只读 ops key** 列最近 3 天 Checkout Sessions；scripts/hourly-ops.sh + crontab `17 * * * *`（10-03 已迁 systemd agentoolrank-hourly）。不用 webhook（需新建签名密钥 = 凭证闸）
 - **流量判断**：真实访问 ≈0（1 天 4 次，基本自测），订阅者 0 → **停止堆功能，转分发**
   - 社区帖三份草稿 docs/ops/launch-kit/community-drafts.md（Show HN / Reddit / dev.to；数据来自 /report、写明作者本人、不拉票）→ 经 agentkit 进 10-02 09:30 老板汇总
   - agentkit 提醒：HN/Reddit 为多项目共用个人号，imagehub 09-30 刚发 Show HN → 同号 Show HN 至少隔一周，**建议先批 dev.to**
@@ -243,7 +243,7 @@
 - 依据：agentkit「集团运营监管：每日 KPI」（老板 10-02：agentkit 只监管，各项目自负责）
 - **代码**：apps/agent-tools/src/lib/kpi.ts（cstDayRange 北京日期→UTC SQLite 边界 / renderKpi / replaceBlock 只替换 `<!-- KPI:START -->`…`<!-- KPI:END -->`，缺标记抛错）；5 单测，全量 122 绿
 - **脚本**：scripts/kpi.ts 读 events / submissions / payments（剔除 selftest）+ data/ops-logs 最新 GSC 行取 28 天点击 → 写回 docs/ops/overview/index.html 顶部
-- **调度**：接入 hourly-ops.sh（cron 每小时 :17），日志 data/ops-logs/kpi-YYYY-MM-DD.log
+- **调度**：接入 hourly-ops.sh（每小时 :17；10-03 起由 systemd agentoolrank-hourly 跑），日志 data/ops-logs/kpi-YYYY-MM-DD.log
 - **首跑数**：昨日访客 23 / 提交 0 / 付费 0 / $0；G2 0/20、G3 0/1、G4 $0/$300、GSC 点击 3/1000；中文页 7 天访客 1
 - commit 13d1315「ops: 看板顶部每日 KPI」；已回复 agentkit
 - T24 已按 owner-goal #23 补第二模型回译比对 + 子项「中文读者付款能力（Stripe 大陆支付宝/微信/银联）」看板单独跟踪（0c3dc27）
@@ -961,3 +961,24 @@
   - **待老板**：Cloudflare 账单确认域名实付、早期 LLM 账单（TASK「等待用户」）
 - 坑：KNOWLEDGE/GOTCHAS.md#visitor-insights-own-events（Playwright click 抬高滚动、?internal=0 验证后要重打）
 - **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章
+
+## 2026-10-03 16:56– 流程即代码：定时任务迁 systemd + visitor-insights v4（3572830、80419ba，已部署推送）
+- **定时任务已从 cron 迁到 systemd 用户定时器**（老板 16:56 决定 #37，FRAMEWORK §0）：
+  - agentoolrank-hourly（每小时 :17）/ agentoolrank-daily（每天 21:30）/ agentoolrank-weekly（周一 10:00），均 Persistent=true
+  - 单元文件在仓库 ops/systemd/，软链接到 ~/.config/systemd/user，已 enable --now
+  - **查看**：`systemctl --user list-timers 'agentoolrank-*'`；日志 `journalctl --user -u agentoolrank-hourly.service`
+  - crontab 只删了我们 3 行（备份 /tmp/claude-1000/crontab.bak），其他行未动
+  - hourly-ops.sh / daily-ops.sh / weekly-ops.sh 改为每步 `|| fail=1`，结尾 `exit $fail`：任一步失败服务就 failed（rule-check 能看到）
+  - 手动 `systemctl --user start agentoolrank-hourly` 成功，scoreboard 与 ops/daily.md 已更新
+  - ops/pipelines.json 登记 3 条，rule-check 通过；rule-check 10-06 起查每条 timer enabled 且服务最近一次不是 failed
+  - GitHub Actions daily-update.yml（crawl-github + compute-rankings，06:00 UTC，近 3 次成功）不是 systemd，**暂未登记**，已问 agentkit 能否支持 runner=github-actions（未回复）
+  - TASK 下一步队列新增 5 项待流水线化：夜间外联、目录站上线复查、hello@ 回信收集、周报数字段、dev.to 定时发文
+- **visitor-insights v4**（对齐 agentkit 7e90501；80419ba）：
+  - scrollPercent 容差 max(48px, 视口 10%)
+  - 访客 = 有 engagement 的会话；只有 page_view 的会话列为「疑似扫描器」，两个数写在 vi 块第一行（不加行）
+  - viNote：「含 10-03 17:00 前数据：停留统计 10-03 16:30 才上线，之前的会话都落在疑似扫描器里，滚动口径也偏低」
+  - 当前显示访客 0、疑似扫描器 34（主要是上线前的真实访客，不是真的 34 个扫描器）
+  - 测试 264 通过；已 bus-send
+- 看板已更新
+- 坑：KNOWLEDGE/GOTCHAS.md#pipelines-systemd-timers
+- **下一步**：22:00 外联第二批（流水线化前仍手动）；10-05 前把外联夜间批次做成定时器；10-07 dev.to 数据文章
