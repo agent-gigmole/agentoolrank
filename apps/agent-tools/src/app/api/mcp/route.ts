@@ -1,3 +1,5 @@
+import { db } from "@repo/db";
+import { recordCall } from "@/lib/api-usage";
 import { NextRequest } from "next/server";
 import { getToolBySlug, searchTools } from "@repo/db/queries";
 import { toPublicTool } from "@/lib/public-api";
@@ -45,7 +47,29 @@ export async function POST(req: NextRequest) {
   }
   const d = deps();
   const messages = Array.isArray(body) ? body : [body];
-  const responses = (await Promise.all(messages.map((m) => handleMcp(m, d)))).filter((r) => r !== null);
+  const ua = req.headers.get("user-agent") ?? "";
+  const headerKey = (req.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "") || req.headers.get("x-api-key") || "";
+  const responses = (
+    await Promise.all(
+      messages.map(async (m) => {
+        if (m?.method !== "tools/call") return handleMcp(m, d);
+        // Log every tool call (api_calls): which tools agents actually use, with or without a key (credits decision 10-03).
+        const t0 = Date.now();
+        const r = await handleMcp(m, d);
+        const args = (m.params?.arguments ?? {}) as Record<string, unknown>;
+        void recordCall((q) => db.execute(q), {
+          surface: "mcp",
+          tool: String(m.params?.name ?? ""),
+          ok: !!r && !("error" in r && r.error) && !(r as { result?: { isError?: boolean } }).result?.isError,
+          ms: Date.now() - t0,
+          key: (typeof args.key === "string" && args.key) || headerKey || undefined,
+          ua,
+          src: typeof args.src === "string" ? args.src : "",
+        });
+        return r;
+      }),
+    )
+  ).filter((r) => r !== null);
   if (responses.length === 0) return new Response(null, { status: 202, headers: CORS });
   return Response.json(Array.isArray(body) ? responses : responses[0], { headers: CORS });
 }
