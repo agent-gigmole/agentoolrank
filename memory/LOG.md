@@ -1101,3 +1101,9 @@
 - 结果：317 测试通过；近 7 天支出 $0、累计 $10.46（未对账）；每星下载榜页面未做未部署；定时器周一自动触发未核实
 - 坑：systemd ExecStart 直接 bun 要显式 WorkingDirectory + PATH；脚本内用带 token 的 URL push 时错误信息不能打印 URL → GOTCHAS#systemd-bun-unit-and-token-push
 - 结果：成功（每星下载榜进行中）
+
+## 2026-10-03 20:21– /downloads 每星下载榜上线 + 维护者入口开工（5f1ab47、f59e02d、756b991）
+- 做法：/downloads 加「Used far more than they are starred」（usedMoreThanStarred 前 10，≥10 万下载），部署并线上核对；看板记一行；TASK 修正押注更新时间为 10-12 周一（bets.json 现有 3 个即 10-05 周押注），新增维护者入口项；开工 /downloads 底部维护者框（徽章 / 首页推荐 $49/7 天，前 5 工具链 /tool/<id>#maintainers，data-testid=downloads-maintainer-cta 走 ui_click label）
+- 结果：线上 OpenAI Python 8,955/星、MCP Python SDK 8,952、AI SDK 3,984、LangChain 1,149、LangGraph 1,023；维护者框 756b991 已提交未部署，/alternatives 入口未做
+- 坑：无新坑
+- 结果：成功（维护者入口进行中）

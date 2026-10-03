@@ -30,8 +30,9 @@
 - ✅ 替代品页 /alternatives/* 加下载量列 + 一句话结论（10-03 20:3x 上线，线上 /alternatives/langchain 已核对）
 - 10-07 21:00 后确认数据文章已自动发出（data/devto-published.json 有 URL），把 URL 写进看板并在 /where-to-list 页底加「读完整数据文章」链接
 - ✅ 首页加「Most downloaded」一栏（前 6 名 + 链 /downloads，10-03 20:4x 上线核对）
-- /downloads 加「下载量多但星数少」（每星下载最高）的工具榜，作为数据文章和 X 周榜的新角度
-- 周一 09:30 前把 ops/bets.json 换成本周 3 个押注、上周押注写 status（hit/miss），并在周报「押注」节对应
+- ✅ /downloads 加「Used far more than they are starred」每星下载榜（≥10 万门槛，10-03 20:5x 上线核对：OpenAI Python 8,955/星、MCP Python SDK 8,952、AI SDK 3,984）
+- 10-12 周一 09:30 前把 ops/bets.json 换成下周 3 个押注、本周押注写 status（hit/miss），周报押注节对应（ops/bets.json 现有的 3 个就是 10-05 这周的押注）
+- /downloads 和 /alternatives 加维护者入口：「你维护其中一个？放实时排名徽章 / 上首页推荐」链到详情页的 MaintainerBox（付费推荐 $49），点击用现有 ui_click 的 label 统计（/downloads 部分 756b991 已提交未部署，/alternatives 未做）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

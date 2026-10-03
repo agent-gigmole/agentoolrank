@@ -1111,3 +1111,9 @@
 - **进行中**：/downloads「每星下载最高」榜：lib/downloads.ts usedMoreThanStarred（≥10 万下载门槛）+ 测试（a14bda6 WIP）；剩页面展示 + 部署
 - 坑：KNOWLEDGE/GOTCHAS.md#systemd-bun-unit-and-token-push
 - **下一步**：每星下载榜页面 + 部署；futurepedia 价格（未核实）；22:00 外联第二批送达核对（未核实）；10-05 周一 08:50 定时器首次自动运行核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）
+
+## 2026-10-03 20:21– /downloads 每星下载榜上线 + 维护者入口开工（5f1ab47 已部署，f59e02d 看板，756b991 已提交未部署）
+- **每星下载榜**（5f1ab47，已部署，线上核对）：/downloads「Used far more than they are starred」，usedMoreThanStarred 前 10，≥10 万下载门槛；线上 OpenAI Python 8,955/星、MCP Python SDK 8,952、AI SDK 3,984、LangChain 1,149、LangGraph 1,023；文案说明高比值多为被依赖的底层库（CI/构建安装）；看板已记（f59e02d）
+- **TASK 队列修正**：ops/bets.json 现有 3 个押注就是 10-05 这周的 → 更新动作改为 10-12 周一 09:30 前；新增「/downloads 和 /alternatives 加维护者入口」
+- **进行中**：维护者入口（756b991，已提交未部署）：/downloads 底部「Maintain one of these tools?」框，README 实时排名徽章 / 首页推荐 $49/7 天，前 5 个工具链 /tool/<id>#maintainers（MaintainerBox 的 section id）；链接 data-testid="downloads-maintainer-cta"，由现有 ui_click 的 label 统计，不新增事件名；剩 /alternatives 同样入口、部署、线上核对
+- **下一步**：/alternatives 维护者入口 + 部署核对；futurepedia 价格（未核实）；22:00 外联第二批送达核对（未核实）；10-05 周一 08:50 周报数字定时器首次自动运行核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）
