@@ -74,3 +74,17 @@ describe("mxVerdict (only a definite DNS answer opts an address out — agentkit
     expect(mxVerdict({ error: "ESERVFAIL" })).toBe("unknown");
   });
 });
+
+describe("badge choice in outreach", () => {
+  const base = { owner: "Jane", name: "Browser-Use", slug: "browser-use", rank: 1, total: 29, category: "Browser & Web Agents" };
+  it("offers the downloads badge when the package has ≥100K monthly downloads", () => {
+    const e = outreachEmail({ ...base, downloads: { label: "PyPI", pkg: "browser-use", value: "7.4M", n: 7_400_000 } }, "https://agentoolrank.com");
+    expect(e.text).toContain("https://agentoolrank.com/api/badge/browser-use?metric=downloads");
+    expect(e.text).toContain("shows the live monthly downloads");
+  });
+  it("keeps the stars badge below that", () => {
+    const e = outreachEmail({ ...base, downloads: { label: "npm", pkg: "x", value: "5.0K", n: 5000 } }, "https://agentoolrank.com");
+    expect(e.text).not.toContain("metric=downloads");
+    expect(e.text).toContain(badgeMarkdown("https://agentoolrank.com", "browser-use", "Browser-Use"));
+  });
+});

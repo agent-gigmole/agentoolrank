@@ -144,7 +144,7 @@ for (const c of queue) {
   // One factual line about package downloads when we have the number (top registry only).
   const pkgs = await db.execute({ sql: "SELECT registry, package, downloads_30d FROM tool_packages WHERE tool_id = ? ORDER BY downloads_30d DESC", args: [c.slug] }).then((r) => r.rows, () => []);
   const top = downloadsLine(pkgs.map((r) => ({ registry: String(r.registry), package: String(r.package), downloads_30d: r.downloads_30d === null ? null : Number(r.downloads_30d) })))[0];
-  const mail = outreachEmail({ owner: c.owner, slug: c.slug, ...t, ...(top && top.n >= 1000 ? { downloads: { label: top.label, pkg: top.pkg, value: top.value } } : {}) }, BASE);
+  const mail = outreachEmail({ owner: c.owner, slug: c.slug, ...t, ...(top && top.n >= 1000 ? { downloads: { label: top.label, pkg: top.pkg, value: top.value, n: top.n } } : {}) }, BASE);
   const to = test ?? c.email;
   if (dryRun) { console.log(`--- to ${to}\nSubject: ${mail.subject}\n${mail.text}\n`); n++; continue; }
   const id = await send(to, mail.subject, mail.text);
