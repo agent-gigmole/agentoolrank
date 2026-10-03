@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { KIT_PRICE_USD, kitFaq, recommendDirectories, type KitData, type ProductType } from "@/lib/directory-kit";
 import { FaqSection } from "@/components/FaqSection";
+import { db } from "@repo/db";
+import { ourResultLabel } from "@/lib/listing-check";
 import kitData from "@/lib/directory-kit-data.json";
 import { KitBuyButton } from "@/components/KitBuyButton";
 
@@ -23,6 +25,10 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
   const productType = (TYPES.find((t) => t.id === type)?.id ?? "ai_tool") as ProductType;
   // The same free top 10 an agent gets from recommend_directories without a key, shown to people too.
   const free = recommendDirectories(kitData as KitData, { productType, full: false, now: new Date() });
+  // Proof from our own listings (scripts/check-listings.ts → listing_checks): where our own page actually went live.
+  const ours: Record<string, string> = await db
+    .execute("SELECT domain, state, rel, target FROM listing_checks WHERE state = 'live'")
+    .then((r) => Object.fromEntries(r.rows.map((x) => [String(x.domain), ourResultLabel({ state: "live", rel: x.rel === null ? null : String(x.rel), target: x.target === null ? null : String(x.target) })])), () => ({}));
   return (
     <main className="max-w-2xl mx-auto px-4 py-10 text-gray-800">
       <h1 className="text-3xl font-bold text-gray-900 mb-3">Submit Kit: submit to fewer directories, the right ones</h1>
@@ -54,6 +60,7 @@ export default async function SubmitKitPage({ searchParams }: { searchParams: Pr
               <span className="text-gray-400">{i + 1}.</span>
               <b>{d.domain}</b>
               <span className={`text-xs px-2 py-0.5 rounded-full ${d.tier === "auto" ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800"}`}>{d.tier === "auto" ? "your agent can finish it" : "needs one human step"}</span>
+              {ours[d.domain] && <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-800" data-testid="kit-our-result">our own listing: {ours[d.domain].replace(/^Live · /, "live, ").replace(/^Live$/, "live")}</span>}
               <span className="ml-auto text-xs text-gray-500">link measured: {d.link_measured} · verified {d.last_verified}</span>
             </div>
             {d.human_steps.length > 0 && <div className="text-xs text-gray-600 mt-1">Human steps: {d.human_steps.join(", ").replace(/_/g, " ")}</div>}
