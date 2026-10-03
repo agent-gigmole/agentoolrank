@@ -140,3 +140,8 @@ export function kitProductJsonLd(baseUrl: string) {
     ],
   };
 }
+
+/** Submit Kit ?type= for a listed tool, from its AgentoolRank category slugs: MCP servers get the MCP list, the rest the AI-tool list. */
+export function kitTypeForCategories(categories: string[] | null | undefined): ProductType {
+  return (categories ?? []).some((c) => /mcp/i.test(c)) ? "mcp_server" : "ai_tool";
+}
