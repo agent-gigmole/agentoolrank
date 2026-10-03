@@ -275,10 +275,14 @@ export async function getToolPackages(toolId: string): Promise<{ registry: strin
 }
 
 /** Every tool with a package download count (for the /downloads leaderboard). */
-export async function getDownloadRows(): Promise<{ id: string; name: string; stars: number | null; registry: string; package: string; downloads_30d: number | null }[]> {
+export async function getDownloadRows(): Promise<{ id: string; name: string; stars: number | null; registry: string; package: string; downloads_30d: number | null; categories: string[] }[]> {
   try {
-    const r = await db.execute("SELECT t.id, t.name, t.github_stars, p.registry, p.package, p.downloads_30d FROM tool_packages p JOIN tools t ON t.id = p.tool_id WHERE p.downloads_30d IS NOT NULL");
-    return r.rows.map((x) => ({ id: String(x.id), name: String(x.name), stars: x.github_stars === null ? null : Number(x.github_stars), registry: String(x.registry), package: String(x.package), downloads_30d: Number(x.downloads_30d) }));
+    const r = await db.execute("SELECT t.id, t.name, t.github_stars, t.category_tags, p.registry, p.package, p.downloads_30d FROM tool_packages p JOIN tools t ON t.id = p.tool_id WHERE p.downloads_30d IS NOT NULL");
+    return r.rows.map((x) => {
+      let categories: string[] = [];
+      try { categories = JSON.parse(String(x.category_tags ?? "[]")); } catch { /* malformed tags */ }
+      return { id: String(x.id), name: String(x.name), stars: x.github_stars === null ? null : Number(x.github_stars), registry: String(x.registry), package: String(x.package), downloads_30d: Number(x.downloads_30d), categories };
+    });
   } catch {
     return [];
   }

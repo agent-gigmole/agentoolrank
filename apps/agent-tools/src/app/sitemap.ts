@@ -1,7 +1,8 @@
 import { translatedTools } from "@/lib/i18n-data";
 import type { MetadataRoute } from "next";
 import { db } from "@repo/db";
-import { getComparisonPairs, getStacks } from "@repo/db/queries";
+import { getCategories, getComparisonPairs, getDownloadRows, getStacks } from "@repo/db/queries";
+import { rankByDownloads } from "@/lib/downloads";
 import { pairsFromAlternatives } from "@/lib/alternatives";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -108,5 +109,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...categoryPages, ...toolPages, ...alternativesPages, ...comparePages, ...stackPages, ...blueprintPages, ...localizedToolPages];
+  // /downloads/<category>: only categories with ≥3 tools that have package counts (same rule as the page).
+  const dlRows = await getDownloadRows();
+  const downloadCategoryPages: MetadataRoute.Sitemap = (await getCategories())
+    .filter((c) => rankByDownloads(dlRows, c.slug).length >= 3)
+    .map((c) => ({ url: `${baseUrl}/downloads/${c.slug}`, changeFrequency: "weekly" as const, priority: 0.6 }));
+
+  return [...staticPages, ...downloadCategoryPages, ...categoryPages, ...toolPages, ...alternativesPages, ...comparePages, ...stackPages, ...blueprintPages, ...localizedToolPages];
 }

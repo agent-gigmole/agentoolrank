@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getDownloadRows } from "@repo/db/queries";
+import { getCategories, getDownloadRows } from "@repo/db/queries";
 import { Breadcrumbs, BreadcrumbJsonLd } from "@repo/ui/Breadcrumbs";
 import { compactCount, rankByDownloads, usedMoreThanStarred } from "@/lib/downloads";
 
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 const BASE = "https://agentoolrank.com";
 
 export default async function DownloadsPage() {
-  const ranked = rankByDownloads(await getDownloadRows());
+  const rows = await getDownloadRows();
+  const ranked = rankByDownloads(rows);
+  const byCategory = (await getCategories()).map((c) => ({ c, n: rankByDownloads(rows, c.slug).length })).filter((x) => x.n >= 3);
   const top = ranked.slice(0, 100);
   const itemList = {
     "@context": "https://schema.org",
@@ -48,6 +50,14 @@ export default async function DownloadsPage() {
         GitHub repo, so same-named packages from other people are left out. Downloads include CI and mirrors, so treat them as a usage
         signal, not a user count. Updated weekly.
       </p>
+      {byCategory.length > 0 && (
+        <p className="text-sm text-gray-600 mb-4">
+          By category:{" "}
+          {byCategory.map(({ c, n }, i) => (
+            <span key={c.slug}>{i > 0 && " · "}<Link href={`/downloads/${c.slug}`} className="text-blue-600 hover:underline">{c.name}</Link> ({n})</span>
+          ))}
+        </p>
+      )}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
