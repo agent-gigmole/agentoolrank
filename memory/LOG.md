@@ -1325,3 +1325,8 @@
 - 结果：线上 crewAI 实测 REST + MCP 返回正确，buy_url 200
 - 坑：线上实测会在 api_calls 记一行；src 只取 URL ?src= / MCP args.src（GOTCHAS#api-calls-selftest-src-from-url）
 - 结果：成功（横幅扩来源未部署）
+
+## 2026-10-04 04:12 维护者横幅扩来源上线（d69fa55 部署）+ 日报加 API 已收录来源（3071e49、36d7aa1）+ 上线通知信加 Submit Kit 开工（126bbee）
+- 做法：自测 api_calls 行 src 改 selftest-listed-reply；横幅正则 ^(?:outreach|live-notify|agent-listed) 部署，真 Chrome（?internal=1）核对两种 ref 显示、无 ref 不显示，看板已记；kpi 维护者行加「API 已收录回复 N 个会话、结账 N」，369 测试全过、kpi 跑出新行；队尾新增并开工「上线通知信加 Submit Kit 一句」，126bbee liveEmail + 测试已 push
+- 结果：成功（Submit Kit 一句待下次 daily-ops 发信生效，先 --dry-run 确认再打 ✅）
+- 坑：无新坑

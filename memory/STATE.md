@@ -1387,3 +1387,10 @@
 - **线上实测**：用 crewAI 打 REST 和 MCP 都返回正确，buy_url 200。已收录路径不写 submissions 表，线上可安全实测；但 /api/v1 有 withCallLog，实测会在 api_calls 记一行（GOTCHAS#api-calls-selftest-src-from-url）。看板已记，TASK 队列该项 ✅
 - **进行中：详情页维护者横幅扩到 ?ref=live-notify / agent-listed**——d69fa55 MaintainerBanner 正则改为 ^(?:outreach|live-notify|agent-listed)，已提交 push，**未部署**
 - **下一步**：横幅部署 + 线上核对（/tool/<slug>?ref=agent-listed 显示横幅）+ 看板；日报可加 ref=agent-listed 来源；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 04:1x 详情页维护者横幅扩来源上线（d69fa55 已部署）+ 日报加 API 已收录回复来源（3071e49、36d7aa1）+ 上线通知信加 Submit Kit 开工（126bbee）
+- **自测行已标**：/api/v1 自测记下的 1 行 api_calls（submit_tool，curl）src 已改为 selftest-listed-reply
+- **横幅扩来源已上线**：MaintainerBanner 正则 ^(?:outreach|live-notify|agent-listed)；真 Chrome（先 ?internal=1）核对 ?ref=agent-listed、?ref=live-notify 显示横幅，无 ref 不显示；看板已记，TASK ✅
+- **日报维护者行已加**「API 已收录回复 N 个会话、结账 N」（ref=agent-listed 的 page_view / checkout_click）；3071e49 测试 + 36d7aa1 实现，369 测试全过，kpi 已跑出新行；TASK ✅
+- **进行中：上线通知信加一句 Submit Kit**（/submit-kit?ref=live-notify）——126bbee 已改 liveEmail + 测试并 push；send-live-emails 从仓库读，下次 daily-ops（21:30）发信即生效
+- **下一步**：`send-live-emails --dry-run` 确认后 TASK 打 ✅；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
