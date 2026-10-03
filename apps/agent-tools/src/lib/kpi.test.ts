@@ -51,6 +51,7 @@ describe("renderDaily", () => {
     totalRevenueCents: 2900, externalSubmissions: 3, monthRevenueCents: 2900, gscClicks28d: 3, zhVisitors7d: 4,
     jaVisitors7d: 2, outreachSent: 20, outreachVisitors7d: 5, dirSubmitted: 41, dirLive: 6, devtoVisitors7d: 7,
     submitFunnel: { page: 9, seen: 5, clicked: 2, done: 1 }, kitFunnel: { page: 4, seen: 3, clicked: 1, done: 1 },
+    maintainer: { ctaClicks: 3, badgeCopies: 2, featuredCheckouts: 1 },
   };
   const md = renderDaily(d);
   it("leaves room for the vi block inside the 15 lines agentkit appends", () => {
@@ -62,6 +63,7 @@ describe("renderDaily", () => {
     expect(md).toContain("Submit Kit 7 天：进页 4 → 看到按钮 3 → 点了 1 → 完成 1");
     expect(md).toContain("提交工具 7 天：进页 9 → 看到按钮 5 → 点了 2 → 完成 1；提交记录 7 天 3");
     expect(md).toContain("dev.to 来源 7 天 7");
+    expect(md).toContain("维护者：入口点击 3 · 复制徽章 2 · 首页推荐结账 1");
     expect(md).toContain("Google 点击 28 天 3");
   });
 });

@@ -125,6 +125,11 @@ const daily = {
       clicked: await sess(`name='ui_click' AND json_extract(props,'$.label')='kit-buy'`),
       done: await n(`SELECT COUNT(*) n FROM payments WHERE ${REAL_PAY} AND plan='submit_kit' AND created_at >= ?`, [wk.from]),
     },
+    maintainer: {
+      ctaClicks: await sess(`name='ui_click' AND json_extract(props,'$.label') IN ('downloads-maintainer-cta','alternatives-maintainer-cta')`),
+      badgeCopies: await sess(`name='badge_copy'`),
+      featuredCheckouts: await sess(`name='checkout_click' AND path LIKE '%#featured'`),
+    },
     devtoVisitors7d: await n(`SELECT COUNT(DISTINCT sid) n FROM events WHERE ${REAL_EV} AND name='page_view' AND (src LIKE '%devto%' OR src LIKE '%dev.to%' OR ref LIKE '%dev.to%') AND ts >= ?`, [wk.from]),
   };
 writeFileSync(new URL("../../../ops/daily.md", import.meta.url).pathname, withViBlock(vi, renderDaily(daily)));
