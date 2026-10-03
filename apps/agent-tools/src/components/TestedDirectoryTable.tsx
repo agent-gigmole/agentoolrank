@@ -11,7 +11,7 @@ const TOGGLES: Array<[keyof DirectoryFilters, string]> = [
   ["noHuman", "No captcha or manual step"],
 ];
 
-export function TestedDirectoryTable({ rows }: { rows: TestedDirectory[] }) {
+export function TestedDirectoryTable({ rows, ours = {} }: { rows: TestedDirectory[]; ours?: Record<string, string> }) {
   const [f, setF] = useState<DirectoryFilters>({});
   const shown = filterDirectories(rows, f);
   return (
@@ -36,6 +36,7 @@ export function TestedDirectoryTable({ rows }: { rows: TestedDirectory[] }) {
               <th className="text-left p-2">Link (checked)</th>
               <th className="text-left p-2">Login</th>
               <th className="text-left p-2">Captcha</th>
+              <th className="text-left p-2">Our result (agentoolrank.com)</th>
             </tr>
           </thead>
           <tbody>
@@ -51,6 +52,7 @@ export function TestedDirectoryTable({ rows }: { rows: TestedDirectory[] }) {
                 <td className="p-2">{d.link === "unknown" ? "not checked" : d.link}</td>
                 <td className="p-2">{d.login.map((l) => LOGIN[l] ?? l).join(", ") || "—"}</td>
                 <td className="p-2">{d.captcha === "unknown" ? "—" : d.captcha}</td>
+                <td className={`p-2 whitespace-nowrap ${ours[d.domain]?.startsWith("Live") ? "text-green-700" : "text-gray-500"}`}>{ours[d.domain] ?? "—"}</td>
               </tr>
             ))}
           </tbody>

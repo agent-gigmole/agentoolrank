@@ -6,6 +6,8 @@ import { FaqSection } from "@/components/FaqSection";
 import { TestedDirectoryTable } from "@/components/TestedDirectoryTable";
 import { summarize, type TestedDirectory } from "@/lib/tested-directories";
 import tested from "@/lib/directories-tested.json";
+import { db } from "@repo/db";
+import { ourResultLabel } from "@/lib/listing-check";
 
 const TESTED = tested as TestedDirectory[];
 const S = summarize(TESTED);
@@ -24,7 +26,18 @@ const faq = [
   { q: "Where should I list an MCP server?", a: "Start with the official MCP Registry, which other MCP directories read from, then mcpservers.org (free). mcp.so's web form is paid ($39); a free GitHub-issue route also exists." },
 ];
 
-export default function WhereToListPage() {
+/** Our own listing results (scripts/check-listings.ts writes them daily); empty if the table isn't there yet. */
+async function ourResults(): Promise<Record<string, string>> {
+  try {
+    const r = await db.execute("SELECT domain, state, rel, target FROM listing_checks");
+    return Object.fromEntries(r.rows.map((x) => [String(x.domain), ourResultLabel({ state: String(x.state), rel: x.rel === null ? null : String(x.rel), target: x.target === null ? null : String(x.target) })]));
+  } catch {
+    return {};
+  }
+}
+
+export default async function WhereToListPage() {
+  const ours = await ourResults();
   return (
     <main className="max-w-5xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-gray-900 mb-3">Where to list your AI agent tool: free vs paid directories</h1>
@@ -72,8 +85,12 @@ export default function WhereToListPage() {
           a captcha or another step only a person can do. We checked the live link on {S.linkChecked} of them; {S.nofollowOfChecked} were not dofollow
           (we mostly checked when something looked off, so treat that as a warning, not a rate).
         </p>
+        <p className="text-sm text-gray-700 mb-2">
+          The last column is what happened to our own listing on each site: we open the page every day and record whether it is live and whether
+          the link to us is followed or nofollow.
+        </p>
         <p className="text-xs text-gray-500 mb-4">Facts come from our own submission notes, not from third-party lists. Rules change; if one is out of date, email hello@agentoolrank.com.</p>
-        <TestedDirectoryTable rows={TESTED} />
+        <TestedDirectoryTable rows={TESTED} ours={ours} />
         <div className="mt-4 border border-blue-200 rounded-xl p-5 bg-blue-50">
           <p className="font-semibold text-gray-900 mb-1">Which of these fit your product, and what trips the form?</p>
           <p className="text-sm text-gray-700 mb-2">

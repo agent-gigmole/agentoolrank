@@ -42,3 +42,21 @@ export function findBacklink(html: string): { found: boolean; rel: string | null
   }
   return repo ?? { found: false, rel: null, target: null };
 }
+
+/** Our own listings (written daily by scripts/check-listings.ts, read by /where-to-list). */
+export const CREATE_LISTING_CHECKS = `CREATE TABLE IF NOT EXISTS listing_checks (
+  domain TEXT PRIMARY KEY,
+  state TEXT NOT NULL,
+  url TEXT,
+  rel TEXT,
+  target TEXT,
+  checked TEXT NOT NULL
+)`;
+
+export function ourResultLabel(r: { state: string; rel: string | null; target: string | null } | undefined): string {
+  if (!r) return "—";
+  if (r.state !== "live") return "Submitted, not live yet";
+  if (r.target === "github") return "Live · links our GitHub";
+  if (!r.rel) return "Live";
+  return /nofollow|ugc|sponsored/.test(r.rel) ? "Live · nofollow" : "Live · followed link";
+}

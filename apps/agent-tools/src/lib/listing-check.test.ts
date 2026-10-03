@@ -37,3 +37,16 @@ describe("findBacklink: listings that link only to our GitHub repo", () => {
     expect(findBacklink('<a href="https://agentoolrank.com">x</a>')).toEqual({ found: true, rel: "dofollow", target: "site" });
   });
 });
+
+describe("ourResultLabel (/where-to-list 'Our result' column)", () => {
+  it("says live with the measured link kind, or submitted / not tried", async () => {
+    const { ourResultLabel } = await import("./listing-check");
+    expect(ourResultLabel({ state: "live", rel: "dofollow", target: "site" })).toBe("Live · followed link");
+    expect(ourResultLabel({ state: "live", rel: "noopener noreferrer", target: "site" })).toBe("Live · followed link");
+    expect(ourResultLabel({ state: "live", rel: "nofollow noopener", target: "site" })).toBe("Live · nofollow");
+    expect(ourResultLabel({ state: "live", rel: "noopener", target: "github" })).toBe("Live · links our GitHub");
+    expect(ourResultLabel({ state: "live", rel: null, target: null })).toBe("Live");
+    expect(ourResultLabel({ state: "submitted", rel: null, target: null })).toBe("Submitted, not live yet");
+    expect(ourResultLabel(undefined)).toBe("—");
+  });
+});

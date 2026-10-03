@@ -8,7 +8,9 @@
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { candidateUrls, findBacklink, knownListingUrl } from "../src/lib/listing-check";
+import { config } from "dotenv";
+import { createClient } from "@libsql/client";
+import { CREATE_LISTING_CHECKS, candidateUrls, findBacklink, knownListingUrl } from "../src/lib/listing-check";
 
 const LOG = `${process.env.HOME}/data/backlinks/directory-log.csv`;
 const DIRSUB = `${process.env.HOME}/project/agentkit/skills/directory-submission/scripts/dirsub.py`;
@@ -59,6 +61,20 @@ for (const [domain, , , , detail] of targets) {
   } else {
     unconfirmed++;
     if (wasLive) console.log(`WARN ${domain}: logged as live but our link wasn't found in the HTML (JS-rendered, moved or removed) — check by hand`);
+  }
+}
+// Publish our results for /where-to-list ("Our result" column): live (we saw our link, or the log says live) or submitted.
+if (!dryRun) {
+  config({ path: new URL("../.env.local", import.meta.url).pathname, quiet: true });
+  const db = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN });
+  await db.execute(CREATE_LISTING_CHECKS);
+  for (const [domain, , , , detail] of targets) {
+    const st = status[domain];
+    const live = st?.found || detail.startsWith("【已上线】");
+    await db.execute({
+      sql: "INSERT INTO listing_checks (domain, state, url, rel, target, checked) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(domain) DO UPDATE SET state=excluded.state, url=excluded.url, rel=excluded.rel, target=excluded.target, checked=excluded.checked",
+      args: [domain, live ? "live" : "submitted", st?.url ?? null, st?.rel ?? null, st?.target ?? null, today],
+    });
   }
 }
 if (!dryRun) {
