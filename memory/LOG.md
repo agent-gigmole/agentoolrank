@@ -1197,3 +1197,9 @@
 - 结果：线上 /tool/langchain 文案核对通过，checkout-smoke 重跑通过；9a2e10f 已提交未部署
 - 坑：无新坑
 - 结果：成功（排队页付费选项进行中）
+
+## 2026-10-03 23:00–23:xx 排队页文案上线 + 队列整理 + dev.to 第二篇 brief（9a2e10f 部署、3abf95a、bc458d6）
+- 做法：9a2e10f 部署，线上 /submit JS 核对「featured on the homepage and your category page」，看板记一行；TASK 四项打勾、新增三项（dev.to 第二篇 10-12、/where-to-list「我们自己的结果」列、X 周榜 /downloads 前 10 变化）；从 tool_packages 现取数字写第二篇 brief
+- 结果：排队页文案线上核对通过；brief 已提交，稿未写、未排期；未完成 10 件
+- 坑：高星低下载不等于炒作，应用类走 Docker/安装器，包下载低估 → GOTCHAS#stars-vs-downloads-distribution-bias
+- 结果：成功（第二篇文章进行中）

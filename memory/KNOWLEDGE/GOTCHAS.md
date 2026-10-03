@@ -1041,3 +1041,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 恢复：`systemctl --user reset-failed <unit>` 后手动 start，确认 inactive（成功）而非 failed
 - 通则：聚合多个外部来源的定时任务，每个来源是独立失败域：单源超时 + 一次重试 + WARN；只有「全部来源都失败」或本地逻辑错误才让任务失败。重试要幂等（按 id 去重）
 - 来源：2026-10-03 hourly 22:17 failed
+
+## stars-vs-downloads-distribution-bias
+- 现象：「每星下载」榜里 n8n（206.5K 星 → 30 天 384.9K 下载）、Langflow（155.5K 星 → 40.1K）看起来像「高星低用」
+- 原因：自托管应用/平台主要经 Docker 镜像、安装器、桌面包分发，npm/PyPI 下载只覆盖一小部分；库/SDK（Pydantic、OpenAI Python、MCP SDK）才是被依赖树反复拉取的，下载会偏高
+- 做法：比较「星 vs 下载」时先按类型分（库/SDK vs 应用/平台），应用类在文中注明「包下载低估实际使用」，不要下「炒作」「虚星」结论
+- 来源：2026-10-03 dev.to 第二篇 brief（docs/ops/launch-kit/briefs/devto-stars-vs-downloads.md）

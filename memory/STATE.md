@@ -1243,3 +1243,10 @@
 - **排队页付费选项显示等待天数**（9a2e10f，已提交未部署）：/submit 排队页 PaidOptions 标题在 waitDays>3 时显示「Don't want to wait about N days?」，Featured 档说明加类目页。原队列项「实时排队数字」改为此实现（排队页上方本来就显示队列位置和预计天数）
 - **TASK 队列**：推荐位加量 ✅；共用积分模块备注拆层完成（仍未接收费）；排队页付费选项（进行中，未部署）
 - **下一步**：9a2e10f 部署并线上核对 /submit 排队页；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿、两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
+
+## 2026-10-03 23:00–23:xx 排队页付费选项文案上线 + 队列整理 + dev.to 第二篇 brief（9a2e10f 部署、3abf95a、bc458d6）
+- 做法：9a2e10f 部署，线上 /submit JS 包含「featured on the homepage and your category page」，看板已记（3abf95a）；TASK 队列整理：78 空值 ✅（76/76）、积分第 1 步 ✅（MCP+REST）、共用积分模块 ✅（接收费等 10-18）、10-07 数据文章 ✅（已排定时）；新增三项：dev.to 第二篇「Stars measure attention, downloads measure use」（10-12）、/where-to-list 加「我们自己的结果」列、每周 /downloads 前 10 变化做 X 周榜第二条素材；未完成 10 件
+- 第二篇 brief：docs/ops/launch-kit/briefs/devto-stars-vs-downloads.md（bc458d6），事实 10-03 从 tool_packages 现取：230 个工具有包；前 10 Pydantic 812.6M … Langfuse 22.4M；每星下载 Pydantic ~28,000、OpenAI Python ~8,955、MCP Python SDK ~8,952、AI SDK ~3,984、FastMCP ~1,793；高星低下载 n8n 206.5K 星 → 384.9K、Langflow 155.5K → 40.1K
+- 下一步：bin/write 出稿 → 复检 → 加进 ops/devto-schedule.json（2026-10-12）
+- 坑：「高星低下载」不能直接读成炒作，自托管应用/平台多经 Docker/安装器分发，包下载低估使用，文章要写明 → GOTCHAS#stars-vs-downloads-distribution-bias
+- 结果：成功（第二篇文章进行中，稿未写、未排期）

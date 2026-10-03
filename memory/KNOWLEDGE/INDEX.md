@@ -321,3 +321,5 @@
 | 中文市场不做 由 operator-lab 公众号统一做（老板 22:34 更正）/ 周报节 zh brief 已撤回 2dd8dc8 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
 | operator-lab 公众号事实稿 handoff-wechat.ts ~/data/handoff/ai-directory/wechat-directories.md --to / 10-05 20:00 截止 await 65ac86 / 9f69cc4 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
 | 下载量 --missing 76/76 补齐 / Pydantic 812.6M 第一 映射核实 | STATE.md#2026-10-03 22:1x–22:4x Stripe 页显示品牌名 + hourly 来源各自容错 |
+| 星 vs 下载 每星下载 n8n Langflow 高星低下载 Docker 安装器分发 包下载低估 不能读成炒作 | GOTCHAS.md#stars-vs-downloads-distribution-bias |
+| dev.to 第二篇 Stars measure attention downloads measure use brief / 230 工具有包 / 每星下载 Pydantic ~28,000 / 10-12 排期 / bc458d6 | STATE.md#2026-10-03 23:00–23:xx 排队页付费选项文案上线 |

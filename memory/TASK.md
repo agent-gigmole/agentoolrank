@@ -12,7 +12,7 @@
 - ✅ 流水线化：dev.to 文章定时发布（devto-publish.ts 并入 hourly，ops/devto-schedule.json；数据文章排在 10-07 21:00 北京，dry-run 通过）
 - ✅ 外联每晚 22:00 由定时器自动发 10 封、回信每小时自动收（流水线已上：agentoolrank-outreach + feedback collect）
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
-- 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
+- ✅ 10-07 数据文章已排进 dev.to 定时发布（ops/devto-schedule.json 10-07 21:00，发前过检查）
 - ✅ npm/PyPI 下载量接入（数据层、详情页、对比页、替代品页、/downloads、首页、徽章、外联都已用上）
 - 竞品三家补价格：TAAFT $49/$437、toolify $99（10-03 已写进周报）；futurepedia 需登录才见价格，周一前用专用 Chrome 登录查（不注册新账号的话记「未核实」）
 - ✅ 每天查一次已上线目录站的链接 rel（由 check-listings 每天自动做；conduid 页面是 JS 渲染、HTML 里找不到链接，需人工看一次）
@@ -51,16 +51,19 @@
 - ✅ /downloads 按类目拆分子页（11 个类目 ≥3 个有数工具，10-03 22:1x 上线，sitemap 11 条，标题如「Most-Downloaded MCP Servers (npm & PyPI, Last 30 Days)」）
 - 外联两批合计 20 封：10-05 按 Brevo 打开率 / ?ref=outreach 会话 / 回信 三个数比较第一批（排名开头）和第二批（排名 + 下载量 + 下载徽章），定下一批文案
 - ✅ 类目页顶部加「N by npm / PyPI downloads →」链 /downloads/<slug>（10-03 22:3x 上线核对；门槛统一为 downloadCategorySlugs，页面/sitemap/链接同一规则）
-- 78 个包下载数为空：原因已查明是 pypistats 批量 429（c4627f1 加退避 + --missing）；剩核对后台 --missing 补回多少（/tmp/claude-1000/dl-missing.log），仍空的逐个看
-- 积分模式第 1 步：MCP 工具调用已记入 api_calls（10-03 22:17 上线核对，src/lib/api-usage.ts 可移植给 new_ladar）；ops/daily.md「MCP 调用 7 天」行已加（4f71928）；剩 /api/v1 也接上 recordCall
+- ✅ 78 个包下载数为空：pypistats 批量 429，c4627f1 退避 + --missing 补齐 76/76
+- ✅ 积分模式第 1 步：MCP 与 REST 调用都记入 api_calls，日报有 7 天调用数
 - ✅ 积分模式第 2 步：免费 API key 上线（/api-key 一键领取、无账户无邮箱、只存哈希；带 key 的 MCP 调用已能按 key 计数，线上 3 次调用核对；10-03 22:3x）
 - ✅ 付款路径每日自查 checkout-smoke（定时器 07:40 已 enabled、systemd 手动跑通；Submit Kit $29.00、首页推荐 $49.00 都到 Stripe 且商品名对；截图 ops/smoke/）
-- 共用积分扣费模块（agentkit 22:20 分工：我做共用版，new_ladar 复用；只一套扣费代码，两边定价可以不同）：api-credits.ts 余额表 + 扣费函数 + 每日免费额度，先写好带测试但不接收费，等 10-18 触发条件；10-03 22:45 按 agentkit 要求拆层（6251f61）：decideCharge 纯函数 + CreditStore 接口（usedToday/balance/apply）+ chargeCall 先判后写，memoryStore/sqliteStore 两个 adapter，new_ladar 拷纯函数与接口、自写 Postgres adapter；仍未接收费，等 10-18 触发条件
+- ✅ 共用积分扣费模块写好（纯规则 + CreditStore 接口 + SQLite adapter，带测试）；接收费等 10-18 触发条件
 - ✅ /api-key 入口：MCP initialize 说明、/agents、/submit-kit 用法段各加一句（10-03 22:4x 上线核对）
 - ✅ /api/v1 REST 接口也接上调用记录（withCallLog + after()，5 个端点，10-03 22:5x 线上核对 list_tools/get_tool）
 - operator-lab 公众号素材（截止 10-05 20:00）：生成脚本 handoff-wechat.ts 已写好，草稿已放 ~/data/handoff/ai-directory/wechat-directories.md（窗口截至 10-03）；10-05 用 --to=2026-10-05 重跑定稿并通知 operator-lab（await 已登记）
 - ✅ $49 推荐位加量：推荐中的工具同时出现在首页和它所在类目页顶部（标 Sponsored），维护者区、/downloads、替代品页、Stripe 商品说明的文案都改成「首页 + 类目页」（10-03 22:5x 上线，checkout-smoke 重跑通过）
-- 提交排队页的 $9/$19/$49 选项（PaidOptions）显示免费队列要等多久，让插队的价值看得见：改为标题「Don't want to wait about N days?」（waitDays>3 时显示，排队页上方本来就有队列位置和预计天数），Featured 档说明加类目页（9a2e10f 已提交，未部署、线上未核对）
+- ✅ 提交排队页付费选项写出免费排队大约几天（「Don't want to wait about N days?」）、Featured 档补类目页（9a2e10f，10-03 23:00 部署，线上 JS 包核对）
+- dev.to 第二篇《Stars measure attention, downloads measure use》：用 /downloads 和「每星下载」榜的数字写 brief → bin/write → 排进 devto-schedule 10-12，文末链 /downloads 和 /api-key
+- /where-to-list 加「我们自己的结果」一列：每个站我们提交后有没有上线、链接类型（check-listings 实测），每天自动更新，独家数据
+- 每周一把 /downloads 前 10 变化（新进、上升最快）写成 X 周榜的第二条素材，脚本生成，人不手填
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
