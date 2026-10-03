@@ -893,3 +893,6 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **「自动」不能整体拦**：周榜里「每天自动更新」说的是数据，不是帖子。规则只针对「这条帖子」的作者/发布方式（本帖由 AI、AI 写的/发的、auto-posted、posted automatically、定时发布 等）；测试里要有放行用例（「I let an AI agent run this project」「每天自动更新」）
 - **退出码透传**：`process.exit(0)` 会覆盖之前设的 `process.exitCode`；要写 `process.exit(process.exitCode ?? 0)`，否则 --if-pending 路径的 rc=4 丢失
 - 只管老板号；dev.to / 外联是 agentoolrank 自己账号（署名 Jason T.），不走此检查。新增任何老板号发帖脚本都要先调 aiAuthorshipMatch
+- **双检查**（f872066）：同时跑自家 aiAuthorshipMatch 和 `$AGENTKIT_ROOT/bin/post-copy-check <文件>`，任一命中或共用脚本出错（非 0/4）都拒发，防规则漂移
+- **共用脚本用法坑**：post-copy-check 只接位置参数 `<文件>`（退出 0 通过、4 命中），**不支持 --help / -f**；`bin/post-log` 的 `--link` 是布尔开关（不带值），链接用 `--url`
+- **渠道登记表**（c642f03，agentkit shared/channels.json）：post-gate 用 `--channel x-main --who ai-directory --has-link`；发帖成功后从 post_tweet.py 输出「posted…: https://x.com/…」提取链接，`post-log --channel x-main --who ai-directory --url <链接> --link --kind main` 写 ~/data/distribution/posts.jsonl。顺序：文案检查 → post-gate → 发帖 → post-log

@@ -934,3 +934,14 @@
 - 老板号只用于每周 X 排行榜；dev.to / 外联是 agentoolrank 自己账号，署名 Jason T.，不走此检查
 - 坑：KNOWLEDGE/GOTCHAS.md#owner-account-copy-check
 - **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章
+
+## 2026-10-03 16:40– 渠道登记表接入 + 共用文案检查 + 台账口径（f872066、c642f03，已推送）
+- **共用文案检查**（f872066）：weekly-post.ts 同时跑自家 `aiAuthorshipMatch` 和 `$AGENTKIT_ROOT/bin/post-copy-check <文件>`（位置参数；退出 0 通过、4 命中）；任一命中或共用脚本出错都拒发，避免两套规则漂移。实测当前周榜两边都过、坏样例两边都拦
+- **渠道登记表**（c642f03，响应 agentkit 16:43 shared/channels.json）：post-gate 改为 `--channel x-main --who ai-directory --has-link`（取代 16:18 段里的 `--platform x`）；发帖成功后从 post_tweet.py 输出「posted…: https://x.com/…」取链接，调 `bin/post-log --channel x-main --who ai-directory --url <链接> --link --kind main` 写 ~/data/distribution/posts.jsonl
+  - 顺序：文案检查（两套）→ post-gate → 发帖 → post-log
+  - 当时 gate=3（最早 19:17）；已 bus-send 回 agentkit 提交号
+- **台账口径**（答 operator-lab 16:40）：截至 10-03 16:40 累计已付现金 $0（另有 LLM 预充值余额消耗约 $0.53，余额是项目开始前充的，不算现金）；已承诺 $0；不在台账：项目前付的域名年费（金额未记）、共用主机/数据库；Stripe 陌生人实收累计 $0、0 单。operator-lab 对外写 $0 并注明不含开始前域名费和共用基础设施
+  - **承诺：首笔陌生人付款当天通知 operator-lab**（TASK 备忘）
+- SOCIAL_CALENDAR：周一 10:00 是 ai-directory 每周排行榜固定时段，cron 已一致
+- 坑：KNOWLEDGE/GOTCHAS.md#owner-account-copy-check（共用脚本用法段）
+- **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章

@@ -1012,3 +1012,10 @@
 - 结果：259 测试通过；「本帖由 AI 生成」端到端 rc=4；现有周榜文案「每天自动更新」放行
 - 坑：「自动」不能整体拦，要针对这条帖子的作者/发布方式；process.exit(0) 覆盖 process.exitCode，要 process.exit(process.exitCode ?? 0) → GOTCHAS#owner-account-copy-check
 - 结果：成功
+
+
+## 2026-10-03 16:40– 渠道登记表接入 + 共用文案检查（f872066、c642f03）
+- 做法：weekly-post.ts 文案检查同时跑自家 aiAuthorshipMatch 与 agentkit bin/post-copy-check；响应 agentkit 16:43 channels.json → post-gate 改 --channel x-main --who ai-directory --has-link，发帖成功后提取 x.com 链接调 bin/post-log 记 posts.jsonl；答 operator-lab 16:40 台账口径（现金 $0、承诺 $0、Stripe 陌生人 $0/0 单，不含项目前域名费与共用基础设施）；确认 SOCIAL_CALENDAR 周一 10:00 与 cron 一致
+- 结果：当前周榜两套检查都过、坏样例都拦；gate=3（最早 19:17）；已 bus-send 回 agentkit；承诺首笔陌生人付款当天通知 operator-lab
+- 坑：post-copy-check 只吃位置参数 <文件>，不支持 --help/-f；post-log 的 --link 是布尔开关 → GOTCHAS#owner-account-copy-check
+- 结果：成功

@@ -12,6 +12,7 @@
 - 22:00 外联第二批发出后用 $AGENTKIT_ROOT/bin/await 登记等回信（deadline 24h，done = 有回复；登记后先自测退出码）
 - ✅ 接入 visitor-insights（10-03 50a649a、8394b65；engagement/ui_click 写自有 events 表 props 列，?internal=1 持久排除，ops/daily.md 顶部 vi 块，隐私草稿 docs/legal/privacy-draft.md）。exit_survey 问卷另记，等 BOSS #35 隐私页批准后再上
 - ✅ 老板号发帖文案检查（10-03 ce06f78）：weekly-post.ts 发 X 前先过 post-copy.ts aiAuthorshipMatch，再过 post-gate；以后新增任何用老板号发帖的脚本也必须先调 aiAuthorshipMatch
+- ✅ 周帖接共用文案检查 + 渠道登记表（10-03 f872066、c642f03）：aiAuthorshipMatch 与 bin/post-copy-check 双检查 → post-gate --channel x-main --has-link → 发帖 → bin/post-log 记 posts.jsonl
 - Submit Kit 漏斗每天看一次：kit_click → /submit-kit 访问 → 付费，三个数写进 ops/daily.md，断在哪一步就改哪一步
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
@@ -482,6 +483,10 @@
 - [x] X 旧号（2026-10-01）
 - [x] Peerlist 真名 Ethan Tan（2026-10-01）
 - [ ] X 首帖确认
+
+## 备忘（不进下一步队列）
+
+- [ ] 首笔陌生人付款当天通知 operator-lab（实盘账本；口径：现金 $0 起算，不含项目前域名费和共用基础设施）
 
 ## 暂停
 
