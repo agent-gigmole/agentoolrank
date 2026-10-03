@@ -19,3 +19,20 @@ describe("whereCopy (per-type 'where to submit' landing pages)", () => {
     for (const w of WHERE_TYPES) expect(whereCopy(w.slug, { tested: 101, fits: 40, year: 2026 })!.description.length).toBeLessThanOrEqual(160);
   });
 });
+
+import { whereFaq } from "./where-to-submit";
+
+describe("whereFaq (numbers counted from the type's sites)", () => {
+  const sites = [
+    { free: "yes", conditions: [], human: [], link: "dofollow" },
+    { free: "yes", conditions: ["badge"], human: ["captcha"], link: "nofollow" },
+    { free: "no", conditions: [], human: ["email_inbox"], link: "unknown" },
+  ];
+  it("counts free-without-conditions, agent-finishable and dofollow sites", () => {
+    const f = whereFaq("an MCP server", sites);
+    expect(f[0].a).toContain("3 of the directories we tested accept an MCP server");
+    expect(f[0].a).toContain("1 of them have a free listing with no badge");
+    expect(f[1].a).toContain("On 1 of the 3 an agent could finish");
+    expect(f[2].a).toContain("We checked the live link on 2 of the 3; 1 were dofollow");
+  });
+});
