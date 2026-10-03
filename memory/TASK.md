@@ -93,7 +93,8 @@
 - ✅ 网页提交已收录工具的结果页也加 Submit Kit 框（KitBox 共用，10-04 04:3x 上线，真 Chrome 核对：推荐位、徽章、Submit Kit 三块都在）
 - ✅ API / MCP 回复带 Submit Kit：已收录回复 submit_kit_url + 说明一句（?ref=agent-listed），排队成功 message_for_human 加网页链接（?ref=agent-queued）（10-04 04:4x 上线，REST 线上核对，自测带 ?src=selftest-kit）
 - ✅ 日报 Submit Kit 漏斗后面加「进页来源：上线通知信 · API 已收录 · API 排队 · 其他」（b2de2c1，kpi 已跑出新行）
-- 上线通知信 / API 回复里的 Submit Kit 链接按工具类目带上 ?type=（MCP 类目 → mcp_server，其余 → ai_tool），进页就是对口的前 10 个站，少一步选择（进行中：kitTypeForCategories 纯函数）
+- ✅ Submit Kit 链接按工具类目带 ?type=（上线通知信、API/MCP 已收录回复；10-04 05:0x 上线，线上核对：MCP servers → type=mcp_server，CrewAI → ai_tool）
+- /submit-kit 对带 ref=live-notify / agent-* 来的访客，页顶加一句「刚上线 / 已收录在 AgentoolRank？这些是适合你这类工具的下一批目录站」，把来意接上（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
