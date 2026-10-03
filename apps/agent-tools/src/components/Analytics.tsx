@@ -36,6 +36,15 @@ function internal(): boolean {
   }
 }
 
+/** Where this session came from (?ref= / utm, saved on the first tracked page view), for checkout attribution. */
+export function sessionSource(): string {
+  try {
+    return sessionStorage.getItem("at_src") ?? "";
+  } catch {
+    return "";
+  }
+}
+
 export function track(name: EventName, path?: string, props?: Record<string, string | number | boolean>) {
   if (typeof window === "undefined" || navigator.webdriver || internal()) return;
   const { sid, src } = session();

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { badgeHtml } from "@/lib/submissions";
-import { track } from "@/components/Analytics";
+import { sessionSource, track } from "@/components/Analytics";
 
 type Result =
   | { kind: "queued"; slug: string; position: number; waitDays: number; name: string }
@@ -21,7 +21,7 @@ function PaidOptions({ slug, waitDays, listed = false }: { slug: string; waitDay
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, plan }),
+        body: JSON.stringify({ slug, plan, src: `submit${listed ? "-listed" : ""}${sessionSource() ? `|${sessionSource()}` : ""}` }),
       });
       const data = await res.json();
       if (data.url) {

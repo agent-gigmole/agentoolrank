@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { track } from "@/components/Analytics";
+import { sessionSource, track } from "@/components/Analytics";
 
 /** Shown on every tool page: maintainers can feature their tool or grab the README badge. */
 export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = false }: { slug: string; name: string; paymentsEnabled: boolean; hasDownloads?: boolean }) {
@@ -20,7 +20,7 @@ export function MaintainerBox({ slug, name, paymentsEnabled, hasDownloads = fals
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, plan: "featured", src: "tool-page" }),
+        body: JSON.stringify({ slug, plan: "featured", src: sessionSource() ? `tool-page|${sessionSource()}` : "tool-page" }),
       });
       const data = await res.json();
       if (data.url) {
