@@ -64,3 +64,6 @@ data/
 # regenerated hourly by apps/agent-tools/scripts/scoreboard.ts; agentkit reads it locally
 ops/scoreboard.json
 ops/daily.md
+
+# checkout smoke screenshots and test session ids (daily, local only)
+ops/smoke/

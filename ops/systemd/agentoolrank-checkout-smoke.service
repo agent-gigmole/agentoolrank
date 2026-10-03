@@ -1,0 +1,9 @@
+[Unit]
+Description=AgentoolRank checkout smoke test (phone browser → Submit Kit / featured → Stripe; name + price asserted)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/qmt/workspace/ai-directory
+Environment=PATH=/home/qmt/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/python3 /home/qmt/workspace/ai-directory/apps/agent-tools/scripts/checkout_smoke.py
+TimeoutStartSec=10min
