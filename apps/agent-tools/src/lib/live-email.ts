@@ -1,0 +1,27 @@
+import { badgeHtml } from "./submissions";
+
+// "Your page is live" email to the person who submitted the tool (the /submit form promises it). Transactional, sent
+// once per approved submission to the address they gave us; it carries the badge and the featured-slot link.
+export function liveEmail(o: { name: string; slug: string; baseUrl: string }): { subject: string; text: string } {
+  const page = `${o.baseUrl}/tool/${o.slug}`;
+  return {
+    subject: `${o.name} is live on AgentoolRank`,
+    text: [
+      "Hi,",
+      "",
+      `${o.name} passed review and its page is live: ${page}`,
+      "",
+      "It shows live GitHub stars, growth and release activity, refreshed daily, and it is in our llms.txt and MCP server, so AI assistants can find it.",
+      "",
+      "Add the badge to your README or website (it links back to the page):",
+      badgeHtml(o.baseUrl, o.slug, o.name),
+      "",
+      `Want more developers to see it? Feature it for 7 days at the top of the homepage and its category page ($49, one-time): ${page}#maintainers`,
+      "",
+      "Thanks for submitting,",
+      "Jason T., AgentoolRank",
+      "",
+      "You get this once because you submitted this tool. Reply if anything on the page is wrong.",
+    ].join("\n"),
+  };
+}
