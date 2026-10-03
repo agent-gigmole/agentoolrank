@@ -10,7 +10,7 @@ type Result =
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://agentoolrank.com";
 
-function PaidOptions({ slug }: { slug: string }) {
+function PaidOptions({ slug, waitDays }: { slug: string; waitDays?: number }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState("");
   async function buy(plan: "priority" | "fast" | "featured") {
@@ -36,7 +36,9 @@ function PaidOptions({ slug }: { slug: string }) {
   }
   return (
     <div className="border border-gray-200 rounded-xl p-6">
-      <p className="font-semibold text-gray-900 mb-3">Don&apos;t want to wait?</p>
+      <p className="font-semibold text-gray-900 mb-3">
+        Don&apos;t want to wait{waitDays && waitDays > 3 ? ` about ${waitDays} days` : ""}?
+      </p>
       <div className="grid sm:grid-cols-3 gap-3">
         <button type="button" onClick={() => buy("priority")} disabled={busy !== null}
           className="text-left border border-gray-300 rounded-lg p-4 hover:border-blue-500 disabled:opacity-60">
@@ -51,7 +53,7 @@ function PaidOptions({ slug }: { slug: string }) {
         <button type="button" onClick={() => buy("featured")} disabled={busy !== null}
           className="text-left border-2 border-blue-500 rounded-lg p-4 hover:bg-blue-50 disabled:opacity-60">
           <div className="font-semibold">Featured · $49</div>
-          <div className="text-sm text-gray-600">Fast-track + 7 days in the homepage Featured section.</div>
+          <div className="text-sm text-gray-600">Fast-track + 7 days featured on the homepage and your category page.</div>
         </button>
       </div>
       <p className="text-xs text-gray-500 mt-3">One-time payment. Not approved in review? Full refund.</p>
@@ -115,7 +117,7 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
             Estimated review in about {result.waitDays} day{result.waitDays === 1 ? "" : "s"}. We&apos;ll email you when your page is live.
           </p>
         </div>
-        {paymentsEnabled && <PaidOptions slug={result.slug} />}
+        {paymentsEnabled && <PaidOptions slug={result.slug} waitDays={result.waitDays} />}
         <div className="border border-gray-200 rounded-xl p-6">
           <p className="font-semibold text-gray-900">Get reviewed first: add the badge</p>
           <p className="text-sm text-gray-600 mt-1 mb-3">
