@@ -984,3 +984,10 @@
 - 结果：235 测试通过；预览附上「项目补充」9 行；首次正式发送 10-04 09:00（未核实）
 - 坑：daily.md 只取前 15 个非空行、mtime 36 小时内；我们本来没自己发日报，无需停用 → GOTCHAS#daily-report-ops-daily
 - 结果：成功
+
+
+## 2026-10-03 16:10– 反馈收件箱接入 + 周报外部评测（769e0c6、5207740）
+- 做法：响应 agentkit 16:10（老板 16:09 跨项目反馈收件箱）→ TDD 写 src/lib/feedback.ts + 4 测试，scripts/feedback.ts collect/add/decide/list，hourly-ops.sh 每小时 collect（dev.to 评论含楼中楼 + GitHub issue，跳过自家账号）；响应 16:12（老板 16:11 反馈当外部评测）→ decide 加 --hit/--misread/--want，周报 2026-10-05.md 加「外部评测」一节；TASK 下一步队列第 1 项改为发前复核文案 + 回信登记；看板更新；两条都 bus-send 回复
+- 结果：239 测试通过；本周陌生人文字反馈 0 条（dev.to 2 篇 0 评论、GitHub 0 issue、hello@ 无真人回信）；结论：卖曝光不成立 → 卖数据，第二批外联开头讲免费收录和数据；rule-check 全过
+- 坑：Gmail 搜回信用 `to:hello@agentoolrank.com newer_than:Nd subject:(Re) -from:me`；hello@ 大量是目录站验证 / 欢迎信，不算反馈 → GOTCHAS#feedback-inbox
+- 结果：成功

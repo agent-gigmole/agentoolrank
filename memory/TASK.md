@@ -3,7 +3,7 @@
 ## 下一步队列
 
 <!-- rule-check 每天 10:00/16:00/22:00 检查：至少 5 件未完成、离收入近、不依赖外部的事；做完打 ✅ 或删掉 -->
-- 每晚 22:00 发外联 10 封（第二批 10-03），有回复 24 小时内回，回 no 的进 optout
+- 每晚 22:00 发外联 10 封（第二批 10-03），发前复核文案：开头讲免费收录和数据，不提付费（外部评测第 1 条）；回信用 feedback.ts add 登记，48 小时内写结论
 - Submit Kit 首单路径：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
 - 10-07 在 dev.to 发《实测 101 个目录站》数据文章（稿已就绪，发前把数字更新为最新数据集）
 - npm/PyPI 下载量接入：从仓库 package.json/pyproject 自动识别包名，限速拉取，作为排名信号和数据文章素材
@@ -332,7 +332,10 @@
 - [x] 草案 docs/ops/weekly/2026-W41-draft.md（c1dcfc2，已推送）：7 天漏斗 会话 51（约 7/天 < 10/天阈值）、/submit 访问 1、提交 2、付费 0；来源 direct 43 / outreach 4 / devto 2。押注 ①外联放量 10→15→20 封/天（截止 10-11）②数据文章分发 dev.to /where-to-list（10-03）+「实测 100 个目录站」（10-07），≥50 访问 ③Submit Kit 预售 ≥3 单（截止 10-18）
 - [ ] **10-05（周一）交第一份**（固定路径 docs/ops/weekly/2026-10-05.md，周一 12:00 前定稿；rule-check 自动查）
 - [x] 机器可读记分牌（10-03 15:22，130f147）：ops/scoreboard.json 每小时由 hourly-ops.sh 生成（收入/单数/支出/利润/访客 7 天 + bets），ops/bets.json 存本周押注；agentkit bin/scoreboard 周一 09:25 排名
-- [ ] 周一复盘清单：更新 ops/bets.json（写新一周 3 个押注 + 上周押注 status），再定稿 docs/ops/weekly/<周一>.md
+- [ ] 周一复盘清单：更新 ops/bets.json（写新一周 3 个押注 + 上周押注 status），再定稿 docs/ops/weekly/<周一>.md（必须含记分牌、竞品、外部评测、押注四节；外部评测一节先跑 `bun run scripts/feedback.ts list` 归纳 1–3 条结论，每条对应改动或不改理由）
+- [x] 反馈收件箱接入（10-03 16:10，769e0c6）：feedback.ts collect/add/decide/list，hourly-ops.sh 每小时 collect dev.to 评论 + GitHub issue；48 小时内处理 new 项
+- [x] 周报外部评测一节（10-03 16:12，5207740）：2026-10-05.md 已加；decide 支持 --hit/--misread/--want
+- [ ] 每轮 loop 查一次 hello@ 邮箱（Gmail `to:hello@agentoolrank.com newer_than:Nd subject:(Re) -from:me`），真人回信用 feedback.ts add 登记
 - [x] rule-check 补齐（10-03 15:11，b478a58）：TASK 顶部「下一步队列」6 件 + 草案 git mv 到 docs/ops/weekly/2026-10-05.md，rule-check 全部通过
 - [ ] 草案补洞察（10-03 06:30）：付费档卖的是曝光，但流量不足——10-02 晚 10 封外联带来 4 个会话（cognee、langchain、hermes-agent），全是 page_view，0 次维护者横幅点击 / 徽章复制 / checkout；约 8.5 小时无回信。首页每天个位数访客，$49 首页推荐作者不会买。推论：Submit Kit 卖数据和配方，本身有价值、不依赖我们的流量，作为周一摘要要点 + Submit Kit 论据
 - [ ] 周一摘要加「收录覆盖率」指标（10-03 07:34）：GSC 28 天 393 次展示全部来自 33 个英文页，zh/ja 为 0；sitemap 提交 2467、indexed 0；URL Inspection 抽查 zh/ja 页为 unknown 或 Discovered-not-indexed → 瓶颈在 Google 收录（新站抓取预算低）

@@ -273,3 +273,4 @@
 | await 看门狗 / 等外部结果先登记 / await add --done --stuck --deadline / 每 15 分钟 check / systemd failed 前缀点名 / 仓库根 bash -c 60 秒先 cd / 登记后自测退出码 / 6a511c 5e891f | GOTCHAS.md#await-watchdog |
 | 微信支付 available 支付宝 pending（10-03 15:4x）/ Smithery 公开页 593 结案 | LOG.md#2026-10-03 15:37– 接入 await 看门狗 |
 | 日报 daily-report / 每天 09:00 发项目 topic / ops/daily.md 前 15 行 36 小时内 / renderDaily kpi.ts / 项目不自己发日报 / dbb1c7c | GOTCHAS.md#daily-report-ops-daily |
+| 反馈收件箱 / ~/data/feedback/feedback.jsonl 只追加 同 id 最后一行 / 48 小时 status new→adopted declined answered / feedback.ts collect add decide list / hello@ 回信 Gmail 搜法 / 外部评测三问 --hit --misread --want / 周报四节 记分牌 竞品 外部评测 押注 / 769e0c6 5207740 | GOTCHAS.md#feedback-inbox |

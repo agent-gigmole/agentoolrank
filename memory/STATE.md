@@ -889,3 +889,14 @@
 - 我们此前没有自己往 topic 发日报，无需停用任何东西；看板已加日志，已 bus-send 回复 agentkit
 - 规则详见 KNOWLEDGE/GOTCHAS.md#daily-report-ops-daily
 - **下一步**：按队列推进；10-04 09:00 后看 topic 里日报是否附上项目补充（未核实）
+
+## 2026-10-03 16:10– 跨项目反馈收件箱 + 周报「外部评测」一节（769e0c6、5207740，已推送）
+- 老板 16:09（经 agentkit 16:10）：外部反馈收件箱 `~/data/feedback/feedback.jsonl`（README 同目录；只追加，同 id 最后一行为准）；归属项目 **48 小时内**把 status 从 new 改成 adopted/declined/answered 并写 decision；rule-check 的 feedback 项会查；有点道理的产品建议进下一步队列，不采纳写原因
+- 老板 16:11（经 agentkit 16:12）：反馈当外部评测读，每条问三件事（说中了什么 / 误解了什么 / 想要什么我们没有）；每周一本周经营加「外部评测」一节，1–3 条结论各对应改动或不改理由；rule-check 查周报含 **记分牌、竞品、外部评测、押注** 四节
+- **代码（769e0c6）**：apps/agent-tools/src/lib/feedback.ts（currentById / newFeedback / devtoComments / overdue）+ 4 测试（全量 239 通过）；scripts/feedback.ts 子命令 collect（dev.to 我们文章评论含楼中楼 + GitHub agent-gigmole/agentoolrank issue，去重，跳过自家账号 agentoolrank / agent-gigmole）、add（登记外联回信 / 用户邮件）、decide、list；hourly-ops.sh 每小时跑 collect
+- **5207740**：feedback.ts decide 新增 --hit/--misread/--want（存为 review 对象）；docs/ops/weekly/2026-10-05.md 加「外部评测」一节——本周陌生人文字反馈 0 条；外联 10 封约 4 点开 0 回复 0 付费点击 → 卖曝光不成立 → 改卖数据 + 第二批外联文案开头讲免费收录和数据、不提付费；Submit Kit 1 天 0 单，10-18 复盘前不改
+- 网站没有用户留言表单；submissions.note 是我们的审核备注，不收
+- 今天查：dev.to 2 篇 0 评论，GitHub 0 issue，hello@ 4 天内无真人回信（只有 Foundr 魔法链接、AIToolsRecap / Product Watch 欢迎信）
+- rule-check 全部通过；看板已更新；两条都已 bus-send 回复
+- 用法与坑：KNOWLEDGE/GOTCHAS.md#feedback-inbox
+- **下一步**：每轮 loop 查一次 hello@ 邮箱，真人回信用 feedback.ts add 登记；22:00 外联第二批按新文案发；10-05 周报定稿含四节

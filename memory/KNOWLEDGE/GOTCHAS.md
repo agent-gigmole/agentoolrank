@@ -862,3 +862,12 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 本项目实现：apps/agent-tools/src/lib/kpi.ts `renderDaily`（纯函数，有单测）+ scripts/kpi.ts 每小时（hourly-ops.sh）同时写看板 KPI 块和 ops/daily.md；文件 gitignore
 - 预览：`$AGENTKIT_ROOT/bin/daily-report --project ai-directory`（只打印不发，dbb1c7c 时实测正常）
 - 加新指标：改 KpiData + renderDaily + 测试，别直接拼字符串进 daily.md；总行数保持 ≤15
+
+## feedback-inbox
+- 10-03 16:09 老板规则（经 agentkit 16:10）：跨项目外部反馈收件箱 `~/data/feedback/feedback.jsonl`（说明见同目录 README.md）。**只追加**，同一 id 的最后一行为当前状态；字段 id/source/url/author/text/project/kind/collected_at/status/decision/ticket
+- 归属项目 **48 小时内**把 status 从 new 改成 adopted/declined/answered（追加一行）并写 decision；`bin/rule-check` 的 feedback 项会查超时；产品建议有一点道理就进 TASK 下一步队列，不采纳写原因
+- 本项目工具（apps/agent-tools 下跑）：`bun run scripts/feedback.ts collect`（dev.to 我们文章的评论含楼中楼 + GitHub agent-gigmole/agentoolrank issue，去重，跳过自家账号 agentoolrank / agent-gigmole；hourly-ops.sh 每小时跑）、`add`（手动登记外联回信 / 用户邮件）、`decide <id> adopted|declined|answered "<decision>" [ticket] --hit "…" --misread "…" --want "…"`（三问存为 review 对象）、`list`；纯函数在 src/lib/feedback.ts（currentById / newFeedback / devtoComments / overdue，有单测）
+- 不收的来源：网站没有用户留言表单；submissions.note 是我们自己的审核备注
+- **邮箱要人工查**：每轮 loop 查一次 hello@，Gmail 搜 `to:hello@agentoolrank.com newer_than:Nd subject:(Re) -from:me`；hello@ 里大量是目录站验证 / 魔法链接 / 欢迎信（Foundr、AIToolsRecap、Product Watch 等），不算反馈，只登记真人回信
+- **外部评测三问**（老板 10-03 16:11）：每条反馈问 说中了什么问题 / 误解了什么（= 文案或定位没讲清）/ 想要什么我们没有；没有文字反馈时读行为数据（点开、访问、点付费），误解与想要写"无法判断，不猜"
+- **周报四节**：每周一 docs/ops/weekly/<周一>.md 必须含 记分牌、竞品、外部评测、押注 四节（rule-check 查）；外部评测一节 1–3 条结论，每条对应一个改动或不改理由
