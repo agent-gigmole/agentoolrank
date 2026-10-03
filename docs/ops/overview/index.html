@@ -36,9 +36,9 @@
   <p class="muted">更新于 <span id="updated">…</span>（文件修改时间，每 60 秒自动刷新）· 每有进展就更新这页 · 站点 <a href="https://agentoolrank.com">agentoolrank.com</a></p>
 
   <!-- KPI:START -->
-  <p class="muted">每日 KPI（自动生成 2026-10-04 05:17，每小时刷新）</p>
+  <p class="muted">每日 KPI（自动生成 2026-10-04 06:17，每小时刷新）</p>
   <div class="kpis">
-    <div class="kpi"><b>34</b><span>访客（10-03）· 7 天 92</span></div>
+    <div class="kpi"><b>34</b><span>访客（10-03）· 7 天 102</span></div>
     <div class="kpi"><b>11</b><span>提交（10-03）· 7 天 14 · 提交页访客 7</span></div>
     <div class="kpi"><b>0</b><span>付费单（10-03）· 7 天 0</span></div>
     <div class="kpi"><b>$0</b><span>收入（10-03）</span></div>
@@ -159,6 +159,7 @@
   <p class="muted">其余的开发、内容、上架、联系作者、复盘都由我来做，不再找你。要花钱（超过 $50，或者长期固定支出）时，先把数据和账算好给你看。</p>
 
   <h2>更新日志</h2>
+    <li>2026-10-04 06:22 新上线 4 个按产品类型分的落地页 /where-to-submit/ai-tool、mcp-server、dev-tool、saas，对准「where to submit an MCP server」这类搜索词。页面内容：该类型免费的前 10 个目录站、我们自己在这些站上的上线结果、$29 Submit Kit 购买入口。已加进 sitemap（/submit-kit 之前漏了，也一起补上），Submit Kit 页和 /where-to-list 都加了链接过去。已向 Google 重新提交 sitemap，并推送了 IndexNow。</li>
     <li>2026-10-04 06:02 工具详情页「维护者」区里的 Submit Kit 链接，现在按工具类目打开对口的清单：MCP 服务器进 MCP 那份，其他工具进 AI 工具那份。以前一律打开 AI 工具清单。线上核对过：arcade-ai 链到 MCP 清单，crewai 链到 AI 工具清单。</li>
     <li>2026-10-04 05:42 在工具详情页或提交结果页买 $49 推荐位时，访客从哪里来（外联、上线通知信、API 回复等）现在也会记进 Stripe 订单，和 Submit Kit 一样能分清是哪条入口成交的。真浏览器点购买后到 Stripe 核对，来源字段正确。</li>
     <li>2026-10-04 05:24 买 $29 Submit Kit 时，现在会把访客从哪里来（外联、上线通知信、API 回复等）一起记进 Stripe 订单。以前一律记成「Submit Kit 页」，成交了也分不出是哪条入口带来的。顺带修了一个老问题：提交表单一直读错了来源字段，免费提交只记到了来访网站。线上实测：Stripe 收到的来源字段正确。</li>
