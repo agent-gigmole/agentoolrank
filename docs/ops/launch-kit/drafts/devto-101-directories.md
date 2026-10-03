@@ -1,101 +1,143 @@
-# We submitted to 101 directories: 81 had a free option, few without strings
+# What submitting to 101 directories taught us about free listings
 
-These findings come from our own submission notes for three products, collected by hand and with browser automation from 2026-09-29 through 2026-10-02, and last verified on 2026-10-02. The sample covers 101 directory sites where at least one product entered the submission flow, with one submission per site per product and no captcha-solving services.
+**81 of 101 directories offered a free option.** Budget time for inbox steps and captchas, and read the free tier's conditions before filling the form.
 
-I'm Jason T., maker of [AgentoolRank](https://agentoolrank.com), a directory of open-source AI agent tools ranked by live GitHub activity. We also run the two other small products included in this submission run.
+Our own submission notes cover 101 sites across three products, tested September 29 through October 2, 2026, and last verified October 2.
 
-The useful distinction is between finding a free form and getting the result you came for. Our notes track what happened during submission.
+I'm Jason T., maker of AgentoolRank, our directory of open-source AI agent tools ranked by live GitHub activity. We also run two other small products.
 
-## What happened across 101 directories
+## What the free option actually bought us
 
-Here is where the sites stood in our log:
+We worked by hand and with browser automation, with one submission per site per product and no captcha-solving services. At least one of our products went through each site's submission flow.
+
+The headline needs three qualifications:
+
+- **56 sites put free submissions in a review queue.**
+- **30 sites required an inbox step.** Verification links, magic links, and codes needed someone available.
+- **66 sites ended as submitted or already listed.**
+
+Here is the full outcome breakdown:
 
 | Outcome | Sites |
 |---|---:|
 | Submitted or already listed | 66 |
-| Opened, then skipped because of rules or fit | 19 |
-| Did not go through on the first try, queued for retry | 9 |
+| Opened, then skipped for rules or fit | 19 |
+| Failed on the first try, queued for retry | 9 |
 | Stopped at a visible captcha | 5 |
-| Stopped because the free tier required a badge we chose not to place | 2 |
+| Stopped because the free tier required a badge we declined | 2 |
 
-Some entries were already there; others had only reached the submitted state.
+Keep "skipped" in your log.
 
-The 19 skipped sites also matter when planning a launch. Opening a directory and reading its rules can end with a reasonable decision not to submit.
+## Budget for handling, then budget for waiting
 
-The 9 sites that did not go through on the first try are queued for a retry. Keep a log per site with the date, result and what blocked you so you can follow up without submitting twice.
+Separate your working time from the directory's waiting time.
 
-## Free options still come with conditions
+For hands-on work, reserve attention for inbox checks and account access. Besides the 30 sites requiring email interaction, 19 offered or required Google login, and 8 had a captcha a person had to complete. These categories can overlap. The 8 captcha sites describe flow requirements; the 5 captcha-stopped outcomes describe where our attempts ended.
 
-Across all 101 sites, we recorded these conditions:
+Inbox steps alone mean a fully unattended agent will stall on about a third of these sites.
 
-| Condition | Sites |
+For elapsed waiting time, the examples were concrete:
+
+| Directory | Observed free submission wait or condition |
+|---|---|
+| SaaSHub | Free no-login form can take up to 32 days |
+| TinyLaunch | Scheduled our free launch for November 2, 2026 |
+| Viesearch | Showed 1,200+ queued submissions and stated an 82% free-tier rejection rate |
+
+Also reserve a follow-up pass. Only **75 sites showed a clear confirmation**, such as FutureTools' "Tool Submitted!" For the others, the last click was not enough to establish what happened. Check later before submitting again.
+
+## A shortlist ordered by conditions you can accept
+
+We read each free tier's conditions before filling the form. Here is what those conditions looked like.
+
+For sites that fit, this is the order I would use to triage the observed options.
+
+| Priority | Candidate | When to consider it | Friction to account for |
+|---|---|---|---|
+| Start here | FutureTools | Its rules fit your tool and you want a clear submission signal | Dismiss the newsletter popup with "No thanks" before using the form; look for "Tool Submitted!" |
+| Start here if waiting is acceptable | SaaSHub | Its rules fit and the free no-login route suits you | Up to 32 days; claim the listing before closing the browser or lose management access |
+| Schedule separately | TinyLaunch | The offered launch date works for your plans | Our free launch was scheduled for November 2, 2026 |
+| Conditional for AI agent tools | AI Agents Directory | Its eligibility rules fit and a free `nofollow` link is acceptable | Free links are `nofollow`; dofollow starts at $49 |
+| Defer if queue risk matters | Viesearch | You accept its stated queue and rejection conditions | Check spam, then click "Join the Waiting List" and "Wait in Line" |
+| Ongoing badge condition | Findly.tools | Free listing tied to a footer badge | Our notes say removing the badge later can lead to delisting |
+
+This order changes with your constraints.
+
+Across the dataset, **14 sites required a badge, 12 required a backlink, and 1 required an X post**.
+
+Of the 39 sites that showed a price, the median entry price was $12.
+
+## Copy this submission log before opening forms
+
+Use a separate row for each site and product. Keep a log of the date, result, and what blocked you so you can avoid duplicate submissions and follow up.
+
+```text
+Site:
+Product:
+Submission date:
+
+Fit decision:
+Free-tier conditions:
+Badge or reciprocal-link commitment:
+
+Attempt result:
+Confirmation text or evidence:
+Blocker:
+Inbox or account action still needed:
+
+Expected review or launch date:
+Next follow-up action:
+Follow-up date:
+
+Live listing URL:
+Observed link rel:
+Management access claimed:
+Continuing requirements:
+```
+
+Use the same outcome labels consistently: submitted or already listed, skipped, retry queued, captcha-stopped, or badge-declined. Add a note when confirmation is uncertain.
+
+Make follow-up instructions specific enough to act on:
+
+- **SaaSHub:** Claim management access before ending the browser session. Record the review wait separately.
+- **Viesearch:** Check spam and complete both waiting-list actions.
+- **Findly.tools:** The site can delist you if you remove the footer badge later.
+- **Unclear confirmation:** Check for the listing later before retrying.
+
+For a failed first attempt, write down the blocker. Otherwise, the next session starts by rediscovering the same problem.
+
+## Verify the link before counting it
+
+We inspected link `rel` attributes on **30 sites**, usually when something looked off. This was not a random sample.
+
+| Recorded link category | Sites |
 |---|---:|
-| Free submissions enter a review queue | 56 |
-| Displaying the directory's badge is required | 14 |
-| A backlink to the directory is required | 12 |
-| An X post is required | 1 |
-
-The queue is worth checking before you fill out the form. Viesearch showed 1,200+ queued submissions and said its free tier rejects 82%.
-
-SaaSHub's free no-login form can take up to 32 days. TinyLaunch scheduled a free launch for 2026-11-02.
-
-Badge requirements can also outlast the submission session. Findly.tools can delist you if its footer badge is removed later. If you accept that condition, it becomes something to remember when changing your site, rather than a box to tick once.
-
-We also saw prices on 39 sites. The median entry price among those sites was $12.
-
-My advice is to read the free-tier conditions first. If you will not place a badge or reciprocal backlink, finding that out before entering your product details saves work.
-
-## Link attributes recorded on 30 sites
-
-We recorded link `rel` attributes on only 30 sites, usually when something looked off. This was not a random sample.
-
-Within that checked group, we recorded:
-
-| Recorded link type | Sites |
-|---|---:|
-| Nofollow | 23 |
+| `nofollow` | 23 |
 | Dofollow | 6 |
-| UGC | 1 |
+| `ugc` | 1 |
 
-The specific examples are more useful than extrapolating from that table. AlternativeTo listings are nofollow. LaunchBoosts free-plan links are nofollow. make.rs profile links use `rel="ugc nofollow"`.
+AlternativeTo listings were `nofollow`, as were LaunchBoosts free-plan links. make.rs profile links used `rel="ugc nofollow"`.
 
-AI Agents Directory's free links are nofollow, and dofollow starts at $49. That is a concrete case where "free listing available" and "free dofollow link available" are different claims.
+We only count a dofollow link after inspecting the live listing.
 
-For a maker submitting primarily for backlinks, the practical check happens on the live listing. Inspect the link and its `rel` attribute before counting it as a dofollow backlink.
+## Stars measure attention, downloads measure use
 
-## Budget for human steps and uncertain confirmations
+For open-source tools, keep distribution signals separate from evidence of use, too. Stars measure attention; package downloads offer a usage signal, not a user count.
 
-Browser automation still ran into steps that needed a person. In our notes, 30 sites required someone to open an inbox for a verification link, magic link or code. Another recorded characteristic was Google login, offered or required on 19 sites.
+The [downloads comparison](https://agentoolrank.com/downloads) counts npm and PyPI downloads over 30 days using the npm downloads API and pypistats. A package counts only when its registry page links back to the tool's own repository. Downloads include CI and mirrors.
 
-We also recorded 8 sites with a captcha a person had to complete. That is a different measure from the 5 captcha-blocked outcomes in the first table. One describes a requirement encountered in the flow; the other describes where our attempt stopped. We did not use captcha-solving services.
+## Spend the next session on fit and follow-up
 
-I would budget for a fully unattended agent to stall on about a third of sites. Inbox access alone appeared on 30 of the 101.
+We saw very little referral traffic so far. We make no promise of traffic, publication or ranking gains.
 
-Some interruptions were small enough to miss but specific enough to log:
+Check conditions before filling forms, reserve time for inbox and captcha steps, and keep a dated log of each site's result and blocker.
 
-- **FutureTools:** Dismiss the newsletter popup with "No thanks" before the form works.
-- **SaaSHub:** Claim the listing before closing the browser, or you lose management access.
-- **Viesearch:** Check spam for the confirmation email, then click "Join the Waiting List" and "Wait in Line."
-- **Findly.tools:** Remember that removing the footer badge later can lead to delisting.
-
-Knowing those details changes how I would supervise an automated run. I would keep inbox access available and review uncertain endings, rather than assuming the browser can finish everything unattended.
-
-Confirmation was its own problem. We recorded a clear success signal on 75 of the 101 sites, such as FutureTools' "Tool Submitted!" For the other 26 we have no reliable signal in our notes, so those needed a later check.
-
-## How to plan your own submission run
-
-Start by deciding which conditions you are willing to accept. Read the free-tier rules before filling in the form, especially badge and backlink requirements. Treat a review queue as pending work, with a follow-up date where the directory gives you a useful waiting period.
-
-Reserve time for inbox steps and captchas. Have a way to pause for a person instead of losing track of the site.
-
-Keep a dated log per site and product. Record the result and what blocked you. Keep "submitted," "already listed" and "needs checking" distinct, so you can follow up without submitting twice. When a listing is live, check the link separately.
-
-I would also keep traffic expectations low. We have seen very little referral traffic so far. For planning purposes, treat links and discoverability as the possible value, rather than expecting directory submissions to deliver traffic.
-
-The next useful step is choosing which conditions fit your launch, before opening more forms. Our [free comparison of where to list an AI agent tool](https://agentoolrank.com/where-to-list) can help with that decision.
+Use our [free comparison of where to list an AI agent tool](https://agentoolrank.com/where-to-list) to choose where to spend that submission time.
 
 If a site's rules changed, tell us and we update the data.
 
+Our [Submit Kit](https://agentoolrank.com/submit-kit) ranks these directories for your product type, with form gotchas and a don't-submit list; the top 10 are free over MCP, and the full list is $29 one-time.
+
 Jason T.
 
-Disclosure: The linked comparison is ours.
+Disclosure: Submit Kit is our product.
