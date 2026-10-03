@@ -303,7 +303,8 @@
 - [x] Stripe $29 一次性付款（10-03 11:48 提前上线，9c37c17）：kit-checkout.ts + /api/kit-checkout + KitBuyButton
 - [x] 付款后发 key（9c37c17）：fulfillKitSession 按 stripe_session 幂等 + /submit-kit/thanks 只显示一次 + reconcile-payments 关页面时 Brevo 邮件补发；生产库 selftest 假会话端到端验证通过
 - [x] /agents 文档补 recommend_directories（d8ca50d，新增"Choosing other launch directories"一节 + MCP initialize 说明）
-- [ ] Smithery 描述更新（需要网页操作）
+- [x] Smithery 描述更新（10-03 12:41–12:46）：工具数 669→593 + recommend_directories 说明，质量分 69→77；Releases 重新发布 SUCCESS
+- [ ] 稍后核对 Smithery 公开页显示 6 个工具（重发布后公开页暂未更新，疑缓存）
 - [x] submit-core 的 message_for_human 加 Submit Kit 入口（d8ca50d，末尾一行不带价格，有测试）
 - [ ] 10-18 复盘：≥3 单继续，0 单冻结付费部分
 - [x] new_ladar 意见补充（6091332）：其意见 10-02 23:48 已发，因总线身份问题未收到，经 agentkit 转达补入——不建议清单（普适原因）、三档"自动 / 要人工一步 / 不建议" + 人工步骤清单、链接只标实测值 + "新域名会不会被秒拒"字段、卖点"少投、投对"不承诺 dofollow、跳过记录作初始档案

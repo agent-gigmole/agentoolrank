@@ -824,3 +824,11 @@
 - **验证**：线上建结账会话，金额 2900 USD、payment 模式、metadata 正确、状态 unpaid（没有付款）；在生产库用 selftest 假会话跑 fulfillKitSession，首次发出的 key 有效、第二次返回 alreadyIssued、伪造 key 无效，测试数据已删；227 测试通过，已部署推送，已回报 agentkit，看板已记录
 - **T27 剩余**：Smithery 描述更新（需要网页操作）；10-18 复盘（≥3 单继续，0 单冻结付费部分）
 - 坑：GOTCHAS#submit-kit-paid-fulfillment
+
+
+## 2026-10-03 12:41–12:46 T27 Smithery 描述更新
+- **描述**：Smithery 后台 /servers/admin-avz6/agentoolrank/settings 描述里的工具数 669→593，补 recommend_directories 说明（Submit Kit：免费返回前 10，$29 key 解锁 30 站 + 不建议清单；不做自动提交、不绕验证码），已保存；质量分 69→77
+- **重新发布**：Releases → Publish → Publish via URL（预填 https://agentoolrank.com/api/mcp）→ Continue → 连接参数 Skip（key 走工具参数）→ SUCCESS，9 秒，Smithery 重扫工具列表。公开页暂未显示新工具，判断为缓存，待稍后核对是否显示 6 个工具
+- 看板已记录
+- **T27 剩余**：核对 Smithery 公开页 6 个工具；10-18 复盘（≥3 单继续，0 单冻结付费部分）
+- 坑：GOTCHAS#directory-form-pitfalls（[name=description] 命中 meta 的变体：Smithery 只有 id → #description）

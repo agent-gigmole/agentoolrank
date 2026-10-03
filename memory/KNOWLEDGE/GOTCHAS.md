@@ -545,6 +545,8 @@
 - **自定义下拉**：JS 点不开 → 截图后按坐标真实点击。
 - **上传 logo 弹裁剪框**：必须点 "Use this logo" 才会继续，否则表单卡住。
 - **`[name=xxx]` 选择器命中 meta**（10-02 第四批，agentlocker）：`[name=description]` 会先命中 `<head>` 里的 `<meta name="description">` → 表单字段一律加 tag 前缀，如 `textarea[name=description]`、`input[name=email]`。
+  - **变体（10-03 Smithery 设置页，第 3 次出现：agentlocker → best-ai → Smithery）**：描述框根本没有 name 属性，只有 `id=description`，页面里唯一带 `name=description` 的是 meta → `[name=description]` 甚至 `textarea[name=description]` 都选不中，要用 `#description`。通用规则：description 字段先查 DOM 里实际是 `textarea` 的哪个属性（id/name），用 tag+具体属性定位，绝不用裸 `[name=description]`。
+  - **Smithery 运营小抄**：改 /servers/<ns>/<server>/settings 的描述（写清工具数、每个工具用途）即可提升质量分（10-03：69→77）；重新发布 = Releases → Publish → Publish via URL（已预填）→ Continue → 连接参数选 Skip（key 走工具参数时）→ 约 9 秒 SUCCESS，随后重扫工具列表；公开页有缓存，新工具可能延迟显示。
 - **同名 Submit**：页面标题、导航链接和提交按钮都叫 "Submit" / "Submit Agent"（thedailyworkflow、ainewshub、aiagentsdirectory）→ 一律用 `form button[type=submit]` 定位，不要按文字匹配。
 - **蜜罐字段**：thedailyworkflow 有隐藏字段 `website`，必须留空，填了会被判 bot；按字段名批量填表前先排除隐藏输入。
 - **层层付费引导**：很多站依次弹 付费档 → Priority Pass → 徽章 三层，要逐层选免费那一项；免费档要求挂徽章的（如 aiagentsdirectory）不当场决定，留周决策。

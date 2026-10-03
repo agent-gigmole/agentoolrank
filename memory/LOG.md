@@ -935,3 +935,10 @@
 - 坑：/agents 加 Link 忘了 import，build 失败；感谢页是唯一能看到明文 key 的地方（库里只存哈希），关页面只能靠对账邮件兜底 → GOTCHAS#submit-kit-paid-fulfillment
 - 待办：Smithery 描述更新（网页操作）；10-18 复盘
 - 结果：成功
+
+
+## 2026-10-03 12:41–12:46 T27 Smithery 描述更新
+- 做法：Smithery settings 页改描述（工具数 669→593 + recommend_directories / Submit Kit 说明）→ Releases → Publish via URL → Continue → 连接参数 Skip → 重新发布
+- 结果：质量分 69→77；重新发布 SUCCESS（9 秒）；公开页暂未显示新工具（疑缓存，待核对 6 个工具）；看板已记录
+- 坑：描述框只有 id=description，[name=description] 只命中 meta → 用 #description（该坑第 3 次出现）→ GOTCHAS#directory-form-pitfalls
+- 结果：成功
