@@ -82,6 +82,8 @@ describe("listedReply (agent submits a tool we already list)", () => {
     expect(r.featured_offer?.buy_url).toBe("https://agentoolrank.com/tool/crewai?ref=agent-listed#maintainers");
     expect(r.badge_html).toBe("<a>badge</a>");
     expect(r.message_for_human).toContain("$49");
+    expect(r.submit_kit_url).toBe("https://agentoolrank.com/submit-kit?ref=agent-listed");
+    expect(r.message_for_human).toContain(r.submit_kit_url);
     expect(r.featured_offer?.what_you_get).not.toMatch(/review|refund/i);
   });
   it("drops the offer when payments are off", () => {

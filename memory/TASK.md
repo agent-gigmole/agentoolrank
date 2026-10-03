@@ -89,7 +89,9 @@
 - ✅ API / MCP 提交已收录工具时回复带 $49 推荐位（featured_offer.buy_url 带 ?ref=agent-listed）、badge_html、message_for_human（10-04 04:0x 上线，线上 REST 与 MCP submit_tool 都已核对）
 - ✅ 详情页维护者横幅扩到 ?ref=live-notify、agent-listed（d69fa55，10-04 04:1x 上线；真 Chrome 核对：两个来源显示、无来源不显示）
 - ✅ 日报维护者行加「API 已收录回复 N 个会话、结账 N」（36d7aa1，kpi 已跑出新行）
-- 上线通知信加 Submit Kit 一句（刚上线的工具正要去别的目录站投放，$29 清单最对口；链接带 ?ref=live-notify），之后每封通知同时推 $49 推荐位和 $29 Submit Kit（进行中）
+- ✅ 上线通知信加 Submit Kit 一句（126bbee，/submit-kit?ref=live-notify，预览已核对，下次 daily-ops 发信生效）
+- ✅ 网页提交已收录工具的结果页也加 Submit Kit 框（KitBox 共用，10-04 04:3x 上线，真 Chrome 核对：推荐位、徽章、Submit Kit 三块都在）
+- API / MCP 已收录回复也带 Submit Kit：listedReply 加 submit_kit_url（/submit-kit?ref=agent-listed）并在 message_for_human 加一句；接着 submit_tool 排队成功的 message_for_human 里的 recommend_directories 那句也给网页链接（进行中）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 
