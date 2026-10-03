@@ -1074,4 +1074,5 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 ## checkout-listed-tool-featured-only
 - /api/checkout 给**已收录工具**（没有 submission 记录）买推荐时，只允许 plan=featured（$49）；fast/priority 等档依赖 submission 审核队列，对已收录工具无意义，会被拒
 - 做法：给已收录工具的付费入口（详情页 #maintainers、/downloads、/alternatives、提交结果页 alreadyListed）只展示 featured；PaidOptions 用 listed 模式（684df92），不要复用提交成功页的全档位列表
-- 来源：2026-10-04 684df92（已收录工具提交结果页维护者入口）
+- **商品描述也要分开**（未改）：Stripe featured 商品描述写的是「Fast-track review plus 7 days…」，对已收录工具不准确（已收录不用审核）。结账页文案是按 submission 场景写的；以后给已收录工具单独一段描述（如按有无 submission 选 product_data.description），改前先在真 Chrome 打开结账页看实际显示
+- 来源：2026-10-04 684df92（已收录工具提交结果页维护者入口，部署后真 Chrome 点到 checkout.stripe.com 发现描述问题）

@@ -1347,3 +1347,10 @@
 - **线上实测**：/api/prefill crewAI 返回整句简介；真 Chrome（?internal=1）填 browser-use 地址后官网、简介自动填，手填名字保留；看板已记（034778e）
 - **进行中：已收录工具提交结果页给维护者入口**（提交已收录工具的人多半是维护者 = $49 最对口的人）：第一步 684df92 未部署——PaidOptions 加 listed 模式只给 featured、抽出 BadgeBox 组件（徽章代码）；358 测试通过。/api/checkout 对已收录工具（无 submission）只允许 plan=featured（GOTCHAS#checkout-listed-tool-featured-only）
 - **下一步**：结果页接上 listed 模式 PaidOptions + BadgeBox → 部署 → 线上核对 → 看板；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 03:1x 已收录工具提交结果页维护者入口上线（684df92 已部署）+ /submit 顶部维护者说明开工（6a5311c 未部署）
+- **维护者入口已上线（agentoolrank.com）**：提交已收录工具后结果页有「Feature it · $49」按钮（PaidOptions listed 模式，只给 featured）+ BadgeBox 徽章代码；埋点 checkout_click 路径 /submit-listed#featured
+- **线上实测**：真 Chrome（?internal=1）提交 crewAI → 预填生效 → 结果页 → 点按钮到 checkout.stripe.com，商品「AgentoolRank featured listing (7 days)」。已收录路径不写 submissions 表，所以线上可安全实测；看板已记
+- **坑（未改）**：Stripe featured 商品描述写「Fast-track review plus 7 days…」，对已收录工具不准（无需审核），可后续单独描述（GOTCHAS#checkout-listed-tool-featured-only）
+- **进行中**：/submit 顶部给已收录工具维护者一句直达说明，第一步 6a5311c 已提交未部署
+- **下一步**：/submit 顶部说明部署 + 线上核对 + 看板；考虑已收录工具的 Stripe 商品描述；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

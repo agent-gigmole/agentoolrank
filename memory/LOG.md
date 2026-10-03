@@ -1289,3 +1289,9 @@
 - 结果：线上 /api/prefill crewAI 返回整句简介；真 Chrome 填 browser-use 后官网/简介自动填、手填名字保留；358 测试全绿
 - 坑：/api/checkout 对已收录工具（无 submission）只允许 plan=featured（GOTCHAS#checkout-listed-tool-featured-only）；构建日志 "Ecmascript file had an error" 仍是 packages/db 旧告警，已有记录
 - 结果：成功（维护者入口进行中）
+
+## 2026-10-04 03:12 已收录工具提交结果页维护者入口上线（684df92 部署，6a5311c）
+- 做法：结果页接 PaidOptions listed 模式（只给 featured $49）+ BadgeBox 徽章代码，埋点 checkout_click /submit-listed#featured；部署 agentoolrank.com，看板记一行，TASK 队列 ✅；新开「/submit 顶部给已收录工具维护者一句直达说明」，第一步 6a5311c 已提交未部署
+- 结果：真 Chrome（?internal=1）提交 crewAI → 预填 → 结果页 → 点按钮到 checkout.stripe.com，商品「AgentoolRank featured listing (7 days)」；已收录路径不写 submissions 表，线上实测无副作用
+- 坑：Stripe featured 商品描述「Fast-track review plus 7 days…」对已收录工具不准确（GOTCHAS#checkout-listed-tool-featured-only 补一条，未改代码）
+- 结果：成功（/submit 顶部说明进行中）
