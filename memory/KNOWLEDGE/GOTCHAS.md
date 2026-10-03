@@ -820,3 +820,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **不付钱也能端到端验证发货**：线上建一个真结账会话只检查金额 / 模式 / metadata（状态 unpaid，不付款）；发货逻辑在生产库用 selftest 假会话直接跑 fulfillKitSession：首次 key 有效、第二次 alreadyIssued、伪造 key 无效，跑完删掉测试数据。
 - **build 坑**：给 /agents 页加 `<Link>` 忘了 `import Link from "next/link"` → `Type error: Cannot find name 'Link'`，本地测试不报，只在 next build 时暴露；改页面 JSX 后部署前跑一次 build。
 
+
+## competitor-scan-webfetch-403
+- 10-03 竞品扫描：TAAFT（theresanaiforthat.com）、toolify.ai 对 WebFetch 直接返回 403（反爬），futurepedia 提交页 404（路径已改）。WebFetch 只适合小站（aiagentsdirectory.com、aiagentslist.com 能正常抓）
+- 做法：大站竞品扫描用浏览器（/browse 或 scripts/winbrowser），或者以我们自己投递时的实测记录（~/data/backlinks/directory-log.csv、Submit Kit 数据）为准；不要反复换 UA 硬抓
+- 周报里抓不到的站要明确标"待补"，不要凭印象填价格/规则

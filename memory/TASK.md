@@ -304,7 +304,7 @@
 - [x] 付款后发 key（9c37c17）：fulfillKitSession 按 stripe_session 幂等 + /submit-kit/thanks 只显示一次 + reconcile-payments 关页面时 Brevo 邮件补发；生产库 selftest 假会话端到端验证通过
 - [x] /agents 文档补 recommend_directories（d8ca50d，新增"Choosing other launch directories"一节 + MCP initialize 说明）
 - [x] Smithery 描述更新（10-03 12:41–12:46）：工具数 669→593 + recommend_directories 说明，质量分 69→77；Releases 重新发布 SUCCESS
-- [ ] 稍后核对 Smithery 公开页显示 6 个工具（重发布后公开页暂未更新，疑缓存）
+- [ ] 明天（10-04）核对 Smithery 公开页：描述 593 + 显示 6 个工具（10-03 13:46 复查仍是旧描述 669，后台已存 593，判断公开页缓存长）
 - [x] submit-core 的 message_for_human 加 Submit Kit 入口（d8ca50d，末尾一行不带价格，有测试）
 - [ ] 10-18 复盘：≥3 单继续，0 单冻结付费部分
 - [x] new_ladar 意见补充（6091332）：其意见 10-02 23:48 已发，因总线身份问题未收到，经 agentkit 转达补入——不建议清单（普适原因）、三档"自动 / 要人工一步 / 不建议" + 人工步骤清单、链接只标实测值 + "新域名会不会被秒拒"字段、卖点"少投、投对"不承诺 dofollow、跳过记录作初始档案
@@ -324,7 +324,8 @@
 - [ ] 周一摘要加「收录覆盖率」指标（10-03 07:34）：GSC 28 天 393 次展示全部来自 33 个英文页，zh/ja 为 0；sitemap 提交 2467、indexed 0；URL Inspection 抽查 zh/ja 页为 unknown 或 Discovered-not-indexed → 瓶颈在 Google 收录（新站抓取预算低）
 - [x] 看板固定指标（自动出数，10-03 09:40，99c23fe）：看板 KPI 新增「固定指标」行，每小时刷新——外联累计发出（data/outreach/sent.json）+ 近 7 天会话（events.src 含 outreach）；目录站已提交 / 已上线（~/data/backlinks/directory-log.csv 取 ai-directory 每域名最新一条，detail 含「已上线 / is live / 已发布」算上线）；中文页、日文页近 7 天访客。kpi.test.ts 先写，212 测试通过。当前：外联 10 封 / 4 会话；目录站 41 / 3（launchboosts、conduid、aitoolsrecap）；zh 访客 3、ja 0
 - [ ] 看板「本周经营」固定栏 + 对标差距指标 + 目录提交成功率（剩余部分）
-- [ ] 周一前补：竞品扫描（对标站 + ≥3 个同类站）、新数据源 1 个、新渠道 1 个
+- [~] 竞品扫描：部分完成（3 家待浏览器补全）（10-03 13:55，写入 W41 草案）：直接竞品 aiagentsdirectory.com、aiagentslist.com 已扫；TAAFT、toolify（WebFetch 403）、futurepedia（提交页 404）待周末浏览器补。结论：竞品卖曝光靠流量撑，我们走数据 + agent 可调用；押注 3 改为「Submit Kit 已上线 $29，10-18 前 ≥3 单」
+- [ ] 周一前补：新数据源 1 个、新渠道 1 个
 - 约束: 瓶颈在分发；零流量期不再堆功能（已承认这两天犯过一部分）
 - 闸: auto
 

@@ -832,3 +832,15 @@
 - 看板已记录
 - **T27 剩余**：核对 Smithery 公开页 6 个工具；10-18 复盘（≥3 单继续，0 单冻结付费部分）
 - 坑：GOTCHAS#directory-form-pitfalls（[name=description] 命中 meta 的变体：Smithery 只有 id → #description）
+
+
+## 2026-10-03 13:46–13:55 T28 竞品扫描（部分）+ Smithery 公开页核对顺延
+- **Smithery**：重新发布 1 小时后公开页仍显示旧描述"669"，后台输入框已存为 593，判断是公开页缓存时间长；明天（10-04）再核对描述和 6 个工具
+- **竞品扫描**写进 docs/ops/weekly/2026-W41-draft.md（已提交）：
+  - aiagentsdirectory.com：免费档要挂徽章 + 回链，外链 nofollow；dofollow 起价 $49，付费 $19 起；首页卖 6 个广告位；另有"Ship custom AI agents"代开发服务
+  - aiagentslist.com：600+ 工具、14+ 分类，有 MCP Servers 专区和 AI Agents Map；上架流程先免费核资格再选付费档；8–9 月持续发博客
+  - TAAFT、toolify 对 WebFetch 返回 403，futurepedia 提交页 404 → 三家待周末用浏览器补全
+  - **结论**：竞品都在卖曝光，背后有流量撑着；我们没有流量，卖曝光卖不动。差异化方向是数据 + agent 可调用（Submit Kit、MCP）
+  - 押注 3 更新为"Submit Kit 已上线，$29，10-18 前 ≥3 单"
+- **T28 剩余**：竞品扫描补全 3 家（浏览器）、新数据源 1 个、新渠道 1 个；10-05 交第一份
+- 坑：GOTCHAS#competitor-scan-webfetch-403

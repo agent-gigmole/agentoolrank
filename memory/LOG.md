@@ -942,3 +942,10 @@
 - 结果：质量分 69→77；重新发布 SUCCESS（9 秒）；公开页暂未显示新工具（疑缓存，待核对 6 个工具）；看板已记录
 - 坑：描述框只有 id=description，[name=description] 只命中 meta → 用 #description（该坑第 3 次出现）→ GOTCHAS#directory-form-pitfalls
 - 结果：成功
+
+
+## 2026-10-03 13:46–13:55 T28 竞品扫描（部分）
+- 做法：Smithery 公开页复查 → 仍是旧描述 669（后台已存 593），判断缓存，顺延到 10-04；WebFetch 扫竞品，写入 docs/ops/weekly/2026-W41-draft.md 竞品扫描一节并提交（7d83817、3e53334）
+- 结果：两家直接竞品已扫完：aiagentsdirectory.com（免费档要徽章 + 回链、nofollow，dofollow $49 起、付费 $19 起，首页 6 个广告位，另卖代开发）、aiagentslist.com（600+ 工具、14+ 分类、MCP 专区 + Agents Map，先免费核资格再选付费档，8–9 月持续发博客）。对标站 TAAFT、toolify 返回 403，futurepedia 提交页 404，待周末用浏览器补。结论：竞品卖曝光靠流量撑，我们零流量卖不动，差异化走数据 + agent 可调用；押注 3 改为"Submit Kit 已上线 $29，10-18 前 ≥3 单"
+- 坑：TAAFT / toolify 拒绝 WebFetch（403）→ GOTCHAS#competitor-scan-webfetch-403
+- 结果：部分完成
