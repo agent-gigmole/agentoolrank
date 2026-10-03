@@ -160,6 +160,7 @@
 
   <h2>更新日志</h2>
   <ul>
+    <li>2026-10-03 20:32 /downloads 和替代品页底部加了维护者入口：「你维护其中一个工具吗？」可以拿实时排名徽章放进 README，或者花 $49 上首页推荐 7 天，点名字直接跳到该工具页的维护者区。这是把新做的下载量页面带来的流量往付费推荐上引。已用真浏览器点过一次，点击按「downloads-maintainer-cta」计入统计。</li>
     <li>2026-10-03 20:22 /downloads 新增一节「下载量远超星数的工具」：按每个 GitHub 星对应的下载量排序，只算近 30 天下载 10 万以上的工具。前几名是 OpenAI Python（每星 8955 次）、MCP Python SDK（8952）、AI SDK（3984）。这类工具多是别的软件依赖的底层库，装在构建和 CI 里，不是用户试完会去点星的应用。这是数据文章和 X 周榜可以用的新角度。</li>
     <li>2026-10-03 20:12 新流水线：周报的记分牌改成自动取数。每周一 08:50 由定时器重写 docs/ops/weekly/&lt;周一&gt;.md 的「记分牌」一节，赶在 agentkit 09:25 排名之前，只提交这一个文件。内容包括收入、陌生人付费单、现金支出、利润、真实访客、两条漏斗、外联、目录站上线数、Google 点击。已通过 systemd 跑通一次，10-05 的周报已经自动生成好。另外，记分牌里的支出改从 agentkit 新建的花费库取，Airwallex 卡的扣款每 6 小时自动入库。</li>
     <li>2026-10-03 20:02 首页（全站流量最大的页面）在 Trending 下面加了「Most downloaded」一栏：近 30 天 npm + PyPI 下载量前 6 名，依次是 OpenAI Python 2.84 亿、MCP Python SDK 2.19 亿、LangChain 1.69 亿、AI SDK 1.08 亿、LangGraph 4370 万、Playwright MCP 2900 万，点「see all」进入 /downloads。</li>
