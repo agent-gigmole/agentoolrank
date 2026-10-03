@@ -91,7 +91,8 @@ export async function GET(
       </div>
     ),
     {
-      width: 320,
+      // Width follows the text so long names and the downloads tail aren't clipped (~7.4 px per char at 13px + brand block).
+      width: Math.max(320, Math.min(560, Math.round(150 + (`Featured: ${name}`.length + (downloads ? downloads.length + 6 : stars.length + 3)) * 7.4))),
       height: 32,
     }
   );
