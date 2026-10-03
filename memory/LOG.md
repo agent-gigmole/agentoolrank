@@ -1220,3 +1220,9 @@
 - 做法：/submit-kit 免费清单服务端读 listing_checks（state=live），用 ourResultLabel 标「our own listing: live, followed link / nofollow」，部署后线上核对，看板记一行；接着 recommendDirectories 加可选 ours 参数返回每站 our_listing（WIP）；第二篇 dev.to 稿后台 bin/write 出稿中
 - 结果：线上 AI tool 类型已显示标记（MCP server / dev tool / SaaS 前 10 暂无我们已上线的站）；our_listing 剩 MCP 路由接入与部署；第二篇稿未核实、未排期
 - 结果：成功（Kit 完整版 our_listing 进行中）
+
+## 2026-10-04 00:0x recommend_directories 带 our_listing + dev.to 第二篇排期 + /submit-kit 实测战绩开工（15c4d7a、f9e5853、dee800f）
+- 做法：McpDeps 加可选 ourListings()，MCP 路由读 listing_checks 传入 recommendDirectories，部署后线上 MCP 调用核对；第二篇稿 bin/write 出稿，2 条推断句改回 brief 原意、改标题，writer check clean，排进 devto-schedule 10-12 21:00；队列加 10-11 重刷数字；开工 /submit-kit 实测战绩一行
+- 结果：线上 ai_tool 返回 2 个 Live（1 followed、1 nofollow）+ 4 个 Submitted；测试 343 通过；第二篇 await 136e42；dee800f 已提交未部署
+- 坑：定时发布的文章数字会在发布日前过期，发布前一天要用最新数据重刷再复检 → GOTCHAS#scheduled-post-refresh-numbers
+- 结果：成功（/submit-kit 实测战绩进行中）

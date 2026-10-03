@@ -1057,3 +1057,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 做法：先查 /api/v1/auth/key 判断；不是 provisioning key 就不能自建子 key，新建 provisioning key 属改凭证，报老板。同一接口还能看该 key 累计 usage 与 limit，用来和自己账本对账（10-03 发现累计 $6.08，我们只记 $0.53）
 - 注意：/api/v1/auth/key 输出的 label 带 key 掩码前后缀，别贴进看板、汇报、对外文本
 - 来源：2026-10-03 word-factory 子 key 请求
+
+## scheduled-post-refresh-numbers
+- 提前多天排进定时发布（ops/devto-schedule.json）的数据文章，里面的下载量/星数是写稿当天的数，到发布日已经过期；brief 要求发布当天的数
+- 做法：排期时同时在 TASK 加一条「发布前一天用最新数据（tool_packages 等）重刷文中数字 → 再跑 writer check」，不要等发布后才发现数字旧
+- 例：dev.to 第二篇 10-04 写稿、10-12 发布 → 10-11 重刷

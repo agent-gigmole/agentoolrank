@@ -1270,3 +1270,10 @@
 - **dev.to 第二篇**：后台 bin/write 出稿中 → docs/ops/launch-kit/drafts/devto-stars-vs-downloads.md（未核实，未复检），之后复检、排进 ops/devto-schedule.json 2026-10-12
 - **TASK 队列**：Submit Kit 实测上线标记 ✅；新增「Kit 完整版返回带 our_listing」（进行中）
 - **下一步**：our_listing 接 MCP 路由并部署核对；第二篇稿复检后排期；等第二周快照后做 /downloads「上升最快」；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55
+
+## 2026-10-04 00:0x recommend_directories 带 our_listing 上线 + dev.to 第二篇排期 + /submit-kit 实测战绩开工（15c4d7a、f9e5853、dee800f）
+- **recommend_directories 返回 our_listing**（15c4d7a，已部署）：McpDeps 新增可选 ourListings()，MCP 路由读 listing_checks 用 ourResultLabel；免费与完整版都带。线上 MCP 调用 ai_tool：aitoolscapital.com「Live · followed link」、aitoolsrecap.com「Live · nofollow」，agenstry / ainewshub / alternative.me / glama「Submitted, not live yet」。测试 343 通过
+- **dev.to 第二篇已排期**（f9e5853）：bin/write 出稿，报告 2 条推断句改回 brief 原意（如「When choosing a library, look at both numbers, plus recent commits and issue response」），标题「Stars measure attention, downloads measure use: 230 AI agent tools」，writer check clean；ops/devto-schedule.json 加 2026-10-12T21:00+08:00（tags ai/opensource/python/javascript）；await 136e42（9d）
+- **/submit-kit 实测战绩（进行中，dee800f 已提交未部署）**：页面显示「Our own run so far: submitted N, live M, followed K」，从 listing_checks 现算
+- **TASK 队列**：our_listing ✅、第二篇排期 ✅；新增「10-11 用最新 tool_packages 重刷第二篇数字后复检」「/submit-kit 实测战绩一行」；看板已记
+- **下一步**：dee800f 部署并线上核对；10-11 重刷第二篇数字；等第二周快照后做 /downloads「上升最快」；07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿；10-04 老板汇总确认 $5.55

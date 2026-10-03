@@ -326,3 +326,5 @@
 | curl 计数翻倍 HTML + RSC 各一次 除以 2 / Our result 列 listing_checks 41 站 7 有链接 4 followed 2 nofollow 1 GitHub / 8069724 | GOTCHAS.md#curl-next-rsc-output |
 | OpenRouter provisioning key / 子 key 401 / is_provisioning_key / /api/v1/auth/key usage 对账 $6.08 vs $0.53 / label 带掩码别外贴 / word-factory 方案 B | GOTCHAS.md#openrouter-provisioning-key |
 | 下载量周快照 tool_packages_history week=周一 downloads_30d / 首快照 2026-09-28 248 行 / 上升最快 X 周榜 / 8876270 | STATE.md#2026-10-03 23:3x–23:xx Our result 列上线 + OpenRouter 子 key 不可建 + 下载量周快照开工 |
+| 定时发布文章数字过期 / 发布前一天重刷 tool_packages 数字再复检 / dev.to 第二篇 10-12 await 136e42 | GOTCHAS.md#scheduled-post-refresh-numbers |
+| recommend_directories our_listing / McpDeps ourListings() / /submit-kit 实测战绩 dee800f | STATE.md#2026-10-04 00:0x recommend_directories 带 our_listing 上线 + dev.to 第二篇排期 + /submit-kit 实测战绩开工（15c4d7a、f9e5853、dee800f） |
