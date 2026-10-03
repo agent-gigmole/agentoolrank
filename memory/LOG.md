@@ -1340,3 +1340,8 @@
 - 做法：listedReply 带 submit_kit_url ?ref=agent-listed；submit_tool 排队成功 message_for_human 加 /submit-kit?ref=agent-queued；部署后 REST 以 ?src=selftest-kit 实测已收录回复含 submit_kit_url 与说明句，/submit-kit?ref=agent-listed 200，看板已记；kpi Submit Kit 行加进页来源（上线通知信/API 已收录/API 排队/其他），370 测试全过、kpi 跑出；队尾新增并开工 kitTypeForCategories（mcp→mcp_server，否则 ai_tool）+ 测试
 - 结果：成功（kitTypeForCategories 未接入 liveEmail / listedReply）
 - 坑：线上自测 REST 要把 ?src=selftest-* 放 URL 上（已有 GOTCHAS#api-calls-selftest-src-from-url，本轮照做，无新坑）
+
+## 2026-10-04 05:03 Submit Kit 链接按类目预选 ?type= 上线（3405e0b 部署、65de35a 看板）+ /submit-kit 来意说明开工（ee2dd67）
+- 做法：liveEmail / listedReply 加可选 kitType；send-live-emails 查 tools.category_tags；REST/MCP 路由用 getToolBySlug(r.slug).category_tags；373 测试全过，部署；线上 ?src=selftest-kittype 实测 modelcontextprotocol/servers → type=mcp_server&ref=agent-listed，CrewAI → type=ai_tool，type=mcp_server 页前列 agenstry、glama；看板已记，TASK ✅；队尾新增并开工 /submit-kit 来意说明（kitIntro，data-testid=kit-intro）
+- 结果：成功（kitIntro 未部署）
+- 坑：线上实测 2 次 REST 已带 ?src=selftest-kittype（照 GOTCHAS#api-calls-selftest-src-from-url）；看板 KPI 块每小时被 kpi.ts 改写，提交看板时顺带进去属正常——无新坑

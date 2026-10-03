@@ -1406,3 +1406,10 @@
 - **日报 Submit Kit 行**加「进页来源：上线通知信 · API 已收录 · API 排队 · 其他」（live-notify / agent-listed / agent-queued / 其他）；370 测试全过，kpi 已跑出新行
 - **进行中：Submit Kit 链接按工具类目带 ?type=**——e0a52b6 src/lib/directory-kit.ts kitTypeForCategories（类目含 mcp → mcp_server，否则 ai_tool）+ 测试；**未接**进 liveEmail / listedReply（需传类目：send-live-emails 查 tools.category_tags；listedReply 需在 route 里查工具）
 - **下一步**：kitTypeForCategories 接入 liveEmail + listedReply（REST route 与 MCP submit_tool）→ 测试 → 部署 → 线上实测（src=selftest-*）；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 05:03 Submit Kit 链接按类目预选 ?type= 上线（3405e0b 已部署，65de35a 看板）+ /submit-kit 来意说明开工（ee2dd67 未部署）
+- **已上线（agentoolrank.com）**：liveEmail 与 listedReply 加可选 kitType；send-live-emails 查 tools.category_tags（JSON 字符串）传入；REST /api/v1/submissions 与 MCP submit_tool 用 getToolBySlug(r.slug).category_tags 算 kitTypeForCategories；373 测试全过
+- **线上实测**（?src=selftest-kittype，2 次 REST 调用不计入统计）：modelcontextprotocol/servers → /submit-kit?type=mcp_server&ref=agent-listed；CrewAI → type=ai_tool；/submit-kit?type=mcp_server 页前列 agenstry、glama。看板已记，TASK ✅
+- **进行中：/submit-kit 对 ref=live-notify / agent-listed / agent-queued 访客页顶加一句接上来意**——ee2dd67 kitIntro 函数（data-testid=kit-intro），已 push **未部署**
+- **注意**：看板 KPI 块每小时被 kpi.ts 改写，提交看板时会一并带进去，属正常
+- **下一步**：kitIntro 接页面 → 测试 → 部署 → 真 Chrome 核对三种 ref 显示、无 ref 不显示 → 看板；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
