@@ -142,7 +142,7 @@ export function SubmitForm({ paymentsEnabled = false }: { paymentsEnabled?: bool
     const form = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     let src = "";
     try {
-      src = sessionStorage.getItem("utm_src") ?? document.referrer ?? "";
+      src = sessionStorage.getItem("at_src") ?? document.referrer ?? "";
     } catch {}
     try {
       const res = await fetch("/api/submit", {

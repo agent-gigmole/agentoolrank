@@ -13,7 +13,7 @@ export function KitBuyButton({ price }: { price: number }) {
       // Session source (?ref= / utm, saved by Analytics) so a Kit sale shows which entry brought the buyer.
       let from = "";
       try {
-        from = sessionStorage.getItem("utm_src") ?? "";
+        from = sessionStorage.getItem("at_src") ?? "";
       } catch {}
       const res = await fetch("/api/kit-checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ src: from ? `submit-kit-page|${from}` : "submit-kit-page" }) });
       const data = await res.json();
