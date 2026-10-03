@@ -132,3 +132,12 @@ describe("subject A/B", () => {
     expect(outreachEmail({ ...t, variant: "B" }, "https://agentoolrank.com").subject).toBe("FastMCP is #2 of 29 in MCP Servers (data inside)");
   });
 });
+
+describe("landing link carries the A/B group (opens are unreliable: Apple Mail prefetch)", () => {
+  it("uses ref=outreach-a / outreach-b when a variant is set, plain outreach otherwise", () => {
+    const t = { owner: "Jane", name: "FastMCP", slug: "fastmcp", rank: 2, total: 29, category: "MCP Servers" };
+    expect(outreachEmail({ ...t, variant: "B" }, "https://agentoolrank.com").text).toContain("/tool/fastmcp?ref=outreach-b");
+    expect(outreachEmail({ ...t, variant: "A" }, "https://agentoolrank.com").text).toContain("/tool/fastmcp?ref=outreach-a");
+    expect(outreachEmail(t, "https://agentoolrank.com").text).toContain("/tool/fastmcp?ref=outreach ");
+  });
+});

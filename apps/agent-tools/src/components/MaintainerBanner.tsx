@@ -7,7 +7,7 @@ import { track } from "@/components/Analytics";
 export function MaintainerBanner({ name }: { name: string }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("ref") === "outreach") setShow(true);
+    if (new URLSearchParams(window.location.search).get("ref")?.startsWith("outreach")) setShow(true); // outreach, outreach-a, outreach-b
   }, []);
   if (!show) return null;
   return (

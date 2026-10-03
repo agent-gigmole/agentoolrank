@@ -17,7 +17,7 @@ export function outreachEmail(
       "",
       `${t.name} is currently #${t.rank} of ${t.total} in ${t.category} on AgentoolRank, ranked by live GitHub activity. I built AgentoolRank.`,
       "",
-      `Could you check ${baseUrl}/tool/${t.slug}?ref=outreach ? It shows your project's stats, alternatives and side-by-side comparisons, with data refreshed daily.`,
+      `Could you check ${baseUrl}/tool/${t.slug}?ref=outreach${t.variant ? `-${t.variant.toLowerCase()}` : ""} ? It shows your project's stats, alternatives and side-by-side comparisons, with data refreshed daily.`,
       "",
       ...(t.downloads
         ? [`Its ${t.downloads.label} package ${t.downloads.pkg} had ${t.downloads.value} downloads in the last 30 days; the page shows that next to stars (${baseUrl}/downloads).`, ""]
