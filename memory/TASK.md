@@ -44,9 +44,10 @@
 - ✅ /submit-kit 网页直接展示免费前 10 个站（?type= 切换 AI tool / MCP server / Dev tool / SaaS，10-03 21:2x 上线核对：MCP server 24 个对口站，前 3 agenstry、glama、mcpmarket）
 - ✅ 外联候选补货：已补到 56 人、未发 47（10-03 21:26，备份 candidates-2026-10-03.json.bak）；夜间 outreach-ops.sh 发信前未发 < 20 自动备份并补货（97f19d0、4bbf302）
 - ✅ recommend_directories 免费结果的付费提示链到 /submit-kit?type=<产品类型>（10-03 21:4x 上线，线上 MCP 调用已核对）
-- /where-to-list 的 Submit Kit 框按产品类型给 4 个直达链接（/submit-kit?type=ai_tool 等），读者一点就看到对口的免费 10 个
-- X 周榜文案加一行「本月下载最多」（取 /downloads 第 1 名），给周一 10:00 的帖子一个新角度，文案过 post-copy 检查
+- ✅ /where-to-list 的 Submit Kit 框按产品类型给 4 个直达链接（c7b8014，10-03 21:51 部署核对）
+- ✅ X 周榜文案加一行「近 30 天下载最多」（16d990f，10-05 10:00 首发；当前会是 OpenAI Python 284.2M，过共用文案检查）
 - 详情页「Maintain X?」框对下载量 ≥10 万的工具，首页推荐按钮文案改为强调「被 N 个下载/月 的开发者看到」？——先查首页推荐的点击数据再定，避免没依据改文案
+- /submit-kit 页标题和描述改为搜索意图词（"best directories to submit an AI tool / MCP server"），并加 FAQ JSON-LD，作为长尾入口
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

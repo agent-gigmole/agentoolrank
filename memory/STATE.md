@@ -1180,3 +1180,10 @@
 - 结果：线上 POST /api/mcp tools/call 返回已核对含 submit-kit?type=mcp_server；c7b8014 已提交未部署；22:00 外联批次待核实（后台等待任务会提醒，未核实）
 - 坑：无新坑
 - 结果：成功（/where-to-list Kit 框直达进行中）
+
+## 2026-10-03 21:51–22:0x /where-to-list Kit 框类型直达上线 + X 周榜加下载量一行（c7b8014、e503557、16d990f）
+- **/where-to-list Kit 框 4 个类型直达**（c7b8014）：21:51 部署，线上 4 个 data-testid wtl-kit-* 已核对；看板已记（e503557）
+- **X 周榜「近 30 天下载最多（npm + PyPI）：<工具>，<数> 次」**（16d990f，已提交推送）：weeklyPostText 加可选 mostDownloaded 参数 + 测试；weekly-post.ts 用 rankByDownloads 取第 1 名；当前预览 OpenAI Python 284.2M，过 agentkit post-copy-check（关键词 + 语义）；测试 327 通过
+  - 10-05 周一 10:00 首发（未核实）
+- **TASK 队列**：/where-to-list 类型直达 ✅、X 周榜下载量 ✅；新增「/submit-kit 标题描述改搜索意图词 + FAQ JSON-LD」
+- **下一步**：22:00 外联批次实发核对（未核实）；/submit-kit 搜索意图标题 + FAQ JSON-LD；10-05 周榜首发核对（未核实）；futurepedia 价格（未核实）；10-07 dev.to 数据文章（未核实）
