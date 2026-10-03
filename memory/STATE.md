@@ -1088,3 +1088,10 @@
 - **TASK 队列**：替代品页 ✅；新增「首页加 Most downloaded 入口卡片链 /downloads」；竞品项改写为只剩 futurepedia
 - 坑：KNOWLEDGE/GOTCHAS.md#vitest-run-from-app-dir
 - **下一步**：futurepedia 价格（登录后查，不注册新账号则记未核实）；首页 Most downloaded 卡片；周报写入价格对比；22:00 外联第二批登记 await；10-07 dev.to 数据文章发出核对
+
+## 2026-10-03 20:4x– 首页 Most downloaded 一栏上线 + 周报记分牌渲染（b5b7113 已部署，167d77e 看板，6b82a3a WIP）
+- **首页 Most downloaded**（b5b7113，已部署，线上已核对）：Trending 下方一栏，rankByDownloads 前 6（npm + PyPI 30 天）：OpenAI Python 284.2M、MCP Python SDK 219.0M、LangChain 169.4M、AI SDK 108.0M、LangGraph 43.7M、Playwright MCP server 29.0M，链 /downloads；看板已记（167d77e）
+- **TASK 队列**：首页 Most downloaded ✅；新增「/downloads 加每星下载最高（下载多星少）榜」
+- **周报数字段流水线化（进行中）**：src/lib/weekly-numbers.ts `scoreboardTable`（收入、陌生人付费单、现金支出、利润、真实访客 + 疑似扫描器、提交工具漏斗、Submit Kit 漏斗、外联、目录站已上线、GSC 28 天）+ 测试，6b82a3a（WIP，未接数据、未上定时器）
+  - 剩：脚本从 ops/scoreboard.json + kpi 数据取数 → 周一 09:00 前替换 docs/ops/weekly/<周一>.md「记分牌」节 → systemd 定时器 + 登记 pipelines.json
+- **下一步**：完成周报数字段脚本 + 定时器；/downloads 每星下载榜；futurepedia 价格（未核实）；周报写入价格对比；22:00 外联第二批送达核对（未核实）；10-07 dev.to 数据文章发出核对（未核实）

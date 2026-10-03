@@ -8,7 +8,7 @@
 - ✅ 外联发前预检（agentkit 17:05，0123eb1）：每封查 MX + 共用 Brevo blockedContacts，不合格跳过并写 optout.json；今晚 22:00 实发结果未核实
 - ✅ 流水线化：目录站上线复查（check-listings.ts 并入 daily-ops 21:30，baa4aa2；首跑 41 站确认 6 个有链接、新增 4 个上线，回写 dirsub）
 - ✅ 流水线化：hello@ 回信收集（agentkit bin/gmail-read，并入每小时 feedback collect；回 no 自动 optout）。原需求：可脚本化的收件箱读取（现在只能在会话里用 Gmail MCP）；先查有没有只读 IMAP/API 凭据，没有就报老板
-- 流水线化：周报数字段（记分牌、漏斗、外部评测原始反馈）脚本生成，结论用 bin/write 写稿
+- 流水线化：周报数字段（记分牌、漏斗、外部评测原始反馈）脚本生成，结论用 bin/write 写稿（进行中：src/lib/weekly-numbers.ts scoreboardTable + 测试已提交 6b82a3a WIP；剩脚本从 ops/scoreboard.json + kpi 数据取数、周一 09:00 前替换 docs/ops/weekly/<周一>.md「记分牌」节、systemd 定时器 + pipelines.json 登记）
 - ✅ 流水线化：dev.to 文章定时发布（devto-publish.ts 并入 hourly，ops/devto-schedule.json；数据文章排在 10-07 21:00 北京，dry-run 通过）
 - 外联每晚 22:00 由定时器自动发 10 封（会话不再手动发）；回信由每小时 feedback collect 自动收，真人回信 48 小时内写结论
 - ✅ Submit Kit 首单路径（10-03 16:35 /where-to-list 已上线 54cb18e；数据文章 brief 已加文末入口；/submit 成功页入口 + kit_click 埋点）：/where-to-list 实测表下方和 10-07 数据文章文末加 recommend_directories 入口，提交状态页也加
@@ -29,7 +29,8 @@
 - ✅ 对比页加下载量一行（10-03 20:1x，/compare/* 显示 npm + PyPI 30 天下载量，高者标绿）
 - ✅ 替代品页 /alternatives/* 加下载量列 + 一句话结论（10-03 20:3x 上线，线上 /alternatives/langchain 已核对）
 - 10-07 21:00 后确认数据文章已自动发出（data/devto-published.json 有 URL），把 URL 写进看板并在 /where-to-list 页底加「读完整数据文章」链接
-- 首页加「Most downloaded」入口卡片链到 /downloads（首页是流量最大的页，现在没有入口）
+- ✅ 首页加「Most downloaded」一栏（前 6 名 + 链 /downloads，10-03 20:4x 上线核对）
+- /downloads 加「下载量多但星数少」（每星下载最高）的工具榜，作为数据文章和 X 周榜的新角度
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

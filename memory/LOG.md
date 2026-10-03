@@ -1089,3 +1089,9 @@
 - 结果：313 测试通过；线上 /alternatives/langchain 结论句已核对；futurepedia 价格未核实；「我们 $9–$49 比大站 $49–$99 便宜且不要求徽章」尚未写进周报
 - 坑：vitest 用 --root 从仓库根跑会少算测试（311 vs 313），要在 apps/agent-tools 目录里跑 → GOTCHAS#vitest-run-from-app-dir
 - 结果：成功（futurepedia 价格未核实）
+
+## 2026-10-03 20:4x– 首页 Most downloaded + 周报记分牌渲染（b5b7113、167d77e、6b82a3a）
+- 做法：首页 Trending 下加「Most downloaded」一栏（rankByDownloads 前 6，链 /downloads），部署并线上核对；看板记一行；TASK 该项 ✅，补「/downloads 每星下载最高榜」；开始周报数字段流水线化：src/lib/weekly-numbers.ts scoreboardTable + 测试（6b82a3a WIP）
+- 结果：线上首页前 6 为 OpenAI Python 284.2M / MCP Python SDK 219.0M / LangChain 169.4M / AI SDK 108.0M / LangGraph 43.7M / Playwright MCP server 29.0M；周报数字段取数脚本、写入周报、定时器均未做
+- 坑：无新坑
+- 结果：成功（周报数字段进行中）
