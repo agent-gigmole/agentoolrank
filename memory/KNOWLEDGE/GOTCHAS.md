@@ -886,3 +886,10 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - **查验证事件按 sid/src 精确查**：Turso ts 是 UTC，用 `datetime('now','-N seconds')` 会混入真实访客的行；验证完把测试 sid 的 src 改成 selftest-* 免得污染统计
 - vi 块：src/lib/vi-summary.ts 与 agentkit vi_summary.py 同格式，withViBlock 放 ops/daily.md 最前；取数失败写「不是 0」，不要写 0
 - exit_survey 问卷要等隐私页（BOSS #35）批准再上
+
+## owner-account-copy-check
+10-03 老板规定（agentkit 16:32 转达）：用老板 X/Reddit 号发的内容不能说这条是 AI 写/发、自动生成、定时发布；讲「AI agent 运营项目」主题可以。代码 ce06f78：
+- 文案检查在 src/lib/post-copy.ts `aiAuthorshipMatch`，weekly-post.ts gatedPost 顺序是**先文案检查，再 post-gate**；命中拒发、删 pending、退出码 4
+- **「自动」不能整体拦**：周榜里「每天自动更新」说的是数据，不是帖子。规则只针对「这条帖子」的作者/发布方式（本帖由 AI、AI 写的/发的、auto-posted、posted automatically、定时发布 等）；测试里要有放行用例（「I let an AI agent run this project」「每天自动更新」）
+- **退出码透传**：`process.exit(0)` 会覆盖之前设的 `process.exitCode`；要写 `process.exit(process.exitCode ?? 0)`，否则 --if-pending 路径的 rc=4 丢失
+- 只管老板号；dev.to / 外联是 agentoolrank 自己账号（署名 Jason T.），不走此检查。新增任何老板号发帖脚本都要先调 aiAuthorshipMatch

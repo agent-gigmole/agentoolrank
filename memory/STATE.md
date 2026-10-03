@@ -924,3 +924,13 @@
 - 看板已更新，已 bus-send 回复 agentkit
 - 坑：KNOWLEDGE/GOTCHAS.md#visitor-insights-own-events
 - **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；#35 批后上问卷；10-07 dev.to 数据文章
+
+## 2026-10-03 16:32– 老板号发帖文案检查（ce06f78，已推送）
+- 来源：agentkit 16:32 转达老板 16:31——用老板 X/Reddit 号发的内容不能说这条是 AI 写/发、自动生成、定时发布；讲「AI agent 运营项目」主题可以；要求做成代码，post-gate 前先查文案
+- **src/lib/post-copy.ts `aiAuthorshipMatch`**：英文 written/generated/posted by AI|agent|bot、my agent wrote/posted、auto-posted、posted automatically、this post was written；中文 本帖由 AI、这条是 AI…、AI 写的/发的/生成的、自动生成、定时发布
+- post-copy.test.ts 12 条，含放行「I let an AI agent run this project」和现有周榜文案「每天自动更新」
+- **scripts/weekly-post.ts gatedPost**：先查文案再走 post-gate；命中则拒发、删 pending、退出码 4（`--if-pending` 也透传）；端到端用「本帖由 AI 生成」实测 rc=4
+- 全量 259 测试通过；看板已更新；已 bus-send 回复 agentkit
+- 老板号只用于每周 X 排行榜；dev.to / 外联是 agentoolrank 自己账号，署名 Jason T.，不走此检查
+- 坑：KNOWLEDGE/GOTCHAS.md#owner-account-copy-check
+- **下一步**：22:00 外联第二批；每天看 Submit Kit 漏斗；10-07 dev.to 数据文章

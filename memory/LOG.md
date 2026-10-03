@@ -1005,3 +1005,10 @@
 - 结果：247 测试通过；真 Chrome 实测 5 事件全到，?internal=1 后当前和后续新标签都 0 事件；测试事件已改 src='selftest-vicheck'；问卷等 #35 隐私页未上线；当时 post-gate=3（最早 19:17）
 - 坑：Playwright 自带浏览器 webdriver=true 会被排除，要用 CDP 连真 Chrome 验证；Turso ts 是 UTC，按时间窗查会混入别人的行，要按 sid/src 精确查 → GOTCHAS#visitor-insights-own-events
 - 结果：成功
+
+
+## 2026-10-03 16:32– 老板号发帖文案检查（ce06f78）
+- 做法：响应 agentkit 16:32（老板 16:31：老板号发的内容不能说是 AI 写/发、自动生成、定时发布，AI agent 运营项目主题可以，做成代码）→ TDD 写 src/lib/post-copy.ts aiAuthorshipMatch + 12 测试；weekly-post.ts gatedPost 先查文案再 post-gate，命中拒发、删 pending、退出码 4，--if-pending 透传；看板更新；bus-send 回复
+- 结果：259 测试通过；「本帖由 AI 生成」端到端 rc=4；现有周榜文案「每天自动更新」放行
+- 坑：「自动」不能整体拦，要针对这条帖子的作者/发布方式；process.exit(0) 覆盖 process.exitCode，要 process.exit(process.exitCode ?? 0) → GOTCHAS#owner-account-copy-check
+- 结果：成功

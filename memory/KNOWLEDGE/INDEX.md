@@ -278,3 +278,4 @@
 | Submit Kit 首单路径 / /where-to-list 说明框 54cb18e / /submit 成功页入口 kit_click d92e6fb / devto brief 文末一行 | LOG.md#2026-10-03 16:35– Submit Kit 入口补齐 |
 | visitor-insights 自建事件表 / engagement ui_click exit_survey / cleanProps 服务端白名单 / events props 列只增 / ?internal=1 localStorage 持久排除 / Playwright webdriver=true 被排除 用 CDP 真 Chrome / Turso UTC 按 sid 查 / vi 块 ops/daily.md 最前 / 问卷等 #35 | GOTCHAS.md#visitor-insights-own-events |
 | post-gate / weekly-post.ts 发 X 前 bin/post-gate --platform x --who ai-directory / weekly-post-pending.txt 每小时 --if-pending 重试 / 4af1458 | STATE.md#2026-10-03 16:18– visitor-insights |
+| 老板号发帖文案检查 / 不能说 AI 写 发 自动生成 定时发布 / aiAuthorshipMatch post-copy.ts / 先文案再 post-gate 退出码 4 / 「每天自动更新」放行 / process.exit(0) 覆盖 exitCode / ce06f78 | GOTCHAS.md#owner-account-copy-check |
