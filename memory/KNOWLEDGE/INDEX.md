@@ -268,4 +268,5 @@
 | 竞品扫描 WebFetch 403 / TAAFT toolify 反爬 / futurepedia 提交页 404 / 大站用浏览器或实测记录 | GOTCHAS.md#competitor-scan-webfetch-403 |
 | pypistats 要带 UA / npm 下载量接口免 key / pypistats 大批量走 BigQuery 只能按需限速 / 包名从 package.json pyproject 自动识别 | GOTCHAS.md#pypistats-needs-ua |
 | rule-check 五条 / 下一步队列 ≥5 未完成 / 周报固定路径 docs/ops/weekly/<周一>.md 周一 12:00 / 看板或 STATE 24h / spend-ledger / 停滞 30 分钟复盘 / 队列行含「已完成」被算完成 | GOTCHAS.md#rule-check-five-rules |
+| 机器可读记分牌 / ops/scoreboard.json 7 字段 26h / ops/bets.json 周一更新 / bin/scoreboard 周一 09:25 排名 利润→收入→单→访客 / 两周零收入转向复盘 / 130f147 | GOTCHAS.md#rule-check-five-rules |
 | rule-check 补齐 / TASK 下一步队列 6 件 / W41-draft → 2026-10-05.md / b478a58 | LOG.md#2026-10-03 15:11– rule-check 补齐 |

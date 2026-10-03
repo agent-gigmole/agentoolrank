@@ -858,3 +858,13 @@
 - 看板加日志；已 bus-send 回复 agentkit；重跑 rule-check：ai-directory 全部通过
 - 规则详见 KNOWLEDGE/GOTCHAS.md#rule-check-five-rules
 - **下一步**：按队列推进；10-05 12:00 前定稿周报（同一路径）
+
+## 2026-10-03 15:22– 机器可读记分牌 ops/scoreboard.json（130f147，已推送）
+- 老板 15:20（经 agentkit 15:22 转达）：经营框架用代码控制 → 建机器可读记分牌，agentkit `bin/scoreboard` 每周一 09:25 跨项目排名
+- **代码**：apps/agent-tools/src/lib/scoreboard.ts（ledgerCashUsd 解析 docs/ops/spend-ledger.md 明细现金行，跳过「既有余额|Sub2API」；buildScoreboard 扣退款、全额退款单不计单数、updated_at 为 +08:00 ISO）+ scoreboard.test.ts（4 测试，全量 233 通过）
+- **脚本**：apps/agent-tools/scripts/scoreboard.ts → ops/scoreboard.json，字段 updated_at、revenue_usd_7d、paid_orders_7d、spend_usd_7d、profit_usd_7d、visitors_7d、bets（另有 sources、warnings）。收入 = Turso payments（排除 selftest）减 Stripe 退款（ops 只读 key 查 checkout/sessions/{id}?expand[]=payment_intent.latest_charge 的 amount_refunded），滚动 7 天；访客 = events 去重 sid（排除 selftest）
+- **ops/bets.json**：本周 3 个押注（取自 docs/ops/weekly/2026-10-05.md），status 复盘时手动改
+- **调度**：hourly-ops.sh 在 reconcile 之后跑；ops/scoreboard.json 已 gitignore（每小时变，agentkit 读本地文件）
+- **当前数**：收入 $0、0 单、支出 $0、访客 72；rule-check 全部通过；agentkit bin/scoreboard 读取正常；已 bus-send 回复
+- 规则详见 KNOWLEDGE/GOTCHAS.md#rule-check-five-rules（scoreboard 检查 + 排名规则）
+- **下一步**：按队列推进；10-05 周一复盘时更新 ops/bets.json（新一周押注 + 上周 status）并定稿周报

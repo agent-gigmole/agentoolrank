@@ -841,3 +841,7 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
   5. **停滞复盘**：被标记停滞后 30 分钟内在 memory/LOG.md 写【停滞复盘】（截至 10-03 15:11 脚本里只有前 4 条函数，这条仍靠自觉 / agentkit 人工查）
 - 解析细节（脚本里的正则）：队列节从标题「下一步队列」到下一个 `#`~`###` 标题为止；只数 `-`/`*`/`1.` 开头的行；行内含 `✅`、`[x]`、`~~`、或字样「已完成」都算已完成 → **未完成项的描述里别写「已完成」四个字**，否则会被少算
 - board 看 mtime，只 touch 不算真更新；看板要写实际进展
+- **第 6 条 scoreboard**（10-03 15:22 新增）：`ops/scoreboard.json` 必须存在、7 字段齐（updated_at、revenue_usd_7d、paid_orders_7d、spend_usd_7d、profit_usd_7d、visitors_7d、bets）、updated_at 在 26 小时内 → 由 hourly-ops.sh 每小时生成（scripts/scoreboard.ts），文件 gitignore，agentkit 读本地
+- `$AGENTKIT_ROOT/bin/scoreboard` 每周一 09:25 跨项目排名：利润 → 收入 → 付费单 → 访客；**连续两周零收入且访客不涨 → 标「转向复盘」**
+- 收入口径：Turso payments 排除 selftest，减 Stripe 退款（checkout/sessions/{id}?expand[]=payment_intent.latest_charge 的 amount_refunded），全额退款单不计单数；支出 = spend-ledger 明细现金行，跳过「既有余额|Sub2API」
+- **周一复盘别忘更新 ops/bets.json**（新一周押注 + 上周 status），否则记分牌 bets 一直是旧的

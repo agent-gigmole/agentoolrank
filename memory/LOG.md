@@ -963,3 +963,10 @@
 - 结果：重跑 $AGENTKIT_ROOT/bin/rule-check，ai-directory 全部通过
 - 坑：rule-check 的五条硬规则（队列 ≥5 / 周报固定路径 / 看板或 STATE 24h / spend-ledger / 停滞 30 分钟复盘）及解析细节 → GOTCHAS#rule-check-five-rules
 - 结果：成功
+
+
+## 2026-10-03 15:22– 机器可读记分牌（130f147）
+- 做法：响应 agentkit 15:22 转达老板 15:20「经营框架用代码控制」→ TDD 写 src/lib/scoreboard.ts（ledger 现金解析 + 退款扣减 + 全额退款不计单）+ 4 测试；scripts/scoreboard.ts 输出 ops/scoreboard.json（7 字段 + sources/warnings），收入取 Turso payments 减 Stripe amount_refunded，访客取 events 去重 sid；ops/bets.json 存本周 3 押注；hourly-ops.sh 在 reconcile 后调用；scoreboard.json 加 gitignore；提交推送 130f147；bus-send 回复 agentkit
+- 结果：233 测试通过；收入 $0 / 0 单 / 支出 $0 / 访客 72；rule-check 全过；agentkit bin/scoreboard 读取正常
+- 坑：rule-check 新增 scoreboard 检查（文件存在、7 字段齐、updated_at 26h 内）；周一 09:25 排名规则；周一复盘要更新 ops/bets.json → GOTCHAS#rule-check-five-rules
+- 结果：成功

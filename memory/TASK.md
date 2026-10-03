@@ -330,6 +330,8 @@
 - 要求：每周一交一页「本周经营」= 记分牌（收入、付费单数、利润、漏斗，对比上周和目标）+ 竞品扫描（对标站 + ≥3 个同类站）+ 新数据源 1 个 + 新渠道 1 个 + 副产品变现 + 下周 3 个押注（带数字和截止日期）+ 上周押注复盘；老板问过一次的问题变成看板固定指标；资源随业绩分配
 - [x] 草案 docs/ops/weekly/2026-W41-draft.md（c1dcfc2，已推送）：7 天漏斗 会话 51（约 7/天 < 10/天阈值）、/submit 访问 1、提交 2、付费 0；来源 direct 43 / outreach 4 / devto 2。押注 ①外联放量 10→15→20 封/天（截止 10-11）②数据文章分发 dev.to /where-to-list（10-03）+「实测 100 个目录站」（10-07），≥50 访问 ③Submit Kit 预售 ≥3 单（截止 10-18）
 - [ ] **10-05（周一）交第一份**（固定路径 docs/ops/weekly/2026-10-05.md，周一 12:00 前定稿；rule-check 自动查）
+- [x] 机器可读记分牌（10-03 15:22，130f147）：ops/scoreboard.json 每小时由 hourly-ops.sh 生成（收入/单数/支出/利润/访客 7 天 + bets），ops/bets.json 存本周押注；agentkit bin/scoreboard 周一 09:25 排名
+- [ ] 周一复盘清单：更新 ops/bets.json（写新一周 3 个押注 + 上周押注 status），再定稿 docs/ops/weekly/<周一>.md
 - [x] rule-check 补齐（10-03 15:11，b478a58）：TASK 顶部「下一步队列」6 件 + 草案 git mv 到 docs/ops/weekly/2026-10-05.md，rule-check 全部通过
 - [ ] 草案补洞察（10-03 06:30）：付费档卖的是曝光，但流量不足——10-02 晚 10 封外联带来 4 个会话（cognee、langchain、hermes-agent），全是 page_view，0 次维护者横幅点击 / 徽章复制 / checkout；约 8.5 小时无回信。首页每天个位数访客，$49 首页推荐作者不会买。推论：Submit Kit 卖数据和配方，本身有价值、不依赖我们的流量，作为周一摘要要点 + Submit Kit 论据
 - [ ] 周一摘要加「收录覆盖率」指标（10-03 07:34）：GSC 28 天 393 次展示全部来自 33 个英文页，zh/ja 为 0；sitemap 提交 2467、indexed 0；URL Inspection 抽查 zh/ja 页为 unknown 或 Discovered-not-indexed → 瓶颈在 Google 收录（新站抓取预算低）
