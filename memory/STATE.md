@@ -844,3 +844,9 @@
   - 押注 3 更新为"Submit Kit 已上线，$29，10-18 前 ≥3 单"
 - **T28 剩余**：竞品扫描补全 3 家（浏览器）、新数据源 1 个、新渠道 1 个；10-05 交第一份
 - 坑：GOTCHAS#competitor-scan-webfetch-403
+
+## 2026-10-03 14:49 T28 新数据源 + 新渠道（写入 W41 草案，b792289）
+- **新数据源：npm/PyPI 下载量**。两个免费接口已实测，都不要 key：api.npmjs.org/downloads/point/last-month/<pkg>（langchain 1214 万/月）；pypistats.org/api/packages/<pkg>/recent（必须带 UA；langchain 1.69 亿/月、crewai 243 万/月）。价值：反映真实使用量，竞品都没有，可做排名信号 + 数据文章素材。约束：pypistats 条款要求大批量走 BigQuery → 只能按需、限速；工具→包名映射必须从仓库 package.json/pyproject 自动识别，不手写。排在 Submit Kit 之后
+- **新渠道：GitHub awesome 清单 PR**（awesome-mcp-servers 约 9.2 万星、awesome-ai-agents）。需要 agent-gigmole fork 外部仓库提 PR，超出"只做 OAuth、不 fork、不建仓库"规则，已问 agentkit（09:30 汇总），未答复
+- **T28 剩余**：竞品扫描补 3 家（浏览器）；10-05 交第一份；下载量接入、awesome PR 已进待办
+- 坑：GOTCHAS#pypistats-needs-ua

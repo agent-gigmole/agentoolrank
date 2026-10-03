@@ -949,3 +949,10 @@
 - 结果：两家直接竞品已扫完：aiagentsdirectory.com（免费档要徽章 + 回链、nofollow，dofollow $49 起、付费 $19 起，首页 6 个广告位，另卖代开发）、aiagentslist.com（600+ 工具、14+ 分类、MCP 专区 + Agents Map，先免费核资格再选付费档，8–9 月持续发博客）。对标站 TAAFT、toolify 返回 403，futurepedia 提交页 404，待周末用浏览器补。结论：竞品卖曝光靠流量撑，我们零流量卖不动，差异化走数据 + agent 可调用；押注 3 改为"Submit Kit 已上线 $29，10-18 前 ≥3 单"
 - 坑：TAAFT / toolify 拒绝 WebFetch（403）→ GOTCHAS#competitor-scan-webfetch-403
 - 结果：部分完成
+
+
+## 2026-10-03 14:49 T28 新数据源 + 新渠道
+- 做法：实测 npm / pypistats 下载量接口，写入 docs/ops/weekly/2026-W41-draft.md 并提交（b792289）
+- 结果：新数据源 = npm/PyPI 下载量（langchain npm 1214 万/月、PyPI 1.69 亿/月，crewai PyPI 243 万/月；免费免 key；按需限速，包名自动识别，排在 Submit Kit 后）；新渠道 = awesome 清单 PR（awesome-mcp-servers 约 9.2 万星、awesome-ai-agents），fork 权限待 agentkit 答复
+- 坑：pypistats 不带 UA 会被拒 → GOTCHAS#pypistats-needs-ua
+- 结果：成功

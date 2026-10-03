@@ -825,3 +825,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 10-03 竞品扫描：TAAFT（theresanaiforthat.com）、toolify.ai 对 WebFetch 直接返回 403（反爬），futurepedia 提交页 404（路径已改）。WebFetch 只适合小站（aiagentsdirectory.com、aiagentslist.com 能正常抓）
 - 做法：大站竞品扫描用浏览器（/browse 或 scripts/winbrowser），或者以我们自己投递时的实测记录（~/data/backlinks/directory-log.csv、Submit Kit 数据）为准；不要反复换 UA 硬抓
 - 周报里抓不到的站要明确标"待补"，不要凭印象填价格/规则
+
+## pypistats-needs-ua
+- 10-03 实测：pypistats.org/api/packages/<pkg>/recent 必须带 User-Agent（如 `curl -A "agentoolrank/1.0 (+https://agentoolrank.com)"`），不带会被拒；api.npmjs.org/downloads/point/last-month/<pkg> 不需要
+- 两者都免费免 key。pypistats 条款：大批量请走 BigQuery（pypi 公共数据集）→ 只能按需单包调用 + 限速，不要全库循环抓
+- 包名映射：从工具仓库的 package.json（name）/ pyproject.toml（[project].name）自动识别，不要手写映射表（项目规则禁止手写工具数据）
