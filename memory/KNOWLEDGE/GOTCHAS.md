@@ -854,3 +854,11 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 写法（6a511c 实际命令）：done = `cd apps/agent-tools && ~/.bun/bin/bun run scripts/stripe-pm-status.ts | grep -q "alipay=[a-z]*/available wechat_pay=[a-z]*/available"`（bun 写全路径，bash -c 不一定有 PATH）；stuck = 同脚本 `| grep -q " error: "`；看门狗类（5e891f）用 `--done false`，stuck = python3 读 ops/scoreboard.json 的 updated_at，超 3 小时 exit 0
 - 命令里不要打印密钥（输出不显示，但别 echo key）
 - 已登记：6a511c Stripe 支付宝/微信支付开通（7d）；5e891f scoreboard.json 每小时刷新（30d 看门狗）；待登记：每晚 22:00 外联发出后等回信
+
+## daily-report-ops-daily
+- 10-03 15:55 老板规则（经 agentkit 15:59）：项目日报由 `$AGENTKIT_ROOT/bin/daily-report` 统一发，每天 09:00（systemd --user agentkit-daily-report.timer）发到项目自己的 Telegram topic（topic 名在 agentkit memory/supervised_projects.txt 第 3 列）。**项目不要自己再发日报**
+- 自动部分：scoreboard 变化、ops/bets.json 押注、24h 提交、await、老板待办——项目无需处理
+- 项目补充：`ops/daily.md`，脚本只取**前 15 个非空行**，且 **mtime 必须在 36 小时内**，否则不附 → 生成脚本要每天至少跑一次；重要的放前面
+- 本项目实现：apps/agent-tools/src/lib/kpi.ts `renderDaily`（纯函数，有单测）+ scripts/kpi.ts 每小时（hourly-ops.sh）同时写看板 KPI 块和 ops/daily.md；文件 gitignore
+- 预览：`$AGENTKIT_ROOT/bin/daily-report --project ai-directory`（只打印不发，dbb1c7c 时实测正常）
+- 加新指标：改 KpiData + renderDaily + 测试，别直接拼字符串进 daily.md；总行数保持 ≤15

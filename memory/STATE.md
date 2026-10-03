@@ -880,3 +880,12 @@
 - 规则写入 Claude 自动记忆 await-before-waiting.md（项目 CLAUDE.md 有用户未提交改动，未动）；已 bus-send 回复 agentkit
 - 用法与坑：KNOWLEDGE/GOTCHAS.md#await-watchdog
 - **下一步**：今晚 22:00 外联第二批发出后登记 await 等回信；支付宝 available 后开 $9 会话目测
+
+## 2026-10-03 15:59– ops/daily.md 接入 agentkit 日报（dbb1c7c，已推送）
+- 老板 15:55（经 agentkit 15:59 转达）：日报改由 `$AGENTKIT_ROOT/bin/daily-report` 每天 09:00 统一发到项目 topic（agentkit-daily-report.timer，首次 10-04 09:00），自动取 scoreboard 变化、押注、24h 提交、await、老板待办；项目特有数据写 `ops/daily.md`（前 15 个非空行、mtime 36 小时内才附）
+- **代码**：apps/agent-tools/src/lib/kpi.ts 新增 renderDaily（9 行）+ kpi.test.ts 2 测试（全量 235 通过）；scripts/kpi.ts 先组 KpiData，再写看板 KPI 块 + ops/daily.md（附 kitOrders7d = payments plan='submit_kit'，devtoVisitors7d = events 的 src/ref 含 devto/dev.to）；hourly-ops.sh 原本就每小时跑 kpi.ts → daily.md 每小时刷新
+- ops/daily.md 已 gitignore；`daily-report --project ai-directory` 预览正常附上「项目补充」
+- **当前数**：访客 10-02 28、7 天 72；工具提交 7 天 6；Kit 0 单；外联 10 封 / 4 会话；目录站已提交 41、上线 3；dev.to 4；zh 3 / ja 1；GSC 28 天点击 3；收入 $0
+- 我们此前没有自己往 topic 发日报，无需停用任何东西；看板已加日志，已 bus-send 回复 agentkit
+- 规则详见 KNOWLEDGE/GOTCHAS.md#daily-report-ops-daily
+- **下一步**：按队列推进；10-04 09:00 后看 topic 里日报是否附上项目补充（未核实）

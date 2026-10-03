@@ -977,3 +977,10 @@
 - 结果：wechat_pay=on/available（新开通），alipay=on/pending；Smithery 公开页已显示 593，结案
 - 坑：await 命令在仓库根目录 bash -c 跑、限时 60 秒，apps/agent-tools 下的脚本要先 cd；登记后必须先手动跑 done/stuck 看退出码 → GOTCHAS#await-watchdog
 - 结果：成功
+
+
+## 2026-10-03 15:59– ops/daily.md 接入 agentkit 日报（dbb1c7c）
+- 做法：响应 agentkit 15:59 转达老板 15:55「日报用代码固化」→ TDD 在 kpi.ts 加 renderDaily（9 行）+ 2 测试；scripts/kpi.ts 改为先组 KpiData 再同时写看板 KPI 块和 ops/daily.md（新增 Submit Kit 7 天单数、dev.to 7 天来源）；daily.md gitignore；提交推送 dbb1c7c；daily-report --project ai-directory 预览正常；看板加日志；bus-send 回复 agentkit
+- 结果：235 测试通过；预览附上「项目补充」9 行；首次正式发送 10-04 09:00（未核实）
+- 坑：daily.md 只取前 15 个非空行、mtime 36 小时内；我们本来没自己发日报，无需停用 → GOTCHAS#daily-report-ops-daily
+- 结果：成功

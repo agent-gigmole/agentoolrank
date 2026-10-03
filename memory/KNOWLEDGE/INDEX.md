@@ -272,3 +272,4 @@
 | rule-check 补齐 / TASK 下一步队列 6 件 / W41-draft → 2026-10-05.md / b478a58 | LOG.md#2026-10-03 15:11– rule-check 补齐 |
 | await 看门狗 / 等外部结果先登记 / await add --done --stuck --deadline / 每 15 分钟 check / systemd failed 前缀点名 / 仓库根 bash -c 60 秒先 cd / 登记后自测退出码 / 6a511c 5e891f | GOTCHAS.md#await-watchdog |
 | 微信支付 available 支付宝 pending（10-03 15:4x）/ Smithery 公开页 593 结案 | LOG.md#2026-10-03 15:37– 接入 await 看门狗 |
+| 日报 daily-report / 每天 09:00 发项目 topic / ops/daily.md 前 15 行 36 小时内 / renderDaily kpi.ts / 项目不自己发日报 / dbb1c7c | GOTCHAS.md#daily-report-ops-daily |

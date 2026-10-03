@@ -340,6 +340,7 @@
 - [ ] 看板「本周经营」固定栏 + 对标差距指标 + 目录提交成功率（剩余部分）
 - [~] 竞品扫描：部分完成（3 家待浏览器补全）（10-03 13:55，写入 W41 草案）：直接竞品 aiagentsdirectory.com、aiagentslist.com 已扫；TAAFT、toolify（WebFetch 403）、futurepedia（提交页 404）待周末浏览器补。结论：竞品卖曝光靠流量撑，我们走数据 + agent 可调用；押注 3 改为「Submit Kit 已上线 $29，10-18 前 ≥3 单」
 - [x] 新数据源、新渠道各 1 个（10-03 14:49，写入 W41 草案 b792289）：数据源 = npm/PyPI 下载量（api.npmjs.org 与 pypistats 免费免 key，已实测）；渠道 = GitHub awesome 清单 PR（awesome-mcp-servers 约 9.2 万星、awesome-ai-agents）
+- [x] ops/daily.md 接入 agentkit 日报（10-03 15:59，dbb1c7c）：kpi.ts renderDaily 9 行 + 2 测试（235 通过），scripts/kpi.ts 每小时写看板 KPI + ops/daily.md（gitignore），daily-report 预览正常附项目补充
 - [ ] npm/PyPI 下载量接入（包名从仓库 package.json/pyproject 自动识别，不手写；按需 + 限速，pypistats 大批量要走 BigQuery）——排在 Submit Kit 之后
 - [ ] awesome 清单 PR（等 agentkit 答复：需 agent-gigmole fork 外部仓库提 PR，超出"只做 OAuth、不 fork、不建仓库"规则，已于 09:30 汇总上报）
 - 约束: 瓶颈在分发；零流量期不再堆功能（已承认这两天犯过一部分）
