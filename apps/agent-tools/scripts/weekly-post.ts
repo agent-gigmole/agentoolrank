@@ -13,6 +13,7 @@ import { createClient } from "@libsql/client";
 import { spawnSync } from "node:child_process";
 import { weeklyPostText } from "../src/lib/weekly-post";
 import { aiAuthorshipMatch } from "../src/lib/post-copy";
+import { compactCount, rankByDownloads } from "../src/lib/downloads";
 
 config({ path: new URL("../.env.local", import.meta.url).pathname });
 const PENDING = new URL("../data/ops-logs/weekly-post-pending.txt", import.meta.url).pathname;
@@ -68,7 +69,10 @@ const tools = week.length >= 5
 
 const now = new Date();
 const label = `${now.getMonth() + 1}/${now.getDate()}`;
-const text = weeklyPostText(tools, label, "https://agentoolrank.com") + (week.length >= 5 ? "" : "\n\n（注：数据是 30 天增速，攒满 7 天每日数据后改为真实周增量）");
+const dlRows = (await db.execute("SELECT t.id, t.name, t.github_stars, p.registry, p.package, p.downloads_30d FROM tool_packages p JOIN tools t ON t.id = p.tool_id WHERE p.downloads_30d IS NOT NULL").then((r) => r.rows, () => []))
+  .map((r) => ({ id: String(r.id), name: String(r.name), stars: r.github_stars === null ? null : Number(r.github_stars), registry: String(r.registry), package: String(r.package), downloads_30d: Number(r.downloads_30d) }));
+const topDl = rankByDownloads(dlRows)[0];
+const text = weeklyPostText(tools, label, "https://agentoolrank.com", topDl ? { name: topDl.name, value: compactCount(topDl.total) } : undefined) + (week.length >= 5 ? "" : "\n\n（注：数据是 30 天增速，攒满 7 天每日数据后改为真实周增量）");
 console.log(text);
 if (process.argv.includes("--post")) {
   const file = new URL(`../data/ops-logs/weekly-post-${now.toISOString().slice(0, 10)}.txt`, import.meta.url).pathname;

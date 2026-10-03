@@ -6,8 +6,9 @@ export interface Gainer {
   tagline: string;
 }
 
-export function weeklyPostText(tools: Gainer[], weekLabel: string, baseUrl: string): string {
+export function weeklyPostText(tools: Gainer[], weekLabel: string, baseUrl: string, mostDownloaded?: { name: string; value: string }): string {
   const lines = tools.slice(0, 5).map((t, i) => `${i + 1}. ${t.name} +${Math.round(t.gain).toLocaleString("en-US")}`);
   const host = baseUrl.replace(/^https?:\/\//, "");
-  return [`本周（${weekLabel}）GitHub 上涨星最快的 AI Agent 开源工具：`, "", ...lines, "", "榜单是我自己做的 AgentoolRank，每天自动更新，也有替代品对比：", `${host}/weekly?ref=x-weekly`].join("\n");
+  const dl = mostDownloaded ? [`近 30 天下载最多（npm + PyPI）：${mostDownloaded.name}，${mostDownloaded.value} 次`, ""] : [];
+  return [`本周（${weekLabel}）GitHub 上涨星最快的 AI Agent 开源工具：`, "", ...lines, "", ...dl, "榜单是我自己做的 AgentoolRank，每天自动更新，也有替代品对比：", `${host}/weekly?ref=x-weekly`].join("\n");
 }

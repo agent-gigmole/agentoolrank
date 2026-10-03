@@ -19,3 +19,15 @@ describe("weeklyPostText", () => {
     expect(weighted).toBeLessThanOrEqual(280 * 2); // X Premium not assumed; keep modest
   });
 });
+
+describe("weeklyPostText with the month's most-downloaded tool", () => {
+  const tools = [{ id: "a", name: "A", gain: 10, tagline: "" }];
+  it("adds one line before the link when given", () => {
+    const t = weeklyPostText(tools, "10/12", "https://agentoolrank.com", { name: "OpenAI Python", value: "284.2M" });
+    expect(t).toContain("近 30 天下载最多（npm + PyPI）：OpenAI Python，284.2M 次");
+    expect(t.trim().endsWith("agentoolrank.com/weekly?ref=x-weekly")).toBe(true);
+  });
+  it("is unchanged without it", () => {
+    expect(weeklyPostText(tools, "10/12", "https://agentoolrank.com")).not.toContain("下载最多");
+  });
+});
