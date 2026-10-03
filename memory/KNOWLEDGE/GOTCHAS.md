@@ -991,3 +991,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 实现：src/lib/outreach.ts mxVerdict（none/ok/unknown）+ 测试；scripts/send-outreach.ts mxCheck
 - 上线后查 data/outreach/optout.json 有没有之前因临时错误被误加的条目（10-03 文件不存在，无需清理）
 - 来源：agentkit mx-transient（new_ladar 012cb63 首例）→ 本项目 b0efe91
+
+## verify-deploy-via-js-chunk
+- 只在用户动作后才渲染的页面状态（如 /submit 提交成功页、弹窗、结账后视图）curl 页面 HTML 看不到，又不想真提交污染数据 → 从线上页面 HTML 取 `/_next/static/chunks/*.js` 链接，逐个下载 grep 新加的唯一文案（如 alt「AgentoolRank badge preview」），命中即说明新代码已部署
+- 只证明代码已上线，不证明交互能跑通；交互本身仍需真浏览器或测试覆盖（未跑的写「未核实」）
+- grep 用 -o 短匹配，避免 minified 整行刷屏（同 GOTCHAS#curl-next-rsc-output）
+- 来源：2026-10-03 提交成功页徽章预览（27f0189）

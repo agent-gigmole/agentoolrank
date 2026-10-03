@@ -1125,3 +1125,9 @@
 - 结果：323 测试通过；22:00 批次 dry-run 5 封下载量徽章（OmniRoute、vLLM、headroom、Browser-Use、Firecrawl，URL 均 200）、5 封星数徽章；详情页线上两个 img alt 已核对；提交成功页未部署；22:00 实发未核实
 - 坑：无新坑
 - 结果：成功（提交成功页预览进行中）
+
+## 2026-10-03 20:52–21:0x 提交成功页徽章预览上线 + 首页 Launching 卡片开工（27f0189、79ebedd、73fcd44）
+- 做法：/submit 成功页徽章实时预览 20:52 部署；成功页要提交后才出现，改为 grep 线上 /submit JS chunk 找「AgentoolRank badge preview」核对部署；看板记一行；TASK 打勾并补首页卡片项；开工首页 Most downloaded 下方「Launching an agent tool?」卡片（101 个目录实测，链 /where-to-list 免费表、/submit-kit $29、/submit 免费上架，data-testid home-where-to-list / home-submit-kit / home-submit 走 ui_click）。原因：/submit-kit 近 7 天 0 访问，首页无入口
+- 结果：成功页预览线上 JS 包已含；首页卡片 73fcd44 已提交未部署；22:00 外联批次由定时器发送，后台等待任务发完后提醒核实（未核实）
+- 坑：只在用户动作后出现的页面状态（提交成功页）无法 curl HTML 核对 → grep 线上 JS chunk 里的文案 → GOTCHAS#verify-deploy-via-js-chunk
+- 结果：成功（首页卡片进行中）
