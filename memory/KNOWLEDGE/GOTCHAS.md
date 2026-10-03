@@ -806,3 +806,8 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - dirsub.py 的 result 枚举没有 `live`（只有 submitted / badge / retry / skip / todo 等）。**约定：站点确认上线时 result 仍记 `submitted`，detail 里写「【已上线】」**（可附上线 URL、rel 属性）。
 - 看板 KPI「目录站已上线」按 ~/data/backlinks/directory-log.csv 里 ai-directory 每个域名的**最新一条**判断，detail 含「已上线 / is live / 已发布」任一关键词即算上线。写错关键词（如「上架了」「live now」）就不会被统计。
 - 外联打开数不可信：Apple Mail Privacy Protection 会预取像素虚增 opened，也有真实来访却没记 opened 的（10-03 cognee 未记打开但站内看了 4 页）。外联效果以 events 表 ref=outreach 会话为准，opened 只作参考。
+
+## submit-kit-tier-first-sort
+- 推荐目录站的排序**档位优先**：auto 全部排在 manual 前面，avoid 不进推荐列表（单独给不建议清单）；对口度只作第二层，其后才是实测 dofollow、有无成功信号。理由：用户先把能自动完成的一口气做完，再集中处理需要真人的步骤；若对口度优先，auto/manual 交错，用户每隔几个站就要停下来人工操作。
+- "不建议"清单只收对谁都成立的原因（badge/backlink、仅付费、表单坏、投票门槛、要凭证、新域名秒拒、页面被劫持）；我们自己投成功过的站不进此清单，避免自相矛盾。
+- 产品数据导出时加测试断言不含 DR / visits / columbus 字段（agentkit 硬要求）。

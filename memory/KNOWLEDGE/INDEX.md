@@ -263,3 +263,4 @@
 | GSC URL Inspection API 逐页查收录 / coverageState / zh ja 页未收录 / Discovered not indexed / sitemap 重提要全权限 scope | GOTCHAS.md#gsc-url-inspection-api |
 | dev.to API 发文 / key 属哪个账号 / devto-api-key-agentoolrank / Forbidden Bots 403 / details textContent / 稿件内部注释外泄 | GOTCHAS.md#devto-api-publish |
 | dirsub 无 live 枚举 / 已上线记法 submitted+detail【已上线】/ 看板目录站已上线统计关键词 / Brevo opened 被 Apple MPP 虚增、以 ref=outreach 会话为准 | GOTCHAS.md#dirsub-live-convention |
+| Submit Kit 推荐排序 档位优先 auto 先于 manual / 对口度第二层 / 不建议清单只收普适原因 / 导出数据无 columbus 字段断言 | GOTCHAS.md#submit-kit-tier-first-sort |

@@ -921,3 +921,9 @@
 - 结果：今天下午开工，10-04 上线收费，10-18 以 ≥3 单为线复盘
 - 结果：成功
 
+
+## 2026-10-03 10:40–11:15 T27 Submit Kit MVP 上线
+- 做法：LLM 补 101 站 accepts/language（enrich-directory-focus.ts）→ 导出 82 可推荐 + 43 不建议（export-directory-kit.ts → directory-kit-data.json）→ directory-kit.ts（tierOf 三档 + recommendDirectories 档位优先排序）+ kit-keys.ts（sha256、30 天到期）+ MCP recommend_directories + /submit-kit 说明页；测试先写（directory-kit 9 条含无 columbus 字段断言、kit-keys、mcp）（9f657f0、a69eb32）
+- 结果：222 测试 + build 通过，已部署推送；线上 ai_tool 匹配 60 返回 10 全 auto，坏 key isError，/submit-kit 200；今天不收钱，10-04 接 Stripe $29 + 发 key + 文档 + 入口
+- 坑：GOTCHAS#submit-kit-tier-first-sort
+- 结果：成功
