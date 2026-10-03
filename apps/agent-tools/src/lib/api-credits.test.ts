@@ -18,3 +18,16 @@ describe("decideCharge", () => {
     expect(decideCharge({ tool: "lookup", usedToday: 0, balance: 0 }, { dailyFree: 0, costs: {} })).toEqual({ ok: false, short: 1 });
   });
 });
+
+describe("chargeCall over a storage interface (any DB: SQLite here, Postgres in new_ladar)", () => {
+  it("decides with the pure rule and applies through the store", async () => {
+    const { chargeCall, memoryStore } = await import("./api-credits");
+    const store = memoryStore({ k: 7 });
+    const p = { dailyFree: 5, costs: { full: 10 } };
+    expect(await chargeCall(store, "k", "full", "2026-10-03", p)).toEqual({ ok: true, fromFree: 5, fromBalance: 5 });
+    expect(await store.balance("k")).toBe(2);
+    expect(await store.usedToday("k", "2026-10-03")).toBe(5);
+    expect(await chargeCall(store, "k", "full", "2026-10-03", p)).toEqual({ ok: false, short: 8 });
+    expect(await store.balance("k")).toBe(2); // a refused call changes nothing
+  });
+});
