@@ -1,0 +1,60 @@
+{
+ "format": "longform",
+ "lang": "en",
+ "model": "gpt-6-astra",
+ "pick": {
+  "style": "data-report",
+  "angle": "Lead with Pydantic’s 812.6 million package downloads versus 28.9 thousand GitHub stars in the dated snapshot, then explain how dependencies and distribution channels create gaps—and why developers should check both signals alongside recent commits and issue response.",
+  "why_share": "Developers and maintainers can share a concrete, sourced explanation of why neither stars nor downloads alone establishes adoption or quality, with a practical checklist for evaluating tools without dismissing popular projects as hype.",
+  "length": "long"
+ },
+ "outline": "- **Title: \"Pydantic: 812.6 million downloads, 28.9 thousand GitHub stars\"**\n- **Opening answer block, within 50 words:** Lead with Pydantic's 812.6 million downloads versus 28.9 thousand stars. State that dependencies and distribution channels help explain the gap, and that neither measure alone tells developers which tool is better.\n- **## What was counted:** Establish the October 3, 2026 snapshot: 230 directory tools with npm or PyPI packages whose registry pages link to their own GitHub repos. Name the npm downloads API and pypistats; specify the last-30-days window. Downloads include CI and mirrors, so they are not user counts.\n- **## Dependencies collect downloads without stars:** Explain repeated installs in builds. Use one small table with Pydantic, OpenAI Python (284.2 million downloads, 31.7 thousand stars), and MCP Python SDK (219.0 million, 24.5 thousand). Note Pydantic's approximately 28,000 downloads per star without treating the ratio as a quality score.\n- **## Package downloads miss other distribution channels:** Contrast n8n's 206.5 thousand stars and 384.9 thousand downloads with Langflow's 155.5 thousand stars and 40.1 thousand downloads. Explain that these self-hosted platforms are mostly installed through Docker or their own installers; low package counts do not establish low use or hype.\n- **## How to use both signals when choosing a tool:** Recommend checking stars and downloads alongside recent commits and issue response. Check distribution before interpreting a gap. Introduce [our downloads page](https://agentoolrank.com/downloads), explicitly identifying AgentoolRank as Jason T.'s directory of open-source AI agent tools ranked by live GitHub activity.\n- **Closing lines:** Note that the same data is queryable over MCP/API with a [free key](https://agentoolrank.com/api-key). Invite corrections: \"If a package mapping is wrong, tell us.\" Sign \"Jason T.\" End with the short disclosure: \"I make AgentoolRank; the downloads page is ours.\"",
+ "reader_review": {
+  "hook_ok": true,
+  "stop_at": "That makes dependency use an important part of interpreting this table.",
+  "why": "The headline numbers earn my attention, but repeated explanations of the same measurement caveats slow the article before I reach the contrasting examples or practical selection advice.",
+  "what_i_want": [
+   "The library-versus-Docker contrast much earlier",
+   "A compact checklist for evaluating a candidate tool",
+   "Clear limits on comparing different installation channels"
+  ],
+  "cut": [
+   "The window is also worth keeping in view.",
+   "That makes dependency use an important part of interpreting this table.",
+   "The ratio also retains the limits of its inputs."
+  ],
+  "come_back": true,
+  "come_back_fix": "For a follow-up, show whether the same projects' download counts change over time while keeping package mappings and measurement windows consistent."
+ },
+ "hits_initial": [],
+ "hits_final": [],
+ "unsupported_initial": [
+  "The AgentoolRank downloads page puts package downloads alongside GitHub stars so readers can examine their differences."
+ ],
+ "unsupported_final": [],
+ "inferred_rules_initial": [
+  "A shared column does not make those portions equivalent.",
+  "In particular, these counts cannot tell you how many Docker installations sit outside the registry measurement.",
+  "Reading a low package count as hype would go beyond what the numbers establish.",
+  "Review repository activity directly rather than treating stars or downloads as a substitute.",
+  "This is a reading order, not a scoring formula.",
+  "Pydantic is the largest download count in this snapshot, but the divergence is not confined to it.",
+  "More GitHub attention does not translate into the same ordering by package downloads.",
+  "I would use those ratios to notice a gap, then stop short of ranking quality with them.",
+  "It does not distinguish individual users from repeated build installations.",
+  "Without checking it, you could be comparing a project's stars with a download count that does not belong beside them.",
+  "The stars are not 30-day star gains.",
+  "The table therefore compares two signals, not two equivalent measures of recent activity.",
+  "Equal star counts do not establish equal package use.",
+  "The counts alone do not explain that difference.",
+  "For a follow-up over time, I would keep the same projects and their package mappings, with consistent measurement windows.",
+  "This snapshot supports a comparison at one date, not a claim about which project's use is growing."
+ ],
+ "inferred_rules_final": [
+  "For a candidate agent framework, MCP server or library, I would use this checklist before treating its popularity as a reason to choose it:",
+  "Confirm how the tool is distributed, then inspect recent commits and issue response."
+ ],
+ "template_vars": [],
+ "missing_vars": [],
+ "publishable": false
+}
