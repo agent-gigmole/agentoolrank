@@ -1,0 +1,2515 @@
+{
+ "generated": "2026-10-03",
+ "sites": [
+  {
+   "domain": "viesearch.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "1200+ submissions; free tier has an 82% rejection rate",
+   "paidFrom": 12,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Confirmation email may land in Gmail spam.",
+    "After email confirmation, click “Join the Waiting List” and then “Wait in Line.”",
+    "Free submissions face a 1200+ queue and an 82% rejection rate."
+   ],
+   "success": "Your submission is now in the review queue",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "futuretools.io",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Pending Matt's review",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "turnstile",
+   "human": [],
+   "tips": [
+    "Dismiss the newsletter popup with “No thanks”",
+    "Select pricing by clicking the visible “Free” text",
+    "Cloudflare Turnstile passes automatically"
+   ],
+   "success": "Tool Submitted!",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "iui.su",
+   "accepts": [
+    "ai_tools",
+    "regional"
+   ],
+   "language": "zh",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit through the Tencent questionnaire with one text field.",
+    "Include a Chinese description, URL, contact email, and note if the site is English.",
+    "Listing is discretionary and may appear in the current month's daily-sharing section."
+   ],
+   "success": "Confirmation says: “The questionnaire is complete. Thank you for participating.”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "best-ai.org",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "1-2 weeks manual review",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "magic_link",
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Magic login link is in the HTML email body.",
+    "For multi-selects, click the option text; changing inputs via JS does not work.",
+    "Backlink-based 48-hour fast-track is optional."
+   ],
+   "success": "Dashboard shows “Submission in Review”.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "ainewshub.org",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Dismiss the newsletter popup with Escape.",
+    "Use the Submit button inside the form; the page has two.",
+    "Field names contain spaces, such as 'ai-tool name'."
+   ],
+   "success": "Form cleared after submission, but no confirmation message was captured.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aitoolscapital.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "24 hours",
+   "paidFrom": 49,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Close the Cheat Sheet subscription popup first.",
+    "Click the visible category and pricing labels; changing radio inputs via JavaScript does not work.",
+    "The Capital voting contest is unchecked by default."
+   ],
+   "success": "“Thanks, Ethan Tan!” confirmation with 24-hour review notice",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "visalytica.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "1-2 weeks",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Review takes 1-2 weeks",
+    "Twitter is optional",
+    "Expect a Featured listing upsell"
+   ],
+   "success": "/submit/thanks confirms the product has been submitted",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "tinystartups.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "x_post"
+   ],
+   "queue": null,
+   "paidFrom": 69,
+   "link": "nofollow",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "x_post"
+   ],
+   "tips": [
+    "Free submission requires a post from the main X account tagging @ratheejaisal with the listing link.",
+    "The free plan provides a nofollow link; $69 is required for dofollow.",
+    "Logo and cover uploads returned Unauthorized when submitting without login."
+   ],
+   "success": "Listing saved at /startup/new-site-radar?c=iiqy",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "websitelaunches.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "Automatic review before listing and launch-date assignment",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit only the domain name.",
+    "No description or image fields.",
+    "Already-detected sites do not need resubmission."
+   ],
+   "success": "“This site has already been detected” with a “View listing” link",
+   "outcome": "listed",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aisharenet.com",
+   "accepts": [
+    "ai_tools",
+    "regional"
+   ],
+   "language": "zh",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Pending editorial review",
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit as a WordPress post, not a directory listing",
+    "Select category 最新AI资源 (20)",
+    "Switch TinyMCE to the Code tab and fill textarea#uspcontent"
+   ],
+   "success": "Redirect to ?success=1&post_id=35373 with “成功！感谢您的提交。”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "agentlocker.ai",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers",
+    "dev_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Standard review takes over one month; optional badge can expedite to within 24 hours.",
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Use /agent/submit and choose “Skip and fill manually.”",
+    "Target textarea[name=description], as [name=description] first matches a meta tag.",
+    "If pricing_model selection times out, set it with JavaScript and dispatch a change event."
+   ],
+   "success": "“Agent submitted successfully” followed by a redirect to the agent badge page.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "outils.ai",
+   "accepts": [
+    "ai_tools",
+    "regional"
+   ],
+   "language": "fr",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review takes several days; listing is not guaranteed.",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit in French.",
+    "Open the embedded form directly at tally.so/r/wAAg6W.",
+    "Use JavaScript to select the Tally identity radio option if needed."
+   ],
+   "success": "The form displays “C'est envoyé!”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "purshology.com",
+   "accepts": [
+    "ai_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "3-7 days",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Use /submit-your-tool/; the old URL returns 404.",
+    "Click confirmation checkboxes via JavaScript.",
+    "Use select_option for multi-select Tags and Category; a logo upload may be required."
+   ],
+   "success": "Listing ID shown with a 3-7 day review notice.",
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "startups.gallery",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review; duration unknown",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [],
+   "captcha": "recaptcha",
+   "human": [
+    "captcha"
+   ],
+   "tips": [
+    "Visible reCAPTCHA v2 requires manual completion",
+    "Submissions are manually reviewed",
+    "No confirmation email was received"
+   ],
+   "success": "Form submitted / Thanks for submitting! We'll review your submission...",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "servicelist.io",
+   "accepts": [
+    "ai_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "5–7 business days for manual review",
+   "paidFrom": 500,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Choose the Software / SaaS category.",
+    "Enter the brand name in the full-name field.",
+    "Select No for the $500 verification option; click the custom confirmation div via JavaScript."
+   ],
+   "success": "Application Received",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "findly.tools",
+   "accepts": [
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "badge",
+    "backlink"
+   ],
+   "queue": null,
+   "paidFrom": 9,
+   "link": "dofollow",
+   "login": [
+    "email_password",
+    "google",
+    "github"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Keep the footer badge permanently; periodic checks can delist the product.",
+    "Badge must link to the exact product URL with ?utm_source=new-site-radar.",
+    "Complete and save the Details, Pricing, and Features tabs before publishing."
+   ],
+   "success": "Status shows Published and the product page is live.",
+   "outcome": "listed",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aiagentsdirectory.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "badge",
+    "backlink"
+   ],
+   "queue": "Until badge verification passes",
+   "paidFrom": 19,
+   "link": "nofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Only accepts AI agent products",
+    "Free listing requires an AAD badge and backlink",
+    "Free backlinks are nofollow; dofollow starts at $49"
+   ],
+   "success": "Listing goes live after badge verification",
+   "outcome": "blocked_badge",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "store.app",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "The /list page returned a 502 ROUTER_EXTERNAL_TARGET_HANDSHAKE_ERROR three times",
+    "Login is required",
+    "Retry on October 3"
+   ],
+   "success": null,
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "promoteproject.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "recaptcha",
+   "human": [
+    "captcha"
+   ],
+   "tips": [
+    "Registration is required before submitting",
+    "Captcha failure clears the registration form",
+    "A human must complete the captcha manually"
+   ],
+   "success": null,
+   "outcome": "blocked_captcha",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "alternative.me",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Email verification was not required to submit",
+    "Create the draft first, then refresh and edit it",
+    "Browser platform requires setting selectedIndex via JavaScript before clicking Add Platform"
+   ],
+   "success": "Status shows Pending Approval after refresh",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "glama.ai",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers",
+    "dev_tools",
+    "open_source_only"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": "Observed listing the next day after official MCP Registry publication",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "No separate submission; listings sync automatically from the official MCP Registry",
+    "Primarily indexes GitHub repositories"
+   ],
+   "success": "The project is searchable on Glama by 'agentoolrank' and appears as agentoolrank/agent-tools",
+   "outcome": "listed",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "bowora.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "badge",
+    "backlink"
+   ],
+   "queue": null,
+   "paidFrom": 1,
+   "link": "nofollow",
+   "login": [
+    "email_password",
+    "email_code"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free submission requires a Bowora badge/backlink; otherwise it costs $1.",
+    "The 4-digit email PIN may land in Gmail spam.",
+    "Leave the off-screen website honeypot empty."
+   ],
+   "success": null,
+   "outcome": "blocked_badge",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "foundr.ai",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "several weeks",
+   "paidFrom": 10,
+   "link": "nofollow",
+   "login": [
+    "magic_link"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Magic-link email opens with a /submit callback",
+    "Uncheck the preselected newsletter box",
+    "Dofollow requires the $10 Standard tier"
+   ],
+   "success": "Redirected to /submit/new-site-radar showing Free as Current Tier",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "10words.io",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "about 2,602 days",
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Free queue is about 2,602 days.",
+    "Paid skip-the-line option was not purchased.",
+    "No email verification is required."
+   ],
+   "success": "Project Submitted for Review!",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "yourfirst.app",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "About 195 days; estimated publication 2027-04-15",
+   "paidFrom": 29,
+   "link": "nofollow",
+   "login": [
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Google login is required.",
+    "Submit only the product URL; the site auto-generates the listing.",
+    "Auto-generated details cannot be edited while processing; verify the name and description later."
+   ],
+   "success": "“You're in!” confirmation and waiting for review; submission ID issued",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "linkcentre.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review in the free queue; expected around page 7 of Data Analytics",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "An activation link is sent by email.",
+    "AI prefills listing details after URL entry; replace them with your prepared title and description.",
+    "Leave the honeypot field and Business phone blank."
+   ],
+   "success": "LISTING RECEIVED; status 1716222 Pending review",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aitoolsrecap.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "Pending as of 2026-10-02",
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Full Name cannot contain periods; use a format like 'Jason T'.",
+    "Validation appears in an alert; click via task_tab to read it.",
+    "The Upgrade Offer page may return 403, but check My Listings for the pending submission."
+   ],
+   "success": "My Listings showed New Site Radar as Pending.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "saaspo.com",
+   "accepts": [
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "turnstile",
+   "human": [],
+   "tips": [
+    "Only suitable for SaaS website designs",
+    "Submissions are manually curated",
+    "Twitter can be left blank"
+   ],
+   "success": "Thank you! Your submission has been received!",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "whatlaunched.today",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "about 5 weeks",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_password",
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Email/password signup returns a Supabase 500 error with no page feedback.",
+    "No account or confirmation email is created after failed signup.",
+    "Google login is the only alternative."
+   ],
+   "success": "A scheduled publication date is provided after submission.",
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "betterlaunch.co",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Until Mon Nov 2, about one month",
+   "paidFrom": 9,
+   "link": "unknown",
+   "login": [
+    "email_password",
+    "email_code"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Click the exact “Continue” button, not “Continue with Google”.",
+    "Enter email and password again on #/create, then focus the one-time-code field before typing the email code.",
+    "Confirm the logo crop with “Use this logo”; the description requires at least 300 characters."
+   ],
+   "success": "Dashboard shows PENDING REVIEW with a Nov 2 launch date.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "peerpush.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "about 62 days (#4290)",
+   "paidFrom": 39,
+   "link": "unknown",
+   "login": [
+    "email_code"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Check existing logs before submitting to avoid duplicates",
+    "Decline the 40% discount and click “Wait in queue”",
+    "Free submissions enter the Standard queue"
+   ],
+   "success": "Project page shows “Coming soon”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "comparateur-ia.com",
+   "accepts": [
+    "ai_tools",
+    "regional"
+   ],
+   "language": "fr",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Up to 10 days for review",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Complete a six-step French submission wizard with seven required rich-text sections.",
+    "Select the free Standard tier; the Verified tier requires a DR45 badge.",
+    "Check the hidden required verif_consent field acknowledging the badge terms."
+   ],
+   "success": "Submission recorded as #109652",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "crunchbase.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": null,
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "New Google accounts must use /register; Google login may not work initially.",
+    "Keep the full description neutral; pricing or promotional language is rejected.",
+    "Logo upload is unavailable before approval and must be added later."
+   ],
+   "success": "Save redirected to edit/success with a UUID; the organization page is visible while logged in and pending public approval.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "startupstash.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "Pending review",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "recaptcha",
+   "human": [
+    "real_name"
+   ],
+   "tips": [
+    "A real first and last name is required.",
+    "Long descriptions are limited to 500 characters.",
+    "Clear Typeform localStorage before resubmitting to avoid appending old answers."
+   ],
+   "success": "Thank you for applying",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "makerlist.io",
+   "accepts": [
+    "ai_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "7 listings ahead; automatic listing on 2026-10-03",
+   "paidFrom": 29,
+   "link": "dofollow",
+   "login": [
+    "google",
+    "github"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Google or GitHub login is required.",
+    "Tags must be selected from presets.",
+    "Free submissions enter a queue; $29 skips it."
+   ],
+   "success": "Confirmation showed 7 listings ahead and automatic publication on 2026-10-03.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "productwatch.io",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "30 days",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_code"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Complete the onboarding questionnaire for new accounts.",
+    "Wait 1–2 minutes for URL scraping before editing the draft.",
+    "Select a calendar date and click Schedule; otherwise the submission remains a draft."
+   ],
+   "success": "Product page shows “Coming Soon” with a 30-day countdown.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "launchboosts.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "email_password",
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Email verification is required for email/password signup.",
+    "Free-plan backlinks are nofollow.",
+    "Submissions automatically enter the weekly voting contest."
+   ],
+   "success": "Project page is live immediately and shows Plan Free and Backlink Nofollow.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "saashub.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "up to 32 days; placed at the back of the queue",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "hcaptcha",
+   "human": [
+    "captcha",
+    "email_inbox"
+   ],
+   "tips": [
+    "The free no-login submission can take up to 32 days.",
+    "Closing the browser before claiming the listing loses management access.",
+    "Claiming ownership requires registration and email verification."
+   ],
+   "success": "Submitted and pending review.",
+   "outcome": "submitted",
+   "verified": "2026-10-01"
+  },
+  {
+   "domain": "registry.modelcontextprotocol.io",
+   "accepts": [
+    "mcp_servers"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "instant",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "other"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Only MCP servers are accepted",
+    "Verify the namespace with a DNS TXT record using v=MCPv1",
+    "Log in again before publishing because JWTs expire quickly"
+   ],
+   "success": "Server status is active immediately after publishing",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "mcpservers.org",
+   "accepts": [
+    "mcp_servers"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Up to 2 weeks",
+   "paidFrom": 39,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Only MCP servers are accepted.",
+    "Remote MCP endpoints and Registry names are supported.",
+    "The $39 expedited dofollow option is optional."
+   ],
+   "success": "Submission successful page displayed",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "producthunt.com",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "At least 7 days between launches from the same maker account.",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Maker must log in with Google once.",
+    "Allow at least 7 days between launches on the same maker account.",
+    "Formal launches need a separate plan covering date, assets, and first comment."
+   ],
+   "success": "Launch scheduled for a specific publication date and time.",
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "smithery.ai",
+   "accepts": [
+    "mcp_servers"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "github"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "GitHub login is required.",
+    "Remote MCP servers can be published by URL without repository access.",
+    "Configure apiKey to use the x-api-key header."
+   ],
+   "success": "Scan showed SUCCESS and the server was Listed.",
+   "outcome": "listed",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "alternativeto.net",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Free queue has a backlog of thousands",
+   "paidFrom": 5,
+   "link": "nofollow",
+   "login": [
+    "email_password",
+    "google",
+    "github",
+    "other"
+   ],
+   "captcha": "hcaptcha",
+   "human": [
+    "captcha"
+   ],
+   "tips": [
+    "Email signup requires visible hCaptcha",
+    "Apple login is also available",
+    "$5 priority review is optional"
+   ],
+   "success": null,
+   "outcome": "blocked_captcha",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "tinylaunch.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "badge",
+    "queue"
+   ],
+   "queue": "Review under 24h; scheduled for Nov 2, 2026 PT if approved",
+   "paidFrom": 9,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free launches enter a scheduling queue and require approval.",
+    "Free outbound links are limited to the weekly top three and require displaying a badge.",
+    "Choose None for paid add-ons and decline the $39 Premium retention offer."
+   ],
+   "success": "Launch Scheduled receipt",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "index.dodopayments.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Pending manual review; no timeframe stated",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "magic_link"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Only accepts tools useful to directory owners.",
+    "Unauthenticated submissions silently return 401; sign in by email magic link and refill the form.",
+    "Keep the submission note under 256 characters."
+   ],
+   "success": "Redirects to /submit/new-site-radar/success with “Thank you for submitting”.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "worthtotry.com",
+   "accepts": [
+    "ai_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "Manual review within one day",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "magic_link"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Verify and edit the auto-generated draft fields.",
+    "Description is limited to 600 characters; remove incorrect categories.",
+    "After creating the draft, click Send for review and disable the empty article option."
+   ],
+   "success": "Dashboard showed LIVE and ranked #1/57 for the week.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "projecthunt.me",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Site unreachable: connection closed or timed out",
+    "Retry after a few days; skip if still unreachable"
+   ],
+   "success": null,
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "listmystartup.app",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_password",
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "The /submit page repeatedly redirects or triggers anti-bot behavior",
+    "Do not repeatedly reopen the page; retry after a few days"
+   ],
+   "success": null,
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "mcpmarket.com",
+   "accepts": [
+    "mcp_servers"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "4–6 weeks",
+   "paidFrom": 29,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Free queue is only available via the GitHub repository route",
+    "Remote MCP route costs $69",
+    "Optional Get Listed Now upgrade costs $29"
+   ],
+   "success": "Submitted! You're in the free queue",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "mcprepository.com",
+   "accepts": [
+    "mcp_servers",
+    "open_source_only"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit only the GitHub repository URL"
+   ],
+   "success": "Queued for validation",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "ai123.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "regional"
+   ],
+   "language": "zh",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "1–3 business days",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Select “Tool” before choosing a category.",
+    "Categories use a searchable dropdown.",
+    "ICP registration number is optional."
+   ],
+   "success": "Success confirmation with submission ID; email notification after review.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "pavelzanek.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": null,
+   "paidFrom": null,
+   "link": "dofollow",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Use the “Suggest a tool” form at the bottom of any tool page.",
+    "The webmaster manually decides whether to list the tool.",
+    "Reject all cookies; newsletter subscription is unnecessary."
+   ],
+   "success": "Thank you, the tool request has been received",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aicatalog.com.ua",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "other",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "hcaptcha",
+   "human": [
+    "captcha"
+   ],
+   "tips": [
+    "The free no-login form requires a visible hCaptcha before submission.",
+    "The form supports Ukrainian and English short and long descriptions.",
+    "After completing hCaptcha, click “Надіслати на розгляд” to submit."
+   ],
+   "success": null,
+   "outcome": "blocked_captcha",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "newname.ai",
+   "accepts": [
+    "ai_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "7–15 days",
+   "paidFrom": 9.99,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Only 5 free submissions are accepted per UTC day.",
+    "Retry after the UTC day resets if the free quota is full.",
+    "The free queue takes 7–15 days; no badge is required."
+   ],
+   "success": "Submitted. You're in the free queue",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aitoolex.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Email verification is required, but the message did not arrive within 15 minutes, including spam.",
+    "Use the brand name for Name and the official site for Website.",
+    "A backlink is optional and only speeds up review."
+   ],
+   "success": "Page says: Please check your email for verification",
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "linkstartai.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit four fields: name, website, email, and notes.",
+    "The page mentions nofollow links."
+   ],
+   "success": "Redirects to /en/submit/success with “Submission Successful!”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "agenstry.com",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Submit the MCP endpoint URL and select “MCP endpoint URL” as the type.",
+    "The site performs a live handshake."
+   ],
+   "success": "✓ indexed — answered the handshake with 5 tools",
+   "outcome": "listed",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "magicnetworld.com",
+   "accepts": [
+    "ai_tools",
+    "regional"
+   ],
+   "language": "zh",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Submit by email via the /submit/ mailto link.",
+    "Use the page's required Chinese subject template.",
+    "Include Chinese long description, URL, logo, and contact details."
+   ],
+   "success": "Email sent; message ID recorded, awaiting webmaster reply.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "thedailyworkflow.com",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "1–3 days",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Choose AI Tool on /submit to open /submit/tool.",
+    "Leave the honeypot website field empty.",
+    "Click the Submit button inside the form, not the navigation link."
+   ],
+   "success": "Submission received! Moderation takes 1–3 days",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "showmebest.ai",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "badge",
+    "backlink",
+    "queue"
+   ],
+   "queue": "72 hours to 4 weeks",
+   "paidFrom": 49.99,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free submission requires a linked footer badge.",
+    "The form showed no success message and did not clear after submission.",
+    "Check email first; retry once if no confirmation arrives."
+   ],
+   "success": null,
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aiai.tools",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review; listing is not guaranteed",
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Use the brand name in the name field",
+    "Use /opengraph-image as the screenshot URL",
+    "Select No for reciprocal backlink"
+   ],
+   "success": "Done!",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "vibekettle.com",
+   "accepts": [
+    "ai_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Standby #58 for the Oct 26 weekly batch",
+   "paidFrom": 6.99,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free Standard submissions enter a standby queue.",
+    "Adding a badge or text backlink can upgrade the link to dofollow.",
+    "The five-step wizard requires a detailed English description."
+   ],
+   "success": "Submission #264; dashboard shows IN REVIEW (1).",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "startupjuicer.com",
+   "accepts": [
+    "ai_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Standby #53 for the Oct 26 weekly listing",
+   "paidFrom": 6.99,
+   "link": "nofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free submission is nofollow.",
+    "Free tier requires joining the standby queue.",
+    "No badge is required."
+   ],
+   "success": "Submission #343; dashboard shows “In Review 1”.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "anyfp.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "turnstile",
+   "human": [
+    "captcha"
+   ],
+   "tips": [
+    "Leave the website2 honeypot field blank",
+    "Prepare a logo and 4 screenshots",
+    "Use a normal browser to complete Turnstile"
+   ],
+   "success": null,
+   "outcome": "blocked_captcha",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "ainavhub.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Free form is at the bottom of /submit",
+    "Only name, URL, and email are required",
+    "No success message or stated review time"
+   ],
+   "success": "POST /api/submit returned 200 and the form cleared",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "ainavbar.ai",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "zh",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": null,
+   "paidFrom": null,
+   "link": "nofollow",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Provide a shot-rank screenshot and logo-240 icon",
+    "Listings are manually reviewed",
+    "Automated bulk submissions are not processed"
+   ],
+   "success": "Submission Successful!",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "publishyoursaas.com",
+   "accepts": [
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "2–3 weeks for manual review",
+   "paidFrom": 9.99,
+   "link": "nofollow",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Select Free launch ($0), not Starter ($9.99).",
+    "No badge means a nofollow link.",
+    "Prepare a 250-character description and an approximately 1,100-character About section."
+   ],
+   "success": "Submission reference bc708b37-ad87-4b95-a3e6-b02885ed06b5",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "upperstory.io",
+   "accepts": [
+    "ai_tools",
+    "mcp_servers",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review; result sent by email",
+   "paidFrom": 3.99,
+   "link": "nofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Leaving the backlink URL blank triggers manual review and a nofollow link.",
+    "Paid packages start at $3.99.",
+    "Submission results are sent by email."
+   ],
+   "success": "Submission ID devjwRiqHI1OyXZ9tu0cA; awaiting email result",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "news.netwrck.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "other"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "The /submit page returned a Cloudflare 502 error.",
+    "HN-style community; registration is required before posting."
+   ],
+   "success": null,
+   "outcome": "retry",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "nav4ai.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "Immediate listing",
+   "paidFrom": 9.9,
+   "link": "unknown",
+   "login": [
+    "email_code"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Email verification code required",
+    "Choose the $0 free submission option",
+    "Free listing is nofollow; no badge required"
+   ],
+   "success": "Popup says tool submission succeeded",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "bai.tools",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Review up to 30 days; free listing may take 1–6 months",
+   "paidFrom": 19.9,
+   "link": "unknown",
+   "login": [
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Google sign-in is required.",
+    "Signing in clears the form; refill it afterward.",
+    "Dofollow links are limited to paid plans."
+   ],
+   "success": "Redirected to /finish with a review-up-to-30-days message",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aitools.inc",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "30–90 days",
+   "paidFrom": 129,
+   "link": "unknown",
+   "login": [],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free listing is not guaranteed.",
+    "Expect a 30–90 day queue.",
+    "Watch for a follow-up email to complete the submission."
+   ],
+   "success": "Typeform displayed: “Thanks! We'll be in touch over the next few days”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "verifiedtools.info",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "About 7–9 weeks (997 submissions ahead)",
+   "paidFrom": 12,
+   "link": "unknown",
+   "login": [
+    "none"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free submissions are nofollow unless you add their badge.",
+    "The free queue has 997 submissions and takes about 7–9 weeks.",
+    "The claim link is sent to hello@; use that email to manage the listing."
+   ],
+   "success": "Submission received!",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "directree.io",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "35 days, approximately until 2026-11-06",
+   "paidFrom": 19,
+   "link": "dofollow",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Leave the off-screen company_url honeypot blank.",
+    "Correct inaccurate AI-generated fields before saving.",
+    "Select 2–5 truthful product weaknesses."
+   ],
+   "success": "Public page /tool/new-site-radar returned HTTP 200, pending review for edits and the dofollow link.",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "ctrlalt.cc",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review queue; earliest selectable launch date was 2026-10-09.",
+   "paidFrom": 19,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Use /join-w-o-js if registration reports 'username incorrect' due to the hidden username field.",
+    "The launch date picker may enforce a minimum date.",
+    "Do not select the optional $19 fast-track."
+   ],
+   "success": "“Almost ready… You'll get an email if your product has been added.”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "shipstry.com",
+   "accepts": [
+    "ai_tools",
+    "dev_tools",
+    "saas",
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Scheduled for Jan 4–10, 2027; earlier weeks were full",
+   "paidFrom": 9.9,
+   "link": "unknown",
+   "login": [
+    "email_code"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Free Harbor submissions enter a scheduling queue",
+    "Optional badge upgrades the link to dofollow",
+    "Decline the Voyage upsell by choosing “Stay on Harbor”"
+   ],
+   "success": "Dashboard shows “Pending 1” under review",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "toolnest.ai",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "3–5 days for editorial review",
+   "paidFrom": 4.99,
+   "link": "unknown",
+   "login": [
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Choose No boost for the free submission.",
+    "Wait for the “Submission received” confirmation before resubmitting.",
+    "Pending submissions may not appear under My Tools."
+   ],
+   "success": "✓ Submission received. We'll review it within 3–5 days",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "startup88.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Manual review; 200+ submissions per month, no stated ETA",
+   "paidFrom": 9.95,
+   "link": "nofollow",
+   "login": [],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Typeform button IDs change on each render",
+    "If Playwright click times out, use JS click on button[value=...]",
+    "For the upload question, click OK before continuing"
+   ],
+   "success": "Typeform confirmation: \"You made it :) Thanks very much for submitting your Startup\"",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "journaliststoolbox.ai",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [],
+   "queue": "Manual review; no timeframe stated",
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "google"
+   ],
+   "captcha": "recaptcha",
+   "human": [],
+   "tips": [
+    "Open the form with the correct Google account using the /u/1/ URL",
+    "Submission is manually reviewed for fit",
+    "Invisible reCAPTCHA appeared without a challenge"
+   ],
+   "success": "Your response has been recorded",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "chatableapps.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "79 submissions ahead; estimated within 1 month",
+   "paidFrom": 9,
+   "link": "nofollow",
+   "login": [
+    "magic_link"
+   ],
+   "captcha": "unknown",
+   "human": [
+    "email_inbox"
+   ],
+   "tips": [
+    "Magic-link email may land in Gmail spam.",
+    "Free submissions enter a queue; $9 Fast Pass is optional.",
+    "Free-tier outbound links are nofollow; dofollow requires the $29 Standard plan."
+   ],
+   "success": "Redirected to /fast-pass?pending_approval=523 with “YOUR SUBMISSION IS IN THE QUEUE”",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "aisupersmart.com",
+   "accepts": [
+    "ai_tools"
+   ],
+   "language": "en",
+   "free": "yes",
+   "conditions": [
+    "queue"
+   ],
+   "queue": "Up to 72 hours for manual approval",
+   "paidFrom": 99,
+   "link": "unknown",
+   "login": [
+    "google"
+   ],
+   "captcha": "unknown",
+   "human": [],
+   "tips": [
+    "Dismiss the Funding Choices overlay via Manage options, then Confirm choices.",
+    "Long description and FAQ use TinyMCE editors.",
+    "Optional ads cost $99 or $149; payment is not required for submission."
+   ],
+   "success": "Redirected to /submit-succesfully-advertise/ with a form successfully submitted message",
+   "outcome": "submitted",
+   "verified": "2026-10-02"
+  },
+  {
+   "domain": "krowdbase.com",
+   "accepts": [
+    "startups_general"
+   ],
+   "language": "en",
+   "free": "unknown",
+   "conditions": [],
+   "queue": null,
+   "paidFrom": null,
+   "link": "unknown",
+   "login": [
+    "email_password"
+   ],
+   "captcha": "recaptcha",
+   "human": [
+    "captcha"
+   ],
+   "tips": [
+    "Visible reCAPTCHA v2 checkbox on registration.",
+    "Submission page requires login.",
+    "Sign-up did not proceed after clicking Sign up."
+   ],
+   "success": null,
+   "outcome": "blocked_captcha",
+   "verified": "2026-10-02"
+  }
+ ],
+ "avoid": [
+  {
+   "domain": "aiagentsdirectory.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "aideckly.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "bigkr.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "bowora.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "codetrendy.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "famed.tools",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "firstlook.tools",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "gets.tools",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "huzzler.so",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "indietools.app",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "launchbuff.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "launchzone.co",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "nxgntools.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "primeclub.co",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "saasgrow.app",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "showmebest.ai",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "sidehunt.io",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "startupdirectory.net",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "toolbit.ai",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "toolhunter.ai",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "toolnav.ai",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "topaihubs.com",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "zplatform.ai",
+   "reason": "badge_or_backlink",
+   "detail": "Free tier requires displaying their badge or a backlink."
+  },
+  {
+   "domain": "trustmrr.com",
+   "reason": "credentials",
+   "detail": "Requires handing over account credentials (e.g. a Stripe key)."
+  },
+  {
+   "domain": "aivalley.ai",
+   "reason": "form_broken",
+   "detail": "Submission form was broken when we tried."
+  },
+  {
+   "domain": "news.netwrck.com",
+   "reason": "form_broken",
+   "detail": "Submission form was broken when we tried."
+  },
+  {
+   "domain": "resource.fyi",
+   "reason": "form_broken",
+   "detail": "Submission form was broken when we tried."
+  },
+  {
+   "domain": "store.app",
+   "reason": "form_broken",
+   "detail": "Submission form was broken when we tried."
+  },
+  {
+   "domain": "whatlaunched.today",
+   "reason": "form_broken",
+   "detail": "Submission form was broken when we tried."
+  },
+  {
+   "domain": "openfuture.ai",
+   "reason": "hijacked_page",
+   "detail": "Submit page showed gambling spam (likely compromised)."
+  },
+  {
+   "domain": "webcatalog.io",
+   "reason": "new_domain_reject",
+   "detail": "Auto-rejects new domains within minutes."
+  },
+  {
+   "domain": "aiagentslist.com",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "aitoptools.com",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "betalist.com",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "indietool.io",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "launchitx.com",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "opentools.ai",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "poweredbyai.app",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "productivity.directory",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "yo.directory",
+   "reason": "paid_only",
+   "detail": "Free submission is not really available (paid only)."
+  },
+  {
+   "domain": "foundrlist.com",
+   "reason": "vote_gate",
+   "detail": "Free listing requires voting for or reviewing other products."
+  },
+  {
+   "domain": "kittylaunch.com",
+   "reason": "vote_gate",
+   "detail": "Free listing requires voting for or reviewing other products."
+  },
+  {
+   "domain": "tools.launchllama.co",
+   "reason": "vote_gate",
+   "detail": "Free listing requires voting for or reviewing other products."
+  }
+ ]
+}

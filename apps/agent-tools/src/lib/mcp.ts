@@ -1,6 +1,8 @@
 // Minimal stateless MCP server (Streamable HTTP, JSON responses) so AI assistants
 // such as Claude and Cursor can query AgentoolRank directly. Served at /api/mcp.
 import type { PublicTool } from "./public-api";
+import { recommendDirectories, KIT_PRICE_USD, type KitData, type ProductType } from "./directory-kit";
+import kitData from "./directory-kit-data.json";
 
 export interface McpDeps {
   search: (query: string, limit: number) => Promise<PublicTool[]>;
@@ -11,6 +13,7 @@ export interface McpDeps {
     opts: { src: string; maxBudgetUsd?: number; deadlineDays?: number; wantFeatured?: boolean },
   ) => Promise<unknown>;
   status: (id: number, token: string) => Promise<unknown | null>;
+  kitKeyValid: (key: string) => Promise<boolean>;
 }
 
 type JsonRpcRequest = { jsonrpc: "2.0"; id?: string | number | null; method: string; params?: Record<string, unknown> };
@@ -69,6 +72,20 @@ const TOOLS = [
       required: ["submission_id", "status_token"],
     },
   },
+  {
+    name: "recommend_directories",
+    description: `Which launch directories should a product be submitted to? Returns sites our own products actually went through, each tagged auto / manual (needs one human step) with free-tier conditions, measured link type, login, human-only steps, form tips and the success signal to look for, plus one checklist of the human steps. Free: top 10. With a Submit Kit key ($${KIT_PRICE_USD} one-time): 30 sites plus a "don't submit" list with reasons. No automated submission, no captcha bypass, no traffic or ranking promised.`,
+    inputSchema: {
+      type: "object",
+      properties: {
+        product_type: { type: "string", enum: ["ai_tool", "mcp_server", "dev_tool", "saas", "other"] },
+        languages: { type: "array", items: { type: "string" }, description: "Directory languages to include, default ['en'] (also: zh, fr)" },
+        open_source: { type: "boolean", description: "Include directories that only list open-source projects" },
+        key: { type: "string", description: "Submit Kit key for the full list (optional)" },
+      },
+      required: ["product_type"],
+    },
+  },
 ];
 
 function text(data: unknown, isError = false) {
@@ -105,6 +122,15 @@ async function callTool(name: string, args: Record<string, unknown>, deps: McpDe
     case "get_submission_status": {
       const s = await deps.status(Number(args.submission_id), String(args.status_token ?? ""));
       return s ? text(s) : text("Unknown submission_id or wrong status_token.", true);
+    }
+    case "recommend_directories": {
+      const types: ProductType[] = ["ai_tool", "mcp_server", "dev_tool", "saas", "other"];
+      const productType = types.includes(args.product_type as ProductType) ? (args.product_type as ProductType) : "other";
+      const key = typeof args.key === "string" ? args.key.trim() : "";
+      const full = key ? await deps.kitKeyValid(key) : false;
+      if (key && !full) return text("Unknown or expired Submit Kit key. Omit `key` for the free top 10.", true);
+      const languages = Array.isArray(args.languages) ? args.languages.filter((l): l is string => typeof l === "string").slice(0, 5) : undefined;
+      return text(recommendDirectories(kitData as KitData, { productType, full, now: new Date(), languages, openSource: args.open_source === true }));
     }
     default:
       return text(`Unknown tool: ${name}`, true);

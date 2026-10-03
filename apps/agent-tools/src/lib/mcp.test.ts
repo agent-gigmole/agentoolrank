@@ -8,6 +8,7 @@ const deps: McpDeps = {
   getMany: async (slugs) => slugs.map((s) => ({ slug: s, name: s }) as never),
   submit: async (input, opts) => ({ status: "queued", submission_id: 9, echo: input, opts }),
   status: async (id, token) => (id === 9 && token === "t" ? { status: "pending", queue_position: 2 } : null),
+  kitKeyValid: async (key) => key === "good-key",
 };
 
 describe("handleMcp", () => {
@@ -23,7 +24,7 @@ describe("handleMcp", () => {
   it("lists three tools with input schemas", async () => {
     const r = await handleMcp({ jsonrpc: "2.0", id: 2, method: "tools/list" }, deps);
     const names = (r as { result: { tools: Array<{ name: string; inputSchema: unknown }> } }).result.tools.map((t) => t.name);
-    expect(names).toEqual(["search_tools", "get_tool", "get_alternatives", "submit_tool", "get_submission_status"]);
+    expect(names).toEqual(["search_tools", "get_tool", "get_alternatives", "submit_tool", "get_submission_status", "recommend_directories"]);
   });
 
   it("calls search_tools and returns JSON text content", async () => {
@@ -57,5 +58,21 @@ describe("handleMcp", () => {
     expect((ok as { result: { isError: boolean } }).result.isError).toBe(false);
     const bad = await handleMcp({ jsonrpc: "2.0", id: 9, method: "tools/call", params: { name: "get_submission_status", arguments: { submission_id: 9, status_token: "x" } } }, deps);
     expect((bad as { result: { isError: boolean } }).result.isError).toBe(true);
+  });
+
+  it("recommend_directories: free sample without a key, full list with a valid key, error on a bad key", async () => {
+    const call = async (args: Record<string, unknown>) => {
+      const r = await handleMcp({ jsonrpc: "2.0", id: 9, method: "tools/call", params: { name: "recommend_directories", arguments: args } }, deps);
+      return (r as { result: { content: Array<{ text: string }>; isError?: boolean } }).result;
+    };
+    const free = JSON.parse((await call({ product_type: "ai_tool" })).content[0].text);
+    expect(free.sites.length).toBeLessThanOrEqual(10);
+    expect(free.avoid).toBeUndefined();
+    expect(free.upgrade).toMatch(/submit-kit/);
+    const full = JSON.parse((await call({ product_type: "ai_tool", key: "good-key" })).content[0].text);
+    expect(full.sites.length).toBeGreaterThan(10);
+    expect(full.avoid.length).toBeGreaterThan(0);
+    const bad = await call({ product_type: "ai_tool", key: "nope" });
+    expect(bad.isError).toBe(true);
   });
 });

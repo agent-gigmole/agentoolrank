@@ -3,6 +3,7 @@ import { getToolBySlug, searchTools } from "@repo/db/queries";
 import { toPublicTool } from "@/lib/public-api";
 import { handleMcp, type McpDeps } from "@/lib/mcp";
 import { createSubmission, submissionStatus } from "@/lib/submit-core";
+import { kitKeyValid } from "@/lib/kit-keys";
 
 // MCP endpoint (Streamable HTTP, stateless, JSON responses only — no SSE stream).
 // Add to a client as: { "url": "https://agentoolrank.com/api/mcp" }
@@ -31,6 +32,7 @@ function deps(): McpDeps {
       return { status: "queued", ...rest };
     },
     status: (id, token) => submissionStatus(id, token),
+    kitKeyValid,
   };
 }
 
