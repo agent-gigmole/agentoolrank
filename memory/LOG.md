@@ -1191,3 +1191,9 @@
 - 结果：api_calls 线上两条 surface=api；测试 340 通过；80fe36a 未部署，/downloads 顶部与文案未做；operator-lab 22:39 确认「带来访客 0」为文章主线，10-05 定稿后通知
 - 坑：无新坑
 - 结果：成功（推荐位加量进行中）
+
+## 2026-10-03 22:45–23:xx 积分模块拆层 + $49 推荐位加量上线 + 排队页付费选项开工（6251f61、80fe36a、ca32443、7741005、9a2e10f）
+- 做法：按 agentkit 要求把 api-credits.ts 拆成 decideCharge 纯函数 + CreditStore 接口 + chargeCall（先判后写），memoryStore / sqliteStore（libsql，扣余额带 balance >= 保护）两个 adapter，new_ladar 只写 Postgres adapter，已回复 agentkit；推荐中的工具上类目页顶部（Sponsored），MaintainerBox、/downloads、替代品页、Stripe 商品说明文案改为「首页 + 类目页」并部署，看板记一行；/submit 排队页付费选项标题加「Don't want to wait about N days?」、Featured 档提类目页
+- 结果：线上 /tool/langchain 文案核对通过，checkout-smoke 重跑通过；9a2e10f 已提交未部署
+- 坑：无新坑
+- 结果：成功（排队页付费选项进行中）

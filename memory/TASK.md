@@ -55,11 +55,12 @@
 - 积分模式第 1 步：MCP 工具调用已记入 api_calls（10-03 22:17 上线核对，src/lib/api-usage.ts 可移植给 new_ladar）；ops/daily.md「MCP 调用 7 天」行已加（4f71928）；剩 /api/v1 也接上 recordCall
 - ✅ 积分模式第 2 步：免费 API key 上线（/api-key 一键领取、无账户无邮箱、只存哈希；带 key 的 MCP 调用已能按 key 计数，线上 3 次调用核对；10-03 22:3x）
 - ✅ 付款路径每日自查 checkout-smoke（定时器 07:40 已 enabled、systemd 手动跑通；Submit Kit $29.00、首页推荐 $49.00 都到 Stripe 且商品名对；截图 ops/smoke/）
-- 共用积分扣费模块（agentkit 22:20 分工：我做共用版，new_ladar 复用；只一套扣费代码，两边定价可以不同）：api-credits.ts 余额表 + 扣费函数 + 每日免费额度，先写好带测试但不接收费，等 10-18 触发条件
+- 共用积分扣费模块（agentkit 22:20 分工：我做共用版，new_ladar 复用；只一套扣费代码，两边定价可以不同）：api-credits.ts 余额表 + 扣费函数 + 每日免费额度，先写好带测试但不接收费，等 10-18 触发条件；10-03 22:45 按 agentkit 要求拆层（6251f61）：decideCharge 纯函数 + CreditStore 接口（usedToday/balance/apply）+ chargeCall 先判后写，memoryStore/sqliteStore 两个 adapter，new_ladar 拷纯函数与接口、自写 Postgres adapter；仍未接收费，等 10-18 触发条件
 - ✅ /api-key 入口：MCP initialize 说明、/agents、/submit-kit 用法段各加一句（10-03 22:4x 上线核对）
 - ✅ /api/v1 REST 接口也接上调用记录（withCallLog + after()，5 个端点，10-03 22:5x 线上核对 list_tools/get_tool）
 - operator-lab 公众号素材（截止 10-05 20:00）：生成脚本 handoff-wechat.ts 已写好，草稿已放 ~/data/handoff/ai-directory/wechat-directories.md（窗口截至 10-03）；10-05 用 --to=2026-10-05 重跑定稿并通知 operator-lab（await 已登记）
-- $49 推荐位加量（进行中）：推荐中的工具同时出现在 /downloads 顶部和它所在类目页顶部（标 Sponsored），推荐说明和 MaintainerBox 文案同步改成「首页 + 类目页 + 下载榜」。类目页顶部已写（80fe36a，未部署）；剩 /downloads 顶部、文案、部署核对
+- ✅ $49 推荐位加量：推荐中的工具同时出现在首页和它所在类目页顶部（标 Sponsored），维护者区、/downloads、替代品页、Stripe 商品说明的文案都改成「首页 + 类目页」（10-03 22:5x 上线，checkout-smoke 重跑通过）
+- 提交排队页的 $9/$19/$49 选项（PaidOptions）显示免费队列要等多久，让插队的价值看得见：改为标题「Don't want to wait about N days?」（waitDays>3 时显示，排队页上方本来就有队列位置和预计天数），Featured 档说明加类目页（9a2e10f 已提交，未部署、线上未核对）
 
 ## 模式: goal — 第 2 轮（2026-10-01 开始；第 1 轮 T1–T9 已收敛）
 

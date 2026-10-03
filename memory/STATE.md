@@ -1236,3 +1236,10 @@
 - **operator-lab**：22:39 确认以「目录站带来访客 0」作为公众号文章主线；10-05 用 --to=2026-10-05 重跑定稿后通知（await 65ac86）
 - **TASK 队列**：/api/v1 接调用记录 ✅；新增「$49 推荐位加量」（进行中）
 - **下一步**：推荐位加量收尾（/downloads 顶部、文案、部署核对）；共用积分模块收尾（不接收费）；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿、两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
+
+## 2026-10-03 22:45–23:xx 积分模块拆层 + $49 推荐位加量上线 + 排队页付费选项显示等待天数（6251f61、80fe36a、ca32443、7741005、9a2e10f）
+- **积分模块拆层**（6251f61；agentkit 22:45 要求）：api-credits.ts 拆成 decideCharge 纯函数（当日免费额度优先，再扣余额，不够返回 short）+ CreditStore 接口（usedToday / balance / apply）+ chargeCall 经接口先判后写（拒绝时不改余额）；adapter 两个：memoryStore（测试用）、sqliteStore（libsql，扣余额 UPDATE 带 `balance >= ?` 保护），建表 CREATE_API_CREDIT_USAGE。new_ladar（Postgres）原样拷纯函数 + 接口，只写自己的 adapter。已回复 agentkit。仍未接收费，等 10-18 触发条件
+- **$49 推荐位加量**（80fe36a + ca32443，已部署）：推荐中的工具出现在所在类目页顶部（Sponsored 标）；MaintainerBox「Feature on the homepage + your category · $49 / 7 days」、/downloads、替代品页、plans.ts featured description（Stripe 商品说明）同步改。线上 /tool/langchain 文案已核对；checkout-smoke 重跑通过。原计划的「/downloads 顶部展示推荐工具」未做，文案按「首页 + 类目页」口径。看板已记（7741005）
+- **排队页付费选项显示等待天数**（9a2e10f，已提交未部署）：/submit 排队页 PaidOptions 标题在 waitDays>3 时显示「Don't want to wait about N days?」，Featured 档说明加类目页。原队列项「实时排队数字」改为此实现（排队页上方本来就显示队列位置和预计天数）
+- **TASK 队列**：推荐位加量 ✅；共用积分模块备注拆层完成（仍未接收费）；排队页付费选项（进行中，未部署）
+- **下一步**：9a2e10f 部署并线上核对 /submit 排队页；明早 07:40 checkout-smoke 定时首跑（未核实）；10-05 公众号稿定稿、两批外联比较、周榜首发核对（未核实）；10-18 积分复盘
