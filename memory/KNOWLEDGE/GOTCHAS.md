@@ -1100,3 +1100,9 @@ bin/write 的终检会把「建议类句子」（从事实推出的做法建议�
 - 核对付款归因：用 Stripe ops key 读 checkout sessions 看 metadata.src（如 'submit-kit-page|selftest-kitsrc'）；自测会留下未付款 checkout session，无害，不用清
 - /api/checkout：已有 submission 时用 DB 里的 sub.src（提交时已存），只有已收录工具（无 submission）才用 body.src——改结账来源前先看走哪条分支
 - 来源：2026-10-04 Submit Kit 付款归因（4479fd9 → df59df4 修键名）
+
+## english-article-hardcode
+- 现象：程序化生成英文文案（"Where to submit a/an <type>"）时，按首字母是否元音选 a/an 会出错：MCP 首字母 M 却读作 "em" → 应为 **an MCP server**；反过来 "a SaaS"、"a developer tool" 正常，"an AI tool" 是因 A 读 "ay"
+- 原因：a/an 取决于发音不是拼写，缩写词（MCP、SEO、API→an API、URL→a URL）尤其不可推断
+- 做法：类型/名词表里直接写死带冠词的短语（WHERE_TYPES 的 noun / Noun 字段，标题大小写版也要单独写），测试断言具体字符串，不写 a/an 推断函数
+- 来源：2026-10-04 /where-to-submit 落地页文案（e8c5f0a apps/agent-tools/src/lib/where-to-submit.ts）

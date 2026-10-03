@@ -1355,3 +1355,8 @@
 - 做法：aa65ef7 373 测试过后部署；真 Chrome /tool/crewai?internal=1 手动 setItem at_src=selftest-featsrc，点维护者区 $49 → Stripe；ops key 读最新 checkout session：metadata.src='tool-page|selftest-featsrc'、submission_id 0、plan featured；看板已记，TASK ✅；队尾新增并开工「详情页维护者区 Submit Kit 链接按类目选 type」（MaintainerBox kitType prop 默认 ai_tool，tool 页传 kitTypeForCategories(tool.category_tags)），已 push 未部署
 - 结果：成功（维护者区 Kit 类型未部署）
 - 坑：无新坑（内部实测照 GOTCHAS#session-source-key-at-src 手动 setItem at_src）
+
+## 2026-10-04 06:02 维护者区 Kit 类型上线（68462ef）+ where-to-submit 落地页开工（e8c5f0a）
+- 做法：68462ef 部署后 curl 线上 /tool/arcade-ai 维护者区 Kit 链接 type=mcp_server、/tool/crewai type=ai_tool；看板已记，TASK ✅。队尾新增并开工 /where-to-submit/<ai-tool|mcp-server|dev-tool|saas> 落地页：先写 src/lib/where-to-submit.ts（WHERE_TYPES + whereCopy 由数字生成 title/h1/description ≤160 字）+ 3 测试，已 push
+- 结果：成功（落地页本体、sitemap、内链未做）
+- 坑：英文冠词不能按首字母判断（MCP 读作 em → an MCP），冠词直接写死在数据里（GOTCHAS#english-article-hardcode）

@@ -1426,3 +1426,9 @@
 - **推荐位付款归因已上线**：373 测试全过后部署；真 Chrome 打开 /tool/crewai?internal=1，手动 sessionStorage.setItem('at_src','selftest-featsrc')，点维护者区 $49 → Stripe；用 Stripe ops key 读最新 checkout session：metadata.src='tool-page|selftest-featsrc'、submission_id 0、plan featured ✅（自测留未付款 session，无害）。看板已记，TASK ✅
 - **进行中：详情页维护者区 Submit Kit 链接按类目选 type**——68462ef MaintainerBox 加 kitType prop（默认 ai_tool），tool 页传 kitTypeForCategories(tool.category_tags)；已 push **未部署**
 - **下一步**：部署 68462ef → 线上核对 MCP 类工具（如 modelcontextprotocol/servers）详情页 Kit 链接含 type=mcp_server、CrewAI 为 ai_tool → 看板；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘
+
+## 2026-10-04 06:02 详情页维护者区 Kit 类型上线（68462ef 已部署）+ /where-to-submit/<类型> 落地页开工（e8c5f0a 第一步）
+- **维护者区 Kit 类型已上线**：curl 线上 /tool/arcade-ai → /submit-kit?type=mcp_server，/tool/crewai → type=ai_tool ✅。看板已记，TASK ✅
+- **进行中：按产品类型的可收录落地页 /where-to-submit/<ai-tool|mcp-server|dev-tool|saas>**（目的：吃 "where to submit an MCP server" 类长尾搜索词、直通 Submit Kit；当前瓶颈是访客少）
+  - 第一步已提交 push（e8c5f0a）：apps/agent-tools/src/lib/where-to-submit.ts——WHERE_TYPES（冠词写死：an AI tool / an MCP server / a developer tool / a SaaS），whereCopy 用测试数与适配数生成 title/h1/description（≤160 字）+ 3 测试
+- **下一步**：app/where-to-submit/[slug]/page.tsx（generateStaticParams、recommendDirectories 免费前 10、我们自己的上线结果、FAQ/ItemList JSON-LD、canonical）→ sitemap → 从 /submit-kit 与 /where-to-list 内链 → 测试 → 部署 → 线上核对；人工看 #13 sol-defi-desk；22:00 A/B 首批实发核对（未核实）；10-08 放量首日核对；10-11 重刷第二篇数字；10-16 GSC 复盘

@@ -339,3 +339,4 @@
 | 表单承诺「We'll email you when your page is live」从未实现 / 对外文案承诺要对照代码 / live-email.ts liveEmail / Brevo 事务性邮件 标签别用 outreach / 防重发 / 48c812e / 已修复 e1451cc send-live-emails live_emails live-notify | GOTCHAS.md#form-promise-not-implemented |
 | 线上自测 API/MCP 污染 api_calls 统计 / withCallLog / src 只取 URL ?src= 或 MCP args.src / body 里的 selftest 不生效 / 事后 UPDATE src / 6d9078f | GOTCHAS.md#api-calls-selftest-src-from-url |
 | 会话来源键是 at_src 不是 utm_src / SubmitForm 读错键 免费提交 src 只有 referrer / sessionSource() 统一读 / ?internal=1 track 直接 return 不写 at_src 手动 setItem / Stripe ops key 读 checkout metadata.src / 未付款自测 session 无害 / /api/checkout 有 submission 用 sub.src / df59df4 aa65ef7 | GOTCHAS.md#session-source-key-at-src |
+| 英文冠词 a/an 按发音不按首字母 / an MCP server / a SaaS / 缩写词不可推断 / 程序化文案冠词写死在数据里 / where-to-submit WHERE_TYPES / e8c5f0a | GOTCHAS.md#english-article-hardcode |
